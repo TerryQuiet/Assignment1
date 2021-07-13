@@ -31,7 +31,7 @@ class AuthActivity : AppCompatActivity() {
         this.supportActionBar?.hide()
         db = DB()
         binding = ActivityAuthBinding.inflate(layoutInflater)
-        preferences = getSharedPreferences(packageName, Context.MODE_PRIVATE)
+        preferences = getPreferences(Context.MODE_PRIVATE)
 
         setContentView(binding.root)
 
@@ -43,12 +43,7 @@ class AuthActivity : AppCompatActivity() {
 
     }
 
-    private fun getCredentials() {
-        binding.etEmail.setText(preferences.getString(EMAIL,""))
-        binding.etPassword.setText(preferences.getString(PASSWORD,""))
-        val isChecked = preferences.getBoolean(IS_REMEMBER,false)
-        binding.checkBoxRemember.isChecked = isChecked
-    }
+
 
     private fun login(view: View) {
         val email = binding.etEmail.text.toString()
@@ -94,6 +89,12 @@ class AuthActivity : AppCompatActivity() {
             .putString(PASSWORD, binding.etPassword.text.toString())
             .apply()
         Log.d(TAG, "saveCredentials: SAVED")
+    }
+
+    private fun getCredentials() {
+        binding.etEmail.setText(preferences.getString(EMAIL,""))
+        binding.etPassword.setText(preferences.getString(PASSWORD,""))
+        binding.checkBoxRemember.isChecked = preferences.getBoolean(IS_REMEMBER,false)
     }
 
 
