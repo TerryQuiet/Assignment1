@@ -6,3 +6,5 @@ added icons
 added rounded imageView 
 https://howtodoandroid.com/shapeableimageview-material-components-android/
 
+
+ok, the plan was to write everything here but I failed xD
