@@ -9,4 +9,5 @@
     <string name="auth_instruction">Fill out the profile and go to the application!</string>
     <string name="auth_terms">By clicking Register you agree\nto our Terms and Conditions</string>
     <string name="register">Register</string>
+    <string name="remember_me">Remember me!</string>
 </resources>
