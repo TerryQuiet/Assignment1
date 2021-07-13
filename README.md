@@ -8,3 +8,7 @@ https://howtodoandroid.com/shapeableimageview-material-components-android/
 
 
 ok, the plan was to write everything here but I failed xD
+
+turned off dark theme 
+https://stackoverflow.com/a/67064345/12972985
+

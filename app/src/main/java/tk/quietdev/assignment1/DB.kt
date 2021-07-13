@@ -11,8 +11,13 @@ class DB {
 
     private fun getUsersList(): Map<String, User> {
         return mapOf(
-            "mail@pm.me" to User("Terry", "mail@pm.me", password = "11111"),
-            "quiet@pm.me" to User("Quiet", "quiet@pm.me", password = "22222")
+            "mail@pm.me" to User(
+                "Terry",
+                "mail@pm.me",
+                "Mega programmer",
+                "Moon 23st",
+                password = "11111"),
+            "mail1@pm.me" to User("Quiet", "quiet@pm.me", password = "11111")
         )
     }
 }

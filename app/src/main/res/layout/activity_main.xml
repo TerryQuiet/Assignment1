@@ -44,7 +44,7 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_profile_pic" />
 
             <TextView
-                android:id="@+id/tv_profession"
+                android:id="@+id/tv_occupation"
                 style="@style/TextAppearance.H3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -61,9 +61,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="5295 Gaylord Walks Apk."
-                app:layout_constraintEnd_toEndOf="@id/tv_profession"
-                app:layout_constraintStart_toStartOf="@id/tv_profession"
-                app:layout_constraintTop_toBottomOf="@id/tv_profession" />
+                app:layout_constraintEnd_toEndOf="@id/tv_occupation"
+                app:layout_constraintStart_toStartOf="@id/tv_occupation"
+                app:layout_constraintTop_toBottomOf="@id/tv_occupation" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
