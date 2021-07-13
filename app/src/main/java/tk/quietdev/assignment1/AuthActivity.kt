@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import tk.quietdev.assignment1.databinding.ActivityAuthBinding
 
 const val IS_REMEMBER = "isSaveChecked"
+const val IS_AUTOLOGIN = "isAutoLoginChecked"
 const val EMAIL = "email"
 const val PASSWORD = "password"
 
@@ -37,45 +38,59 @@ class AuthActivity : AppCompatActivity() {
 
         getCredentials()
 
+        if (binding.checkBoxAutologin.isChecked) {
+            tryLogin()
+        }
+
         binding.btnRegister.setOnClickListener {
-            login(it)
+            tryLogin()
         }
 
     }
 
 
+    /**
+     * checks if user is present in database an proceeds to login if so
+     */
 
-    private fun login(view: View) {
+    private fun tryLogin() {
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
-
         val user = db.getUser(email, password)
 
         if (user != null) {
-            val intent = Intent(this, MainActivity::class.java).apply {
-                putExtra(User.USERNAME, user.userName)
-                putExtra(User.OCCUPATION, user.occupation)
-                putExtra(User.PHYSICAL_ADDRESS, user.physicalAddress)
-                putExtra(User.PICTURE, user.picture)
-            }
-
             if (binding.checkBoxRemember.isChecked) {
                 saveCredentials()
             } else {
                 clearCredentials()
             }
-            startActivity(intent)
-            //finish() //should it be done like that?
+            login(user)
         } else {
-            Snackbar.make(view, "Try mail@pm.me : 11111 ", Snackbar.LENGTH_LONG)
-                .setActionTextColor(Color.WHITE)
-                .setAction("OK") {
-                    binding.etEmail.setText("mail@pm.me")
-                    binding.etPassword.setText("11111")
-                }
-                .show()
+            showHelpToast()
         }
 
+    }
+
+
+    private fun showHelpToast() {
+        Snackbar.make(binding.root, "Try mail@pm.me : 11111 ", Snackbar.LENGTH_LONG)
+            .setActionTextColor(Color.WHITE)
+            .setAction("OK") {
+                binding.etEmail.setText("mail@pm.me")
+                binding.etPassword.setText("11111")
+            }
+            .show()
+    }
+
+    private fun login(user: User) {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra(User.USERNAME, user.userName)
+            putExtra(User.OCCUPATION, user.occupation)
+            putExtra(User.PHYSICAL_ADDRESS, user.physicalAddress)
+            putExtra(User.PICTURE, user.picture)
+        }
+        startActivity(intent)
+        //finish() //should it be done like that?
     }
 
     private fun clearCredentials() {
@@ -85,6 +100,7 @@ class AuthActivity : AppCompatActivity() {
     private fun saveCredentials() {
         preferences.edit()
             .putBoolean(IS_REMEMBER, binding.checkBoxRemember.isChecked)
+            .putBoolean(IS_AUTOLOGIN, binding.checkBoxAutologin.isChecked)
             .putString(EMAIL, binding.etEmail.text.toString())
             .putString(PASSWORD, binding.etPassword.text.toString())
             .apply()
@@ -95,6 +111,7 @@ class AuthActivity : AppCompatActivity() {
         binding.etEmail.setText(preferences.getString(EMAIL,""))
         binding.etPassword.setText(preferences.getString(PASSWORD,""))
         binding.checkBoxRemember.isChecked = preferences.getBoolean(IS_REMEMBER,false)
+        binding.checkBoxAutologin.isChecked = preferences.getBoolean(IS_AUTOLOGIN,false)
     }
 
 

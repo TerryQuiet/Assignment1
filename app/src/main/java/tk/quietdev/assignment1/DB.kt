@@ -2,7 +2,7 @@ package tk.quietdev.assignment1
 
 
 /**
- * Class with users so I can have some date to use for login
+ * Class with users so I can have some data to use for login
  */
 
 class DB {
