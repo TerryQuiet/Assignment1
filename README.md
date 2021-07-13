@@ -12,7 +12,8 @@ ok, the plan was to write everything here but I failed xD
 turned off dark theme 
 https://stackoverflow.com/a/67064345/12972985
 
-
+shared preference 
+https://developer.android.com/training/data-storage/shared-preferences
 
 
 
