@@ -41,6 +41,7 @@ class AuthActivity : AppCompatActivity() {
                 putExtra(User.PICTURE, user.picture)
             }
             startActivity(intent)
+            finish()
         } else {
             Snackbar.make(view, "Try mail@pm.me : 11111 ", Snackbar.LENGTH_LONG)
                 .setActionTextColor(Color.WHITE)

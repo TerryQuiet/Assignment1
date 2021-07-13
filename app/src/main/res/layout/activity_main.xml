@@ -91,7 +91,7 @@
             app:layout_constraintStart_toEndOf="@id/im_facebook"
             app:layout_constraintTop_toBottomOf="@+id/top_container"
             app:layout_constraintVertical_chainStyle="spread_inside"
-            app:srcCompat="@drawable/ic_instagram" />
+            app:srcCompat="@drawable/ic_linkedin" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/im_vkontakte"
