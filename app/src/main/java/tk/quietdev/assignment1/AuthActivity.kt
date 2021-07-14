@@ -43,9 +43,18 @@ class AuthActivity : AppCompatActivity() {
             tryLogin()
         }
 
-        binding.btnRegister.setOnClickListener {
-            tryLogin()
+        binding.apply {
+            btnRegister.setOnClickListener {
+                tryLogin()
+            }
+            checkBoxAutologin.setOnClickListener {
+                preferences.edit()
+                    .putBoolean(IS_AUTOLOGIN, binding.checkBoxAutologin.isChecked)
+                    .apply()
+            }
         }
+
+
 
     }
 
@@ -101,7 +110,6 @@ class AuthActivity : AppCompatActivity() {
     private fun saveCredentials() {
         preferences.edit()
             .putBoolean(IS_REMEMBER, binding.checkBoxRemember.isChecked)
-            .putBoolean(IS_AUTOLOGIN, binding.checkBoxAutologin.isChecked)
             .putString(EMAIL, binding.etEmail.text.toString())
             .putString(PASSWORD, binding.etPassword.text.toString())
             .apply()
