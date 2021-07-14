@@ -2,6 +2,10 @@ package tk.quietdev.assignment1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.transition.Explode
+import android.transition.Slide
+import android.view.Window
+import tk.quietdev.assignment1.data.User
 import tk.quietdev.assignment1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -10,6 +14,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
+
+
         setContentView(view)
         setTitle(R.string.settings)
         bindValues()

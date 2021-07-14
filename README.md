@@ -16,7 +16,7 @@ shared preference
 https://developer.android.com/training/data-storage/shared-preferences
 
 spent:
-20min on autologin and small code refactor
+20min on autologin and small code refactor 
 
 
 

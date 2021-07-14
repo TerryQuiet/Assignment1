@@ -1,4 +1,6 @@
-package tk.quietdev.assignment1
+package tk.quietdev.assignment1.data
+
+import tk.quietdev.assignment1.R
 
 
 /**

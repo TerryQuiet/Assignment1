@@ -7,9 +7,10 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
+import tk.quietdev.assignment1.data.DB
+import tk.quietdev.assignment1.data.User
 import tk.quietdev.assignment1.databinding.ActivityAuthBinding
 
 const val IS_REMEMBER = "isSaveChecked"
