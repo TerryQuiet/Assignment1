@@ -1,4 +1,4 @@
-package tk.quietdev.assignment1
+package tk.quietdev.level1
 
 
 import android.content.Context
@@ -9,9 +9,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import tk.quietdev.assignment1.data.DB
-import tk.quietdev.assignment1.data.User
-import tk.quietdev.assignment1.databinding.ActivityAuthBinding
+import tk.quietdev.level1.data.DB
+import tk.quietdev.level1.data.User
+import tk.quietdev.level1.databinding.ActivityAuthBinding
 
 private const val IS_REMEMBER = "isSaveChecked"
 private const val IS_AUTOLOGIN = "isAutoLoginChecked"

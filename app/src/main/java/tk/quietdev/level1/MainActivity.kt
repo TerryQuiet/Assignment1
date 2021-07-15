@@ -1,12 +1,9 @@
-package tk.quietdev.assignment1
+package tk.quietdev.level1
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.transition.Explode
-import android.transition.Slide
-import android.view.Window
-import tk.quietdev.assignment1.data.User
-import tk.quietdev.assignment1.databinding.ActivityMainBinding
+import tk.quietdev.level1.data.User
+import tk.quietdev.level1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
