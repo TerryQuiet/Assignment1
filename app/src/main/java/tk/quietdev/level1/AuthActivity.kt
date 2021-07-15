@@ -18,7 +18,6 @@ private const val IS_AUTOLOGIN = "isAutoLoginChecked"
 private const val EMAIL = "email"
 private const val PASSWORD = "password"
 
-
 private const val TAG = "AuthActivity"
 
 class AuthActivity : AppCompatActivity() {
