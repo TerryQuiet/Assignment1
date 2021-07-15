@@ -8,7 +8,7 @@ import tk.quietdev.level1.R
  */
 
 class DB {
-    private val userList = getUsersList()
+    private val userList = getUsersMap()
 
     fun getUser(name: String, password: String): User? {
         return if (userList[name]?.isPasswordCorrect(password) == true) {
@@ -16,7 +16,7 @@ class DB {
         } else null
     }
 
-    private fun getUsersList(): Map<String, User> {
+    private fun getUsersMap(): Map<String, User> {
         return mapOf(
             "mail@pm.me" to User(
                 "Terry",
