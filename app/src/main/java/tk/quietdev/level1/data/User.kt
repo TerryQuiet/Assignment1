@@ -1,6 +1,6 @@
-package tk.quietdev.assignment1.data
+package tk.quietdev.level1.data
 
-import tk.quietdev.assignment1.R
+import tk.quietdev.level1.R
 
 
 data class User(

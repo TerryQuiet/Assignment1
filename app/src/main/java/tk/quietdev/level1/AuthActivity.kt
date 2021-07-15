@@ -1,4 +1,4 @@
-package tk.quietdev.assignment1
+package tk.quietdev.level1
 
 
 import android.content.Context
@@ -9,9 +9,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import tk.quietdev.assignment1.data.DB
-import tk.quietdev.assignment1.data.User
-import tk.quietdev.assignment1.databinding.ActivityAuthBinding
+import tk.quietdev.level1.data.DB
+import tk.quietdev.level1.data.User
+import tk.quietdev.level1.databinding.ActivityAuthBinding
 
 private const val IS_REMEMBER = "isSaveChecked"
 private const val IS_AUTOLOGIN = "isAutoLoginChecked"
@@ -39,6 +39,10 @@ class AuthActivity : AppCompatActivity() {
 
         getCredentials()
 
+
+
+        //binding.etEmail.boxStrokeColor = resources.getColor(R.color.my_orange)
+
         if (binding.checkBoxAutologin.isChecked) {
             tryLogin()
         }
@@ -64,7 +68,9 @@ class AuthActivity : AppCompatActivity() {
      */
 
     private fun tryLogin() {
-        val email = binding.etEmail.text.toString()
+        //val email = binding.etEmail.text.toString()
+
+        val email = binding.etEmail.editText?.text.toString()
         val password = binding.etPassword.text.toString()
         val user = db.getUser(email, password)
 
@@ -86,7 +92,8 @@ class AuthActivity : AppCompatActivity() {
         Snackbar.make(binding.root, "Try mail@pm.me : 11111 ", Snackbar.LENGTH_LONG)
             .setActionTextColor(Color.WHITE)
             .setAction("OK") {
-                binding.etEmail.setText("mail@pm.me")
+                binding.etEmail.editText?.setText("mail@pm.me")
+                //binding.etEmail.setText("mail@pm.me")
                 binding.etPassword.setText("11111")
             }
             .show()
@@ -110,14 +117,14 @@ class AuthActivity : AppCompatActivity() {
     private fun saveCredentials() {
         preferences.edit()
             .putBoolean(IS_REMEMBER, binding.checkBoxRemember.isChecked)
-            .putString(EMAIL, binding.etEmail.text.toString())
+           // .putString(EMAIL, binding.etEmail.text.toString())
             .putString(PASSWORD, binding.etPassword.text.toString())
             .apply()
         Log.d(TAG, "saveCredentials: SAVED")
     }
 
     private fun getCredentials() {
-        binding.etEmail.setText(preferences.getString(EMAIL,""))
+        //binding.etEmail.setText(preferences.getString(EMAIL,""))
         binding.etPassword.setText(preferences.getString(PASSWORD,""))
         binding.checkBoxRemember.isChecked = preferences.getBoolean(IS_REMEMBER,false)
         binding.checkBoxAutologin.isChecked = preferences.getBoolean(IS_AUTOLOGIN,false)
