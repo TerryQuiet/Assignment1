@@ -13,10 +13,10 @@ import tk.quietdev.assignment1.data.DB
 import tk.quietdev.assignment1.data.User
 import tk.quietdev.assignment1.databinding.ActivityAuthBinding
 
-const val IS_REMEMBER = "isSaveChecked"
-const val IS_AUTOLOGIN = "isAutoLoginChecked"
-const val EMAIL = "email"
-const val PASSWORD = "password"
+private const val IS_REMEMBER = "isSaveChecked"
+private const val IS_AUTOLOGIN = "isAutoLoginChecked"
+private const val EMAIL = "email"
+private const val PASSWORD = "password"
 
 
 private const val TAG = "AuthActivity"
@@ -60,7 +60,7 @@ class AuthActivity : AppCompatActivity() {
 
 
     /**
-     * checks if user is present in database an proceeds to login if so
+     * checks if user is present in a database and proceeds to login if so
      */
 
     private fun tryLogin() {
