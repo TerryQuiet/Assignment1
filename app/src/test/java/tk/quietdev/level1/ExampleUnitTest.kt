@@ -1,4 +1,4 @@
-package tk.quietdev.assignment1
+package tk.quietdev.level1
 
 import org.junit.Test
 

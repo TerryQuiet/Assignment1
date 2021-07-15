@@ -20,4 +20,25 @@
             <item name="android:fontFamily">@font/open_sans</item>
             <item name="android:textSize">12sp</item>
         </style>
+
+    <style name="details_socialNetwork_imageButton" parent="">
+        <item name="android:layout_width">60dp</item>
+        <item name="android:layout_height">60dp</item>
+    </style>
+
+
+    <!-- Base style for TextInputEditText. You should use one of the sub-styles instead. -->
+<!--    <style name="Base.Widget.MaterialComponents.TextInputEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:padding">@dimen/xsmall_4dp</item>
+    </style>-->
+
+    <style name="ThemeOverlay.App.TextInputLayout" parent="">
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorError">@color/white</item>
+        <item name="textAppearanceSubtitle1">@color/white</item>
+        <item name="textAppearanceCaption">@color/white</item>
+        <item name="editTextStyle">@style/Widget.Design.TextInputLayout</item>
+
+    </style>
 </resources>

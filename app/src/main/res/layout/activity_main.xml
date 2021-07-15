@@ -23,8 +23,8 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_profile_pic"
-                android:layout_width="113dp"
-                android:layout_height="113dp"
+                android:layout_width="@dimen/details_square_photo"
+                android:layout_height="@dimen/details_square_photo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -36,9 +36,9 @@
                 style="@style/TextAppearance.H2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="8dp"
-                android:text="Lucile Alvarado"
+                android:layout_marginTop="@dimen/large_24dp"
+                android:layout_marginBottom="@dimen/small_8dp"
+                tools:text="Lucile Alvarado"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/iv_profile_pic" />
@@ -48,8 +48,8 @@
                 style="@style/TextAppearance.H3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Graphic designer"
+                android:layout_marginTop="@dimen/small_8dp"
+                tools:text="Graphic designer"
                 app:layout_constraintEnd_toEndOf="@id/tv_name"
                 app:layout_constraintStart_toStartOf="@id/tv_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_name" />
@@ -59,8 +59,8 @@
                 style="@style/TextAppearance.H3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="5295 Gaylord Walks Apk."
+                android:layout_marginTop="@dimen/normal_16dp"
+                tools:text="5295 Gaylord Walks Apk."
                 app:layout_constraintEnd_toEndOf="@id/tv_occupation"
                 app:layout_constraintStart_toStartOf="@id/tv_occupation"
                 app:layout_constraintTop_toBottomOf="@id/tv_occupation" />
@@ -71,8 +71,7 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/im_facebook"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            style="@style/details_socialNetwork_imageButton"
             android:background="?android:selectableItemBackground"
             app:layout_constraintEnd_toStartOf="@+id/im_instagram"
             app:layout_constraintStart_toStartOf="parent"
@@ -81,8 +80,7 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/im_instagram"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            style="@style/details_socialNetwork_imageButton"
             android:layout_marginTop="62dp"
             android:background="?android:selectableItemBackground"
             app:layout_constraintBottom_toTopOf="@+id/button"
@@ -95,8 +93,7 @@
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/im_vkontakte"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            style="@style/details_socialNetwork_imageButton"
             android:background="?android:selectableItemBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/im_instagram"
@@ -107,7 +104,7 @@
             android:id="@+id/button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/normal_16dp"
             android:backgroundTint="?attr/colorSecondary"
             android:text="@string/edit_profile"
             app:layout_constraintBottom_toBottomOf="parent"
