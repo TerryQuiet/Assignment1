@@ -1,12 +1,15 @@
 package tk.quietdev.level1
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.data.User
+
+private const val TAG = "RecycleViewAdapter"
 
 class RecycleViewAdapter(
     private val dataset: List<User>
