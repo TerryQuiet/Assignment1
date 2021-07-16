@@ -93,16 +93,16 @@
                 android:paddingHorizontal="@dimen/xsmall_4dp"
                 android:text="@string/password"
                 android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
-                android:textColor="@color/gray" />
+                android:textColor="@color/gray"
+                app:hintEnabled="false" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/et_passwordParent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:counterEnabled="true"
-                android:hint="@string/password"
                 app:boxBackgroundColor="@android:color/transparent"
-                app:hintEnabled="true">
+                app:counterEnabled="false"
+                app:hintEnabled="false">
 
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -110,6 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
+                    android:hint="@string/password"
                     android:textColor="@color/white" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -119,18 +120,18 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_register"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:layout_marginVertical="@dimen/small_8dp"
             android:padding="@dimen/normal_16dp"
             android:text="@string/register"
+            android:textColor="@color/onBackGroundColor"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_terms"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:textColor="@color/onBackGroundColor"
             app:strokeColor="?attr/colorSecondary"
             app:strokeWidth="2dp" />
 
@@ -142,8 +143,8 @@
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:text="@string/auth_terms"
             android:textAlignment="center"
-            android:textColor="@color/onBackGroundColor"
             android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
+            android:textColor="@color/onBackGroundColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
