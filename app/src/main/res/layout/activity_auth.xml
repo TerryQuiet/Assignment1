@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+
         tools:context=".MainActivity">
 
         <LinearLayout
@@ -27,20 +27,22 @@
 
             <TextView
                 android:id="@+id/tv_main"
-                style="@style/TextAppearance.H1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/auth_main"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
+                android:textColor="@color/onBackGroundColor" />
 
             <TextView
                 android:id="@+id/textView2"
-                style="@style/TextAppearance.H4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
                 android:text="@string/auth_instruction"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
+                android:textColor="@color/onBackGroundColor" />
 
 
         </LinearLayout>
@@ -59,63 +61,58 @@
 
             <TextView
                 android:id="@+id/tv_label_email"
-                style="@style/TextAppearance.H3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/xsmall_4dp"
                 android:text="@string/email"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
                 android:textColor="@color/gray" />
 
-            <!--<EditText
-                android:id="@+id/et_email"
-                style="@style/TextAppearance.H2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:backgroundTint="?attr/colorOnPrimary"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:textColor="?attr/colorOnPrimary"
-                android:textColorHint="?attr/colorOnPrimary" />-->
-
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/et_email"
+                android:id="@+id/et_email_parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:hintEnabled="false"
-                >
+                app:boxBackgroundColor="@android:color/transparent"
+                app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/email"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/white"
-                    />
-
-
+                    android:textColor="@color/white" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/tv_label_password"
-                style="@style/TextAppearance.H3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/normal_16dp"
                 android:paddingHorizontal="@dimen/xsmall_4dp"
                 android:text="@string/password"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
                 android:textColor="@color/gray" />
 
-            <EditText
-                android:id="@+id/et_password"
-                style="@style/TextAppearance.H2"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/et_passwordParent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="?attr/colorOnPrimary"
+                app:counterEnabled="true"
                 android:hint="@string/password"
-                android:inputType="textPassword"
-                android:textColor="?attr/colorOnPrimary"
-                android:textColorHint="?attr/colorOnPrimary" />
+                app:boxBackgroundColor="@android:color/transparent"
+                app:hintEnabled="true">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textColor="@color/white" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
@@ -126,37 +123,38 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:layout_marginVertical="@dimen/small_8dp"
-            android:padding="@dimen/xsmall_4dp"
+            android:padding="@dimen/normal_16dp"
             android:text="@string/register"
-            android:textColor="?attr/colorOnPrimary"
-            android:textSize="24sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_terms"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:textColor="@color/onBackGroundColor"
             app:strokeColor="?attr/colorSecondary"
             app:strokeWidth="2dp" />
 
         <TextView
             android:id="@+id/tv_terms"
-            style="@style/TextAppearance.H4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/normal_16dp"
             android:layout_marginHorizontal="@dimen/normal_16dp"
-
             android:text="@string/auth_terms"
             android:textAlignment="center"
+            android:textColor="@color/onBackGroundColor"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <CheckBox
             android:id="@+id/checkBox_remember"
-            style="@style/TextAppearance.H2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:text="@string/remember_me"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toTopOf="@+id/btn_register"
             app:layout_constraintEnd_toEndOf="parent"
@@ -167,14 +165,14 @@
             android:id="@+id/checkBox_autologin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/auto_login"
-            style="@style/TextAppearance.H2"
             android:layout_marginHorizontal="@dimen/normal_16dp"
-            app:layout_constraintVertical_bias="0"
+            android:text="@string/auto_login"
+            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
             android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toTopOf="@+id/btn_register"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/container_editables" />
+            app:layout_constraintTop_toBottomOf="@+id/container_editables"
+            app:layout_constraintVertical_bias="0" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
