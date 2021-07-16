@@ -103,7 +103,7 @@ class AuthActivity : AppCompatActivity() {
                 binding.etEmail.setText("mail@pm.me")
                 binding.etPassword.setText("11111")
             }
-            .setTextColor(Color.WHITE)
+            .setTextColor(Color.WHITE) // I tried to change it in theme.xml, but it doesn't work... help required
             .show()
     }
 
