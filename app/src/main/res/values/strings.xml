@@ -11,4 +11,6 @@
     <string name="register">Register</string>
     <string name="remember_me">Remember me!</string>
     <string name="auto_login">auto login</string>
+    <string name="please_enter_valid_email">Please enter valid email address</string>
+    <string name="please_enter_valid_password">Please enter atleast 5 characters</string>
 </resources>
