@@ -12,7 +12,6 @@ class MainActivity : AppCompatActivity() {
         setTitle(R.string.settings)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         bindValues()
     }
 

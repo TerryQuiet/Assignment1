@@ -8,10 +8,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import com.google.android.material.snackbar.Snackbar
 import tk.quietdev.level1.data.DB
 import tk.quietdev.level1.data.User
 import tk.quietdev.level1.databinding.ActivityAuthBinding
+import tk.quietdev.level1.utils.Validator
 
 private const val IS_REMEMBER = "isSaveChecked"
 private const val IS_AUTOLOGIN = "isAutoLoginChecked"
@@ -24,7 +26,7 @@ class AuthActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthBinding
     private lateinit var db: DB
-    private lateinit var preferences : SharedPreferences
+    private lateinit var preferences: SharedPreferences
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,10 +35,10 @@ class AuthActivity : AppCompatActivity() {
         db = DB()
         binding = ActivityAuthBinding.inflate(layoutInflater)
         preferences = getPreferences(Context.MODE_PRIVATE)
-
         setContentView(binding.root)
 
         getCredentials()
+        showHelpToast()
 
         if (binding.checkBoxAutologin.isChecked) {
             tryLogin()
@@ -51,8 +53,21 @@ class AuthActivity : AppCompatActivity() {
                     .putBoolean(IS_AUTOLOGIN, binding.checkBoxAutologin.isChecked)
                     .apply()
             }
+            etEmail.doOnTextChanged { text, _, _, _ ->
+                if (!text.isNullOrEmpty() && Validator.isEmailValid(text.toString())) {
+                    binding.etEmailParent.isErrorEnabled = false
+                } else {
+                    binding.etEmailParent.error = resources.getString(R.string.please_enter_valid_email)
+                }
+            }
+            etPassword.doOnTextChanged { text, _, _, _ ->
+                if (!text.isNullOrEmpty() && Validator.isPasswordValid(text.toString())) {
+                    binding.etPasswordParent.isErrorEnabled = false
+                } else {
+                    binding.etPasswordParent.error = resources.getString(R.string.please_enter_valid_password)
+                }
+            }
         }
-
 
 
     }
@@ -83,11 +98,11 @@ class AuthActivity : AppCompatActivity() {
 
     private fun showHelpToast() {
         Snackbar.make(binding.root, "Try mail@pm.me : 11111 ", Snackbar.LENGTH_LONG)
-            .setActionTextColor(Color.WHITE)
             .setAction("OK") {
                 binding.etEmail.setText("mail@pm.me")
                 binding.etPassword.setText("11111")
             }
+            .setTextColor(Color.WHITE) // I tried to change it in theme.xml, but it doesn't work... help required
             .show()
     }
 
@@ -116,10 +131,10 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun getCredentials() {
-        binding.etEmail.setText(preferences.getString(EMAIL,""))
-        binding.etPassword.setText(preferences.getString(PASSWORD,""))
-        binding.checkBoxRemember.isChecked = preferences.getBoolean(IS_REMEMBER,false)
-        binding.checkBoxAutologin.isChecked = preferences.getBoolean(IS_AUTOLOGIN,false)
+        binding.etEmail.setText(preferences.getString(EMAIL, ""))
+        binding.etPassword.setText(preferences.getString(PASSWORD, ""))
+        binding.checkBoxRemember.isChecked = preferences.getBoolean(IS_REMEMBER, false)
+        binding.checkBoxAutologin.isChecked = preferences.getBoolean(IS_AUTOLOGIN, false)
     }
 
 
