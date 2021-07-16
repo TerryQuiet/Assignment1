@@ -61,7 +61,7 @@ class AuthActivity : AppCompatActivity() {
                     binding.etEmailParent.error = resources.getString(R.string.please_enter_valid_email)
                 }
             }
-            etPassword.doOnTextChanged { text, start, before, count ->
+            etPassword.doOnTextChanged { text, _, _, _ ->
                 if (!text.isNullOrEmpty() && Validator.isPasswordValid(text.toString())) {
                     binding.etPasswordParent.isErrorEnabled = false
                 } else {
