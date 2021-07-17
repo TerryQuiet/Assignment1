@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:paddingHorizontal="@dimen/normal_16dp"
     android:paddingVertical="@dimen/small_8dp">
 
@@ -20,7 +21,7 @@
 
     <TextView
         android:id="@+id/tv_name"
-        style="@style/TextAppearance.H2"
+        style="@style/TextAppearance.MyTheme.Headline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/normal_16dp"
@@ -32,7 +33,7 @@
 
     <TextView
         android:id="@+id/tv_occupation"
-        style="@style/TextAppearance.H4"
+        style="@style/TextAppearance.MyTheme.Headline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/normal_16dp"
