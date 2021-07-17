@@ -17,7 +17,7 @@
         <!--text fields.-->
         <item name="android:windowBackground">@color/backGroundColor</item>
         <item name="android:colorBackground">@color/backGroundColor</item>
-        <item name="colorSurface">@android:color/transparent</item>
+        <item name="colorSurface">@color/backGroundColor</item>
         <item name="colorError">@color/red_600</item>
         <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
         <!--on which they appear.-->
@@ -31,7 +31,7 @@
         <item name="textAppearanceHeadline2">@style/TextAppearance.MyTheme.Headline2</item>
         <item name="textAppearanceHeadline3">@style/TextAppearance.MyTheme.Headline3</item>
         <item name="textAppearanceHeadline4">@style/TextAppearance.MyTheme.Headline4</item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.MyTheme.Headline5</item>
+<!--        <item name="textAppearanceHeadline5">@style/TextAppearance.MyTheme.Headline5</item>
         <item name="textAppearanceHeadline6">@style/TextAppearance.MyTheme.Headline6</item>
         <item name="textAppearanceSubtitle1">@style/TextAppearance.MyTheme.Subtitle1</item>
         <item name="textAppearanceSubtitle2">@style/TextAppearance.MyTheme.Subtitle2</item>
@@ -39,7 +39,7 @@
         <item name="textAppearanceBody2">@style/TextAppearance.MyTheme.Body2</item>
         <item name="textAppearanceButton">@style/TextAppearance.MyTheme.Button</item>
         <item name="textAppearanceCaption">@style/TextAppearance.MyTheme.Caption</item>
-        <item name="textAppearanceOverline">@style/TextAppearance.MyTheme.Overline</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.MyTheme.Overline</item>-->
         <!--Material shape attributes-->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent
         </item>
@@ -48,10 +48,10 @@
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MyTheme.LargeComponent
         </item>
         <!--Component styles-->
-        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert
+<!--        <item name="materialAlertDialogTheme">@style/ThemeOverlay.MaterialComponents.Dialog.Alert
         </item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.MyTheme.BottomSheetDialog</item>
-        <item name="navigationViewStyle">@style/Widget.MyTheme.NavigationView</item>
+        <item name="navigationViewStyle">@style/Widget.MyTheme.NavigationView</item>-->
 
         <!--My addiction-->
 
@@ -115,6 +115,8 @@
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Snackbar</item>
         <item name="backgroundOverlayColorAlpha">1</item>
         <item name="android:textColor">@color/white</item>
+
+        <item name="colorSurface">@color/white</item>
     </style>
 
     <style name="Widget.App.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
@@ -123,7 +125,9 @@
 
     <style name="ThemeOverlay.App.Snackbar" parent="">
         <item name="colorOnSurface">@color/backGroundLightColor</item>
+        <item name="colorSurface">@color/white</item>
         <item name="android:textColor">@color/white</item>
+
     </style>
 
 

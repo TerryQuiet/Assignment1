@@ -7,12 +7,14 @@ import tk.quietdev.level1.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTitle(R.string.settings)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         bindValues()
+
     }
 
     private fun bindValues() {

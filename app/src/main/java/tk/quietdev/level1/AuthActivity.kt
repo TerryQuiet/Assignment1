@@ -4,7 +4,6 @@ package tk.quietdev.level1
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -28,10 +27,8 @@ class AuthActivity : AppCompatActivity() {
     private lateinit var db: DB
     private lateinit var preferences: SharedPreferences
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.supportActionBar?.hide()
         db = DB()
         binding = ActivityAuthBinding.inflate(layoutInflater)
         preferences = getPreferences(Context.MODE_PRIVATE)
@@ -72,7 +69,6 @@ class AuthActivity : AppCompatActivity() {
 
     }
 
-
     /**
      * checks if user is present in a database and proceeds to login if so
      */
@@ -102,7 +98,7 @@ class AuthActivity : AppCompatActivity() {
                 binding.etEmail.setText("mail@pm.me")
                 binding.etPassword.setText("11111")
             }
-            .setTextColor(Color.WHITE) // I tried to change it in theme.xml, but it doesn't work... help required
+            //.setTextColor(Color.WHITE) // I tried to change it in theme.xml, but it doesn't work... help required
             .show()
     }
 
