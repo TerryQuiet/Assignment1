@@ -10,3 +10,6 @@ https://developer.android.com/training/data-storage/shared-preferences
 
 transaction animation
 https://medium.com/mobile-app-development-publication/animate-android-activities-transition-bf7f89a74b35
+
+View Binding in RecyclerView Adapter 
+https://www.geeksforgeeks.org/how-to-use-view-binding-in-recyclerview-adapter-class-in-android/

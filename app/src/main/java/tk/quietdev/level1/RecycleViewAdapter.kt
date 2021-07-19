@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.data.User
 import tk.quietdev.level1.databinding.ActivityContactsBinding
 import tk.quietdev.level1.databinding.ListItemBinding
+import tk.quietdev.level1.utils.ext.loadImage
 
 private const val TAG = "RecycleViewAdapter"
 
@@ -19,10 +20,7 @@ class RecycleViewAdapter(
 
 
 
-    inner class ItemViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-
-
-    }
+    class ItemViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         // create a new view
@@ -40,10 +38,9 @@ class RecycleViewAdapter(
             with(dataset[position]){
                 binding.tvName.text = this.userName
                 binding.tvOccupation.text = this.occupation
+                binding.ivProfilePic.loadImage(this.picture)
             }
         }
-
-
     }
 
     override fun getItemCount() = dataset.size
