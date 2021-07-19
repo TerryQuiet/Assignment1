@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.snackbar.Snackbar
@@ -20,7 +21,6 @@ private const val IS_AUTOLOGIN = "isAutoLoginChecked"
 private const val EMAIL = "email"
 private const val PASSWORD = "password"
 
-
 private const val TAG = "AuthActivity"
 
 class AuthActivity : AppCompatActivity() {
@@ -29,10 +29,8 @@ class AuthActivity : AppCompatActivity() {
     private lateinit var db: DB
     private lateinit var preferences: SharedPreferences
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.supportActionBar?.hide()
         db = DB()
         binding = ActivityAuthBinding.inflate(layoutInflater)
         preferences = getPreferences(Context.MODE_PRIVATE)
@@ -73,7 +71,6 @@ class AuthActivity : AppCompatActivity() {
 
     }
 
-
     /**
      * checks if user is present in a database and proceeds to login if so
      */
@@ -98,7 +95,7 @@ class AuthActivity : AppCompatActivity() {
 
 
     private fun showHelpToast() {
-        Snackbar.make(binding.root, "Try mail@pm.me : 11111 ", Snackbar.LENGTH_LONG)
+        Snackbar.make(binding.btnRegister, "Try mail@pm.me : 11111 ", Snackbar.LENGTH_LONG)
             .setAction("OK") {
                 binding.etEmail.setText("mail@pm.me")
                 binding.etPassword.setText("11111")

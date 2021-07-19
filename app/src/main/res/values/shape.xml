@@ -63,7 +63,7 @@
     <style name="roundedImageViewRounded">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
-        <item name="colorSecondaryVariant">@color/backGroundColor</item>
+        <item name="colorSecondaryVariant">@color/dark_blue_500</item>
     </style>
 
 </resources>
