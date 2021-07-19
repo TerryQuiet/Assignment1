@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:theme="@style/Base.Theme.MyApp.WhiteSurface">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,22 +16,24 @@
 
 
         <com.google.android.material.appbar.MaterialToolbar
+
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/settings"
-            app:titleTextAppearance="@style/TextAppearance.MyTheme.Headline1"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/settings"
+            app:titleTextAppearance="@style/TextAppearance.MyTheme.Headline1" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/top_container"
             android:layout_width="match_parent"
-            android:background="@color/dark_blue_500"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/toolbar"
-            app:layout_constraintStart_toStartOf="parent" >
+            android:background="?attr/colorSurface"
+            android:theme="@style/Base.Theme.MyApp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar">
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_profile_pic"
@@ -45,41 +48,38 @@
 
             <TextView
                 android:id="@+id/tv_name"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_24dp"
                 android:layout_marginBottom="@dimen/small_8dp"
-                android:textColor="?attr/colorOnBackground"
-                tools:text="Lucile Alvarado"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_profile_pic" />
+                app:layout_constraintTop_toBottomOf="@id/iv_profile_pic"
+                tools:text="Lucile Alvarado" />
 
             <TextView
                 android:id="@+id/tv_occupation"
-                android:textColor="?attr/colorOnBackground"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/small_8dp"
-                tools:text="Graphic designer"
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
                 app:layout_constraintEnd_toEndOf="@id/tv_name"
                 app:layout_constraintStart_toStartOf="@id/tv_name"
-                app:layout_constraintTop_toBottomOf="@id/tv_name" />
+                app:layout_constraintTop_toBottomOf="@id/tv_name"
+                tools:text="Graphic designer" />
 
             <TextView
                 android:id="@+id/tv_address"
-                android:textColor="?attr/colorOnBackground"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/normal_16dp"
                 android:paddingBottom="53dp"
-                tools:text="5295 Gaylord Walks Apk."
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
                 app:layout_constraintEnd_toEndOf="@id/tv_occupation"
                 app:layout_constraintStart_toStartOf="@id/tv_occupation"
-                app:layout_constraintTop_toBottomOf="@id/tv_occupation" />
+                app:layout_constraintTop_toBottomOf="@id/tv_occupation"
+                tools:text="5295 Gaylord Walks Apk." />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -100,9 +100,9 @@
             android:background="?android:selectableItemBackground"
             app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintEnd_toStartOf="@+id/im_vkontakte"
-            app:layout_constraintVertical_bias="0.3"
             app:layout_constraintStart_toEndOf="@id/im_facebook"
             app:layout_constraintTop_toBottomOf="@id/top_container"
+            app:layout_constraintVertical_bias="0.3"
             app:layout_constraintVertical_chainStyle="spread_inside"
             app:srcCompat="@drawable/ic_linkedin" />
 
@@ -120,7 +120,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/normal_16dp"
-            android:backgroundTint="?attr/colorSecondary"
             android:text="@string/edit_profile"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
