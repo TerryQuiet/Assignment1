@@ -42,14 +42,13 @@
         <!--Component styles-->
 
         <!--statusBar, icon colors overridden in 23-->
-        <item name="android:statusBarColor" >?attr/colorPrimary</item>
+        <item name="android:statusBarColor">?attr/colorPrimary</item>
 
 
         <!--My addiction-->
 
         <item name="android:windowAnimationStyle">@style/WindowAnimations</item>
         <item name="android:textColor">?attr/colorPrimary</item>
-
 
 
         <!--app bar basically-->
