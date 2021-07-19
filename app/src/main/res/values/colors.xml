@@ -7,19 +7,19 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white_700">#DADADD</color>
     <color name="gray">#B2B2B3</color>
 
         <!--My colors-->
-    <color name="primaryColor">#fb5e06</color>
-    <color name="primaryLightColor">#ff9040</color>
-    <color name="primaryDarkColor">#c02900</color>
-    <color name="primaryTextColor">#fafafa</color>
-    <color name="backGroundColor">#242235</color>
-    <color name="backGroundLightColor">#4c495f</color>
-    <color name="backGroundDarkColor">#00000f</color>
-    <color name="onBackGroundColor">#fafafa</color>
-    <color name="red_200">#cf6679</color> <!--Color error (dark)-->
-    <color name="red_600">#b00020</color> <!--Color error (light)-->
+    <color name="orange_500">#fb5e06</color>
+    <color name="orange_200">#ff9040</color>
+    <color name="orange_700">#c02900</color>
+    <color name="dark_blue_500">#242235</color>
+    <color name="dark_blue_200">#4c495f</color>
+    <color name="dark_blue_700">#00000f</color>
+    <color name="red_200">#cf6679</color>
+    <color name="red_600">#b00020</color>
+
 
 
 </resources>
