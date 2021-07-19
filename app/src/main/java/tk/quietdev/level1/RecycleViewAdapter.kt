@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.data.User
+import tk.quietdev.level1.databinding.ActivityContactsBinding
+import tk.quietdev.level1.databinding.ListItemBinding
 
 private const val TAG = "RecycleViewAdapter"
 
@@ -15,20 +17,33 @@ class RecycleViewAdapter(
     private val dataset: List<User>
 ) : RecyclerView.Adapter<RecycleViewAdapter.ItemViewHolder>() {
 
-    class ItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val userName: TextView = view.findViewById(R.id.tv_name)
+
+
+    inner class ItemViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         // create a new view
-        val adapterLayout = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_item, parent, false)
-        return ItemViewHolder(adapterLayout)
+        val binding = ListItemBinding
+            .inflate(LayoutInflater.from(parent.context), parent, false)
+
+        return ItemViewHolder(binding)
+
+
+
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val item = dataset[position]
-        holder.userName.text = item.userName
+        with(holder){
+            with(dataset[position]){
+                binding.tvName.text = this.userName
+                binding.tvOccupation.text = this.occupation
+            }
+        }
+
+
     }
 
     override fun getItemCount() = dataset.size

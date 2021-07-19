@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/Base.Theme.MyApp.WhiteSurface"
+    android:background="?attr/colorSurface"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
     android:paddingHorizontal="@dimen/normal_16dp"
     android:paddingVertical="@dimen/small_8dp">
 
@@ -22,10 +23,10 @@
     <TextView
         android:id="@+id/tv_name"
         style="@style/TextAppearance.MyTheme.Headline2"
+        android:textColor="?attr/colorOnSurface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/normal_16dp"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/tv_occupation"
         app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,10 +35,10 @@
     <TextView
         android:id="@+id/tv_occupation"
         style="@style/TextAppearance.MyTheme.Headline4"
+        android:textColor="?attr/colorOnSurface"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/normal_16dp"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
         app:layout_constraintTop_toBottomOf="@+id/tv_name"
