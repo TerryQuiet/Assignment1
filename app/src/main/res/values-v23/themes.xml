@@ -1,8 +1,6 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
 
-    <style name="Theme.MyApp" parent="Base.Theme.MyApp" />
-
-    <!--Base custom theme which will be shared between both light and dark theme variants-->
     <style name="Base.Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!--Material color attributes (light theme) -->
         <!--colorPrimary colors map to components and elements, such as app bars and buttons. -->
@@ -39,16 +37,14 @@
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MyTheme.LargeComponent</item>
         <!--Component styles-->
 
-        <!--statusBar, icon colors overridden in 23-->
-        <item name="android:statusBarColor" >?attr/colorPrimary</item>
-
 
         <!--My addiction-->
 
         <item name="android:windowAnimationStyle">@style/WindowAnimations</item>
-        <item name="android:textColor">?attr/colorPrimary</item>
-
-
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <!--statusBar-->
+        <item name="android:statusBarColor" >@color/white_700</item>
+        <item name="android:windowLightStatusBar">true</item>
 
         <!--app bar basically-->
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
@@ -59,54 +55,4 @@
         <item name="textInputStyle">@style/AppTheme.TextInputLayoutStyle</item>
 
     </style>
-
-
-    <!--    Toolbar-->
-    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.MyApp.Toolbar</item>
-    </style>
-
-    <style name="ThemeOverlay.MyApp.Toolbar" parent="">
-        <item name="backgroundColor">@color/dark_blue_500</item>
-        <item name="colorPrimary">@color/dark_blue_500</item>
-        <item name="colorPrimaryVariant">@color/dark_blue_200</item>
-        <item name="colorOnPrimary">@color/white</item>
-    </style>
-
-
-    <!--  TextInputLayout-->
-    <style name="AppTheme.TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="materialThemeOverlay">@style/Theme.MyApp.MaterialThemeOverlay</item>
-    </style>
-
-    <style name="Theme.MyApp.MaterialThemeOverlay">
-        <item name="editTextStyle">@style/AppTheme.TextInputEditTextStyle</item>
-    </style>
-
-    <style name="AppTheme.TextInputEditTextStyle" parent="@style/Widget.MaterialComponents.TextInputEditText.FilledBox">
-        <item name="android:paddingStart">@dimen/xsmall_4dp</item>
-        <item name="android:paddingTop">@dimen/small_8dp</item>
-        <item name="android:textColorHint">@color/gray</item>
-    </style>
-
-
-    <!--    Snackbar-->
-    <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">
-        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Snackbar</item>
-        <item name="backgroundOverlayColorAlpha">1</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="colorSurface">@color/white</item>
-    </style>
-
-    <style name="Widget.App.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
-        <item name="android:textColor">@color/orange_500</item>
-    </style>
-
-    <style name="ThemeOverlay.App.Snackbar" parent="">
-        <item name="colorOnSurface">@color/dark_blue_200</item>
-        <item name="colorSurface">@color/white</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
-
 </resources>

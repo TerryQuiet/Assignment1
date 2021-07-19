@@ -4,8 +4,10 @@ package tk.quietdev.level1
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.snackbar.Snackbar
@@ -93,12 +95,12 @@ class AuthActivity : AppCompatActivity() {
 
 
     private fun showHelpToast() {
-        Snackbar.make(binding.root, "Try mail@pm.me : 11111 ", Snackbar.LENGTH_LONG)
+        Snackbar.make(binding.btnRegister, "Try mail@pm.me : 11111 ", Snackbar.LENGTH_LONG)
             .setAction("OK") {
                 binding.etEmail.setText("mail@pm.me")
                 binding.etPassword.setText("11111")
             }
-            //.setTextColor(Color.WHITE) // I tried to change it in theme.xml, but it doesn't work... help required
+            .setTextColor(Color.WHITE) // I tried to change it in theme.xml, but it doesn't work... help required
             .show()
     }
 
