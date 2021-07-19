@@ -9,7 +9,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         tools:context=".MainActivity">
 
         <LinearLayout
@@ -31,8 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/auth_main"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline1"
-                android:textColor="?attr/colorOnBackground" />
+                android:textAppearance="@style/TextAppearance.MyTheme.Headline1" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -42,7 +40,7 @@
                 android:text="@string/auth_instruction"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
-                android:textColor="?attr/colorOnBackground" />
+                />
 
 
         </LinearLayout>
@@ -81,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/white" />
+                    />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -111,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:hint="@string/password"
-                    android:textColor="@color/white" />
+                     />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,7 +125,7 @@
             android:layout_marginVertical="@dimen/small_8dp"
             android:padding="@dimen/normal_16dp"
             android:text="@string/register"
-            android:textColor="?attr/colorOnBackground"
+            android:textColor="?attr/colorOnSurface"
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/tv_terms"
             app:layout_constraintEnd_toEndOf="parent"
@@ -144,7 +142,6 @@
             android:text="@string/auth_terms"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
-            android:textColor="?attr/colorOnBackground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -156,7 +153,7 @@
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:text="@string/remember_me"
             android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
-            android:textColor="?attr/colorOnPrimary"
+            android:textColor="?attr/colorOnSurface"
             app:layout_constraintBottom_toTopOf="@+id/btn_register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/container_editables"
@@ -169,7 +166,7 @@
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:text="@string/auto_login"
             android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
-            android:textColor="?attr/colorOnPrimary"
+            android:textColor="?attr/colorOnSurface"
             app:layout_constraintBottom_toTopOf="@+id/btn_register"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/container_editables"

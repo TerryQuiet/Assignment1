@@ -1,6 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.MyApp" parent="Base.Theme.MyApp" />
+    <style name="Base.Theme.MyApp.WhiteSurface" parent="">
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/black</item>
+    </style>
 
     <!--Base custom theme which will be shared between both light and dark theme variants-->
     <style name="Base.Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -9,8 +12,10 @@
         <!--colorSecondary colors are most often used as accents on components, such as FABs and -->
         <!--selection controls.-->
         <item name="colorPrimary">@color/orange_500</item>
+        <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/orange_200</item>
         <item name="colorSecondary">@color/orange_500</item>
+        <item name="colorOnSecondary">@color/white</item>
         <item name="colorSecondaryVariant">@color/orange_200</item>
         <!--colorBackground appears behind scrollable content and is used for the default window-->
         <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
@@ -19,15 +24,12 @@
         <item name="android:windowBackground">@color/dark_blue_500</item>
         <item name="android:colorBackground">@color/dark_blue_500</item>
         <item name="backgroundColor">@color/dark_blue_500</item>
-        <item name="colorSurface">@color/dark_blue_500</item>
-        <item name="colorError">@color/red_600</item>
-        <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
-        <!--on which they appear.-->
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorOnSecondary">@color/white</item>
         <item name="colorOnBackground">@color/white</item>
+        <item name="colorSurface">@color/dark_blue_500</item>
         <item name="colorOnSurface">@color/white</item>
-        <item name="colorOnError">@color/red_200</item>
+        <item name="colorError">@color/red_600</item>
+        <item name="colorOnError">@color/black</item>
+
         <!--Material type attributes-->
         <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1</item>
         <item name="textAppearanceHeadline2">@style/TextAppearance.MyTheme.Headline2</item>
@@ -76,10 +78,10 @@
 
     <!--  TextInputLayout-->
     <style name="AppTheme.TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="materialThemeOverlay">@style/Theme.MyApp.MaterialThemeOverlay</item>
+        <item name="materialThemeOverlay">@style/Base.Theme.MyApp.MaterialThemeOverlay</item>
     </style>
 
-    <style name="Theme.MyApp.MaterialThemeOverlay">
+    <style name="Base.Theme.MyApp.MaterialThemeOverlay">
         <item name="editTextStyle">@style/AppTheme.TextInputEditTextStyle</item>
     </style>
 
@@ -87,6 +89,7 @@
         <item name="android:paddingStart">@dimen/xsmall_4dp</item>
         <item name="android:paddingTop">@dimen/small_8dp</item>
         <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
 
@@ -107,6 +110,5 @@
         <item name="colorSurface">@color/white</item>
         <item name="android:textColor">@color/white</item>
     </style>
-
 
 </resources>
