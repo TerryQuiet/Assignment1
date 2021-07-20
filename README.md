@@ -13,3 +13,6 @@ https://medium.com/mobile-app-development-publication/animate-android-activities
 
 View Binding in RecyclerView Adapter 
 https://www.geeksforgeeks.org/how-to-use-view-binding-in-recyclerview-adapter-class-in-android/
+
+item separator
+https://stackoverflow.com/a/57886251/12972985

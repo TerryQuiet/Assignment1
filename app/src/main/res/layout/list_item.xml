@@ -1,54 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:theme="@style/Base.Theme.MyApp.WhiteSurface"
-    android:background="?attr/colorSurface"
+    android:layout_marginBottom="@dimen/xsmall_4dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/normal_16dp"
-    android:paddingVertical="@dimen/small_8dp">
+    android:layout_height="wrap_content">
 
-
-    <ImageView
-        android:id="@+id/iv_profile_pic"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_profile"
-        tools:layout_editor_absoluteX="42dp" />
-
-
-    <TextView
-        android:id="@+id/tv_name"
-        style="@style/TextAppearance.MyTheme.Headline2"
-        android:textColor="?attr/colorOnSurface"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/normal_16dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_occupation"
-        app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Ava Smith" />
+        android:background="?attr/colorSurface"
+        android:theme="@style/Base.Theme.MyApp.WhiteSurface"
+        android:paddingHorizontal="@dimen/normal_16dp"
+        android:paddingVertical="@dimen/small_8dp">
 
-    <TextView
-        android:id="@+id/tv_occupation"
-        style="@style/TextAppearance.MyTheme.Headline4"
-        android:textColor="?attr/colorOnSurface"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/normal_16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name"
-        tools:text="Photograph" />
+        <ImageView
+            android:id="@+id/iv_profile_pic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_profile"
+            tools:layout_editor_absoluteX="42dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_trashcan" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_name"
+            style="@style/TextAppearance.MyTheme.Headline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/normal_16dp"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintBottom_toTopOf="@+id/tv_occupation"
+            app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Ava Smith" />
+
+        <TextView
+            android:id="@+id/tv_occupation"
+            style="@style/TextAppearance.MyTheme.Headline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/normal_16dp"
+            android:textColor="?attr/colorOnSurface"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            tools:text="Photograph" />
+
+        <ImageButton
+            android:id="@+id/image_btn_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_trashcan" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
+
