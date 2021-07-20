@@ -7,8 +7,8 @@ data class User(
     var email: String,
     var occupation: String = "Not provided",
     var physicalAddress: String = "Not provided",
-    var picture: Int = R.drawable.ic_profile,
-    private var password: String
+    var picture: String = "https://i.pravatar.cc/150?u=${email}",
+    private var password: String = "11111"
 ) {
     fun isPasswordCorrect(inputPassword: String): Boolean {
         return password == inputPassword
