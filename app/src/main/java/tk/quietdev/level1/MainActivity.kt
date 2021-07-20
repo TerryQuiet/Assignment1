@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindValues() {
         binding.apply {
-            tvName.text = intent.getStringExtra(User.USERNAME)
+            tvName?.text = intent.getStringExtra(User.USERNAME)
             tvAddress.text = intent.getStringExtra(User.PHYSICAL_ADDRESS)
             tvOccupation.text = intent.getStringExtra(User.OCCUPATION)
             ivProfilePic.setImageResource(intent.getIntExtra(User.PICTURE, R.drawable.ic_profile))
