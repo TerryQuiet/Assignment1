@@ -29,10 +29,6 @@
         <item name="colorOnSurface">@color/white</item>
         <item name="colorOnError">@color/red_200</item>
         <!--Material type attributes-->
-        <item name="textAppearanceHeadline1">@style/TextAppearance.MyTheme.Headline1_24sp</item>
-        <item name="textAppearanceHeadline2">@style/TextAppearance.MyTheme.Headline2_18sp</item>
-        <item name="textAppearanceHeadline3">@style/TextAppearance.MyTheme.Headline3_14sp</item>
-        <item name="textAppearanceHeadline4">@style/TextAppearance.MyTheme.Headline4_12sp</item>
 
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyTheme.MediumComponent</item>
