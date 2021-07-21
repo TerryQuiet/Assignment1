@@ -1,19 +1,16 @@
-package tk.quietdev.level1
+package tk.quietdev.level1.ui.contacts
 
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import tk.quietdev.level1.models.User
+import tk.quietdev.level1.database.MockDatabase
 import tk.quietdev.level1.databinding.ListItemBinding
-import tk.quietdev.level1.ui.ContactsActivity
 import tk.quietdev.level1.utils.ext.loadImage
 
-private const val TAG = "RecycleViewAdapter"
 
 class RecycleViewAdapter(
-    private val dataset: MutableList<User>,
+    private val dataset: MutableList<String>,
     private val contactsActivity: ContactsActivity
 ) : RecyclerView.Adapter<RecycleViewAdapter.ItemViewHolder>() {
 
@@ -28,11 +25,13 @@ class RecycleViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        val userID = MockDatabase.userContacts[position]
+        val user = MockDatabase.getUserWithNoValidation(userID)
         with(holder) {
-            with(dataset[position]) {
-                binding.tvName.text = this.userName
-                binding.tvOccupation.text = this.occupation
-                binding.ivProfilePic.loadImage(this.picture)
+            with(user) {
+                binding.tvName.text = this?.userName
+                binding.tvOccupation.text = this?.occupation
+                binding.ivProfilePic.loadImage(this?.picture)
                 binding.imageBtnRemove.setOnClickListener {
                     contactsActivity.removeUser(position)
                 }
@@ -41,7 +40,6 @@ class RecycleViewAdapter(
     }
 
     override fun getItemCount():Int {
-        Log.d(TAG, "getItemCount: ${dataset.size}")
         return dataset.size
     } 
 }

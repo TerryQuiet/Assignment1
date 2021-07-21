@@ -1,7 +1,5 @@
 package tk.quietdev.level1.models
 
-import tk.quietdev.level1.R
-
 data class User(
     var userName: String? = null,
     var email: String,
