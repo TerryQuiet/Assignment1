@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/auth_main"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline1" />
+                android:textSize="@dimen/H1_24sp" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -39,7 +39,7 @@
                 android:layout_marginTop="13dp"
                 android:text="@string/auth_instruction"
                 android:textAlignment="center"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline4" />
+                android:textSize="@dimen/H4_12sp" />
 
 
         </LinearLayout>
@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="@dimen/xsmall_4dp"
                 android:text="@string/email"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:textSize="@dimen/H3_14sp"
                 android:textColor="@color/gray" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -88,7 +88,7 @@
                 android:layout_marginTop="@dimen/normal_16dp"
                 android:paddingHorizontal="@dimen/xsmall_4dp"
                 android:text="@string/password"
-                android:textAppearance="@style/TextAppearance.MyTheme.Headline3"
+                android:textSize="@dimen/H3_14sp"
                 android:textColor="@color/gray"
                 app:hintEnabled="false" />
 
@@ -138,7 +138,7 @@
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:text="@string/auth_terms"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline4"
+            android:textSize="@dimen/H4_12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:text="@string/remember_me"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+            android:textSize="@dimen/H2_18sp"
             android:textColor="?attr/colorOnSurface"
             app:layout_constraintBottom_toTopOf="@+id/btn_register"
             app:layout_constraintEnd_toEndOf="parent"
@@ -162,7 +162,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:text="@string/auto_login"
-            android:textAppearance="@style/TextAppearance.MyTheme.Headline2"
+            android:textSize="@dimen/H2_18sp"
             android:textColor="?attr/colorOnSurface"
             app:layout_constraintBottom_toTopOf="@+id/btn_register"
             app:layout_constraintStart_toStartOf="parent"

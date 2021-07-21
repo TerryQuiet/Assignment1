@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/tv_name"
-            style="@style/TextAppearance.MyTheme.Headline2"
+            android:textSize="@dimen/H2_18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"
@@ -39,7 +39,7 @@
 
         <TextView
             android:id="@+id/tv_occupation"
-            style="@style/TextAppearance.MyTheme.Headline4"
+            android:textSize="@dimen/H4_12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"
