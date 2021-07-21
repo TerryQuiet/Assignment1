@@ -9,8 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white_700">#DADADD</color>
     <color name="gray">#B2B2B3</color>
-
-        <!--My colors-->
     <color name="orange_500">#fb5e06</color>
     <color name="orange_200">#ff9040</color>
     <color name="orange_700">#c02900</color>

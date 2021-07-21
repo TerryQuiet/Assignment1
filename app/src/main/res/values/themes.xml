@@ -29,6 +29,7 @@
         <item name="colorSurface">@color/dark_blue_500</item>
         <item name="colorOnSurface">@color/white</item>
         <item name="colorError">@color/red_200</item>
+        <item name="errorTextColor">@color/red_200</item>
         <item name="colorOnError">@color/black</item>
 
 
@@ -85,7 +86,7 @@
     </style>
 
     <style name="AppTheme.TextInputEditTextStyle" parent="@style/Widget.MaterialComponents.TextInputEditText.FilledBox">
-        <item name="android:paddingStart">@dimen/xsmall_4dp</item>
+        <item name="android:paddingStart">@dimen/extra_small_4dp</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 

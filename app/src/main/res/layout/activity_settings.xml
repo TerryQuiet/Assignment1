@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="?attr/colorSurface"
     android:theme="@style/Base.Theme.MyApp.WhiteSurface"
-    tools:context=".SettingsActivity">
+    tools:context=".ui.SettingsActivity">
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/large_24dp"
             android:layout_marginBottom="@dimen/small_8dp"
-            android:textSize="@dimen/H2_18sp"
+            android:textSize="@dimen/header2_18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivProfilePic"
@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_8dp"
-            android:textSize="@dimen/H3_14sp"
+            android:textSize="@dimen/header3_14sp"
             app:layout_constraintEnd_toEndOf="@id/tvName"
             app:layout_constraintStart_toStartOf="@id/tvName"
             app:layout_constraintTop_toBottomOf="@id/tvName"
@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normal_16dp"
-            android:textSize="@dimen/H3_14sp"
+            android:textSize="@dimen/header3_14sp"
             app:layout_constraintEnd_toEndOf="@id/tvOccupation"
             app:layout_constraintStart_toStartOf="@id/tvOccupation"
             app:layout_constraintTop_toBottomOf="@id/tvOccupation"

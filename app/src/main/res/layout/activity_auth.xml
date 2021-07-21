@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SettingsActivity">
+    tools:context=".ui.SettingsActivity">
 
     <LinearLayout
         android:id="@+id/containerMessage"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:text="@string/auth_main"
             android:textAlignment="center"
-            android:textSize="@dimen/H1_24sp" />
+            android:textSize="@dimen/header1_24sp" />
 
         <TextView
             android:id="@+id/tvHint"
@@ -35,7 +35,7 @@
             android:layout_marginTop="13dp"
             android:text="@string/auth_instruction"
             android:textAlignment="center"
-            android:textSize="@dimen/H4_12sp" />
+            android:textSize="@dimen/header4_12sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -52,32 +52,37 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etEmailParent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:errorTextColor="?attr/colorOnError"
             android:hint="@string/email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:textColor="?colorOnSurface" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
-
             android:id="@+id/etPasswordParent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:boxBackgroundColor="@android:color/transparent"
-            android:hint="@string/password">
+            android:hint="@string/password"
+            app:errorTextColor="?attr/colorOnError"
+            app:boxBackgroundColor="@android:color/transparent">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:textColor="?colorOnSurface" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,22 +95,21 @@
         android:layout_marginHorizontal="@dimen/normal_16dp"
         android:text="@string/remember_me"
         android:textColor="?attr/colorOnSurface"
-        android:textSize="@dimen/H2_18sp"
+        android:textSize="@dimen/header2_18sp"
 
         app:layout_constraintEnd_toStartOf="@id/tvForgotPassword"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/containerEditables"
-         />
+        app:layout_constraintTop_toBottomOf="@+id/containerEditables" />
 
     <TextView
         android:id="@+id/tvForgotPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/normal_16dp"
         android:ellipsize="end"
         android:text="@string/forgot_your_password"
-        android:layout_marginHorizontal="@dimen/normal_16dp"
-        android:textSize="@dimen/H3_14sp"
+        android:textSize="@dimen/header3_14sp"
         app:layout_constraintBottom_toBottomOf="@+id/cbRemember"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cbRemember"
@@ -137,7 +141,7 @@
         android:layout_marginHorizontal="@dimen/normal_16dp"
         android:text="@string/auth_terms"
         android:textAlignment="center"
-        android:textSize="@dimen/H4_12sp"
+        android:textSize="@dimen/header4_12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

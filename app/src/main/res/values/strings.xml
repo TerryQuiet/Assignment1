@@ -17,4 +17,5 @@
     <string name="contact_removed">contact has been removed</string>
     <string name="forgot_your_password">Forgot your password?</string>
     <string name="view_my_contacts">VIEW MY CONTACTS</string>
+    <string name="login_help_tip">\"Try mail@pm.me : 11111 \"</string>
 </resources>

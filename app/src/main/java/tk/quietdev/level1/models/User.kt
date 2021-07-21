@@ -1,4 +1,4 @@
-package tk.quietdev.level1.data
+package tk.quietdev.level1.models
 
 import tk.quietdev.level1.R
 
@@ -14,12 +14,6 @@ data class User(
         return password == inputPassword
     }
 
-    companion object {
-        const val USERNAME = "userName"
-        const val OCCUPATION = "occupation"
-        const val PHYSICAL_ADDRESS = "physicalAddress"
-        const val PICTURE = "picture"
-    }
 }
 
 
