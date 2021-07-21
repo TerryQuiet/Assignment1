@@ -30,7 +30,7 @@ class SettingsActivity : AppCompatActivity() {
             }
             btnEditProfile.setOnClickListener {
                 // temporary
-                PrefsHelper.clearPreferences()
+               // PrefsHelper.clearPreferences()
             }
         }
     }
