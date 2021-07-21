@@ -109,6 +109,7 @@ class AuthActivity : AppCompatActivity() {
         val intent = Intent(this, SettingsActivity::class.java).apply {
             putExtra(Const.EMAIL, email)
         }
+        PrefsHelper.saveCurrentUserID(email)
         startActivity(intent)
         finish()
     }

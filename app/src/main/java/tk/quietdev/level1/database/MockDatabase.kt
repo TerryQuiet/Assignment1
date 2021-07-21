@@ -16,9 +16,13 @@ object MockDatabase {
     private val allFakeUsers = getUsersMap()
 
     fun getUserWithValidation(name: String, password: String): User? {
-        return if (allFakeUsers[name]?.isPasswordCorrect(password) == true) {
+        return if (isPasswordCorrect(allFakeUsers[name], password)) {
             allFakeUsers[name]
         } else null
+    }
+
+    private fun isPasswordCorrect(user: User?, password: String):Boolean {
+        return (user?.password == password)
     }
 
     fun getUserWithNoValidation(name: String?): User? {
