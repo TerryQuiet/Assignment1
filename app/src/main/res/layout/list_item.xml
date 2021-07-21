@@ -3,7 +3,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginBottom="@dimen/xsmall_4dp"
+    android:layout_marginBottom="@dimen/extra_small_4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -27,7 +27,7 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:textSize="@dimen/H2_18sp"
+            android:textSize="@dimen/header2_18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"
@@ -39,7 +39,7 @@
 
         <TextView
             android:id="@+id/tvOccupation"
-            android:textSize="@dimen/H4_12sp"
+            android:textSize="@dimen/header4_12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"

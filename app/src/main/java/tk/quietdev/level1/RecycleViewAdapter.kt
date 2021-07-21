@@ -1,14 +1,13 @@
 package tk.quietdev.level1
 
 
-import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import tk.quietdev.level1.data.User
+import tk.quietdev.level1.models.User
 import tk.quietdev.level1.databinding.ListItemBinding
+import tk.quietdev.level1.ui.ContactsActivity
 import tk.quietdev.level1.utils.ext.loadImage
 
 private const val TAG = "RecycleViewAdapter"

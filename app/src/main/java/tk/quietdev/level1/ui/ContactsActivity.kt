@@ -1,21 +1,20 @@
-package tk.quietdev.level1
+package tk.quietdev.level1.ui
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
-import tk.quietdev.level1.data.DB
-import tk.quietdev.level1.data.User
+import tk.quietdev.level1.R
+import tk.quietdev.level1.RecycleViewAdapter
+import tk.quietdev.level1.database.Database
+import tk.quietdev.level1.models.User
 
 private const val TAG = "ContactsActivity"
 
@@ -27,18 +26,14 @@ class ContactsActivity : AppCompatActivity() {
     lateinit var adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
     lateinit var myDataset: MutableList<User>
 
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-        // Log.d(TAG, "onCreateView: ")
 
-        return super.onCreateView(name, context, attrs)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contacts)
         // Initialize data
         Log.d(TAG, "onCreate: ")
-        myDataset = DB().getUserList().toMutableList()
+        myDataset = Database.getUserList().toMutableList()
         addBackButton = findViewById(R.id.extended_fab)
         val recyclerView = findViewById<RecyclerView>(R.id.recycle_view)
         recyclerView.layoutManager = LinearLayoutManager(this)

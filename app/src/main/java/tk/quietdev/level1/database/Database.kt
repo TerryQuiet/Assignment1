@@ -1,19 +1,20 @@
-package tk.quietdev.level1.data
+package tk.quietdev.level1.database
 
-import tk.quietdev.level1.R
+import tk.quietdev.level1.models.User
 
+object Database {
+    var currentUserID: String = ""
 
-/**
- * Class with users so I can have some data to use for login
- */
-
-class DB {
     private val userMap = getUsersMap()
 
-    fun getUser(name: String, password: String): User? {
+    fun getUserWithValidation(name: String, password: String): User? {
         return if (userMap[name]?.isPasswordCorrect(password) == true) {
             userMap[name]
         } else null
+    }
+
+    fun getUserWithNoValidation(name: String?): User? {
+        return userMap[name]
     }
 
     private fun getUsersMap(): Map<String, User> {
@@ -24,7 +25,8 @@ class DB {
                 "Mega programmer",
                 "Moon 23st",
                 "https://avatars.githubusercontent.com/u/12786477?v=4",
-                password = "11111"),
+                password = "11111"
+            ),
             "mail1@pm.me" to User("Quiet", "mail1@pm.me"),
             "blabal@pm.me" to User("Blabal", "blabal@pm.me"),
             "xaxaax@pm.me" to User("Xaxaax", "xaxaax@pm.me"),
@@ -38,6 +40,6 @@ class DB {
     }
 
     fun getUserList(): List<User> {
-       return userMap.values.toList()
+        return userMap.values.toList()
     }
 }
