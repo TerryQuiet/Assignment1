@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import tk.quietdev.level1.database.MockDatabase
 import tk.quietdev.level1.databinding.ActivitySettingsBinding
-import tk.quietdev.level1.models.User
 import tk.quietdev.level1.ui.contacts.ContactsActivity
 import tk.quietdev.level1.utils.Const
-import tk.quietdev.level1.utils.PrefsHelper
 import tk.quietdev.level1.utils.ext.loadImage
 
 class SettingsActivity : AppCompatActivity() {
