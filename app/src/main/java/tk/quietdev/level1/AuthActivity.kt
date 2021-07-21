@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.snackbar.Snackbar
@@ -17,7 +16,6 @@ import tk.quietdev.level1.databinding.ActivityAuthBinding
 import tk.quietdev.level1.utils.Validator
 
 private const val IS_REMEMBER = "isSaveChecked"
-private const val IS_AUTOLOGIN = "isAutoLoginChecked"
 private const val EMAIL = "email"
 private const val PASSWORD = "password"
 
@@ -39,7 +37,7 @@ class AuthActivity : AppCompatActivity() {
         getCredentials()
         showHelpToast()
 
-        if (binding.checkBoxAutologin.isChecked) {
+        if (binding.cbRemember.isChecked) {
             tryLogin()
         }
 
@@ -47,11 +45,7 @@ class AuthActivity : AppCompatActivity() {
             btnRegister.setOnClickListener {
                 tryLogin()
             }
-            checkBoxAutologin.setOnClickListener {
-                preferences.edit()
-                    .putBoolean(IS_AUTOLOGIN, binding.checkBoxAutologin.isChecked)
-                    .apply()
-            }
+
             etEmail.doOnTextChanged { text, _, _, _ ->
                 if (!text.isNullOrEmpty() && Validator.isEmailValid(text.toString())) {
                     binding.etEmailParent.isErrorEnabled = false
@@ -81,7 +75,7 @@ class AuthActivity : AppCompatActivity() {
         val user = db.getUser(email, password)
 
         if (user != null) {
-            if (binding.checkBoxRemember.isChecked) {
+            if (binding.cbRemember.isChecked) {
                 saveCredentials()
             } else {
                 clearCredentials()
@@ -105,7 +99,7 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun login(user: User) {
-        val intent = Intent(this, MainActivity::class.java).apply {
+        val intent = Intent(this, SettingsActivity::class.java).apply {
             putExtra(User.USERNAME, user.userName)
             putExtra(User.OCCUPATION, user.occupation)
             putExtra(User.PHYSICAL_ADDRESS, user.physicalAddress)
@@ -121,7 +115,7 @@ class AuthActivity : AppCompatActivity() {
 
     private fun saveCredentials() {
         preferences.edit()
-            .putBoolean(IS_REMEMBER, binding.checkBoxRemember.isChecked)
+            .putBoolean(IS_REMEMBER, binding.cbRemember.isChecked)
             .putString(EMAIL, binding.etEmail.text.toString())
             .putString(PASSWORD, binding.etPassword.text.toString())
             .apply()
@@ -131,8 +125,8 @@ class AuthActivity : AppCompatActivity() {
     private fun getCredentials() {
         binding.etEmail.setText(preferences.getString(EMAIL, ""))
         binding.etPassword.setText(preferences.getString(PASSWORD, ""))
-        binding.checkBoxRemember.isChecked = preferences.getBoolean(IS_REMEMBER, false)
-        binding.checkBoxAutologin.isChecked = preferences.getBoolean(IS_AUTOLOGIN, false)
+        binding.cbRemember.isChecked = preferences.getBoolean(IS_REMEMBER, false)
+
     }
 
 

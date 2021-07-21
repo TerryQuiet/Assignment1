@@ -3,15 +3,15 @@ package tk.quietdev.level1
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import tk.quietdev.level1.data.User
-import tk.quietdev.level1.databinding.ActivityMainBinding
+import tk.quietdev.level1.databinding.ActivitySettingsBinding
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+class SettingsActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTitle(R.string.settings)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         bindValues()
     }

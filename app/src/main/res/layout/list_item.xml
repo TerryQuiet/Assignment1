@@ -16,7 +16,7 @@
         android:paddingVertical="@dimen/small_8dp">
 
         <ImageView
-            android:id="@+id/iv_profile_pic"
+            android:id="@+id/ivProfilePic"
             android:layout_width="50dp"
             android:layout_height="50dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,27 +26,27 @@
 
 
         <TextView
-            android:id="@+id/tv_name"
+            android:id="@+id/tvName"
             android:textSize="@dimen/H2_18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:textColor="?attr/colorOnSurface"
-            app:layout_constraintBottom_toTopOf="@+id/tv_occupation"
-            app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
+            app:layout_constraintBottom_toTopOf="@+id/tvOccupation"
+            app:layout_constraintStart_toEndOf="@id/ivProfilePic"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Ava Smith" />
 
         <TextView
-            android:id="@+id/tv_occupation"
+            android:id="@+id/tvOccupation"
             android:textSize="@dimen/H4_12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:textColor="?attr/colorOnSurface"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_profile_pic"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name"
+            app:layout_constraintStart_toEndOf="@id/ivProfilePic"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
             tools:text="Photograph" />
 
         <ImageButton

@@ -8,4 +8,5 @@
     <dimen name="H4_12sp">12sp</dimen>
     <dimen name="H3_14sp">14sp</dimen>
     <dimen name="H2_18sp">18sp</dimen>
+    <dimen name="wide_button_height_64dp">64dp</dimen>
 </resources>
