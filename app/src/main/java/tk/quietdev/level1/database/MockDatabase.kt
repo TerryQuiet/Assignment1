@@ -1,20 +1,28 @@
 package tk.quietdev.level1.database
 
 import tk.quietdev.level1.models.User
+import tk.quietdev.level1.utils.PrefsHelper
 
-object Database {
-    var currentUserID: String = ""
+object MockDatabase {
 
-    private val userMap = getUsersMap()
+    lateinit var userContacts:MutableList<String>
+    var currentUserID: String = PrefsHelper.getCurrentUser()
+
+    // init from App
+    fun init() {
+        userContacts = getUserList().map { it.email }.toMutableList()
+    }
+
+    private val allFakeUsers = getUsersMap()
 
     fun getUserWithValidation(name: String, password: String): User? {
-        return if (userMap[name]?.isPasswordCorrect(password) == true) {
-            userMap[name]
+        return if (allFakeUsers[name]?.isPasswordCorrect(password) == true) {
+            allFakeUsers[name]
         } else null
     }
 
     fun getUserWithNoValidation(name: String?): User? {
-        return userMap[name]
+        return allFakeUsers[name]
     }
 
     private fun getUsersMap(): Map<String, User> {
@@ -39,7 +47,7 @@ object Database {
         )
     }
 
-    fun getUserList(): List<User> {
-        return userMap.values.toList()
+    private fun getUserList(): List<User> {
+        return allFakeUsers.values.toList()
     }
 }

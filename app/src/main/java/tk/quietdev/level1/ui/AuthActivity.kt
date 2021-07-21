@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.snackbar.Snackbar
 import tk.quietdev.level1.R
-import tk.quietdev.level1.database.Database
+import tk.quietdev.level1.database.MockDatabase
 import tk.quietdev.level1.databinding.ActivityAuthBinding
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.PrefsHelper
@@ -18,13 +18,15 @@ import tk.quietdev.level1.utils.Validator
 class AuthActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthBinding
-    private val db = Database
+    private val db = MockDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.cbRemember.isChecked = PrefsHelper.getRememberState()
+
+        loadPreferences()
+
         showHelpTip()
 
         if (binding.cbRemember.isChecked) {
@@ -33,6 +35,10 @@ class AuthActivity : AppCompatActivity() {
             }
         }
         setListeners()
+    }
+
+    private fun loadPreferences() {
+        binding.cbRemember.isChecked = PrefsHelper.getRememberState()
     }
 
     private fun setListeners() {
