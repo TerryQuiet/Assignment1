@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/contacts"
-        app:titleTextAppearance="@style/TextAppearance.MyTheme.Headline1" />
+         />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_view"
