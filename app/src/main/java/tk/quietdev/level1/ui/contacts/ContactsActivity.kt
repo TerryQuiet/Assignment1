@@ -4,6 +4,7 @@ package tk.quietdev.level1.ui.contacts
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import tk.quietdev.level1.R
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.DialogAddContactBinding
 import tk.quietdev.level1.models.User
+import tk.quietdev.level1.utils.Const
 
 
 class ContactsActivity : AppCompatActivity(), AddContactDialog.EditNameDialogListener {
@@ -20,7 +22,7 @@ class ContactsActivity : AppCompatActivity(), AddContactDialog.EditNameDialogLis
     private var deletedUser = ""
     private var deletedUserPosition = 0
     private lateinit var addBackButton: Button
-    private lateinit var adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
+    private lateinit var adapter: RecycleViewAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +30,10 @@ class ContactsActivity : AppCompatActivity(), AddContactDialog.EditNameDialogLis
         addBackButton = findViewById(R.id.extended_fab)
         val recyclerView = findViewById<RecyclerView>(R.id.recycle_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = RecycleViewAdapter(FakeDatabase.userContacts, this)
-        adapter = recyclerView.adapter!!
+        recyclerView.adapter = RecycleViewAdapter( this)
+        adapter = (recyclerView.adapter as RecycleViewAdapter)
+        adapter.update(FakeDatabase.userContacts)
         recyclerView.addItemDecoration(DividerItemDecoration(this@ContactsActivity, LinearLayoutManager.VERTICAL))
-
         addListeners()
 
     }
@@ -43,29 +45,47 @@ class ContactsActivity : AppCompatActivity(), AddContactDialog.EditNameDialogLis
         }
     }
 
-    fun removeUser(position: Int) {
-        deletedUser = FakeDatabase.userContacts.removeAt(position)
-        deletedUserPosition = position
-        adapter.notifyDataSetChanged()
-        //adapter.notifyItemRemoved(position)
+
+
+    private fun showDeletionUndoSnackBar(duration : Int) {
         Snackbar.make(
             findViewById<RecyclerView>(R.id.recycle_view),
             resources.getText(R.string.contact_removed),
-            5000
+            duration
         )
             .setTextColor(Color.WHITE)
-            .setAction("NOO!!") {
-                addUserBack(position)
+            .setAction(getString(R.string.add_back)) {
+                addUserBack()
             }
             .show()
     }
 
-    private fun addUserBack(position: Int) {
+    fun removeUser(position: String?) {
+        removeUser(FakeDatabase.userContacts.indexOf(position))
+    }
+
+    private fun addUserBack() {
         if (deletedUser.isNotEmpty()) {
-            FakeDatabase.userContacts.add(position, deletedUser)
+            FakeDatabase.userContacts.add(deletedUserPosition, deletedUser)
+            adapter.update(FakeDatabase.userContacts)
             deletedUser = ""
-            adapter.notifyDataSetChanged()
+            //adapter.notifyItemInserted(deletedUserPosition)
         }
+    }
+
+    private fun addNewUserToDatabase(user: User) {
+        FakeDatabase.allFakeUsers[user.email] = user
+        FakeDatabase.userContacts.add(user.email)
+        // adapter.notifyItemInserted(FakeDatabase.userContacts.size)
+        adapter.update(FakeDatabase.userContacts)
+    }
+
+    fun removeUser(position: Int) {
+        deletedUser = FakeDatabase.userContacts.removeAt(position)
+        deletedUserPosition = position
+        //adapter.notifyItemRemoved(position)
+        adapter.update(FakeDatabase.userContacts)
+        showDeletionUndoSnackBar(Const.TIME_5_SEC)
     }
 
     override fun onDialogAddClicked(dialogBinding: DialogAddContactBinding) {
@@ -79,10 +99,11 @@ class ContactsActivity : AppCompatActivity(), AddContactDialog.EditNameDialogLis
             occupation = occupation
         )
 
-        FakeDatabase.allFakeUsers[user.email] = user
-        FakeDatabase.userContacts.add(user.email)
-        adapter.notifyDataSetChanged()
+        addNewUserToDatabase(user)
+
     }
+
+
 
 
 }

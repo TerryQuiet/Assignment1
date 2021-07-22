@@ -5,7 +5,8 @@ import tk.quietdev.level1.utils.PrefsHelper
 
 object FakeDatabase {
 
-    lateinit var userContacts:MutableList<String>
+    var userContacts: MutableList<String> = mutableListOf()
+
     var currentUserID: String = PrefsHelper.getCurrentUser()
 
     // init from App
@@ -21,7 +22,7 @@ object FakeDatabase {
         } else null
     }
 
-    private fun isPasswordCorrect(user: User?, password: String):Boolean {
+    private fun isPasswordCorrect(user: User?, password: String): Boolean {
         return (user?.password == password)
     }
 

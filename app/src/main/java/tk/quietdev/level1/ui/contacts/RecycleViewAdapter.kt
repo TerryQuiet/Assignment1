@@ -1,18 +1,28 @@
 package tk.quietdev.level1.ui.contacts
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.utils.ext.loadImage
 
-
+private const val TAG = "RecycleViewAdapter"
 class RecycleViewAdapter(
-    private val dataset: MutableList<String>,
     private val contactsActivity: ContactsActivity
 ) : RecyclerView.Adapter<RecycleViewAdapter.ItemViewHolder>() {
+
+    private var  userList= emptyList<String>()
+
+    fun update(newList: List<String>) {
+        val callback = DiffUtilCallback(userList, newList)
+        val result = DiffUtil.calculateDiff(callback)
+        userList = newList.toList()
+        result.dispatchUpdatesTo(this)
+    }
 
     class ItemViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -33,13 +43,32 @@ class RecycleViewAdapter(
                 binding.tvOccupation.text = this?.occupation
                 binding.ivProfilePic.loadImage(this?.picture)
                 binding.imageBtnRemove.setOnClickListener {
-                    contactsActivity.removeUser(position)
+                    contactsActivity.removeUser(this?.email)
                 }
             }
         }
     }
 
-    override fun getItemCount():Int {
-        return dataset.size
-    } 
+    override fun getItemCount(): Int {
+        return userList.size
+    }
+
+    class DiffUtilCallback(private val oldList: List<String>, private val newList: List<String>) : DiffUtil.Callback() {
+        override fun getOldListSize(): Int {
+            return oldList.size
+        }
+
+        override fun getNewListSize(): Int {
+            return newList.size
+        }
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            //Log.d(TAG, "areItemsTheSame: ${oldList[oldItemPosition] == newList[newItemPosition]} ")
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition] == newList[newItemPosition]
+        }
+    }
 }
