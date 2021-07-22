@@ -8,13 +8,14 @@ import android.widget.Button
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import tk.quietdev.level1.R
-import tk.quietdev.level1.database.MockDatabase
+import tk.quietdev.level1.database.FakeDatabase
+import tk.quietdev.level1.databinding.DialogAddContactBinding
+import tk.quietdev.level1.models.User
 
 
-class ContactsActivity : AppCompatActivity() {
+class ContactsActivity : AppCompatActivity(), AddContactDialog.EditNameDialogListener {
 
     private var deletedUser = ""
     private var deletedUserPosition = 0
@@ -27,7 +28,7 @@ class ContactsActivity : AppCompatActivity() {
         addBackButton = findViewById(R.id.extended_fab)
         val recyclerView = findViewById<RecyclerView>(R.id.recycle_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = RecycleViewAdapter(MockDatabase.userContacts, this)
+        recyclerView.adapter = RecycleViewAdapter(FakeDatabase.userContacts, this)
         adapter = recyclerView.adapter!!
         recyclerView.addItemDecoration(DividerItemDecoration(this@ContactsActivity, LinearLayoutManager.VERTICAL))
 
@@ -37,23 +38,13 @@ class ContactsActivity : AppCompatActivity() {
 
     private fun addListeners() {
         addBackButton?.setOnClickListener {
-            addContactDialog()
+            AddContactDialog()
+                .show(supportFragmentManager, "MyCustomFragment")
         }
     }
 
-    private fun addContactDialog() {
-        val items = arrayOf("Item 1", "Item 2", "Item 3")
-
-        MaterialAlertDialogBuilder(this)
-           // .setTitle(resources.getString(R.string.title))
-            .setItems(items) { dialog, which ->
-                // Respond to item chosen
-            }
-            .show()
-    }
-
     fun removeUser(position: Int) {
-        deletedUser = MockDatabase.userContacts.removeAt(position)
+        deletedUser = FakeDatabase.userContacts.removeAt(position)
         deletedUserPosition = position
         adapter.notifyDataSetChanged()
         //adapter.notifyItemRemoved(position)
@@ -70,11 +61,27 @@ class ContactsActivity : AppCompatActivity() {
     }
 
     private fun addUserBack(position: Int) {
-        if (deletedUser.isNotEmpty()) { // TODO: 7/20/2021 There is a BUG with snackbar and button, so it can be pressed twice
-            MockDatabase.userContacts.add(position, deletedUser)
+        if (deletedUser.isNotEmpty()) {
+            FakeDatabase.userContacts.add(position, deletedUser)
             deletedUser = ""
             adapter.notifyDataSetChanged()
         }
+    }
+
+    override fun onDialogAddClicked(dialogBinding: DialogAddContactBinding) {
+        val name = dialogBinding.etName.text.toString()
+        val surname = dialogBinding.etSurname.text.toString()
+        val occupation = dialogBinding.etOccupation.text.toString()
+
+        val user = User(
+            userName = "$name $surname",
+            email = "$name.$surname@mail.fake",
+            occupation = occupation
+        )
+
+        FakeDatabase.allFakeUsers[user.email] = user
+        FakeDatabase.userContacts.add(user.email)
+        adapter.notifyDataSetChanged()
     }
 
 

@@ -4,6 +4,7 @@
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/black</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
+
     </style>
 
     <!--Base custom theme which will be shared between both light and dark theme variants-->
@@ -42,8 +43,6 @@
         <!--statusBar, icon colors overridden in 23-->
         <item name="android:statusBarColor">?attr/colorPrimary</item>
 
-
-
         <item name="android:windowAnimationStyle">@style/WindowAnimations</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
 
@@ -80,6 +79,7 @@
         <item name="hintTextColor">@color/gray</item>
         <item name="android:textColorHint">@color/gray</item>
         <item name="errorTextColor">@color/red_200</item>
+
     </style>
 
     <style name="Base.Theme.MyApp.MaterialThemeOverlay">

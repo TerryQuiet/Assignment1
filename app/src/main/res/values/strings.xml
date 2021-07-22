@@ -19,4 +19,8 @@
     <string name="view_my_contacts">VIEW MY CONTACTS</string>
     <string name="login_help_tip">\"Try mail@pm.me : 11111 \"</string>
     <string name="add_contact">Add contact</string>
+    <string name="name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="occupation">Occupation</string>
+    <string name="cancel">Cancel</string>
 </resources>

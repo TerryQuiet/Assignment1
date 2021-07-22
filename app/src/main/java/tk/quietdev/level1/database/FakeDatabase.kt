@@ -3,7 +3,7 @@ package tk.quietdev.level1.database
 import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.PrefsHelper
 
-object MockDatabase {
+object FakeDatabase {
 
     lateinit var userContacts:MutableList<String>
     var currentUserID: String = PrefsHelper.getCurrentUser()
@@ -13,7 +13,7 @@ object MockDatabase {
         userContacts = getUserList().map { it.email }.toMutableList()
     }
 
-    private val allFakeUsers = getUsersMap()
+    val allFakeUsers = getUsersMap().toMutableMap()
 
     fun getUserWithValidation(name: String, password: String): User? {
         return if (isPasswordCorrect(allFakeUsers[name], password)) {
