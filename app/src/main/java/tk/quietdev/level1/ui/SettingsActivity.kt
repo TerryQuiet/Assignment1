@@ -3,7 +3,7 @@ package tk.quietdev.level1.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import tk.quietdev.level1.database.MockDatabase
+import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.ActivitySettingsBinding
 import tk.quietdev.level1.ui.contacts.ContactsActivity
 import tk.quietdev.level1.utils.Const
@@ -34,7 +34,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun bindValues() {
-        val currentUser = MockDatabase.getUserWithNoValidation(intent.getStringExtra(Const.EMAIL))
+        val currentUser = FakeDatabase.getUserWithNoValidation(intent.getStringExtra(Const.EMAIL))
         binding.apply {
             tvName.text = currentUser?.userName
             tvAddress.text = currentUser?.physicalAddress

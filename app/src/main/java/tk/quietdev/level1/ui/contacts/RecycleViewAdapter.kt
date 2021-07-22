@@ -4,7 +4,7 @@ package tk.quietdev.level1.ui.contacts
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import tk.quietdev.level1.database.MockDatabase
+import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.utils.ext.loadImage
 
@@ -25,8 +25,8 @@ class RecycleViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        val userID = MockDatabase.userContacts[position]
-        val user = MockDatabase.getUserWithNoValidation(userID)
+        val userID = FakeDatabase.userContacts[position]
+        val user = FakeDatabase.getUserWithNoValidation(userID)
         with(holder) {
             with(user) {
                 binding.tvName.text = this?.userName

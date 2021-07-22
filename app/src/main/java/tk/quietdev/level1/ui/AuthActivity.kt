@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.snackbar.Snackbar
 import tk.quietdev.level1.R
-import tk.quietdev.level1.database.MockDatabase
+import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.ActivityAuthBinding
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.PrefsHelper
@@ -18,7 +18,7 @@ import tk.quietdev.level1.utils.Validator
 class AuthActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthBinding
-    private val db = MockDatabase
+    private val db = FakeDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

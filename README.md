@@ -16,3 +16,6 @@ https://www.geeksforgeeks.org/how-to-use-view-binding-in-recyclerview-adapter-cl
 
 item separator
 https://stackoverflow.com/a/57886251/12972985
+
+Dialog
+https://medium.com/swlh/alertdialog-and-customdialog-in-android-with-kotlin-f42a168c1936
