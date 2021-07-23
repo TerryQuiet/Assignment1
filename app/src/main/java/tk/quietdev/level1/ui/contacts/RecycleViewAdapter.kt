@@ -1,8 +1,8 @@
 package tk.quietdev.level1.ui.contacts
 
 
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +15,7 @@ class RecycleViewAdapter(
     private val contactsActivity: ContactsActivity
 ) : RecyclerView.Adapter<RecycleViewAdapter.ItemViewHolder>() {
 
-    private var  userList= emptyList<String>()
+    private var userList = emptyList<String>()
 
     fun update(newList: List<String>) {
         val callback = DiffUtilCallback(userList, newList)
@@ -24,7 +24,10 @@ class RecycleViewAdapter(
         result.dispatchUpdatesTo(this)
     }
 
-    class ItemViewHolder(val binding: ListItemBinding) : RecyclerView.ViewHolder(binding.root)
+    class ItemViewHolder(
+        val binding: ListItemBinding,
+        var email: String? = ""
+    ) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         // create a new view
@@ -45,6 +48,7 @@ class RecycleViewAdapter(
                 binding.imageBtnRemove.setOnClickListener {
                     contactsActivity.removeUser(this?.email)
                 }
+                email = this?.email
             }
         }
     }
@@ -63,7 +67,7 @@ class RecycleViewAdapter(
         }
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition] == newList[newItemPosition]
+            return oldList[oldItemPosition] === newList[newItemPosition]
         }
 
         override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

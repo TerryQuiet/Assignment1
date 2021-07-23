@@ -2,11 +2,13 @@ package tk.quietdev.level1.ui.contacts
 
 
 import android.graphics.Color
+import android.media.MediaRouter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -17,7 +19,7 @@ import tk.quietdev.level1.databinding.DialogAddContactBinding
 import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.Const
 
-
+private const val TAG = "ContactsActivity"
 class ContactsActivity : AppCompatActivity(), AddContactDialog.EditNameDialogListener {
 
     private var deletedUser = ""
@@ -26,6 +28,22 @@ class ContactsActivity : AppCompatActivity(), AddContactDialog.EditNameDialogLis
     private val binding get() = _binding!!
 
     private val adapter by lazy { RecycleViewAdapter(this) }
+
+    private var simpleCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val email = (viewHolder as RecycleViewAdapter.ItemViewHolder).email
+            removeUser(email)
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +54,8 @@ class ContactsActivity : AppCompatActivity(), AddContactDialog.EditNameDialogLis
             recycleView.layoutManager = LinearLayoutManager(this@ContactsActivity)
             recycleView.adapter = adapter
             recycleView.addItemDecoration(DividerItemDecoration(this@ContactsActivity, LinearLayoutManager.VERTICAL))
+            ItemTouchHelper(simpleCallback).attachToRecyclerView(recycleView)
+            
         }
 
         adapter.update(FakeDatabase.userContacts)
@@ -99,10 +119,11 @@ class ContactsActivity : AppCompatActivity(), AddContactDialog.EditNameDialogLis
             email = "$name.$surname@mail.fake",
             occupation = occupation
         )
-
         addNewUserToDatabase(user)
 
     }
+
+
 
 
 
