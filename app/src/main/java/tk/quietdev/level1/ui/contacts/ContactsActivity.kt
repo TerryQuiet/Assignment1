@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import tk.quietdev.level1.R
 import tk.quietdev.level1.database.FakeDatabase
+import tk.quietdev.level1.databinding.ActivityContactsBinding
 import tk.quietdev.level1.databinding.DialogAddContactBinding
 import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.Const
@@ -21,25 +22,29 @@ class ContactsActivity : AppCompatActivity(), AddContactDialog.EditNameDialogLis
 
     private var deletedUser = ""
     private var deletedUserPosition = 0
-    private lateinit var addBackButton: Button
-    private lateinit var adapter: RecycleViewAdapter
+    private var _binding : ActivityContactsBinding? = null
+    private val binding get() = _binding!!
+
+    private val adapter by lazy { RecycleViewAdapter(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_contacts)
-        addBackButton = findViewById(R.id.extended_fab)
-        val recyclerView = findViewById<RecyclerView>(R.id.recycle_view)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = RecycleViewAdapter( this)
-        adapter = (recyclerView.adapter as RecycleViewAdapter)
+        _binding = ActivityContactsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.apply {
+            recycleView.layoutManager = LinearLayoutManager(this@ContactsActivity)
+            recycleView.adapter = adapter
+            recycleView.addItemDecoration(DividerItemDecoration(this@ContactsActivity, LinearLayoutManager.VERTICAL))
+        }
+
         adapter.update(FakeDatabase.userContacts)
-        recyclerView.addItemDecoration(DividerItemDecoration(this@ContactsActivity, LinearLayoutManager.VERTICAL))
         addListeners()
 
     }
 
     private fun addListeners() {
-        addBackButton?.setOnClickListener {
+        binding.btnAdd.setOnClickListener {
             AddContactDialog()
                 .show(supportFragmentManager, "MyCustomFragment")
         }
@@ -60,30 +65,26 @@ class ContactsActivity : AppCompatActivity(), AddContactDialog.EditNameDialogLis
             .show()
     }
 
-    fun removeUser(position: String?) {
-        removeUser(FakeDatabase.userContacts.indexOf(position))
-    }
+
 
     private fun addUserBack() {
         if (deletedUser.isNotEmpty()) {
             FakeDatabase.userContacts.add(deletedUserPosition, deletedUser)
             adapter.update(FakeDatabase.userContacts)
             deletedUser = ""
-            //adapter.notifyItemInserted(deletedUserPosition)
         }
     }
 
     private fun addNewUserToDatabase(user: User) {
         FakeDatabase.allFakeUsers[user.email] = user
         FakeDatabase.userContacts.add(user.email)
-        // adapter.notifyItemInserted(FakeDatabase.userContacts.size)
         adapter.update(FakeDatabase.userContacts)
     }
 
-    fun removeUser(position: Int) {
+    fun removeUser(email: String?) {
+        val position = FakeDatabase.userContacts.indexOf(email)
         deletedUser = FakeDatabase.userContacts.removeAt(position)
         deletedUserPosition = position
-        //adapter.notifyItemRemoved(position)
         adapter.update(FakeDatabase.userContacts)
         showDeletionUndoSnackBar(Const.TIME_5_SEC)
     }
