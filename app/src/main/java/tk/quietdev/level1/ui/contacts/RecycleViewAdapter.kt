@@ -10,7 +10,7 @@ import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.utils.ext.loadImage
 
-private const val TAG = "RecycleViewAdapter"
+
 class RecycleViewAdapter(
     private val contactsActivity: ContactsActivity
 ) : RecyclerView.Adapter<RecycleViewAdapter.ItemViewHolder>() {
@@ -63,7 +63,6 @@ class RecycleViewAdapter(
         }
 
         override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            //Log.d(TAG, "areItemsTheSame: ${oldList[oldItemPosition] == newList[newItemPosition]} ")
             return oldList[oldItemPosition] == newList[newItemPosition]
         }
 
