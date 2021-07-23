@@ -23,7 +23,7 @@ class AddContactDialog : DialogFragment() {
         }
 
         binding.btnAdd.setOnClickListener {
-            val parent = activity as EditNameDialogListener
+            val parent = activity as AddUserDialogListener
             parent.onDialogAddClicked(binding)
             dismiss()
         }
@@ -45,7 +45,7 @@ class AddContactDialog : DialogFragment() {
         _binding = null
     }
 
-    interface EditNameDialogListener {
+    interface AddUserDialogListener {
         fun onDialogAddClicked(dialogBinding: DialogAddContactBinding)
     }
 
