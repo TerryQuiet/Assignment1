@@ -4,6 +4,8 @@ package tk.quietdev.level1.ui.contacts
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,25 +19,32 @@ import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
-private const val TAG = "ContactsActivity"
+class ContactsActivity : AppCompatActivity() {
 
-class ContactsActivity : AppCompatActivity(), AddContactDialog.AddUserDialogListener, OnSwipeCallBack.Listener {
-
-    private var deletedUser = ""
-    private var deletedUserPosition = 0
     private var _binding: ActivityContactsBinding? = null
     private val binding get() = _binding!!
-
-    private val adapter by lazy { RecycleViewAdapter(this) }
-
-    private var simpleCallback = OnSwipeCallBack(this)
-
+    private val adapter by lazy { RecycleViewAdapter(viewModel) }
+    lateinit var  viewModel : ContactsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityContactsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel = ViewModelProvider(this).get(ContactsViewModel::class.java)
+
+        viewModel.apply {
+            userList.observe(this@ContactsActivity, { newList ->
+                adapter.update(newList)
+            })
+            deletedUser.observe(this@ContactsActivity, { deletedUser ->
+                if (deletedUser.isNotEmpty()) {
+                    showDeletionUndoSnackBar(Const.TIME_5_SEC)
+                }
+            })
+        }
+
+        val simpleCallback = OnSwipeCallBack(viewModel)
         binding.apply {
             recycleView.layoutManager = LinearLayoutManager(this@ContactsActivity)
             recycleView.adapter = adapter
@@ -50,64 +59,21 @@ class ContactsActivity : AppCompatActivity(), AddContactDialog.AddUserDialogList
     private fun addListeners() {
         binding.btnAdd.setOnClickListener {
             AddContactDialog()
-                .show(supportFragmentManager, "MyCustomFragment")
+                .show(supportFragmentManager,"")
         }
     }
-
 
     private fun showDeletionUndoSnackBar(duration: Int) {
         Snackbar.make(
             findViewById<RecyclerView>(R.id.recycle_view),
-            resources.getText(R.string.contact_removed),
+            getString(R.string.contact_removed),
             duration
         )
             .setTextColor(Color.WHITE)
             .setAction(getString(R.string.add_back)) {
-                addUserBack()
+                viewModel.addUserBack()
             }
             .show()
-    }
-
-
-    private fun addUserBack() {
-        if (deletedUser.isNotEmpty()) {
-            FakeDatabase.userContacts.add(deletedUserPosition, deletedUser)
-            adapter.update(FakeDatabase.userContacts)
-            deletedUser = ""
-        }
-    }
-
-    private fun addNewUserToDatabase(user: User) {
-        FakeDatabase.allFakeUsers[user.email] = user
-        FakeDatabase.userContacts.add(user.email)
-        adapter.update(FakeDatabase.userContacts)
-    }
-
-    fun removeUser(email: String?) {
-        val position = FakeDatabase.userContacts.indexOf(email)
-        deletedUser = FakeDatabase.userContacts.removeAt(position)
-        deletedUserPosition = position
-        adapter.update(FakeDatabase.userContacts)
-        showDeletionUndoSnackBar(Const.TIME_5_SEC)
-    }
-
-    override fun onDialogAddClicked(dialogBinding: DialogAddContactBinding) {
-        val name = dialogBinding.etName.text.toString()
-        val surname = dialogBinding.etSurname.text.toString()
-        val occupation = dialogBinding.etOccupation.text.toString()
-
-        val user = User(
-            userName = "$name $surname",
-            email = "$name.$surname@mail.fake",
-            occupation = occupation
-        )
-        addNewUserToDatabase(user)
-
-    }
-
-    override fun swipedOn(viewHolder: RecyclerView.ViewHolder) {
-        val email = (viewHolder as RecycleViewAdapter.ItemViewHolder).email
-        removeUser(email)
     }
 
 

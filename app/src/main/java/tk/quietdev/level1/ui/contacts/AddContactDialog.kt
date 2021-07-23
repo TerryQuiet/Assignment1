@@ -23,8 +23,8 @@ class AddContactDialog : DialogFragment() {
         }
 
         binding.btnAdd.setOnClickListener {
-            val parent = activity as AddUserDialogListener
-            parent.onDialogAddClicked(binding)
+            val parent = activity as ContactsActivity
+            parent.viewModel.onDialogAddClicked(binding)
             dismiss()
         }
 
@@ -44,10 +44,5 @@ class AddContactDialog : DialogFragment() {
         super.onDestroyView()
         _binding = null
     }
-
-    interface AddUserDialogListener {
-        fun onDialogAddClicked(dialogBinding: DialogAddContactBinding)
-    }
-
 
 }

@@ -12,7 +12,7 @@ import tk.quietdev.level1.utils.ext.loadImage
 
 
 class RecycleViewAdapter(
-    private val contactsActivity: ContactsActivity
+    private val contactsActivity: ContactsViewModel
 ) : RecyclerView.Adapter<RecycleViewAdapter.ItemViewHolder>() {
 
     private var userList = emptyList<String>()
