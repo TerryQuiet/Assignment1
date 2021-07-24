@@ -9,7 +9,6 @@
     android:theme="@style/Base.Theme.MyApp.WhiteSurface"
     tools:context=".ui.SettingsActivity">
 
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glCenterHorizontal"
         android:layout_width="wrap_content"
@@ -33,96 +32,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:title="@string/settings" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <include
         android:id="@+id/topContainer"
+        layout="@layout/user_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="?attr/colorSurface"
-        android:theme="@style/Base.Theme.MyApp"
         app:layout_constraintBottom_toTopOf="@+id/glCenterHorizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivProfilePic"
-            android:layout_width="@dimen/details_square_photo"
-            android:layout_height="@dimen/details_square_photo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-            app:srcCompat="@drawable/ic_profile" />
+    </include>
 
-
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/large_24dp"
-            android:layout_marginBottom="@dimen/small_8dp"
-            android:textSize="@dimen/header2_18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivProfilePic"
-            tools:text="Lucile Alvarado" />
-
-        <TextView
-            android:id="@+id/tvOccupation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/small_8dp"
-            android:textSize="@dimen/header3_14sp"
-            app:layout_constraintEnd_toEndOf="@id/tvName"
-            app:layout_constraintStart_toStartOf="@id/tvName"
-            app:layout_constraintTop_toBottomOf="@id/tvName"
-            tools:text="Graphic designer" />
-
-        <TextView
-            android:id="@+id/tvAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/normal_16dp"
-            android:textSize="@dimen/header3_14sp"
-            app:layout_constraintEnd_toEndOf="@id/tvOccupation"
-            app:layout_constraintStart_toStartOf="@id/tvOccupation"
-            app:layout_constraintTop_toBottomOf="@id/tvOccupation"
-            tools:text="5295 Gaylord Walks Apk." />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <LinearLayout
+    <include
         android:id="@+id/containerSocialButtons"
+        layout="@layout/social_buttons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/glForButtons">
 
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/iBtnInstagram"
-            style="@style/details_socialNetwork_imageButton"
-            android:background="?android:selectableItemBackground"
-            app:srcCompat="@drawable/ic_linkedin"
-            android:layout_weight="1"/>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/iBtnVkontakte"
-            style="@style/details_socialNetwork_imageButton"
-            android:background="?android:selectableItemBackground"
-            app:srcCompat="@drawable/ic_vkontakte"
-            android:layout_weight="1"/>
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/iBtnFacebook"
-            style="@style/details_socialNetwork_imageButton"
-            android:background="?android:selectableItemBackground"
-            app:srcCompat="@drawable/ic_facebook"
-            android:layout_weight="1"/>
-    </LinearLayout>
-
+    </include>
 
 
     <Button
@@ -133,11 +65,11 @@
         android:layout_margin="@dimen/normal_16dp"
         android:text="@string/edit_profile"
         android:textColor="?attr/colorOnSurface"
-        app:strokeColor="?attr/colorOnSurface"
-        app:strokeWidth="2dp"
         app:layout_constraintBottom_toTopOf="@id/btnViewContacts"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="?attr/colorOnSurface"
+        app:strokeWidth="2dp" />
 
     <Button
         android:id="@+id/btnViewContacts"
