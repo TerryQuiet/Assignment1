@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:theme="@style/Base.Theme.MyApp.WhiteSurface"
     app:cardCornerRadius="@dimen/small_8dp">
 
 
@@ -13,7 +14,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etNameParent"
-            style="@style/MyApp.TextInputLayoutStyleOutlineOnWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/name"
@@ -30,7 +30,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etSurnameParent"
-            style="@style/MyApp.TextInputLayoutStyleOutlineOnWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/surname"
@@ -46,7 +45,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/etOccupationParent"
-            style="@style/MyApp.TextInputLayoutStyleOutlineOnWhite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/occupation"
@@ -62,7 +60,6 @@
 
         <Button
             android:id="@+id/bntCancel"
-            style="@style/orangeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/small_8dp"
@@ -75,7 +72,6 @@
 
         <Button
             android:id="@+id/btnAdd"
-            style="@style/orangeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_contact"

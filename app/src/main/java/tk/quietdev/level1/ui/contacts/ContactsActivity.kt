@@ -4,8 +4,9 @@ package tk.quietdev.level1.ui.contacts
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.Observer
+import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,8 +15,6 @@ import com.google.android.material.snackbar.Snackbar
 import tk.quietdev.level1.R
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.ActivityContactsBinding
-import tk.quietdev.level1.databinding.DialogAddContactBinding
-import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
@@ -24,14 +23,13 @@ class ContactsActivity : AppCompatActivity() {
     private var _binding: ActivityContactsBinding? = null
     private val binding get() = _binding!!
     private val adapter by lazy { RecycleViewAdapter(viewModel) }
-    lateinit var  viewModel : ContactsViewModel
+    val  viewModel : ContactsViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityContactsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        viewModel = ViewModelProvider(this).get(ContactsViewModel::class.java)
 
         viewModel.apply {
             userList.observe(this@ContactsActivity, { newList ->
