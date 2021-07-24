@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorSurface"
+    android:orientation="vertical"
+    android:theme="@style/Base.Theme.MyApp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivProfilePic"
+        android:layout_width="@dimen/details_square_photo"
+        android:layout_height="@dimen/details_square_photo"
+        android:layout_gravity="center"
+        app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+        app:srcCompat="@drawable/ic_profile" />
+
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_gravity="center"
+        tools:text="Lucile Alvarado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_24dp"
+        android:layout_marginBottom="@dimen/small_8dp"
+        android:textSize="@dimen/header2_18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivProfilePic" />
+
+    <TextView
+        android:id="@+id/tvOccupation"
+        tools:text="Graphic designer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/small_8dp"
+        android:textSize="@dimen/header3_14sp" />
+
+    <TextView
+        android:id="@+id/tvAddress"
+        tools:text="5295 Gaylord Walks Apk."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/normal_16dp"
+        android:textSize="@dimen/header3_14sp" />
+</LinearLayout>

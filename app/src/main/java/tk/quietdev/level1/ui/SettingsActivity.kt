@@ -5,16 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.ActivitySettingsBinding
+import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.ui.contacts.ContactsActivity
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingsBinding
+    private lateinit var userDetailBinding: UserDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
+        userDetailBinding = binding.topContainer
         setContentView(binding.root)
 
         bindListeners()
@@ -35,7 +38,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun bindValues() {
         val currentUser = FakeDatabase.getUserWithNoValidation(intent.getStringExtra(Const.EMAIL))
-        binding.apply {
+        binding.topContainer.apply {
             tvName.text = currentUser?.userName
             tvAddress.text = currentUser?.physicalAddress
             tvOccupation.text = currentUser?.occupation
