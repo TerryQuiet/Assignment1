@@ -42,9 +42,6 @@ class RecycleViewAdapter2(
 
         }
 
-
-
-
     }
 
     private object DiffCallBack : DiffUtil.ItemCallback<String>() {
