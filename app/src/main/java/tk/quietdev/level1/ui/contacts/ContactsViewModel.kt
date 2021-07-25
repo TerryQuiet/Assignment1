@@ -46,7 +46,7 @@ class ContactsViewModel : ViewModel(), OnSwipeCallBack.Listener {
     }
 
     override fun swipedOn(viewHolder: RecyclerView.ViewHolder) {
-        val email = (viewHolder as RecycleViewAdapter.ItemViewHolder).email
+        val email = (viewHolder as RecycleViewAdapter2.RowHolder).email
         removeUser(email)
     }
 
