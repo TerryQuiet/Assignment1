@@ -6,7 +6,7 @@ import android.os.Bundle
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.ActivitySettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
-import tk.quietdev.level1.ui.contacts.ContactsActivity
+//import tk.quietdev.level1.ui.contacts.ContactsActivity
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
@@ -47,8 +47,8 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun openContacts() {
-        val intent = Intent(this, ContactsActivity::class.java)
+       /* val intent = Intent(this, ContactsActivity::class.java)
         startActivity(intent)
-        finish()
+        finish()*/
     }
 }

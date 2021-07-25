@@ -1,41 +1,49 @@
 package tk.quietdev.level1.ui.contacts
 
-
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
+import android.util.Log
+import android.view.*
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import tk.quietdev.level1.R
 import tk.quietdev.level1.database.FakeDatabase
-import tk.quietdev.level1.databinding.ActivityContactsBinding
+import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
-class ContactsActivity : AppCompatActivity() {
-
-    private var _binding: ActivityContactsBinding? = null
+private const val TAG = "ContactsFragment"
+class ContactsFragment : Fragment() {
+    private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
     private val adapter by lazy { RecycleViewAdapter(viewModel) }
-    val  viewModel : ContactsViewModel by viewModels()
+    val viewModel: ContactsViewModel by viewModels()
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = FragmentContactsBinding.inflate(inflater, container, false).apply { _binding = this }.root
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        _binding = ActivityContactsBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         viewModel.apply {
-            userList.observe(this@ContactsActivity, { newList ->
+            userList.observe(viewLifecycleOwner, { newList ->
                 adapter.update(newList)
             })
-            deletedUser.observe(this@ContactsActivity, { deletedUser ->
+            deletedUser.observe(viewLifecycleOwner, { deletedUser ->
                 if (deletedUser.isNotEmpty()) {
                     showDeletionUndoSnackBar(Const.TIME_5_SEC)
                 }
@@ -44,12 +52,12 @@ class ContactsActivity : AppCompatActivity() {
 
         val simpleCallback = OnSwipeCallBack(viewModel)
         binding.apply {
-            recycleView.layoutManager = LinearLayoutManager(this@ContactsActivity)
+            recycleView.layoutManager = LinearLayoutManager(context)
             recycleView.adapter = adapter
-            recycleView.addItemDecoration(DividerItemDecoration(this@ContactsActivity, LinearLayoutManager.VERTICAL))
+            recycleView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
             ItemTouchHelper(simpleCallback).attachToRecyclerView(recycleView)
         }
-
+        Log.d(TAG, "onViewCreated: ${FakeDatabase.userContacts.size}" )
         adapter.update(FakeDatabase.userContacts)
         addListeners()
     }
@@ -57,13 +65,13 @@ class ContactsActivity : AppCompatActivity() {
     private fun addListeners() {
         binding.btnAdd.setOnClickListener {
             AddContactDialog()
-                .show(supportFragmentManager,"")
+                .show(childFragmentManager, "")
         }
     }
 
     private fun showDeletionUndoSnackBar(duration: Int) {
         Snackbar.make(
-            findViewById<RecyclerView>(R.id.recycle_view),
+            binding.btnAdd,
             getString(R.string.contact_removed),
             duration
         )

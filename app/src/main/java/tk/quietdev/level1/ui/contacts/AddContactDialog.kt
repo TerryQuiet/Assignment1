@@ -23,9 +23,9 @@ class AddContactDialog : DialogFragment() {
         }
 
         binding.btnAdd.setOnClickListener {
-            val parent = activity as ContactsActivity
+          /*  val parent = activity as ContactsActivity
             parent.viewModel.onDialogAddClicked(binding)
-            dismiss()
+            dismiss()*/
         }
 
         return AlertDialog.Builder(requireActivity())

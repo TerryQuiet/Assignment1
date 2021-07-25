@@ -24,4 +24,7 @@
     <string name="occupation">Occupation</string>
     <string name="cancel">Cancel</string>
     <string name="add_back">Add back</string>
+    <string name="profile">Profile</string>
+    <string name="message">Message</string>
+    <string name="search">Search</string>
 </resources>
