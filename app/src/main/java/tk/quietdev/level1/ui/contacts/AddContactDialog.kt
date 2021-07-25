@@ -8,9 +8,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import tk.quietdev.level1.databinding.DialogAddContactBinding
 
-class AddContactDialog : DialogFragment() {
+class AddContactDialog(private val viewModel: ContactsViewModel) : DialogFragment() {
 
     private var _binding: DialogAddContactBinding? = null
     private val binding get() = _binding!!
@@ -23,9 +24,8 @@ class AddContactDialog : DialogFragment() {
         }
 
         binding.btnAdd.setOnClickListener {
-          /*  val parent = activity as ContactsActivity
-            parent.viewModel.onDialogAddClicked(binding)
-            dismiss()*/
+            viewModel.onDialogAddClicked(binding)
+            dismiss()
         }
 
         return AlertDialog.Builder(requireActivity())
@@ -43,6 +43,10 @@ class AddContactDialog : DialogFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    interface Listener {
+        fun onDialogAddClicked(binding: DialogAddContactBinding)
     }
 
 }
