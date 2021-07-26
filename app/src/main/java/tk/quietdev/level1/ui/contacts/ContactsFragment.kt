@@ -90,7 +90,7 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener, OnSwipeCallBack.
         viewModel.onDialogAddClicked(binding)
     }
 
-    override fun swipedOn(viewHolder: RecyclerView.ViewHolder) {
+    override fun onSwipped(viewHolder: RecyclerView.ViewHolder) {
         (viewHolder as RvContactsAdapter.ContactHolder).remove()
     }
 

@@ -6,6 +6,8 @@
     android:layout_height="wrap_content"
     android:background="?attr/colorSurface"
     android:orientation="vertical"
+
+    android:paddingHorizontal="@dimen/normal_16dp"
     android:theme="@style/Base.Theme.MyApp">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -45,6 +47,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/normal_16dp"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textAlignment="center"
         android:textSize="@dimen/header3_14sp"
-        tools:text="5295 Gaylord Walks Apk." />
+        tools:text="5295 Gaylord Walks Apk.5295 Gaylord Walks Apk.5295 Gaylord Walks Apk. 5295 Gaylord Walks Apk. 5295 Gaylord Walks Apk. 5295 Gaylord Walks Apk. 5295 Gaylord Walks Apk. 5295 Gaylord Walks Apk." />
 </LinearLayout>
