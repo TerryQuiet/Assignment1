@@ -18,9 +18,12 @@ import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
 
-class ContactsFragment : Fragment(), AddContactDialog.Listener, OnSwipeCallBack.Listener {
+class ContactsFragment : Fragment(), AddContactDialog.Listener, OnSwipeCallBack.Listener,
+    RvContactsAdapter.OnRemoveListener {
     private lateinit var binding: FragmentContactsBinding
-    private val adapter by lazy { RvContactsAdapter(layoutInflater, viewModel) }
+    private val adapter by lazy {
+        RvContactsAdapter(layoutInflater, viewModel::removeUser)
+    }
     private val viewModel: ContactsViewModel by viewModels()
 
 
@@ -28,7 +31,8 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener, OnSwipeCallBack.
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentContactsBinding.inflate(inflater, container, false).apply { binding = this }.root
+    ): View =
+        FragmentContactsBinding.inflate(inflater, container, false).apply { binding = this }.root
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,7 +53,12 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener, OnSwipeCallBack.
         binding.apply {
             recycleView.layoutManager = LinearLayoutManager(context)
             recycleView.adapter = adapter
-            recycleView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+            recycleView.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    LinearLayoutManager.VERTICAL
+                )
+            )
             ItemTouchHelper(onSwipeCallBack).attachToRecyclerView(recycleView)
         }
         adapter.submitList(FakeDatabase.userContacts)
@@ -76,12 +85,17 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener, OnSwipeCallBack.
             .show()
     }
 
+
     override fun onDialogAddClicked(binding: DialogAddContactBinding) {
         viewModel.onDialogAddClicked(binding)
     }
 
     override fun swipedOn(viewHolder: RecyclerView.ViewHolder) {
         (viewHolder as RvContactsAdapter.ContactHolder).remove()
+    }
+
+    override fun remove(email: String?) {
+        viewModel.removeUser(email)
     }
 
 

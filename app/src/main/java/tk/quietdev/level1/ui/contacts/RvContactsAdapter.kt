@@ -11,8 +11,8 @@ import tk.quietdev.level1.utils.ext.loadImage
 
 class RvContactsAdapter(
     private val inflater: LayoutInflater,
-    private val viewModel: ContactsViewModel
-) : ListAdapter<String, RvContactsAdapter.ContactHolder>(DiffCallBack) {
+    private val onRemove: (String?) -> Unit
+    ) : ListAdapter<String, RvContactsAdapter.ContactHolder>(DiffCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
         return ContactHolder(ListItemBinding.inflate(inflater, parent, false))
@@ -42,11 +42,13 @@ class RvContactsAdapter(
         }
 
         fun remove() {
-            viewModel.removeUser(email)
+            onRemove(email)
         }
-
     }
 
+    interface OnRemoveListener {
+        fun remove(email: String?)
+    }
 
 
     private object DiffCallBack : DiffUtil.ItemCallback<String>() {
