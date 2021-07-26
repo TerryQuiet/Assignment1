@@ -30,6 +30,7 @@ class RvContactsAdapter(
 
         fun bind(userID: String) {
             val user = FakeDatabase.getUserWithNoValidation(userID)
+
             email = user?.email
             with(user) {
                 binding.tvName.text = this?.userName
