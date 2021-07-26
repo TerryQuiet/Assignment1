@@ -13,7 +13,8 @@ import tk.quietdev.level1.utils.ext.loadImage
 
 class RvContactsAdapter(
     private val inflater: LayoutInflater,
-    private val onRemove: (String?) -> Unit
+    private val onRemove: (String?) -> Unit,
+    private val onClick: (String?) -> Unit
     ) : ListAdapter<String, RvContactsAdapter.ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener  {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -23,26 +24,30 @@ class RvContactsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
-        return ContactHolder(ListItemBinding.inflate(inflater, parent, false), onRemove)
+        return ContactHolder(ListItemBinding.inflate(inflater, parent, false), onRemove, onClick)
     }
 
     override fun onBindViewHolder(holder: ContactHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    override fun onHolderSwipped(viewHolder: RecyclerView.ViewHolder) {
+    override fun onHolderSwiped(viewHolder: RecyclerView.ViewHolder) {
         (viewHolder as ContactHolder).remove()
     }
 
+
      class ContactHolder(
         private val binding: ListItemBinding,
-        private val onRemove: (String?) -> Unit
+        private val onRemove: (String?) -> Unit,
+        private val onClick: (String?) -> Unit
     ) : RecyclerView.ViewHolder(binding.root)  {
 
         private var email: String? = ""
 
         fun bind(userID: String) {
             val user = FakeDatabase.getUserWithNoValidation(userID)
+
+
 
             email = user?.email
             with(user) {
@@ -51,6 +56,9 @@ class RvContactsAdapter(
                 binding.ivProfilePic.loadImage(this?.picture)
                 binding.imageBtnRemove.setOnClickListener {
                     remove()
+                }
+                binding.root.setOnClickListener {
+                    onClick(email)
                 }
             }
         }
