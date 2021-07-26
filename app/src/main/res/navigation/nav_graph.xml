@@ -15,5 +15,10 @@
     <fragment
         android:id="@+id/contactDetailFragment"
         android:name="tk.quietdev.level1.ui.contacts.ContactDetailFragment"
-        android:label="ContactDetailFragment" />
+        android:label="ContactDetailFragment" >
+        <argument
+            android:name="email"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>
