@@ -9,20 +9,20 @@ import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.utils.ext.loadImage
 
-class RecycleViewAdapter2(
+class RvContactsAdapter(
     private val inflater: LayoutInflater,
     private val viewModel: ContactsViewModel
-) : ListAdapter<String, RecycleViewAdapter2.RowHolder>(DiffCallBack) {
+) : ListAdapter<String, RvContactsAdapter.ContactHolder>(DiffCallBack) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RowHolder {
-        return RowHolder(ListItemBinding.inflate(inflater, parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
+        return ContactHolder(ListItemBinding.inflate(inflater, parent, false))
     }
 
-    override fun onBindViewHolder(holder: RowHolder, position: Int) {
+    override fun onBindViewHolder(holder: ContactHolder, position: Int) {
         holder.bind(getItem(position))
     }
 
-    inner class RowHolder(
+    inner class ContactHolder(
         private val binding: ListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 

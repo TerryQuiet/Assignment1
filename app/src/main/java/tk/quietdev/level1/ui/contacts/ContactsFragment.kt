@@ -20,7 +20,7 @@ import tk.quietdev.level1.utils.OnSwipeCallBack
 
 class ContactsFragment : Fragment(), AddContactDialog.Listener, OnSwipeCallBack.Listener {
     private lateinit var binding: FragmentContactsBinding
-    private val adapter by lazy { RecycleViewAdapter2(layoutInflater, viewModel) }
+    private val adapter by lazy { RvContactsAdapter(layoutInflater, viewModel) }
     private val viewModel: ContactsViewModel by viewModels()
 
 
@@ -81,7 +81,7 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener, OnSwipeCallBack.
     }
 
     override fun swipedOn(viewHolder: RecyclerView.ViewHolder) {
-        (viewHolder as RecycleViewAdapter2.RowHolder).remove()
+        (viewHolder as RvContactsAdapter.ContactHolder).remove()
     }
 
 
