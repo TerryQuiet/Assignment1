@@ -23,7 +23,7 @@ class RecycleViewAdapter2(
     }
 
     inner class RowHolder(
-        private val binding: ListItemBinding,
+        val binding: ListItemBinding,
         var email: String? =""
     ) : RecyclerView.ViewHolder(binding.root) {
 

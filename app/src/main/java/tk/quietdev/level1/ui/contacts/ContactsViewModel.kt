@@ -10,7 +10,7 @@ import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
 
-class ContactsViewModel : ViewModel(), OnSwipeCallBack.Listener {
+class ContactsViewModel : ViewModel() {
 
 
     private var deletedUserPosition = 0
@@ -45,10 +45,7 @@ class ContactsViewModel : ViewModel(), OnSwipeCallBack.Listener {
         updateLiveData()
     }
 
-    override fun swipedOn(viewHolder: RecyclerView.ViewHolder) {
-        val email = (viewHolder as RecycleViewAdapter2.RowHolder).email
-        removeUser(email)
-    }
+
 
     fun onDialogAddClicked(dialogBinding: DialogAddContactBinding) {
         val name = dialogBinding.etName.text.toString()
