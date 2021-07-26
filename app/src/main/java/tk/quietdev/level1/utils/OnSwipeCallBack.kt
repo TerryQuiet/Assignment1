@@ -4,7 +4,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 
-class OnSwipeCallBack(private val call: Listener) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+class OnSwipeCallBack(
+    private val call: Listener) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -17,6 +18,7 @@ class OnSwipeCallBack(private val call: Listener) : ItemTouchHelper.SimpleCallba
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         call.swipedOn(viewHolder)
     }
+
 
     interface Listener {
       fun swipedOn(viewHolder: RecyclerView.ViewHolder)
