@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,7 +22,11 @@ import tk.quietdev.level1.utils.OnSwipeCallBack
 class ContactsFragment : Fragment(), AddContactDialog.Listener {
     private lateinit var binding: FragmentContactsBinding
     private val adapter by lazy {
-        RvContactsAdapter(layoutInflater, viewModel::removeUser)
+        RvContactsAdapter(
+            layoutInflater,
+            viewModel::removeUser,
+            this::openContactDetail
+        )
     }
     private val viewModel: ContactsViewModel by viewModels()
 
@@ -83,7 +88,8 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
         viewModel.onDialogAddClicked(binding)
     }
 
-
-
+    private fun openContactDetail(email: String?) {
+        findNavController().navigate(ContactsFragmentDirections.actionContactsFragmentToContactDetailFragment())
+    }
 
 }

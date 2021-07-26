@@ -16,11 +16,11 @@ class OnSwipeCallBack(
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        call.onHolderSwipped(viewHolder)
+        call.onHolderSwiped(viewHolder)
     }
 
 
     interface Listener {
-      fun onHolderSwipped(viewHolder: RecyclerView.ViewHolder)
+      fun onHolderSwiped(viewHolder: RecyclerView.ViewHolder)
     }
 }
