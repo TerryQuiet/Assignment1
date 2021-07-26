@@ -13,11 +13,10 @@ import tk.quietdev.level1.databinding.DialogAddContactBinding
 
 class AddContactDialog(private val viewModel: ContactsViewModel) : DialogFragment() {
 
-    private var _binding: DialogAddContactBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: DialogAddContactBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        _binding = DialogAddContactBinding.inflate(LayoutInflater.from(context))
+        binding = DialogAddContactBinding.inflate(LayoutInflater.from(context))
 
         binding.bntCancel.setOnClickListener {
             dismiss()
@@ -38,11 +37,6 @@ class AddContactDialog(private val viewModel: ContactsViewModel) : DialogFragmen
         val width = (resources.displayMetrics.widthPixels * 0.85).toInt()
         dialog!!.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
         dialog!!.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     interface Listener {
