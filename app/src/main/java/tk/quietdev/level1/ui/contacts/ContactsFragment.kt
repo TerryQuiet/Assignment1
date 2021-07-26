@@ -18,14 +18,12 @@ import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
 
-class ContactsFragment : Fragment(), AddContactDialog.Listener, OnSwipeCallBack.Listener,
-    RvContactsAdapter.OnRemoveListener {
+class ContactsFragment : Fragment(), AddContactDialog.Listener {
     private lateinit var binding: FragmentContactsBinding
     private val adapter by lazy {
         RvContactsAdapter(layoutInflater, viewModel::removeUser)
     }
     private val viewModel: ContactsViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,17 +47,12 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener, OnSwipeCallBack.
             })
         }
 
-        val onSwipeCallBack = OnSwipeCallBack(this)
         binding.apply {
             recycleView.layoutManager = LinearLayoutManager(context)
             recycleView.adapter = adapter
             recycleView.addItemDecoration(
-                DividerItemDecoration(
-                    context,
-                    LinearLayoutManager.VERTICAL
-                )
+                DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
             )
-            ItemTouchHelper(onSwipeCallBack).attachToRecyclerView(recycleView)
         }
         adapter.submitList(FakeDatabase.userContacts)
         addListeners()
@@ -90,13 +83,7 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener, OnSwipeCallBack.
         viewModel.onDialogAddClicked(binding)
     }
 
-    override fun onSwipped(viewHolder: RecyclerView.ViewHolder) {
-        (viewHolder as RvContactsAdapter.ContactHolder).remove()
-    }
 
-    override fun remove(email: String?) {
-        viewModel.removeUser(email)
-    }
 
 
 }
