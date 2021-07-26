@@ -81,8 +81,7 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener, OnSwipeCallBack.
     }
 
     override fun swipedOn(viewHolder: RecyclerView.ViewHolder) {
-        val email = (viewHolder as RecycleViewAdapter2.RowHolder).email
-        viewModel.removeUser(email)
+        (viewHolder as RecycleViewAdapter2.RowHolder).remove()
     }
 
 

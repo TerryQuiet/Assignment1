@@ -3,17 +3,17 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_marginBottom="@dimen/extra_small_4dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/extra_small_4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorSurface"
-        android:theme="@style/Base.Theme.MyApp.WhiteSurface"
         android:paddingHorizontal="@dimen/normal_16dp"
-        android:paddingVertical="@dimen/small_8dp">
+        android:paddingVertical="@dimen/small_8dp"
+        android:theme="@style/Base.Theme.MyApp.WhiteSurface">
 
         <ImageView
             android:id="@+id/ivProfilePic"
@@ -27,11 +27,11 @@
 
         <TextView
             android:id="@+id/tvName"
-            android:textSize="@dimen/header2_18sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/header2_18sp"
             app:layout_constraintBottom_toTopOf="@+id/tvOccupation"
             app:layout_constraintStart_toEndOf="@id/ivProfilePic"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,11 +39,11 @@
 
         <TextView
             android:id="@+id/tvOccupation"
-            android:textSize="@dimen/header4_12sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_16dp"
             android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/header4_12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/ivProfilePic"
             app:layout_constraintTop_toBottomOf="@+id/tvName"

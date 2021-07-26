@@ -55,8 +55,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorTextColor="?attr/colorOnError"
-            android:hint="@string/email">
+            android:hint="@string/email"
+            app:errorTextColor="?attr/colorOnError">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmail"
@@ -74,8 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            app:errorTextColor="?attr/colorOnError"
-            app:boxBackgroundColor="@android:color/transparent">
+            app:boxBackgroundColor="@android:color/transparent"
+            app:errorTextColor="?attr/colorOnError">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
@@ -144,8 +144,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

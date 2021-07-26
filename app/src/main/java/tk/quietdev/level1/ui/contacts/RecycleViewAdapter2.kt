@@ -23,26 +23,31 @@ class RecycleViewAdapter2(
     }
 
     inner class RowHolder(
-        val binding: ListItemBinding,
-        var email: String? =""
+        private val binding: ListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        private var email: String? = ""
 
         fun bind(userID: String) {
             val user = FakeDatabase.getUserWithNoValidation(userID)
+            email = user?.email
             with(user) {
                 binding.tvName.text = this?.userName
                 binding.tvOccupation.text = this?.occupation
                 binding.ivProfilePic.loadImage(this?.picture)
                 binding.imageBtnRemove.setOnClickListener {
-                    viewModel.removeUser(this?.email)
-
+                    remove()
                 }
-                email = this?.email
             }
+        }
 
+        fun remove() {
+            viewModel.removeUser(email)
         }
 
     }
+
+
 
     private object DiffCallBack : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {

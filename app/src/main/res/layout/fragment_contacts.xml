@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
-    >
+    android:background="?attr/colorSurface">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
@@ -18,10 +17,10 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             style="@style/Widget.MaterialComponents.Toolbar.Primary"
-            app:title="@string/contacts"
-
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+
+            android:layout_height="?attr/actionBarSize"
+            app:title="@string/contacts" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -39,8 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:text="@string/add_contact"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/add_contact" />
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
