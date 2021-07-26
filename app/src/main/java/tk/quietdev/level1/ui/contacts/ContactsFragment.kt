@@ -89,7 +89,7 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
     }
 
     private fun openContactDetail(email: String?) {
-        findNavController().navigate(ContactsFragmentDirections.actionContactsFragmentToContactDetailFragment())
+        findNavController().navigate(ContactsFragmentDirections.actionContactsFragmentToContactDetailFragment(email))
     }
 
 }
