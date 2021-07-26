@@ -1,12 +1,11 @@
 package tk.quietdev.level1.ui
 
-import android.content.Intent
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.ActivitySettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
-//import tk.quietdev.level1.ui.contacts.ContactsActivity
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
@@ -19,7 +18,6 @@ class SettingsActivity : AppCompatActivity() {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         userDetailBinding = binding.topContainer
         setContentView(binding.root)
-
         bindListeners()
         bindValues()
     }

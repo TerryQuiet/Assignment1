@@ -12,9 +12,7 @@ import tk.quietdev.level1.utils.OnSwipeCallBack
 
 class ContactsViewModel : ViewModel() {
 
-
     private var deletedUserPosition = 0
-
     val userList = MutableLiveData(FakeDatabase.userContacts)
     val deletedUser = MutableLiveData("")
 
