@@ -19,8 +19,7 @@ import tk.quietdev.level1.utils.OnSwipeCallBack
 
 
 class ContactsFragment : Fragment(), AddContactDialog.Listener {
-    private var _binding: FragmentContactsBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentContactsBinding
     private val adapter by lazy { RecycleViewAdapter2(layoutInflater, viewModel) }
     private val viewModel: ContactsViewModel by viewModels()
 
@@ -30,7 +29,7 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = FragmentContactsBinding.inflate(inflater, container, false).apply { _binding = this }.root
+    ): View = FragmentContactsBinding.inflate(inflater, container, false).apply { binding = this }.root
 
 
 
