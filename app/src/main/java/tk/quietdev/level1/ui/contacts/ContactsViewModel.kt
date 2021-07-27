@@ -2,12 +2,11 @@ package tk.quietdev.level1.ui.contacts
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.DialogAddContactBinding
 import tk.quietdev.level1.models.User
 
-import tk.quietdev.level1.utils.OnSwipeCallBack
+
 
 
 class ContactsViewModel : ViewModel() {
@@ -58,6 +57,9 @@ class ContactsViewModel : ViewModel() {
         addNewUserToDatabase(user)
     }
 
+    fun getUser(email: String?): Any {
+
+    }
 
 
 }

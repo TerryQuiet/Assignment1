@@ -5,14 +5,9 @@ import tk.quietdev.level1.utils.PrefsHelper
 
 object FakeDatabase {
 
-
     val allFakeUsers = getUsersMap().toMutableMap()
-
-
     var userContacts: MutableList<String> = getUserList().map { it.email }.toMutableList()
     var currentUserID: String = PrefsHelper.getCurrentUser()
-
-
 
     fun getUserWithValidation(name: String, password: String): User? {
         return if (isPasswordCorrect(allFakeUsers[name], password)) {
