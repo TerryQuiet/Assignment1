@@ -6,6 +6,7 @@ import android.view.View
 
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.FragmentContactDetailBinding
@@ -17,6 +18,8 @@ class ContactDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentContactDetailBinding
     private lateinit var userDetailBinding: UserDetailBinding
+    private lateinit var viewModel: ContactsViewModel
+
     private val args: ContactDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -27,14 +30,15 @@ class ContactDetailFragment : Fragment() {
         FragmentContactDetailBinding.inflate(inflater, container, false).apply {
             binding = this
             userDetailBinding = binding.topContainer
+            viewModel = ViewModelProvider(requireActivity()).get(ContactsViewModel::class.java)
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        // TODO: 7/26/2021 sharedViewModel? 
-        val currentUser = FakeDatabase.getUserWithNoValidation(args.email)
+
+        val currentUser = viewModel.getUser(args.email)
 
         userDetailBinding.apply {
             tvName.text = currentUser?.userName

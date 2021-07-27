@@ -14,6 +14,7 @@ class AddContactDialog(private val viewModel: ContactsViewModel) : DialogFragmen
 
     private lateinit var binding: DialogAddContactBinding
 
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogAddContactBinding.inflate(LayoutInflater.from(context))
 

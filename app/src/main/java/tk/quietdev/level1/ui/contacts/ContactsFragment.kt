@@ -5,22 +5,23 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import tk.quietdev.level1.R
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.DialogAddContactBinding
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.utils.Const
-import tk.quietdev.level1.utils.OnSwipeCallBack
+
 
 
 class ContactsFragment : Fragment(), AddContactDialog.Listener {
+
     private lateinit var binding: FragmentContactsBinding
+    private lateinit var viewModel: ContactsViewModel
     private val adapter by lazy {
         RvContactsAdapter(
             layoutInflater,
@@ -28,7 +29,6 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
             this::openContactDetail
         )
     }
-    private val viewModel: ContactsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +40,8 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(requireActivity()).get(ContactsViewModel::class.java)
 
         viewModel.apply {
             userList.observe(viewLifecycleOwner, { newList ->
