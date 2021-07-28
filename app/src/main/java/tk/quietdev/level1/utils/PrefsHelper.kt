@@ -8,6 +8,7 @@ object PrefsHelper {
 
     private lateinit var preferences: SharedPreferences
 
+
     private const val PREFS_NAME = "params"
     private const val USER_ID = "USERID"
     private const val IS_REMEMBER = "isSaveChecked"
@@ -29,14 +30,23 @@ object PrefsHelper {
 
     fun getRememberState(): Boolean = preferences.getBoolean(IS_REMEMBER, false)
 
-    fun saveCurrentUserID(userId:String) {
+    fun saveCurrentUserID(userId: String) {
         preferences.edit()
             .putString(USER_ID, userId)
             .apply()
     }
 
-    fun getCurrentUser(): String {
-      return preferences.getString(USER_ID,"")!!
+    fun saveString(key: String, userId: String) {
+        preferences.edit()
+            .putString(key, userId)
+            .apply()
     }
+
+    fun getCurrentUser(): String {
+        return preferences.getString(USER_ID, "")!!
+    }
+
+    fun getPreferences(): SharedPreferences = preferences
+
 
 }

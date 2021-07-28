@@ -56,6 +56,19 @@
 
     </include>
 
+    <Button
+        android:id="@+id/btnEditProfile"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/normal_16dp"
+        android:text="@string/edit_profile"
+        android:textColor="?attr/colorOnSurface"
+        app:layout_constraintBottom_toTopOf="@id/btnMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:strokeColor="?attr/colorOnSurface"
+        app:strokeWidth="2dp" />
 
     <Button
         android:id="@+id/btnMessage"

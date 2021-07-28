@@ -19,7 +19,7 @@ import tk.quietdev.level1.ui.contacts.recycleView.RvContactsAdapter
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.OnItemClickListener
 
-private const val TAG = "ContactsViewModel"
+
 class ContactsFragment : Fragment(), AddContactDialog.Listener {
 
     private lateinit var binding: FragmentContactsBinding
