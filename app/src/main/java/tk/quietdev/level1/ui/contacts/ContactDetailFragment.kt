@@ -38,14 +38,14 @@ class ContactDetailFragment : Fragment() {
 
 
 
-        val currentUser = viewModel.getUser(args.email)
+        //val currentUser = viewModel.getUser(args.email)
 
-        userDetailBinding.apply {
+     /*   userDetailBinding.apply {
             tvName.text = currentUser?.userName
             tvAddress.text = currentUser?.physicalAddress
             tvOccupation.text = currentUser?.occupation
             ivProfilePic.loadImage(currentUser?.picture)
-        }
+        }*/
 
 
     }

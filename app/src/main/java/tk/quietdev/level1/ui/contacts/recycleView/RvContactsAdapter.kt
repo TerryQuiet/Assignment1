@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts
+package tk.quietdev.level1.ui.contacts.recycleView
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,16 +6,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.ListItemBinding
+import tk.quietdev.level1.utils.OnItemClickListener
 import tk.quietdev.level1.utils.OnSwipeCallBack
-import tk.quietdev.level1.utils.ext.loadImage
 
 class RvContactsAdapter(
     private val inflater: LayoutInflater,
     private val onRemove: (String?) -> Unit,
-    private val onClick: (String?) -> Unit
-    ) : ListAdapter<String, RvContactsAdapter.ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener  {
+    private val functionOnClickListener: (String?) -> Unit,
+    private val objectOnClickListener: OnItemClickListener
+) : ListAdapter<String, ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
@@ -24,7 +24,14 @@ class RvContactsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
-        return ContactHolder(ListItemBinding.inflate(inflater, parent, false), onRemove, onClick)
+        return ContactHolder(
+            ListItemBinding.inflate(
+                inflater, parent, false
+            ),
+            onRemove,
+            functionOnClickListener,
+            objectOnClickListener
+        )
     }
 
     override fun onBindViewHolder(holder: ContactHolder, position: Int) {
@@ -34,38 +41,6 @@ class RvContactsAdapter(
     override fun onHolderSwiped(viewHolder: RecyclerView.ViewHolder) {
         (viewHolder as ContactHolder).remove()
     }
-
-
-     class ContactHolder(
-        private val binding: ListItemBinding,
-        private val onRemove: (String?) -> Unit,
-        private val onClick: (String?) -> Unit
-    ) : RecyclerView.ViewHolder(binding.root)  {
-
-        private var email: String? = ""
-
-        fun bind(userID: String) {
-            val user = FakeDatabase.getUserWithNoValidation(userID)
-
-
-
-            email = user?.email
-            with(user) {
-                binding.tvName.text = this?.userName
-                binding.tvOccupation.text = this?.occupation
-                binding.ivProfilePic.loadImage(this?.picture)
-                binding.imageBtnRemove.setOnClickListener {
-                    remove()
-                }
-                binding.root.setOnClickListener {
-                    onClick(email)
-                }
-            }
-        }
-         fun remove() {
-            onRemove(email)
-        }
-     }
 
     private object DiffCallBack : DiffUtil.ItemCallback<String>() {
         override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
@@ -77,8 +52,6 @@ class RvContactsAdapter(
         }
 
     }
-
-
 
 }
 

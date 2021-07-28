@@ -1,36 +1,41 @@
 package tk.quietdev.level1.ui.contacts
 
-import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import tk.quietdev.level1.databinding.DialogAddContactBinding
 
-class AddContactDialog(private val viewModel: ContactsViewModel) : DialogFragment() {
+class AddContactDialog(
+    private val onClick: Listener
+) : DialogFragment() {
 
     private lateinit var binding: DialogAddContactBinding
 
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = DialogAddContactBinding.inflate(LayoutInflater.from(context))
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.bntCancel.setOnClickListener {
             dismiss()
         }
 
         binding.btnAdd.setOnClickListener {
-            viewModel.onDialogAddClicked(binding)
+            onClick.onDialogAddClicked(binding)
             dismiss()
         }
-
-        return AlertDialog.Builder(requireActivity())
-            .setView(binding.root)
-            .create()
     }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View =
+        DialogAddContactBinding.inflate(LayoutInflater.from(context)).apply { binding = this }.root
+
 
     override fun onStart() {
         super.onStart()

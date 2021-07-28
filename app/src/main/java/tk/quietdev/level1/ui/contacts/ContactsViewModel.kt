@@ -21,18 +21,18 @@ class ContactsViewModel : ViewModel() {
     }
 
 
+    private fun addNewUserToDatabase(user: User) {
+        FakeDatabase.allFakeUsers[user.email] = user
+        FakeDatabase.userContacts.add(user.email)
+        updateLiveData()
+    }
+
     fun addUserBack() {
         if (deletedUser.value.toString().isNotEmpty()) {
             FakeDatabase.userContacts.add(deletedUserPosition, deletedUser.value.toString())
             updateLiveData()
             deletedUser.value = ""
         }
-    }
-
-    private fun addNewUserToDatabase(user: User) {
-        FakeDatabase.allFakeUsers[user.email] = user
-        FakeDatabase.userContacts.add(user.email)
-        updateLiveData()
     }
 
     fun removeUser(email: String?) {
@@ -57,9 +57,9 @@ class ContactsViewModel : ViewModel() {
         addNewUserToDatabase(user)
     }
 
-    fun getUser(email: String?): Any {
+   /* fun getUser(email: String?): Any {
 
-    }
+    }*/
 
 
 }
