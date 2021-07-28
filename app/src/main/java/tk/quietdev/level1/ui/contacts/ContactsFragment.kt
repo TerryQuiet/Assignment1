@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -14,8 +13,9 @@ import tk.quietdev.level1.R
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.DialogAddContactBinding
 import tk.quietdev.level1.databinding.FragmentContactsBinding
+import tk.quietdev.level1.ui.contacts.recycleView.RvContactsAdapter
 import tk.quietdev.level1.utils.Const
-
+import tk.quietdev.level1.utils.OnItemClickListener
 
 
 class ContactsFragment : Fragment(), AddContactDialog.Listener {
@@ -26,8 +26,39 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
         RvContactsAdapter(
             layoutInflater,
             viewModel::removeUser,
-            this::openContactDetail
+            // TODO: 7/28/2021 help me understand the difference
+            functionOnClickListener =  this::openContactDetail,
+            objectOnClickListener =  object : OnItemClickListener {
+                override fun onItemClick(email: String?) {
+                    openContactDetail(email)
+                }
+            }
         )
+    }
+
+    private fun addListeners() {
+        binding.btnAdd.setOnClickListener {
+            AddContactDialog(this)
+                .show(childFragmentManager, "")
+        }
+    }
+
+
+    private fun showDeletionUndoSnackBar(duration: Int) {
+        Snackbar.make(
+            binding.btnAdd,
+            getString(R.string.contact_removed),
+            duration
+        )
+            .setTextColor(Color.WHITE)
+            .setAction(getString(R.string.add_back)) {
+                viewModel.addUserBack()
+            }
+            .show()
+    }
+
+    private fun openContactDetail(email: String?) {
+        findNavController().navigate(ContactsFragmentDirections.actionContactsFragmentToContactDetailFragment(email))
     }
 
     override fun onCreateView(
@@ -36,7 +67,6 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
         savedInstanceState: Bundle?
     ): View =
         FragmentContactsBinding.inflate(inflater, container, false).apply { binding = this }.root
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,33 +95,8 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
         addListeners()
     }
 
-    private fun addListeners() {
-        binding.btnAdd.setOnClickListener {
-            AddContactDialog(viewModel)
-                .show(childFragmentManager, "")
-        }
-    }
-
-    private fun showDeletionUndoSnackBar(duration: Int) {
-        Snackbar.make(
-            binding.btnAdd,
-            getString(R.string.contact_removed),
-            duration
-        )
-            .setTextColor(Color.WHITE)
-            .setAction(getString(R.string.add_back)) {
-                viewModel.addUserBack()
-            }
-            .show()
-    }
-
-
     override fun onDialogAddClicked(binding: DialogAddContactBinding) {
         viewModel.onDialogAddClicked(binding)
-    }
-
-    private fun openContactDetail(email: String?) {
-        findNavController().navigate(ContactsFragmentDirections.actionContactsFragmentToContactDetailFragment(email))
     }
 
 }
