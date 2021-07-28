@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.databinding.ListItemBinding
+import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.OnItemClickListener
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
@@ -15,7 +16,7 @@ class RvContactsAdapter(
     private val onRemove: (String?) -> Unit,
     private val functionOnClickListener: (String?) -> Unit,
     private val objectOnClickListener: OnItemClickListener
-) : ListAdapter<String, ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener {
+) : ListAdapter<User, ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
@@ -42,12 +43,12 @@ class RvContactsAdapter(
         (viewHolder as ContactHolder).remove()
     }
 
-    private object DiffCallBack : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+    private object DiffCallBack : DiffUtil.ItemCallback<User>() {
+        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
             return oldItem == newItem
         }
 
