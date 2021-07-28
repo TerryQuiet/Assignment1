@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
+    <style name="Base.Theme.MyApp.WhiteSurface" >
+        <item name="backgroundColor">@color/white</item>
+        <item name="colorOnBackground">@color/black</item>
+        <item name="textInputStyle">@style/MyApp.TextInputLayoutStyleOutlineOnWhite</item>
+    </style>
 
     <style name="Base.Theme.MyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!--Material color attributes (light theme) -->
@@ -9,26 +13,26 @@
         <!--colorSecondary colors are most often used as accents on components, such as FABs and -->
         <!--selection controls.-->
         <item name="colorPrimary">@color/orange_500</item>
+        <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/orange_200</item>
         <item name="colorSecondary">@color/orange_500</item>
+        <item name="colorOnSecondary">@color/white</item>
         <item name="colorSecondaryVariant">@color/orange_200</item>
         <!--colorBackground appears behind scrollable content and is used for the default window-->
         <!--background. colorSurface is mapped to the surface of components such as cards, sheets-->
         <!--and menus. colorError is used to indicate an error state for components such as-->
         <!--text fields.-->
-        <item name="android:windowBackground">@color/dark_blue_500</item>
-        <item name="android:colorBackground">@color/dark_blue_500</item>
         <item name="backgroundColor">@color/dark_blue_500</item>
-        <item name="colorSurface">@color/dark_blue_500</item>
-        <item name="colorError">@color/red_600</item>
-        <!--"On" colors define how text, icons and strokes are colored in relation to the surface-->
-        <!--on which they appear.-->
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:windowBackground">?attr/backgroundColor</item>
+        <item name="colorSurface">?attr/backgroundColor</item>
+
         <item name="colorOnBackground">@color/white</item>
-        <item name="colorOnSurface">@color/white</item>
-        <item name="colorOnError">@color/red_200</item>
-        <!--Material type attributes-->
+        <item name="colorOnSurface">?attr/colorOnBackground</item>
+
+        <item name="colorError">@color/red_200</item>
+        <item name="errorTextColor">@color/red_200</item>
+        <item name="colorOnError">@color/black</item>
+        <item name="android:textColorHint">@color/gray</item>
 
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyTheme.MediumComponent</item>
@@ -39,17 +43,14 @@
         <!--My addiction-->
 
         <item name="android:windowAnimationStyle">@style/WindowAnimations</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
         <!--statusBar-->
-        <item name="android:statusBarColor" >@color/white_700</item>
-        <item name="android:windowLightStatusBar">true</item>
+
 
         <!--app bar basically-->
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
-
         <item name="snackbarStyle">@style/Widget.App.Snackbar</item>
         <item name="snackbarButtonStyle">@style/Widget.App.SnackbarButton</item>
-
         <item name="textInputStyle">@style/AppTheme.TextInputLayoutStyle</item>
 
     </style>

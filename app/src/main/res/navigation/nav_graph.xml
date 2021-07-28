@@ -20,5 +20,16 @@
             android:name="email"
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_contactDetailFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="tk.quietdev.level1.ui.contacts.EditProfileFragment"
+        android:label="EditProfileFragment" >
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
 </navigation>

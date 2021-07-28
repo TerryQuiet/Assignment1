@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import tk.quietdev.level1.databinding.FragmentContactDetailBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
@@ -43,6 +44,13 @@ class ContactDetailFragment : Fragment() {
                 tvOccupation.text = it.occupation
                 ivProfilePic.loadImage(it.picture)
             }
+            binding.btnEditProfile.setOnClickListener {
+                openEditFragment(currentUser.email)
+            }
         }
+    }
+
+    private fun openEditFragment(email: String) {
+        findNavController().navigate(ContactDetailFragmentDirections.actionContactDetailFragmentToEditProfileFragment(email))
     }
 }

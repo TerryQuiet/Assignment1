@@ -1,6 +1,5 @@
 package tk.quietdev.level1.ui.contacts
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import tk.quietdev.level1.database.FakeDatabase

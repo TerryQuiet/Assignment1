@@ -2,13 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:theme="@style/Base.Theme.MyApp"
+    android:background="?attr/backgroundColor"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/colorSurface"
     android:orientation="vertical"
-
-    android:paddingHorizontal="@dimen/normal_16dp"
-    android:theme="@style/Base.Theme.MyApp">
+    android:paddingHorizontal="@dimen/normal_16dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivProfilePic"
