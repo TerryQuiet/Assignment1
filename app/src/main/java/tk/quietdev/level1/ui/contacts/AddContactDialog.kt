@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import tk.quietdev.level1.databinding.DialogAddContactBinding
 
+
 class AddContactDialog(
     private val onClick: Listener
 ) : DialogFragment() {
@@ -46,6 +47,7 @@ class AddContactDialog(
 
     interface Listener {
         fun onDialogAddClicked(binding: DialogAddContactBinding)
+
     }
 
 }

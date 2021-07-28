@@ -3,12 +3,10 @@ package tk.quietdev.level1.ui.contacts
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
-import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.FragmentContactDetailBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.utils.ext.loadImage
@@ -36,18 +34,15 @@ class ContactDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val currentUser = viewModel.getUser(args.email)
 
-
-        //val currentUser = viewModel.getUser(args.email)
-
-     /*   userDetailBinding.apply {
-            tvName.text = currentUser?.userName
-            tvAddress.text = currentUser?.physicalAddress
-            tvOccupation.text = currentUser?.occupation
-            ivProfilePic.loadImage(currentUser?.picture)
-        }*/
-
-
+        currentUser?.let {
+            userDetailBinding.apply {
+                tvName.text = it.userName
+                tvAddress.text = it.physicalAddress
+                tvOccupation.text = it.occupation
+                ivProfilePic.loadImage(it.picture)
+            }
+        }
     }
-
 }

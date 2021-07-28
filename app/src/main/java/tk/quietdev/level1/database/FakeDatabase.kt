@@ -5,25 +5,16 @@ import tk.quietdev.level1.utils.PrefsHelper
 
 object FakeDatabase {
 
-    val allFakeUsers = getUsersMap().toMutableMap()
-    var userContacts: MutableList<String> = getUserList().map { it.email }.toMutableList()
-    var currentUserID: String = PrefsHelper.getCurrentUser()
+    // all the users in database
+    private val allFakeUsers = getFakeUsers().toMutableMap()
 
-    fun getUserWithValidation(name: String, password: String): User? {
-        return if (isPasswordCorrect(allFakeUsers[name], password)) {
-            allFakeUsers[name]
-        } else null
-    }
+    var currentUserID: String = PrefsHelper.getCurrentUser()
 
     private fun isPasswordCorrect(user: User?, password: String): Boolean {
         return (user?.password == password)
     }
 
-    fun getUserWithNoValidation(name: String?): User? {
-        return allFakeUsers[name]
-    }
-
-    private fun getUsersMap(): Map<String, User> {
+    private fun getFakeUsers(): Map<String, User> {
         return mapOf(
             "mail@pm.me" to User(
                 "Terry",
@@ -45,7 +36,22 @@ object FakeDatabase {
         )
     }
 
-    private fun getUserList(): List<User> {
-        return allFakeUsers.values.toList()
+    fun getUserList(): List<String> {
+        return allFakeUsers.keys.toList()
     }
+
+    fun getUserWithValidation(name: String, password: String): User? {
+        return if (isPasswordCorrect(allFakeUsers[name], password)) {
+            allFakeUsers[name]
+        } else null
+    }
+
+    fun getUserWithNoValidation(name: String?): User? {
+        return allFakeUsers[name]
+    }
+
+    fun addUser(user: User) {
+        allFakeUsers[user.email] = user
+    }
+
 }

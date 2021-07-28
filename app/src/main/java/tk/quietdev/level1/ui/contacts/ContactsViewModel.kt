@@ -1,5 +1,6 @@
 package tk.quietdev.level1.ui.contacts
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import tk.quietdev.level1.database.FakeDatabase
@@ -7,41 +8,44 @@ import tk.quietdev.level1.databinding.DialogAddContactBinding
 import tk.quietdev.level1.models.User
 
 
-
-
 class ContactsViewModel : ViewModel() {
 
+    private val db = FakeDatabase
+
     private var deletedUserPosition = 0
-    val userList = MutableLiveData(FakeDatabase.userContacts)
-    val deletedUser = MutableLiveData("")
+    val userList = MutableLiveData(db.getUserList().toMutableList())
+    private val deletedUsers = mutableMapOf<String, Boolean>()
 
 
     private fun updateLiveData() {
-        userList.value = FakeDatabase.userContacts
+        userList.postValue(userList.value)
     }
 
-
     private fun addNewUserToDatabase(user: User) {
-        FakeDatabase.allFakeUsers[user.email] = user
-        FakeDatabase.userContacts.add(user.email)
+        db.addUser(user)
+        userList.value?.add(user.email)
         updateLiveData()
     }
 
-    fun addUserBack() {
-        if (deletedUser.value.toString().isNotEmpty()) {
-            FakeDatabase.userContacts.add(deletedUserPosition, deletedUser.value.toString())
-            updateLiveData()
-            deletedUser.value = ""
+    fun addUserBack(email :String) {
+        val isRecoverable = deletedUsers[email]
+        isRecoverable?.let {
+            if (it) {
+                userList.value?.add(deletedUserPosition, email)
+                deletedUsers.remove(email)
+                updateLiveData()
+            }
         }
     }
 
     fun removeUser(email: String?) {
-        val position = FakeDatabase.userContacts.indexOf(email)
-        deletedUser.value = FakeDatabase.userContacts.removeAt(position)
-        deletedUserPosition = position
-        updateLiveData()
+        val position = userList.value?.indexOf(email)
+        position?.let {
+            deletedUsers[userList.value?.removeAt(it)!!] = true
+            deletedUserPosition = it
+            updateLiveData()
+        }
     }
-
 
 
     fun onDialogAddClicked(dialogBinding: DialogAddContactBinding) {
@@ -57,9 +61,12 @@ class ContactsViewModel : ViewModel() {
         addNewUserToDatabase(user)
     }
 
-   /* fun getUser(email: String?): Any {
+    fun getUser(email: String?): User? {
+       return db.getUserWithNoValidation(email)
+    }
 
-    }*/
-
+    fun setUserRecoverable(email: String, boolean: Boolean) {
+        deletedUsers[email] = boolean
+    }
 
 }

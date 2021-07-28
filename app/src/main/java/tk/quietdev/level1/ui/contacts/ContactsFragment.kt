@@ -2,22 +2,24 @@ package tk.quietdev.level1.ui.contacts
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import tk.quietdev.level1.R
-import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.DialogAddContactBinding
 import tk.quietdev.level1.databinding.FragmentContactsBinding
+import tk.quietdev.level1.models.User
 import tk.quietdev.level1.ui.contacts.recycleView.RvContactsAdapter
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.OnItemClickListener
 
-
+private const val TAG = "ContactsViewModel"
 class ContactsFragment : Fragment(), AddContactDialog.Listener {
 
     private lateinit var binding: FragmentContactsBinding
@@ -25,15 +27,22 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
     private val adapter by lazy {
         RvContactsAdapter(
             layoutInflater,
-            viewModel::removeUser,
+            this::removeUser,
             // TODO: 7/28/2021 help me understand the difference
             functionOnClickListener =  this::openContactDetail,
             objectOnClickListener =  object : OnItemClickListener {
-                override fun onItemClick(email: String?) {
-                    openContactDetail(email)
+                override fun onItemClick(id: String?) {
+                    openContactDetail(id)
                 }
             }
         )
+    }
+
+    private fun removeUser(email: String?) {
+        email?.let {
+            viewModel.removeUser(email)
+            showDeletionUndoSnackBar(email ,Const.TIME_5_SEC)
+        }
     }
 
     private fun addListeners() {
@@ -44,7 +53,7 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
     }
 
 
-    private fun showDeletionUndoSnackBar(duration: Int) {
+    private fun showDeletionUndoSnackBar(email :String , duration: Int) {
         Snackbar.make(
             binding.btnAdd,
             getString(R.string.contact_removed),
@@ -52,8 +61,13 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
         )
             .setTextColor(Color.WHITE)
             .setAction(getString(R.string.add_back)) {
-                viewModel.addUserBack()
+                viewModel.addUserBack(email)
             }
+            .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                       viewModel.setUserRecoverable(email, false)
+                }
+            })
             .show()
     }
 
@@ -75,12 +89,7 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
 
         viewModel.apply {
             userList.observe(viewLifecycleOwner, { newList ->
-                adapter.submitList(newList.toList())
-            })
-            deletedUser.observe(viewLifecycleOwner, { deletedUser ->
-                if (deletedUser.isNotEmpty()) {
-                    showDeletionUndoSnackBar(Const.TIME_5_SEC)
-                }
+                adapter.submitList(getUsersByEmail(newList))
             })
         }
 
@@ -91,8 +100,12 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
                 DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
             )
         }
-        adapter.submitList(FakeDatabase.userContacts)
+        adapter.submitList(getUsersByEmail(viewModel.userList.value!!))
         addListeners()
+    }
+
+    private fun getUsersByEmail(value: MutableList<String>): List<User> {
+      return value.mapNotNull { viewModel.getUser(it) }.toList()
     }
 
     override fun onDialogAddClicked(binding: DialogAddContactBinding) {
