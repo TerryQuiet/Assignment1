@@ -55,6 +55,7 @@
 
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/normal_16dp"
@@ -67,7 +68,7 @@
                     android:id="@+id/etNameParent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="SSS">
+                    android:hint="@string/username">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/name"
@@ -81,7 +82,7 @@
                     android:id="@+id/etOccupationParent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="SSS">
+                    android:hint="@string/career">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etOccupation"
@@ -94,7 +95,7 @@
                     android:id="@+id/etEmailParent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="SSS">
+                    android:hint="@string/email">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etEmail"
@@ -107,7 +108,7 @@
                     android:id="@+id/etPhoneNumberParent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="SSS">
+                    android:hint="@string/phone">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etPhoneNumber"
@@ -120,7 +121,7 @@
                     android:id="@+id/etAddressParent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="SSS">
+                    android:hint="@string/address">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etAddress"
@@ -133,7 +134,7 @@
                     android:id="@+id/etBirthDateParent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="SSS">
+                    android:hint="@string/date_of_birth">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etBirthDate"
@@ -150,9 +151,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/normal_16dp"
+                android:text="@string/save"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintVertical_bias="1"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
             </Button>
 
