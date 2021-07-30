@@ -25,6 +25,10 @@ object FakeDatabase {
         return movieList.associateBy { it.email }.toMutableMap()
     }
 
+    /**
+     * @param amount the number of user emails to return, -1 if all
+     * @return list of user emails
+     */
     fun getUserList(amount: Int = -1): List<String> {
         return allFakeUsers.keys.take(if (amount < 0) allFakeUsers.size else amount)
     }
@@ -41,6 +45,13 @@ object FakeDatabase {
 
     fun addUser(user: User) {
         allFakeUsers[user.email] = user
+    }
+
+    fun updateUser(oldUserID: String, user: User) {
+        allFakeUsers[user.email] = user
+        if (oldUserID != user.email) {
+            allFakeUsers.remove(oldUserID)
+        }
     }
 
 }
