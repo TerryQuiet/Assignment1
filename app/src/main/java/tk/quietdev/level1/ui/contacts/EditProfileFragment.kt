@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
+import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.ext.loadImage
 
 class EditProfileFragment : Fragment() {
@@ -15,6 +17,7 @@ class EditProfileFragment : Fragment() {
     private lateinit var binding: FragmentEditProfileBinding
     private lateinit var viewModel: ContactsViewModel
     private val args: ContactDetailFragmentArgs by navArgs()
+    private val user = User("", "")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,21 +31,40 @@ class EditProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindValues()
-    }
-
-    private fun bindValues() {
         val user = viewModel.getUser(args.email)
         user?.let {
-            binding.apply {
-                ivProfilePic.loadImage(it.picture)
-                etAddress.setText(it.physicalAddress)
-                etOccupation.setText(it.occupation)
-                etEmail.setText(it.email)
-                etBirthDate.setText(it.birthDate)
-                etPhoneNumber.setText(it.phone)
-                etName.setText(it.userName)
+            bindValues(it)
+            setListeners()
+        }
+    }
+
+    private fun setListeners() {
+        binding.apply {
+            btnSave.setOnClickListener {
+                val user = User(
+                    userName = etName.text.toString(),
+                    email = etEmail.text.toString(),
+                    occupation = etOccupation.text.toString(),
+                    physicalAddress = etAddress.text.toString(),
+                    birthDate = etBirthDate.text.toString(),
+                    phone = etPhoneNumber.text.toString()
+                )
+                viewModel.updateUser(binding.etEmail.text.toString(), user)
+                bindValues(user)
             }
+        }
+
+    }
+
+    private fun bindValues(user: User) {
+        binding.apply {
+            ivProfilePic.loadImage(user.picture)
+            etAddress.setText(user.physicalAddress)
+            etOccupation.setText(user.occupation)
+            etEmail.setText(user.email)
+            etBirthDate.setText(user.birthDate)
+            etPhoneNumber.setText(user.phone)
+            etName.setText(user.userName)
         }
     }
 

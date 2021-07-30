@@ -47,4 +47,11 @@ object FakeDatabase {
         allFakeUsers[user.email] = user
     }
 
+    fun updateUser(oldUserID: String, user: User) {
+        allFakeUsers[user.email] = user
+        if (oldUserID != user.email) {
+            allFakeUsers.remove(oldUserID)
+        }
+    }
+
 }

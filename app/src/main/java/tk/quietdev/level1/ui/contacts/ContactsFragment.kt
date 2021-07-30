@@ -88,9 +88,9 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
         viewModel = ViewModelProvider(requireActivity()).get(ContactsViewModel::class.java)
 
         viewModel.apply {
-            userList.observe(viewLifecycleOwner, { newList ->
+            userList.observe(viewLifecycleOwner) { newList ->
                 adapter.submitList(getUsersByEmail(newList))
-            })
+            }
         }
 
         binding.apply {

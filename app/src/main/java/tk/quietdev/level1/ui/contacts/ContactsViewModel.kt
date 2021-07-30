@@ -26,7 +26,7 @@ class ContactsViewModel : ViewModel() {
         updateLiveData()
     }
 
-    fun addUserBack(email :String) {
+    fun addUserBack(email: String) {
         val isRecoverable = deletedUsers[email]
         isRecoverable?.let {
             if (it) {
@@ -61,11 +61,22 @@ class ContactsViewModel : ViewModel() {
     }
 
     fun getUser(email: String?): User? {
-       return db.getUserWithNoValidation(email)
+        return db.getUserWithNoValidation(email)
     }
 
     fun setUserRecoverable(email: String, boolean: Boolean) {
         deletedUsers[email] = boolean
+    }
+
+    fun updateUser(oldUserID: String, user: User) {
+        db.updateUser(oldUserID, user)
+        if (oldUserID != user.email) {
+            userList.value?.remove(oldUserID)
+            userList.value?.add(user.email)
+        }
+        userList.postValue(userList.value)
+
+
     }
 
 }
