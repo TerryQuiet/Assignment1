@@ -12,7 +12,7 @@ class ContactsViewModel : ViewModel() {
     private val db = FakeDatabase
 
     private var deletedUserPosition = 0
-    val userList = MutableLiveData(db.getUserList().toMutableList())
+    val userList = MutableLiveData(db.getUserList(11).toMutableList())
     private val deletedUsers = mutableMapOf<String, Boolean>()
 
 
