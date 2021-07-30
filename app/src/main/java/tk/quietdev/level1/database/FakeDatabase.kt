@@ -1,12 +1,13 @@
 package tk.quietdev.level1.database
 
+import com.fasterxml.jackson.module.kotlin.*
 import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.PrefsHelper
 
 object FakeDatabase {
 
     // all the users in database
-    private val allFakeUsers = getFakeUsers().toMutableMap()
+    private lateinit var  allFakeUsers : MutableMap<String, User>
 
     var currentUserID: String = PrefsHelper.getCurrentUser()
 
@@ -14,30 +15,18 @@ object FakeDatabase {
         return (user?.password == password)
     }
 
-    private fun getFakeUsers(): Map<String, User> {
-        return mapOf(
-            "mail@pm.me" to User(
-                "Terry",
-                "mail@pm.me",
-                "Mega programmer",
-                "Moon 23st",
-                "https://avatars.githubusercontent.com/u/12786477?v=4",
-                password = "11111"
-            ),
-            "mail1@pm.me" to User("Quiet", "mail1@pm.me"),
-            "blabal@pm.me" to User("Blabal", "blabal@pm.me"),
-            "xaxaax@pm.me" to User("Xaxaax", "xaxaax@pm.me"),
-            "fffff1@pm.me" to User("Fffff1", "fffff1@pm.me"),
-            "fffff2@pm.me" to User("Fffff2", "fffff2@pm.me"),
-            "fffff3@pm.me" to User("Fffff3", "fffff3@pm.me"),
-            "fffff4@pm.me" to User("Fffff4", "fffff4@pm.me"),
-            "fffff5@pm.me" to User("Fffff5", "fffff5@pm.me"),
-            "fffff6@pm.me" to User("Fffff6", "fffff6@pm.me"),
-        )
+    fun init(string: String) {
+        allFakeUsers = getUsersFromJson(string)
     }
 
-    fun getUserList(): List<String> {
-        return allFakeUsers.keys.toList()
+    private fun getUsersFromJson(string: String): MutableMap<String, User> {
+        val mapper = jacksonObjectMapper()
+        val movieList:List<User> = mapper.readValue(string)
+        return movieList.associateBy { it.email }.toMutableMap()
+    }
+
+    fun getUserList(amount: Int = -1): List<String> {
+        return allFakeUsers.keys.take(if (amount < 0) allFakeUsers.size else amount)
     }
 
     fun getUserWithValidation(name: String, password: String): User? {
