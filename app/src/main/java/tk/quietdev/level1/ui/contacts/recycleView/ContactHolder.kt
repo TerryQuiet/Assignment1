@@ -4,7 +4,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.User
-import tk.quietdev.level1.utils.OnItemClickListener
 import tk.quietdev.level1.utils.ext.loadImage
 
 class ContactHolder(
@@ -38,5 +37,9 @@ class ContactHolder(
 
     fun remove() {
         onRemove(email)
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(id: String?)
     }
 }

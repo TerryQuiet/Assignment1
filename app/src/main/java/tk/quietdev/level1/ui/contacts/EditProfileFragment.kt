@@ -4,12 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
 import tk.quietdev.level1.models.User
+import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
 class EditProfileFragment : Fragment() {
@@ -17,7 +18,9 @@ class EditProfileFragment : Fragment() {
     private lateinit var binding: FragmentEditProfileBinding
     private lateinit var viewModel: ContactsViewModel
     private val args: ContactDetailFragmentArgs by navArgs()
-    private val user = User("", "")
+    private lateinit var oldUserID: String
+    private var currentUser: User? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,8 +34,9 @@ class EditProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val user = viewModel.getUser(args.email)
-        user?.let {
+        currentUser = viewModel.getUser(args.email)
+        currentUser?.let {
+            oldUserID = it.email
             bindValues(it)
             setListeners()
         }
@@ -41,7 +45,16 @@ class EditProfileFragment : Fragment() {
     private fun setListeners() {
         binding.apply {
             btnSave.setOnClickListener {
-                val user = User(
+                getNewValues()
+            }
+        }
+
+    }
+
+    private fun getNewValues() {
+        currentUser?.let {
+            binding.apply {
+                val newUser = it.copy(
                     userName = etName.text.toString(),
                     email = etEmail.text.toString(),
                     occupation = etOccupation.text.toString(),
@@ -49,8 +62,13 @@ class EditProfileFragment : Fragment() {
                     birthDate = etBirthDate.text.toString(),
                     phone = etPhoneNumber.text.toString()
                 )
-                viewModel.updateUser(binding.etEmail.text.toString(), user)
-                bindValues(user)
+                // I have to set the currentUser to new user, so if fields does not change on a next button press
+                // im not calling to update
+                if (currentUser != newUser) {
+                    viewModel.updateUser(oldUserID, newUser)
+                    findNavController().previousBackStackEntry?.savedStateHandle?.set(Const.EDITUSER_GET_BACK, newUser.email)
+                    currentUser = newUser
+                }
             }
         }
 

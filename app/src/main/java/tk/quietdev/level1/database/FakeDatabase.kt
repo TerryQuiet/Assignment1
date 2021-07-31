@@ -1,9 +1,14 @@
 package tk.quietdev.level1.database
 
+import android.util.Log
 import com.fasterxml.jackson.module.kotlin.*
 import tk.quietdev.level1.models.User
+import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.PrefsHelper
+import kotlin.reflect.full.memberProperties
 
+
+private const val TAG = Const.TAG
 object FakeDatabase {
 
     // all the users in database
