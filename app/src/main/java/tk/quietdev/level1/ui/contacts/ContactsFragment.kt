@@ -15,11 +15,11 @@ import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.DialogAddContactBinding
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.models.User
+import tk.quietdev.level1.ui.contacts.recycleView.ContactHolder
 import tk.quietdev.level1.ui.contacts.recycleView.RvContactsAdapter
 import tk.quietdev.level1.utils.Const
-import tk.quietdev.level1.utils.OnItemClickListener
 
-
+private const val TAG = Const.TAG
 class ContactsFragment : Fragment(), AddContactDialog.Listener {
 
     private lateinit var binding: FragmentContactsBinding
@@ -30,7 +30,7 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
             this::removeUser,
             // TODO: 7/28/2021 help me understand the difference
             functionOnClickListener =  this::openContactDetail,
-            objectOnClickListener =  object : OnItemClickListener {
+            objectOnClickListener =  object : ContactHolder.OnItemClickListener {
                 override fun onItemClick(id: String?) {
                     openContactDetail(id)
                 }
@@ -89,6 +89,7 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
 
         viewModel.apply {
             userList.observe(viewLifecycleOwner) { newList ->
+                Log.d(TAG, "onViewCreated: ${newList}")
                 adapter.submitList(getUsersByEmail(newList))
             }
         }

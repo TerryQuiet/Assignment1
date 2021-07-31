@@ -8,14 +8,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.User
-import tk.quietdev.level1.utils.OnItemClickListener
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
 class RvContactsAdapter(
     private val inflater: LayoutInflater,
     private val onRemove: (String?) -> Unit,
     private val functionOnClickListener: (String?) -> Unit,
-    private val objectOnClickListener: OnItemClickListener
+    private val objectOnClickListener: ContactHolder.OnItemClickListener
 ) : ListAdapter<User, ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

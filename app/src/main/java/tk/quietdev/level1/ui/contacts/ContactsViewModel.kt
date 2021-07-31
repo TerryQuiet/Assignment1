@@ -1,10 +1,13 @@
 package tk.quietdev.level1.ui.contacts
 
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.databinding.DialogAddContactBinding
 import tk.quietdev.level1.models.User
+
+
 
 
 class ContactsViewModel : ViewModel() {
@@ -71,11 +74,10 @@ class ContactsViewModel : ViewModel() {
     fun updateUser(oldUserID: String, user: User) {
         db.updateUser(oldUserID, user)
         if (oldUserID != user.email) {
-            userList.value?.remove(oldUserID)
-            userList.value?.add(user.email)
+            removeUser(oldUserID)
+            userList.value?.add(deletedUserPosition, user.email)
         }
         userList.postValue(userList.value)
-
 
     }
 

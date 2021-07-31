@@ -1,15 +1,19 @@
 package tk.quietdev.level1.ui.contacts
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import tk.quietdev.level1.databinding.FragmentContactDetailBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
+import tk.quietdev.level1.models.User
+import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
 
@@ -34,9 +38,19 @@ class ContactDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        // FIXME: 7/31/2021  
         val currentUser = viewModel.getUser(args.email)
+        bind(currentUser)
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>(Const.EDITUSER_GET_BACK)
+            ?.observe(
+                viewLifecycleOwner
+            ) {
+                bind(viewModel.getUser(it))
+            }
+    }
 
+
+    private fun bind(currentUser: User?) {
         currentUser?.let {
             userDetailBinding.apply {
                 tvName.text = it.userName
@@ -51,6 +65,10 @@ class ContactDetailFragment : Fragment() {
     }
 
     private fun openEditFragment(email: String) {
-        findNavController().navigate(ContactDetailFragmentDirections.actionContactDetailFragmentToEditProfileFragment(email))
+        findNavController().navigate(
+            ContactDetailFragmentDirections.actionContactDetailFragmentToEditProfileFragment(
+                email
+            )
+        )
     }
 }

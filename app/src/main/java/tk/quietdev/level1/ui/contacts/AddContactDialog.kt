@@ -47,7 +47,6 @@ class AddContactDialog(
 
     interface Listener {
         fun onDialogAddClicked(binding: DialogAddContactBinding)
-
     }
 
 }
