@@ -2,13 +2,13 @@ package tk.quietdev.level1.ui.contacts
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import tk.quietdev.level1.R
@@ -19,29 +19,66 @@ import tk.quietdev.level1.ui.contacts.recycleView.ContactHolder
 import tk.quietdev.level1.ui.contacts.recycleView.RvContactsAdapter
 import tk.quietdev.level1.utils.Const
 
-private const val TAG = Const.TAG
+
 class ContactsFragment : Fragment(), AddContactDialog.Listener {
 
     private lateinit var binding: FragmentContactsBinding
     private lateinit var viewModel: ContactsViewModel
-    private val adapter by lazy {
-        RvContactsAdapter(
-            layoutInflater,
-            this::removeUser,
-            // TODO: 7/28/2021 help me understand the difference
-            functionOnClickListener =  this::openContactDetail,
-            objectOnClickListener =  object : ContactHolder.OnItemClickListener {
-                override fun onItemClick(id: String?) {
-                    openContactDetail(id)
-                }
-            }
-        )
+    private lateinit var recycleView: RecyclerView
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentContactsBinding.inflate(inflater, container, false)
+        return binding.root
     }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity()).get(ContactsViewModel::class.java)
+        initObservables()
+        initRecycleView()
+        addListeners()
+    }
+
+    override fun onDialogAddClicked(binding: DialogAddContactBinding) {
+        viewModel.onDialogAddClicked(binding)
+    }
+
+    private fun initRecycleView() {
+        recycleView = binding.recycleView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = getContactAdapter()
+            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+        }
+        (recycleView.adapter as RvContactsAdapter).submitList(getUsersByEmail(viewModel.userList.value))
+    }
+
+    private fun initObservables() {
+        viewModel.apply {
+            userList.observe(viewLifecycleOwner) { newList ->
+                (recycleView.adapter as RvContactsAdapter).submitList(getUsersByEmail(newList))
+            }
+        }
+    }
+
+
+
+    private fun getContactAdapter() = RvContactsAdapter(
+        layoutInflater,
+        this::removeUser,
+        // TODO: 7/28/2021 help me understand the difference
+        functionOnClickListener = this::openContactDetail,
+        objectOnClickListener = onItemClickListener
+    )
 
     private fun removeUser(email: String?) {
         email?.let {
             viewModel.removeUser(email)
-            showDeletionUndoSnackBar(email ,Const.TIME_5_SEC)
+            showDeletionUndoSnackBar(email, Const.TIME_5_SEC)
         }
     }
 
@@ -53,9 +90,9 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
     }
 
 
-    private fun showDeletionUndoSnackBar(email :String , duration: Int) {
+    private fun showDeletionUndoSnackBar(email: String, duration: Int) {
         Snackbar.make(
-            binding.btnAdd,
+            binding.root,
             getString(R.string.contact_removed),
             duration
         )
@@ -65,52 +102,32 @@ class ContactsFragment : Fragment(), AddContactDialog.Listener {
             }
             .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
-                       viewModel.setUserRecoverable(email, false)
+                    viewModel.setUserRecoverable(email, false)
                 }
             })
             .show()
     }
 
     private fun openContactDetail(email: String?) {
-        findNavController().navigate(ContactsFragmentDirections.actionContactsFragmentToContactDetailFragment(email))
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View =
-        FragmentContactsBinding.inflate(inflater, container, false).apply { binding = this }.root
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(requireActivity()).get(ContactsViewModel::class.java)
-
-        viewModel.apply {
-            userList.observe(viewLifecycleOwner) { newList ->
-                Log.d(TAG, "onViewCreated: ${newList}")
-                adapter.submitList(getUsersByEmail(newList))
-            }
-        }
-
-        binding.apply {
-            recycleView.layoutManager = LinearLayoutManager(context)
-            recycleView.adapter = adapter
-            recycleView.addItemDecoration(
-                DividerItemDecoration(context, LinearLayoutManager.VERTICAL)
+        findNavController().navigate(
+            ContactsFragmentDirections.actionContactsFragmentToContactDetailFragment(
+                email
             )
+        )
+    }
+
+    private fun getUsersByEmail(value: MutableList<String>?): List<User> {
+        value?.mapNotNull { viewModel.getUser(it) }?.toList()?.let {
+            return it
         }
-        adapter.submitList(getUsersByEmail(viewModel.userList.value!!))
-        addListeners()
+        return emptyList()
     }
 
-    private fun getUsersByEmail(value: MutableList<String>): List<User> {
-      return value.mapNotNull { viewModel.getUser(it) }.toList()
+    private val onItemClickListener = object : ContactHolder.OnItemClickListener {
+        override fun onItemClick(id: String?) {
+            openContactDetail(id)
+        }
     }
 
-    override fun onDialogAddClicked(binding: DialogAddContactBinding) {
-        viewModel.onDialogAddClicked(binding)
-    }
 
 }

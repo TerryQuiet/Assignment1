@@ -8,7 +8,9 @@ import tk.quietdev.level1.databinding.DialogAddContactBinding
 import tk.quietdev.level1.models.User
 
 
-
+/**
+ * Here I have list of Emails to show in recycleView (I'm not showing all I have in DB)
+ */
 
 class ContactsViewModel : ViewModel() {
 
@@ -17,17 +19,6 @@ class ContactsViewModel : ViewModel() {
     private var deletedUserPosition = 0
     val userList = MutableLiveData(db.getUserList(11).toMutableList())
     private val deletedUsers = mutableMapOf<String, Boolean>()
-
-
-    private fun updateLiveData() {
-        userList.postValue(userList.value)
-    }
-
-    private fun addNewUserToDatabase(user: User) {
-        db.addUser(user)
-        userList.value?.add(user.email)
-        updateLiveData()
-    }
 
     fun addUserBack(email: String) {
         val isRecoverable = deletedUsers[email]
@@ -73,12 +64,29 @@ class ContactsViewModel : ViewModel() {
 
     fun updateUser(oldUserID: String, user: User) {
         db.updateUser(oldUserID, user)
+        internalListUpdate(oldUserID, user)
+        userList.postValue(userList.value)
+
+    }
+
+    /**
+     * If email was updated, we have to delete replace it with new
+     */
+    private fun internalListUpdate(oldUserID: String, user: User) {
         if (oldUserID != user.email) {
             removeUser(oldUserID)
             userList.value?.add(deletedUserPosition, user.email)
         }
-        userList.postValue(userList.value)
+    }
 
+    private fun updateLiveData() {
+        userList.postValue(userList.value)
+    }
+
+    private fun addNewUserToDatabase(user: User) {
+        db.addUser(user)
+        userList.value?.add(user.email)
+        updateLiveData()
     }
 
 }
