@@ -1,9 +1,12 @@
 package tk.quietdev.level1.ui.contacts
 
+
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -13,6 +16,7 @@ import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
+
 class EditProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentEditProfileBinding
@@ -20,7 +24,8 @@ class EditProfileFragment : Fragment() {
     private val args: ContactDetailFragmentArgs by navArgs()
     private lateinit var oldUserID: String
     private var currentUser: User? = null
-
+    private var isLocalPicture = false
+    private lateinit var localPictureUri: Uri
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,12 +45,20 @@ class EditProfileFragment : Fragment() {
             bindValues(it)
             setListeners()
         }
+
+
     }
 
     private fun setListeners() {
         binding.apply {
             btnSave.setOnClickListener {
                 getNewValues()
+            }
+            btnAddPhoto.setOnClickListener {
+                // FIXME: 7/31/2021 no idea how this works
+                getAction.launch(
+                    "image/"
+                )
             }
         }
 
@@ -60,7 +73,8 @@ class EditProfileFragment : Fragment() {
                     occupation = etOccupation.text.toString(),
                     physicalAddress = etAddress.text.toString(),
                     birthDate = etBirthDate.text.toString(),
-                    phone = etPhoneNumber.text.toString()
+                    phone = etPhoneNumber.text.toString(),
+                    picture = if (isLocalPicture) localPictureUri.toString() else it.picture
                 )
                 // I have to set the currentUser to new user, so if fields does not change on a next button press
                 // im not calling to update
@@ -85,5 +99,20 @@ class EditProfileFragment : Fragment() {
             etName.setText(user.userName)
         }
     }
+
+
+
+    private val getAction = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) {
+        it.let {
+            localPictureUri = it
+            binding.ivProfilePic.loadImage(it)
+            isLocalPicture = true
+        }
+    }
+
+
+
 
 }

@@ -12,4 +12,3 @@ data class User(
     var birthDate: String? = null,
     var phone: String? = null,
 )
-
