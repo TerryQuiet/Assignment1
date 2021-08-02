@@ -1,21 +1,11 @@
 package tk.quietdev.level1.ui
 
 
-import android.content.Intent
-import android.graphics.Color
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doOnTextChanged
-import com.google.android.material.snackbar.Snackbar
-import tk.quietdev.level1.R
-import tk.quietdev.level1.database.FakeDatabase
-import tk.quietdev.level1.databinding.ActivityAuthBinding
-import tk.quietdev.level1.utils.Const
-import tk.quietdev.level1.utils.PrefsHelper
-import tk.quietdev.level1.utils.Validator
 
 
 class AuthActivity : AppCompatActivity() {
+/*
 
     private lateinit var binding: ActivityAuthBinding
     private val db = FakeDatabase
@@ -54,7 +44,9 @@ class AuthActivity : AppCompatActivity() {
                         binding.etEmailParent.error = getString(R.string.please_enter_valid_email)
                     }
                 }
-                /* Lower error message disappears when not focused, but frame stays RED if error */
+                */
+/* Lower error message disappears when not focused, but frame stays RED if error *//*
+
                 setOnFocusChangeListener { _, hasFocus ->
                     if (hasFocus && etEmailParent.isErrorEnabled) {
                         etEmailParent.error = getString(R.string.please_enter_valid_email)
@@ -76,9 +68,11 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    /**
+    */
+/**
      * checks if user is present in a database and proceeds to login if so
-     */
+     *//*
+
 
     private fun tryLogin() {
         val email = binding.etEmail.text.toString()
@@ -114,6 +108,7 @@ class AuthActivity : AppCompatActivity() {
         finish()
     }
 
+*/
 
 
 

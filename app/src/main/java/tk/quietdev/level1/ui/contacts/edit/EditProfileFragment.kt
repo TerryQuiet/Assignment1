@@ -1,31 +1,28 @@
-package tk.quietdev.level1.ui.contacts
+package tk.quietdev.level1.ui.contacts.edit
 
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
 import tk.quietdev.level1.models.User
-import tk.quietdev.level1.utils.Const
+import tk.quietdev.level1.ui.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.utils.ext.loadImage
-
 
 class EditProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentEditProfileBinding
-    private lateinit var viewModel: ContactsViewModel
-    private val args: ContactDetailFragmentArgs by navArgs()
-    private lateinit var oldUserID: String
-    private var currentUser: User? = null
-    private var isLocalPicture = false
-    private lateinit var localPictureUri: Uri
+    private val sharedViewModel: ContactsSharedViewModel by sharedViewModel()
+    private val viewModel: EditProfileViewModel by viewModel()
+    private val args: EditProfileFragmentArgs by navArgs()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,15 +31,14 @@ class EditProfileFragment : Fragment() {
     ): View =
         FragmentEditProfileBinding.inflate(inflater, container, false).apply {
             binding = this
-            viewModel = ViewModelProvider(requireActivity()).get(ContactsViewModel::class.java)
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        currentUser = viewModel.getUser(args.email)
-        currentUser?.let {
-            oldUserID = it.email
-            bindValues(it)
+
+        viewModel.apply {
+            currentUser = args.user
+            bindValues(currentUser)
             setListeners()
         }
 
@@ -52,45 +48,40 @@ class EditProfileFragment : Fragment() {
     private fun setListeners() {
         binding.apply {
             btnSave.setOnClickListener {
-                getNewValues()
+                if (updateUser()) {
+                    sharedViewModel.updatedUser.value = viewModel.currentUser
+                }
+                findNavController().popBackStack()
             }
             btnAddPhoto.setOnClickListener {
-                // FIXME: 7/31/2021 no idea how this works
                 getAction.launch(
                     "image/"
                 )
             }
         }
-
     }
 
-    private fun getNewValues() {
-        currentUser?.let {
-            binding.apply {
-                val newUser = it.copy(
+    /**
+     * @return returns true if user was updated
+     */
+    private fun updateUser(): Boolean {
+        binding.apply {
+          return viewModel.updateUser(
                     userName = etName.text.toString(),
                     email = etEmail.text.toString(),
                     occupation = etOccupation.text.toString(),
                     physicalAddress = etAddress.text.toString(),
                     birthDate = etBirthDate.text.toString(),
                     phone = etPhoneNumber.text.toString(),
-                    picture = if (isLocalPicture) localPictureUri.toString() else it.picture
+                    pictureUri =
+                    if (viewModel.localPictureUri != null) viewModel.localPictureUri.toString() else viewModel.currentUser.pictureUri
                 )
-                // I have to set the currentUser to new user, so if fields does not change on a next button press
-                // im not calling to update
-                if (currentUser != newUser) {
-                    viewModel.updateUser(oldUserID, newUser)
-                    findNavController().previousBackStackEntry?.savedStateHandle?.set(Const.EDITUSER_GET_BACK, newUser.email)
-                    currentUser = newUser
-                }
-            }
         }
-
     }
 
     private fun bindValues(user: User) {
         binding.apply {
-            ivProfilePic.loadImage(user.picture)
+            ivProfilePic.loadImage(user.pictureUri)
             etAddress.setText(user.physicalAddress)
             etOccupation.setText(user.occupation)
             etEmail.setText(user.email)
@@ -101,18 +92,12 @@ class EditProfileFragment : Fragment() {
     }
 
 
-
     private val getAction = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) {
-        it.let {
+        viewModel.apply {
             localPictureUri = it
             binding.ivProfilePic.loadImage(it)
-            isLocalPicture = true
         }
     }
-
-
-
-
 }

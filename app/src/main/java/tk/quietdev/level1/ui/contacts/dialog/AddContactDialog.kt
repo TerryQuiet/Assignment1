@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts
+package tk.quietdev.level1.ui.contacts.dialog
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -7,25 +7,49 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.databinding.DialogAddContactBinding
+import tk.quietdev.level1.ui.contacts.ContactsSharedViewModel
 
 
-class AddContactDialog(
-    private val onClick: Listener
-) : DialogFragment() {
+class AddContactDialog
+ : DialogFragment() {
 
     private lateinit var binding: DialogAddContactBinding
+    private val viewModel: AddContactViewModel by viewModel()
+    private val sharedViewModel: ContactsSharedViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.bntCancel.setOnClickListener {
-            dismiss()
+        setObserver()
+        setListeners()
+    }
+
+    private fun setListeners() {
+        binding.apply {
+
+            bntCancel.setOnClickListener {
+                dismiss()
+            }
+
+            btnAdd.setOnClickListener {
+                viewModel.addNewUser(
+                    etName.text.toString(),
+                    etSurname.text.toString(),
+                    etOccupation.text.toString()
+                )
+                dismiss()
+            }
+
         }
 
-        binding.btnAdd.setOnClickListener {
-            onClick.onDialogAddClicked(binding)
-            dismiss()
+    }
+
+    private fun setObserver() {
+        viewModel.newUser.observe(viewLifecycleOwner) { user ->
+            user?.let { sharedViewModel.newUser.value = user }
         }
     }
 
@@ -45,8 +69,5 @@ class AddContactDialog(
         dialog!!.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
-    interface Listener {
-        fun onDialogAddClicked(binding: DialogAddContactBinding)
-    }
 
 }
