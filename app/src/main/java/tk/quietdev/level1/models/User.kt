@@ -3,6 +3,7 @@ package tk.quietdev.level1.models
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class User(
+    var id: Int? = null,
     var userName: String? = null,
     var email: String,
     var occupation: String = "Not provided",

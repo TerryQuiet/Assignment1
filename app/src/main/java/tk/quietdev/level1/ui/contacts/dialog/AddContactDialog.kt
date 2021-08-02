@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts
+package tk.quietdev.level1.ui.contacts.dialog
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -11,7 +11,6 @@ import tk.quietdev.level1.databinding.DialogAddContactBinding
 
 
 class AddContactDialog(
-    private val onClick: Listener
 ) : DialogFragment() {
 
     private lateinit var binding: DialogAddContactBinding
@@ -24,7 +23,7 @@ class AddContactDialog(
         }
 
         binding.btnAdd.setOnClickListener {
-            onClick.onDialogAddClicked(binding)
+           // onClick.onDialogAddClicked(binding)
             dismiss()
         }
     }

@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts
+package tk.quietdev.level1.ui.contacts.edit
 
 
 import android.net.Uri
@@ -9,19 +9,18 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
 import tk.quietdev.level1.models.User
-import tk.quietdev.level1.utils.Const
+import tk.quietdev.level1.ui.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.utils.ext.loadImage
 
 
 class EditProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentEditProfileBinding
-    private lateinit var viewModel: ContactsViewModel
-    private val args: ContactDetailFragmentArgs by navArgs()
+    private lateinit var sharedViewModel: ContactsSharedViewModel
+    private val args: EditProfileFragmentArgs by navArgs()
     private lateinit var oldUserID: String
     private var currentUser: User? = null
     private var isLocalPicture = false
@@ -34,17 +33,17 @@ class EditProfileFragment : Fragment() {
     ): View =
         FragmentEditProfileBinding.inflate(inflater, container, false).apply {
             binding = this
-            viewModel = ViewModelProvider(requireActivity()).get(ContactsViewModel::class.java)
+            sharedViewModel = ViewModelProvider(requireActivity()).get(ContactsSharedViewModel::class.java)
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        currentUser = viewModel.getUser(args.email)
+      /*  currentUser = sharedViewModel.getUser(args.email)
         currentUser?.let {
             oldUserID = it.email
             bindValues(it)
             setListeners()
-        }
+        }*/
 
 
     }
@@ -78,11 +77,11 @@ class EditProfileFragment : Fragment() {
                 )
                 // I have to set the currentUser to new user, so if fields does not change on a next button press
                 // im not calling to update
-                if (currentUser != newUser) {
-                    viewModel.updateUser(oldUserID, newUser)
+            /*    if (currentUser != newUser) {
+                    sharedViewModel.updateUser(oldUserID, newUser)
                     findNavController().previousBackStackEntry?.savedStateHandle?.set(Const.EDITUSER_GET_BACK, newUser.email)
                     currentUser = newUser
-                }
+                }*/
             }
         }
 

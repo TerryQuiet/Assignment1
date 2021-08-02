@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts.recycleView
+package tk.quietdev.level1.ui.contacts.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,11 +10,9 @@ import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
-class RvContactsAdapter(
-    private val inflater: LayoutInflater,
-    private val onRemove: (String?) -> Unit,
-    private val functionOnClickListener: (String?) -> Unit,
-    private val objectOnClickListener: ContactHolder.OnItemClickListener
+class ContactsAdapter(
+    private val onRemove: (User, Int) -> Unit,
+    private val onItemClickListener: (Int) -> Unit
 ) : ListAdapter<User, ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -26,11 +24,10 @@ class RvContactsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
         return ContactHolder(
             ListItemBinding.inflate(
-                inflater, parent, false
+                LayoutInflater.from(parent.context), parent, false
             ),
             onRemove,
-            functionOnClickListener,
-            objectOnClickListener
+            onItemClickListener
         )
     }
 

@@ -1,23 +1,21 @@
-package tk.quietdev.level1.ui.contacts.recycleView
+package tk.quietdev.level1.ui.contacts.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.ext.loadImage
 
 class ContactHolder(
     private val binding: ListItemBinding,
-    private val onRemove: (String?) -> Unit,
-    private val functionOnClickListener: (String?) -> Unit,
-    private val objectOnClickListener: OnItemClickListener
+    private val onRemove: (User, Int) -> Unit,
+    private val onClickListener: (Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var email: String? = ""
+    private var currentUserId: User? = null
 
     fun bind(user: User) {
-        email = user.email
         with(user) {
+            currentUserId = this
             binding.tvName.text = this.userName
             binding.tvOccupation.text = this.occupation
             binding.ivProfilePic.loadImage(this.picture)
@@ -25,21 +23,15 @@ class ContactHolder(
                 remove()
             }
             binding.root.setOnClickListener {
-                // TODO: 7/28/2021 help me understand the difference
-                if (false) {
-                    functionOnClickListener(email)
-                } else {
-                    objectOnClickListener.onItemClick(email)
-                }
+                user.id?.let { onClickListener(it) }
             }
         }
     }
 
     fun remove() {
-        onRemove(email)
-    }
+        currentUserId?.let {
+            onRemove(it, adapterPosition)
+        }
 
-    interface OnItemClickListener {
-        fun onItemClick(id: String?)
     }
 }
