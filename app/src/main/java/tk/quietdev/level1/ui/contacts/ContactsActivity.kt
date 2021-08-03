@@ -23,7 +23,7 @@ class ContactsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityContactsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.topAppBar)
+        setSupportActionBar(binding.tbContacts)
         supportFragmentManager.findFragmentById(R.id.nav_host)?.findNavController()?.let { nav ->
             appBarConfiguration = AppBarConfiguration(nav.graph)
             setupActionBarWithNavController(nav, appBarConfiguration)
