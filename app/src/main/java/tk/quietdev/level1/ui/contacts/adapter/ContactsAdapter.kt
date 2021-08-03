@@ -12,7 +12,7 @@ import tk.quietdev.level1.utils.OnSwipeCallBack
 
 class ContactsAdapter(
     private val onRemove: (User, Int) -> Unit,
-    private val onItemClickListener: (Int) -> Unit
+    private val onItemClickListener: (User) -> Unit
 ) : ListAdapter<User, ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

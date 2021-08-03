@@ -18,9 +18,8 @@
         android:name="tk.quietdev.level1.ui.contacts.detail.ContactDetailFragment"
         android:label="@string/profile">
         <argument
-            android:name="email"
-            app:argType="string"
-            app:nullable="true" />
+            android:name="user"
+            app:argType="tk.quietdev.level1.models.User" />
         <action
             android:id="@+id/action_contactDetailFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
@@ -30,7 +29,7 @@
         android:name="tk.quietdev.level1.ui.contacts.edit.EditProfileFragment"
         android:label="@string/edit_profile">
         <argument
-            android:name="email"
-            app:argType="string" />
+            android:name="user"
+            app:argType="tk.quietdev.level1.models.User" />
     </fragment>
 </navigation>

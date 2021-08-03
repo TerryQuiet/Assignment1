@@ -8,7 +8,7 @@ import tk.quietdev.level1.utils.ext.loadImage
 class ContactHolder(
     private val binding: ListItemBinding,
     private val onRemove: (User, Int) -> Unit,
-    private val onClickListener: (Int) -> Unit
+    private val onClickListener: (User) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var currentUserId: User? = null
@@ -18,12 +18,12 @@ class ContactHolder(
             currentUserId = this
             binding.tvName.text = this.userName
             binding.tvOccupation.text = this.occupation
-            binding.ivProfilePic.loadImage(this.picture)
+            binding.ivProfilePic.loadImage(this.pictureUri)
             binding.imageBtnRemove.setOnClickListener {
                 remove()
             }
             binding.root.setOnClickListener {
-                user.id?.let { onClickListener(it) }
+                 onClickListener(this)
             }
         }
     }

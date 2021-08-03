@@ -9,15 +9,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFINITE
 import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.models.User
+import tk.quietdev.level1.ui.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.ui.contacts.adapter.ContactsAdapter
 import tk.quietdev.level1.ui.contacts.dialog.AddContactDialog
 import tk.quietdev.level1.utils.Const
@@ -27,8 +30,8 @@ class ContactsListFragment : Fragment() {
 
     private lateinit var binding: FragmentContactsBinding
     private val viewModel: ContactListViewModel by viewModel()
+    private val contactsSharedViewModel: ContactsSharedViewModel by sharedViewModel()
     private val contactsAdapter: ContactsAdapter by lazy { getContactAdapter() }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +51,7 @@ class ContactsListFragment : Fragment() {
     }
 
     private fun initRecycleView() {
-        binding.recycleView.apply {
+       binding.recycleView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = contactsAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
@@ -61,11 +64,24 @@ class ContactsListFragment : Fragment() {
         viewModel.apply {
             userList.observe(viewLifecycleOwner) { newList ->
                 Log.d(Const.TAG, "initObservables: ${newList.size} ")
-                contactsAdapter.submitList(newList)
+                contactsAdapter.submitList(newList.toList())
+            }
+        }
+        contactsSharedViewModel.apply {
+            newUser.observe(viewLifecycleOwner) { newUser ->
+                newUser?.let {
+                    viewModel.addNewUser(newUser)
+                    contactsSharedViewModel.newUser.value = null
+                }
+            }
+            updatedUser.observe(viewLifecycleOwner){
+                if (it!=null) {
+                    viewModel.updateUser(it)
+                    updatedUser.value = null
+                }
             }
         }
     }
-
 
     private fun getContactAdapter() = ContactsAdapter(
         onRemove =  this::removeUser,
@@ -74,7 +90,7 @@ class ContactsListFragment : Fragment() {
 
     private fun removeUser(user: User, position: Int) {
         viewModel.removeUser(user, position)
-        showDeletionUndoSnackBar(position)
+        showDeletionUndoSnackBar(user.id!!)
     }
 
     private fun addListeners() {
@@ -96,22 +112,25 @@ class ContactsListFragment : Fragment() {
                 viewModel.addUserBack(id)
             }
             .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                    super.onDismissed(transientBottomBar, event)
+                }
                 override fun onShown(transientBottomBar: Snackbar?) {
                     super.onShown(transientBottomBar)
                     Handler(Looper.getMainLooper()).postDelayed({
                         transientBottomBar?.dismiss()
-                        viewModel.deletedUserPosition = null
                     }, Const.TIME_5_SEC)
                 }
             })
             .show()
     }
 
-    private fun openContactDetail(id: Int) {
-        /*     findNavController().navigate(
+    private fun openContactDetail(user: User) {
+        Log.d(Const.TAG, "openContactDetail: ${user.userName}")
+            findNavController().navigate(
                  ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(
-                     email
+                     user
                  )
-             )*/
+             )
     }
 }
