@@ -17,7 +17,7 @@ class ContactListViewModel(
     private var handler: Handler? = null
 
     init {
-        userList = MutableLiveData(db.getUserList(Const.FAKE_USER_AMOUT_TO_LIST).toMutableList())
+        userList = MutableLiveData(db.getUserList(Const.FAKE_USER_AMOUNT_TO_LIST).toMutableList())
     }
 
     fun addUserBack(id: Int) {
@@ -44,10 +44,6 @@ class ContactListViewModel(
                 }, Const.TIME_5_SEC + 2000)
             }*/
         }
-    }
-
-    fun getUserById(id: Int): User? {
-        return db.getUserWithNoValidation(id)
     }
 
     fun addNewUser(user: User) {

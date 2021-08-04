@@ -19,3 +19,6 @@ https://stackoverflow.com/a/57886251/12972985
 
 Dialog
 https://medium.com/swlh/alertdialog-and-customdialog-in-android-with-kotlin-f42a168c1936
+
+Contacts from phone
+https://medium.com/@kednaik/android-contacts-fetching-using-coroutines-aa0129bffdc4

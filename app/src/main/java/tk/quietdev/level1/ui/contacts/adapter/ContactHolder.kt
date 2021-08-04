@@ -12,7 +12,7 @@ class ContactHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var currentUserId: User? = null
-
+    
     fun bind(user: User) {
         with(user) {
             currentUserId = this
@@ -30,7 +30,7 @@ class ContactHolder(
 
     fun remove() {
         currentUserId?.let {
-            onRemove(it, adapterPosition)
+            onRemove(it, absoluteAdapterPosition)
         }
 
     }

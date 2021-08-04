@@ -16,6 +16,7 @@ class ContactsAdapter(
 ) : ListAdapter<User, ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+
         super.onAttachedToRecyclerView(recyclerView)
         val onSwipeCallBack = OnSwipeCallBack(this)
         ItemTouchHelper(onSwipeCallBack).attachToRecyclerView(recyclerView)
