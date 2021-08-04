@@ -4,6 +4,10 @@ import tk.quietdev.level1.models.Contact
 import tk.quietdev.level1.models.User
 
 class Convertor {
+
+    /**
+     * @return only contacts with image, and phone number
+     */
     fun convertContactToUser(contact: Contact): User? {
         val number: String? = if (contact.numbers.isEmpty()) null else contact.numbers.first()
         val photo = contact.photo
