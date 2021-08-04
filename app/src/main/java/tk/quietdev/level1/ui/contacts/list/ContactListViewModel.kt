@@ -46,10 +46,6 @@ class ContactListViewModel(
         }
     }
 
-    fun getUserById(id: Int): User? {
-        return db.getUserWithNoValidation(id)
-    }
-
     fun addNewUser(user: User) {
         userList.value?.add(user)
         updateLiveData()

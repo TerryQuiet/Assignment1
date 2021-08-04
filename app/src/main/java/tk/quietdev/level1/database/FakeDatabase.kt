@@ -5,18 +5,25 @@ import android.content.Context
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import tk.quietdev.level1.models.User
-import tk.quietdev.level1.utils.ext.readAssetsFile
+import tk.quietdev.level1.models.convertors.Convertor
+import tk.quietdev.level1.utils.ContactsFetcher
 
 
-class FakeDatabase(context: Context) {
+class FakeDatabase(
+    context: Context,
+    private val contactsFetcher: ContactsFetcher,
+    private val convertor: Convertor
+) {
 
     private var userIds: Int = 0
 
     // all the users in database, using Int as ID
     private val allFakeUsers: MutableMap<Int, User> = emptyMap<Int, User>().toMutableMap()
 
+
     init {
-        addUsersFromJson(context.assets.readAssetsFile("json/FakeUserArray.json"))
+        //addUsersFromJson(context.assets.readAssetsFile("json/FakeUserArray.json"))
+        addUsersFromPhone()
     }
 
 
@@ -32,6 +39,14 @@ class FakeDatabase(context: Context) {
         val mapper = jacksonObjectMapper()
         val userList: List<User> = mapper.readValue(string)
         userList.forEach { addUser(it) }
+    }
+
+    private fun addUsersFromPhone() {
+        contactsFetcher.fetchContacts().forEach { contact ->
+            convertor.convertContactToUser(contact)?.let { user ->
+                addUser(user)
+            }
+        }
     }
 
     /**
