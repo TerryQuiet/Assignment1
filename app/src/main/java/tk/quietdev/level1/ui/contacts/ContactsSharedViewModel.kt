@@ -15,7 +15,4 @@ class ContactsSharedViewModel : ViewModel() {
     val newUser = MutableLiveData<User>(null)
     val updatedUser = MutableLiveData<User>(null)
 
-
-
-
 }

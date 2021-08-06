@@ -17,7 +17,7 @@ class ContactListViewModel(
     private var handler: Handler? = null
 
     init {
-        userList = MutableLiveData(db.getUserList(Const.FAKE_USER_AMOUT_TO_LIST).toMutableList())
+        userList = MutableLiveData(db.getUserList(Const.FAKE_USER_AMOUNT_TO_LIST).toMutableList())
     }
 
     fun addUserBack(id: Int) {

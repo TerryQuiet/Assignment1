@@ -7,6 +7,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import tk.quietdev.level1.models.User
 import tk.quietdev.level1.models.convertors.Convertor
 import tk.quietdev.level1.utils.ContactsFetcher
+import tk.quietdev.level1.utils.ext.readAssetsFile
 
 
 class FakeDatabase(
@@ -22,8 +23,8 @@ class FakeDatabase(
 
 
     init {
-        //addUsersFromJson(context.assets.readAssetsFile("json/FakeUserArray.json"))
-        addUsersFromPhone()
+        addUsersFromJson(context.assets.readAssetsFile("json/FakeUserArray.json"))
+        //addUsersFromPhone()
     }
 
 

@@ -13,6 +13,8 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import tk.quietdev.level1.models.Contact
 import kotlin.collections.set
+
+
 // https://medium.com/@kednaik/android-contacts-fetching-using-coroutines-aa0129bffdc4
 
 class ContactsFetcher(private val mApplication: Application) : AndroidViewModel(mApplication) , KoinComponent {
@@ -26,19 +28,19 @@ class ContactsFetcher(private val mApplication: Application) : AndroidViewModel(
             viewModelScope.launch {
                 val contactsListAsync = async { getPhoneContacts() }
                 val contactNumbersAsync = async { getContactNumbers() }
-                val contactEmailAsync = async { getContactEmails() }
+                //val contactEmailAsync = async { getContactEmails() }
 
                 contacts = contactsListAsync.await()
                 val contactNumbers = contactNumbersAsync.await()
-                val contactEmails = contactEmailAsync.await()
+               // val contactEmails = contactEmailAsync.await()
 
                 contacts.forEach {
                     contactNumbers[it.id]?.let { numbers ->
                         it.numbers = numbers
                     }
-                    contactEmails[it.id]?.let { emails ->
+                  /*  contactEmails[it.id]?.let { emails ->
                         it.emails = emails
-                    }
+                    }*/
                 }
 
             }
@@ -65,6 +67,7 @@ class ContactsFetcher(private val mApplication: Application) : AndroidViewModel(
                 val id = contactsCursor.getString(idIndex)
                 val name = contactsCursor.getString(nameIndex)
                 val photo = contactsCursor.getString(photoIndex)
+                if (photo.isNullOrEmpty()) continue
                 if (name != null) {
                     contactsList.add(Contact(id, name).apply {
                         this.photo = photo
