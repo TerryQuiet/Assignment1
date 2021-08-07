@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts.edit
+package tk.quietdev.level1.ui.pager.contacts.edit
 
 
 import android.os.Bundle
@@ -13,7 +13,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
 import tk.quietdev.level1.models.User
-import tk.quietdev.level1.ui.contacts.ContactsSharedViewModel
+import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.utils.ext.loadImage
 
 class EditProfileFragment : Fragment() {

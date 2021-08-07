@@ -3,11 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/contactsListFragment">
+    app:startDestination="@id/start_dest">
+
+    <fragment
+        android:id="@+id/start_dest"
+        android:name="tk.quietdev.level1.ui.pager.ViewPagerContainerFragment"
+        android:label="ViewPagerContainerFragment" >
+        <action
+            android:id="@+id/action_start_dest_to_contactDetailFragment"
+            app:destination="@id/contactDetailFragment" />
+    </fragment>
+
+   <fragment android:id="@+id/settingsFragment"
+       android:name="tk.quietdev.level1.ui.pager.settings.SettingsFragment"
+       android:label="@string/settings">
+       <action
+           android:id="@+id/action_settingsFragment_to_contactsListFragment"
+           app:destination="@id/contactsListFragment" />
+   </fragment>
 
     <fragment
         android:id="@+id/contactsListFragment"
-        android:name="tk.quietdev.level1.ui.contacts.list.ContactsListFragment"
+        android:name="tk.quietdev.level1.ui.pager.contacts.list.ContactsListFragment"
         android:label="@string/contacts">
         <action
             android:id="@+id/action_contactsListFragment_to_contactDetailFragment"
@@ -15,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/contactDetailFragment"
-        android:name="tk.quietdev.level1.ui.contacts.detail.ContactDetailFragment"
+        android:name="tk.quietdev.level1.ui.pager.contacts.detail.ContactDetailFragment"
         android:label="@string/profile">
         <argument
             android:name="user"
@@ -26,10 +43,11 @@
     </fragment>
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="tk.quietdev.level1.ui.contacts.edit.EditProfileFragment"
+        android:name="tk.quietdev.level1.ui.pager.contacts.edit.EditProfileFragment"
         android:label="@string/edit_profile">
         <argument
             android:name="user"
             app:argType="tk.quietdev.level1.models.User" />
     </fragment>
+
 </navigation>

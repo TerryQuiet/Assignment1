@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts.detail
+package tk.quietdev.level1.ui.pager.contacts.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.databinding.FragmentContactDetailBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.models.User
-import tk.quietdev.level1.ui.contacts.ContactsSharedViewModel
+import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.utils.ext.loadImage
 
 
@@ -62,6 +62,9 @@ class ContactDetailFragment : Fragment() {
             }
             binding.btnEditProfile.setOnClickListener {
                 openEditFragment(viewModel.currentUser)
+            }
+            binding.btnMessage.setOnClickListener {
+                findNavController().popBackStack()
             }
         }
     }

@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts.list
+package tk.quietdev.level1.ui.pager.contacts.list
 
 import android.graphics.Color
 import android.os.Bundle
@@ -20,9 +20,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.models.User
-import tk.quietdev.level1.ui.contacts.ContactsSharedViewModel
-import tk.quietdev.level1.ui.contacts.adapter.ContactsAdapter
-import tk.quietdev.level1.ui.contacts.dialog.AddContactDialog
+import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
+import tk.quietdev.level1.ui.pager.contacts.adapter.ContactsAdapter
+import tk.quietdev.level1.ui.pager.contacts.dialog.AddContactDialog
+import tk.quietdev.level1.ui.pager.ViewPagerContainerFragmentDirections
 import tk.quietdev.level1.utils.Const
 
 
@@ -51,13 +52,12 @@ class ContactsListFragment : Fragment() {
     }
 
     private fun initRecycleView() {
-       binding.recycleView.apply {
+        binding.recycleView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = contactsAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
     }
-
 
 
     private fun initObservables() {
@@ -74,8 +74,8 @@ class ContactsListFragment : Fragment() {
                     contactsSharedViewModel.newUser.value = null
                 }
             }
-            updatedUser.observe(viewLifecycleOwner){
-                if (it!=null) {
+            updatedUser.observe(viewLifecycleOwner) {
+                if (it != null) {
                     viewModel.updateUser(it)
                     updatedUser.value = null
                 }
@@ -84,7 +84,7 @@ class ContactsListFragment : Fragment() {
     }
 
     private fun getContactAdapter() = ContactsAdapter(
-        onRemove =  this::removeUser,
+        onRemove = this::removeUser,
         onItemClickListener = this::openContactDetail
     )
 
@@ -115,6 +115,7 @@ class ContactsListFragment : Fragment() {
                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                     super.onDismissed(transientBottomBar, event)
                 }
+
                 override fun onShown(transientBottomBar: Snackbar?) {
                     super.onShown(transientBottomBar)
                     Handler(Looper.getMainLooper()).postDelayed({
@@ -127,10 +128,11 @@ class ContactsListFragment : Fragment() {
 
     private fun openContactDetail(user: User) {
         Log.d(Const.TAG, "openContactDetail: ${user.userName}")
-            findNavController().navigate(
-                 ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(
-                     user
-                 )
-             )
+        findNavController().navigate(
+            /*ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(
+                user
+            )*/
+            ViewPagerContainerFragmentDirections.actionStartDestToContactDetailFragment(user)
+        )
     }
 }

@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts.detail
+package tk.quietdev.level1.ui.pager.contacts.detail
 
 import androidx.lifecycle.ViewModel
 import tk.quietdev.level1.models.User

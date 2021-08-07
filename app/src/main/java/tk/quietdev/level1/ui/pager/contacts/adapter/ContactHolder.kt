@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts.adapter
+package tk.quietdev.level1.ui.pager.contacts.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.databinding.ListItemBinding
