@@ -28,12 +28,11 @@ class FakeDatabase(
     }
 
 
-    // TODO: 8/2/2021 fix it later
-    //var currentUserID: String = PrefsHelper.getCurrentUser()
+    var currentUserID: Int? = null
 
-    /*   private fun isPasswordCorrect(user: User?, password: String): Boolean {
-           return (user?.password == password)
-       }*/
+    private fun isPasswordCorrect(user: User?, password: String): Boolean {
+        return (user?.password == password)
+    }
 
 
     private fun addUsersFromJson(string: String) {
@@ -58,11 +57,16 @@ class FakeDatabase(
         return allFakeUsers.values.take(if (amount < 0) allFakeUsers.size else amount)
     }
 
-    /* fun getUserWithValidation(id: Int, password: String): User? {
-         return if (isPasswordCorrect(allFakeUsers[id], password)) {
-             allFakeUsers[id]
-         } else null
-     }*/
+    fun getUserWithValidation(email: String, password: String): User? {
+        val id = findIdByEmail(email)
+        return if (isPasswordCorrect(allFakeUsers[id], password)) {
+            allFakeUsers[id]
+        } else null
+    }
+
+    private fun findIdByEmail(email: String): Int? {
+       return allFakeUsers.values.find { it.email == email }?.id
+    }
 
     fun getUserWithNoValidation(id: Int): User? {
         return allFakeUsers[id]

@@ -8,10 +8,9 @@ object PrefsHelper {
 
     private lateinit var preferences: SharedPreferences
 
-
     private const val PREFS_NAME = "params"
-    private const val USER_ID = "USERID"
-    private const val IS_REMEMBER = "isSaveChecked"
+    const val USER_ID = "USERID"
+    const val IS_REMEMBER = "isSaveChecked"
 
     // init from App
     fun init(context: Context) {
@@ -22,19 +21,8 @@ object PrefsHelper {
         preferences.edit().clear().apply()
     }
 
-    fun saveRememberState(isRemember: Boolean) {
-        preferences.edit()
-            .putBoolean(IS_REMEMBER, isRemember)
-            .apply()
-    }
 
     fun getRememberState(): Boolean = preferences.getBoolean(IS_REMEMBER, false)
-
-    fun saveCurrentUserID(userId: String) {
-        preferences.edit()
-            .putString(USER_ID, userId)
-            .apply()
-    }
 
     fun saveString(key: String, userId: String) {
         preferences.edit()
@@ -42,11 +30,25 @@ object PrefsHelper {
             .apply()
     }
 
-    fun getCurrentUser(): String {
-        return preferences.getString(USER_ID, "")!!
+    fun saveInt(key: String, value: Int) {
+        preferences.edit()
+            .putInt(key, value)
+            .apply()
+    }
+
+    fun saveBoolean(key: String, value: Boolean) {
+        preferences.edit()
+            .putBoolean(key, value)
+            .apply()
+    }
+
+    fun getIntOrNull(key: String): Int? {
+        return if (preferences.contains(key)) {
+            preferences.getInt(key, -1)
+        } else
+            null
     }
 
     fun getPreferences(): SharedPreferences = preferences
-
 
 }

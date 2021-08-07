@@ -1,35 +1,43 @@
-package tk.quietdev.level1.ui
+package tk.quietdev.level1.ui.authorization
 
 
+import android.content.Intent
+import android.graphics.Color
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-
+import androidx.core.widget.doOnTextChanged
+import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import tk.quietdev.level1.R
+import tk.quietdev.level1.databinding.ActivityAuthBinding
+import tk.quietdev.level1.models.User
+import tk.quietdev.level1.ui.contacts.ContactsActivity
+import tk.quietdev.level1.utils.Const
+import tk.quietdev.level1.utils.PrefsHelper
+import tk.quietdev.level1.utils.Validator
 
 class AuthActivity : AppCompatActivity() {
-/*
 
     private lateinit var binding: ActivityAuthBinding
-    private val db = FakeDatabase
+    private val viewModel: AuthViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadPreferences()
+        viewModel.loadPreferences()
 
         showHelpTip()
 
         if (binding.cbRemember.isChecked) {
-            if (db.currentUserID.isNotEmpty()) {
-                login(db.currentUserID)
+            viewModel.currentUser.value?.let {
+                login(it)
             }
         }
         setListeners()
     }
 
-    private fun loadPreferences() {
-        binding.cbRemember.isChecked = PrefsHelper.getRememberState()
-    }
 
     private fun setListeners() {
         binding.apply {
@@ -44,8 +52,8 @@ class AuthActivity : AppCompatActivity() {
                         binding.etEmailParent.error = getString(R.string.please_enter_valid_email)
                     }
                 }
-                */
-/* Lower error message disappears when not focused, but frame stays RED if error *//*
+
+/* Lower error message disappears when not focused, but frame stays RED if error */
 
                 setOnFocusChangeListener { _, hasFocus ->
                     if (hasFocus && etEmailParent.isErrorEnabled) {
@@ -63,24 +71,24 @@ class AuthActivity : AppCompatActivity() {
                 }
             }
             cbRemember.setOnCheckedChangeListener { _, isChecked ->
-                PrefsHelper.saveRememberState(isChecked)
+                PrefsHelper.saveBoolean(PrefsHelper.IS_REMEMBER, isChecked)
             }
         }
     }
 
-    */
+
 /**
      * checks if user is present in a database and proceeds to login if so
-     *//*
+     */
 
 
     private fun tryLogin() {
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
-        val user = db.getUserWithValidation(email, password)
+        viewModel.findUser(email, password)
+        val user = viewModel.currentUser.value
         if (user != null) {
-            db.currentUserID = email
-            login(email)
+            login(user)
         } else {
             showHelpTip()
         }
@@ -98,18 +106,16 @@ class AuthActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun login(email: String) {
+    private fun login(user: User) {
         // it's required by a task to send something in intend.
-        val intent = Intent(this, SettingsActivity::class.java).apply {
-            putExtra(Const.EMAIL, email)
+        val intent = Intent(this, ContactsActivity::class.java).apply {
+            putExtra(Const.USER, user)
         }
-        PrefsHelper.saveCurrentUserID(email)
+
+        PrefsHelper.saveInt(PrefsHelper.USER_ID, user.id!!)
         startActivity(intent)
         finish()
     }
-
-*/
-
 
 
 }
