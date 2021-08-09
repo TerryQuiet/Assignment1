@@ -1,7 +1,6 @@
 package tk.quietdev.level1.ui.pager
 
 import android.os.Bundle
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -21,7 +20,7 @@ class PagerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPagerHolderBinding
     lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewPager: ViewPager2
-    lateinit var tb: ActionBar
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +28,6 @@ class PagerActivity : AppCompatActivity() {
         viewPager = binding.pagerActivity
         setContentView(binding.root)
         setSupportActionBar(binding.tbContacts)
-        tb = supportActionBar!!
         viewPager.adapter = ScreenSlidePagerAdapter(supportFragmentManager, lifecycle)
 
 
