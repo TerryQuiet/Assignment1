@@ -1,12 +1,13 @@
 package tk.quietdev.level1.ui.pager
 
 import android.os.Bundle
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -18,19 +19,25 @@ import tk.quietdev.level1.ui.settings.SettingsFragment
 
 class PagerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPagerHolderBinding
-    private lateinit var appBarConfiguration: AppBarConfiguration
+    lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var viewPager: ViewPager2
+    lateinit var tb: ActionBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPagerHolderBinding.inflate(layoutInflater)
         viewPager = binding.pagerActivity
         setContentView(binding.root)
+        setSupportActionBar(binding.tbContacts)
+        tb = supportActionBar!!
         viewPager.adapter = ScreenSlidePagerAdapter(supportFragmentManager, lifecycle)
-        supportFragmentManager.findFragmentById(R.id.nav_host)?.findNavController()?.let { nav ->
-            appBarConfiguration = AppBarConfiguration(nav.graph)
-            setupActionBarWithNavController(nav, appBarConfiguration)
-        }
+
+
+    }
+
+    fun setupAppBar(nav: NavController) {
+        appBarConfiguration = AppBarConfiguration(nav.graph)
+        setupActionBarWithNavController(nav, appBarConfiguration)
     }
 
     /**

@@ -63,6 +63,9 @@ class ContactDetailFragment : Fragment() {
             binding.btnEditProfile.setOnClickListener {
                 openEditFragment(viewModel.currentUser)
             }
+            binding.btnMessage.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 
