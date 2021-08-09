@@ -3,12 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragmentContactPager">
-
-    <fragment
-        android:id="@+id/fragmentContactPager"
-        android:name="tk.quietdev.level1.ui.pager.FragmentContactPager"
-        android:label="FragmentContactPager" />
+    app:startDestination="@id/contactsListFragment">
 
     <fragment
         android:id="@+id/contactsListFragment"

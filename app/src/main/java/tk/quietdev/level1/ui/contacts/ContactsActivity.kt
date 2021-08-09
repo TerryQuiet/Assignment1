@@ -18,7 +18,6 @@ class ContactsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityContactsBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityContactsBinding.inflate(layoutInflater)

@@ -11,7 +11,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.ActivityAuthBinding
 import tk.quietdev.level1.models.User
-import tk.quietdev.level1.ui.contacts.ContactsActivity
+import tk.quietdev.level1.ui.pager.PagerActivity
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.PrefsHelper
 import tk.quietdev.level1.utils.Validator
@@ -107,8 +107,11 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun login(user: User) {
-        // it's required by a task to send something in intend.
-        val intent = Intent(this, ContactsActivity::class.java).apply {
+       /* val intent = Intent(this, ContactsActivity::class.java).apply {
+            putExtra(Const.USER, user)
+        }*/
+
+        val intent = Intent(this, PagerActivity::class.java).apply {
             putExtra(Const.USER, user)
         }
 
