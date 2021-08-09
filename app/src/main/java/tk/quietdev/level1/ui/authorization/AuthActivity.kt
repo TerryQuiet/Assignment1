@@ -30,7 +30,7 @@ class AuthActivity : AppCompatActivity() {
 
         showHelpTip()
 
-        if (binding.cbRemember.isChecked) {
+        if (viewModel.isRemember.value!!) {
             viewModel.currentUser.value?.let {
                 login(it)
             }

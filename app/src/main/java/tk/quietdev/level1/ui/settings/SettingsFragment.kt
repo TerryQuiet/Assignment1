@@ -31,7 +31,7 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val user = activity?.intent?.getParcelableExtra<User>(Const.EMAIL)
+        val user = activity?.intent?.getParcelableExtra<User>(Const.USER)
         viewModel.currentUser = user!!
         bindListeners()
         bindValues()
