@@ -3,30 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/activity_auth.xml" value="0.13768115942028986" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/activity_contacts.xml" value="0.14175724637681159" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/activity_contacts2.xml" value="0.14175724637681159" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/activity_nav_host_holder.xml" value="0.1331521739130435" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/activity_pager_holder.xml" value="0.12487335359675786" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/activity_settings.xml" value="0.17831813576494426" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/dialog_add_contact.xml" value="0.13768115942028986" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/fragment_contact_detail.xml" value="0.17831813576494426" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/fragment_contact_main.xml" value="0.17831813576494426" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/fragment_contact_pager.xml" value="0.13768115942028986" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/fragment_contacts.xml" value="0.13768115942028986" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/fragment_edit_profile.xml" value="0.13768115942028986" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/fragment_nav_graph.xml" value="0.17831813576494426" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/fragment_screen_slide_page.xml" value="0.13768115942028986" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/fragment_settings.xml" value="0.13768115942028986" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/fragment_viewpager_container.xml" value="0.17831813576494426" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/Assignment1/app/src/main/res/layout/social_buttons.xml" value="0.12487335359675786" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/rev/my/Assignment1/app/src/main/res/layout/activity_auth.xml" value="0.36666666666666664" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/rev/my/Assignment1/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/rev/my/Assignment1/app/src/main/res/layout/activity_settings.xml" value="0.36666666666666664" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/rev/my/Assignment1/app/src/main/res/layout/dialog_add_contact.xml" value="0.36666666666666664" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/rev/my/Assignment1/app/src/main/res/layout/fragment_contact_detail.xml" value="0.2028985507246377" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/rev/my/Assignment1/app/src/main/res/layout/fragment_contacts.xml" value="0.36666666666666664" />
-        <entry key="..\:/study/0AND/SHPP_ANDR/rev/my/Assignment1/app/src/main/res/layout/fragment_edit_profile.xml" value="0.18" />
+        <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/fragment_viewpager_container.xml" value="0.1" />
       </map>
     </option>
   </component>
