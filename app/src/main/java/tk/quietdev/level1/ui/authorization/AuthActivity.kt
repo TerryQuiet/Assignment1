@@ -106,11 +106,9 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun login(user: User) {
-
         val intent = Intent(this, PagerActivity::class.java).apply {
             putExtra(Const.USER, user)
         }
-
         PrefsHelper.saveInt(PrefsHelper.USER_ID, user.id!!)
         startActivity(intent)
         finish()
