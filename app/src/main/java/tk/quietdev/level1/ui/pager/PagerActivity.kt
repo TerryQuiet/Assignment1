@@ -30,12 +30,12 @@ class PagerActivity : AppCompatActivity() {
         setSupportActionBar(binding.tbContacts)
         viewPager.adapter = ScreenSlidePagerAdapter(supportFragmentManager, lifecycle)
 
-
     }
 
     fun setupAppBar(nav: NavController) {
         appBarConfiguration = AppBarConfiguration(nav.graph)
         setupActionBarWithNavController(nav, appBarConfiguration)
+
     }
 
     /**
@@ -52,6 +52,8 @@ class PagerActivity : AppCompatActivity() {
                 else -> SettingsFragment()
             }
         }
+
+
     }
 
     override fun onSupportNavigateUp() =

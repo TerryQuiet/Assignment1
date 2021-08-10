@@ -23,13 +23,8 @@ class FragmentNavGraph : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         childFragmentManager.findFragmentById(R.id.nav_host)?.findNavController()?.let {
             (activity as PagerActivity).setupAppBar(it)
         }
-
     }
-
-
-    /* */
 }
