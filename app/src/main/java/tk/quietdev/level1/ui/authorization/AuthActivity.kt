@@ -1,6 +1,5 @@
 package tk.quietdev.level1.ui.authorization
 
-
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
