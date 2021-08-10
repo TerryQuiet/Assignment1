@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -30,6 +31,7 @@ class EditProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View =
         FragmentEditProfileBinding.inflate(inflater, container, false).apply {
+            (activity as AppCompatActivity).supportActionBar?.show()
             binding = this
         }.root
 

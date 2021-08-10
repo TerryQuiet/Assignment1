@@ -18,6 +18,7 @@ class ViewPagerContainerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentViewpagerContainerBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -33,6 +34,8 @@ class ViewPagerContainerFragment : Fragment() {
                 else -> "Setting"
             }
         }.attach()
+
+
 
     }
 }
