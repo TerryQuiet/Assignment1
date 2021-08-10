@@ -6,14 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.databinding.FragmentSettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.models.User
+import tk.quietdev.level1.ui.pager.ViewPagerContainerFragmentDirections
+import tk.quietdev.level1.ui.pager.contacts.detail.ContactDetailFragmentDirections
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
-class SettingsFragment : Fragment() {
+class SettingsFragment(val pageChange: (Int) -> Unit ) : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var userDetailBinding: UserDetailBinding
     private val viewModel: SettingsViewModel by viewModel()
@@ -32,7 +35,6 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val user = activity?.intent?.getParcelableExtra<User>(Const.USER)
-         // TODO: 8/10/2021 FIX
         user?.let {
             viewModel.currentUser = it
             bindListeners()
@@ -44,7 +46,7 @@ class SettingsFragment : Fragment() {
     private fun bindListeners() {
         binding.apply {
             btnViewContacts.setOnClickListener {
-
+                pageChange(1)
             }
             btnEditProfile.setOnClickListener {
 

@@ -26,7 +26,8 @@ class ViewPagerContainerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewPager.adapter =
-            PagerAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
+            PagerAdapter(childFragmentManager, viewLifecycleOwner.lifecycle, ::changePage)
+
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
@@ -35,7 +36,9 @@ class ViewPagerContainerFragment : Fragment() {
             }
         }.attach()
 
+    }
 
-
+    fun changePage(page: Int) {
+        binding.viewPager.setCurrentItem(page, true)
     }
 }

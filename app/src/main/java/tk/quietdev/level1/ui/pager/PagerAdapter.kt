@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import tk.quietdev.level1.ui.pager.contacts.list.ContactsListFragment
 import tk.quietdev.level1.ui.pager.settings.SettingsFragment
 
-class PagerAdapter(fm: FragmentManager, lf: Lifecycle) :
+class PagerAdapter(fm: FragmentManager, lf: Lifecycle,val pageChange: (Int) -> Unit) :
         FragmentStateAdapter(fm, lf) {
 
         override fun getItemCount(): Int = 2
@@ -15,9 +15,10 @@ class PagerAdapter(fm: FragmentManager, lf: Lifecycle) :
         override fun createFragment(position: Int): Fragment {
             return when (position) {
                 1 -> ContactsListFragment()
-                else -> SettingsFragment()
+                else -> SettingsFragment(pageChange)
             }
         }
+
 
 
     }
