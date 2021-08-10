@@ -11,6 +11,7 @@ import tk.quietdev.level1.databinding.FragmentSettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.Const
+import tk.quietdev.level1.utils.ext.loadImage
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding

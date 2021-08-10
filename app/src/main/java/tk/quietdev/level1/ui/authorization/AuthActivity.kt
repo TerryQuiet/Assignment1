@@ -30,11 +30,11 @@ class AuthActivity : AppCompatActivity() {
 
         showHelpTip()
 
-    /*    if (viewModel.isRemember.value!!) {
+        if (viewModel.isRemember.value!!) {
             viewModel.currentUser.value?.let {
                 login(it)
             }
-        }*/
+        }
         setListeners()
     }
 
@@ -77,7 +77,7 @@ class AuthActivity : AppCompatActivity() {
     }
 
 
-/**
+    /**
      * checks if user is present in a database and proceeds to login if so
      */
 

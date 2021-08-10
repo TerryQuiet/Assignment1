@@ -16,9 +16,13 @@ class AuthViewModel(private val db: FakeDatabase):ViewModel() {
         PrefsHelper.apply {
             isRemember.value = getPreferences().getBoolean(IS_REMEMBER, false)
         }
-        db.currentUserID = PrefsHelper.getIntOrNull(PrefsHelper.USER_ID)
-        db.currentUserID?.let {
-            currentUser.value = db.getUserWithNoValidation(it)
+        if (isRemember.value == true) {
+            db.currentUserID = PrefsHelper.getIntOrNull(PrefsHelper.USER_ID)
+            if (db.currentUserID != null) {
+                currentUser.value = db.getUserWithNoValidation(db.currentUserID!!)
+            } else {
+                isRemember.value = false
+            }
         }
     }
 
