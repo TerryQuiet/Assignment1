@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts.list
+package tk.quietdev.level1.ui.pager.contacts.list
 
 import android.os.Handler
 import android.os.Looper

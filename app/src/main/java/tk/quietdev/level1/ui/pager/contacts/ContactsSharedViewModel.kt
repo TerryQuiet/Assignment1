@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts
+package tk.quietdev.level1.ui.pager.contacts
 
 
 import androidx.lifecycle.MutableLiveData

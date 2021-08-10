@@ -30,11 +30,11 @@ class AuthActivity : AppCompatActivity() {
 
         showHelpTip()
 
-        if (viewModel.isRemember.value!!) {
+    /*    if (viewModel.isRemember.value!!) {
             viewModel.currentUser.value?.let {
                 login(it)
             }
-        }
+        }*/
         setListeners()
     }
 
@@ -107,9 +107,6 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun login(user: User) {
-       /* val intent = Intent(this, ContactsActivity::class.java).apply {
-            putExtra(Const.USER, user)
-        }*/
 
         val intent = Intent(this, PagerActivity::class.java).apply {
             putExtra(Const.USER, user)

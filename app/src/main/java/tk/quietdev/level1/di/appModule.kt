@@ -6,12 +6,12 @@ import org.koin.dsl.module
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.models.convertors.Convertor
 import tk.quietdev.level1.ui.authorization.AuthViewModel
-import tk.quietdev.level1.ui.contacts.ContactsSharedViewModel
-import tk.quietdev.level1.ui.contacts.detail.ContactDetailViewModel
-import tk.quietdev.level1.ui.contacts.dialog.AddContactViewModel
-import tk.quietdev.level1.ui.contacts.edit.EditProfileViewModel
-import tk.quietdev.level1.ui.contacts.list.ContactListViewModel
-import tk.quietdev.level1.ui.settings.SettingsViewModel
+import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
+import tk.quietdev.level1.ui.pager.contacts.detail.ContactDetailViewModel
+import tk.quietdev.level1.ui.pager.contacts.dialog.AddContactViewModel
+import tk.quietdev.level1.ui.pager.contacts.edit.EditProfileViewModel
+import tk.quietdev.level1.ui.pager.contacts.list.ContactListViewModel
+import tk.quietdev.level1.ui.pager.settings.SettingsViewModel
 import tk.quietdev.level1.utils.ContactsFetcher
 
 

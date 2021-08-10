@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.settings
+package tk.quietdev.level1.ui.pager.settings
 
 
 import android.os.Bundle
@@ -11,7 +11,6 @@ import tk.quietdev.level1.databinding.FragmentSettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.Const
-import tk.quietdev.level1.utils.ext.loadImage
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
@@ -32,9 +31,13 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val user = activity?.intent?.getParcelableExtra<User>(Const.USER)
-        viewModel.currentUser = user!!
-        bindListeners()
-        bindValues()
+         // TODO: 8/10/2021 FIX
+        user?.let {
+            viewModel.currentUser = it
+            bindListeners()
+            bindValues()
+        }
+
     }
 
     private fun bindListeners() {
@@ -58,9 +61,4 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    /*private fun openContacts() {
-       val intent = Intent(this, ContactsActivity::class.java)
-        startActivity(intent)
-        finish()
-    }*/
 }

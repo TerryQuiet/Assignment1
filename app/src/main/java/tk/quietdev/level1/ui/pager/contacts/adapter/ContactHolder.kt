@@ -1,9 +1,8 @@
-package tk.quietdev.level1.ui.contacts.adapter
+package tk.quietdev.level1.ui.pager.contacts.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.User
-import tk.quietdev.level1.utils.ext.loadImage
 
 class ContactHolder(
     private val binding: ListItemBinding,

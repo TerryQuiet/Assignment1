@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.contacts.dialog
+package tk.quietdev.level1.ui.pager.contacts.dialog
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -10,7 +10,7 @@ import androidx.fragment.app.DialogFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.databinding.DialogAddContactBinding
-import tk.quietdev.level1.ui.contacts.ContactsSharedViewModel
+import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 
 
 class AddContactDialog
