@@ -23,7 +23,6 @@ import tk.quietdev.level1.models.User
 import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.ui.pager.contacts.adapter.ContactsAdapter
 import tk.quietdev.level1.ui.pager.contacts.dialog.AddContactDialog
-import tk.quietdev.level1.ui.pager.ViewPagerContainerFragmentDirections
 import tk.quietdev.level1.utils.Const
 
 
@@ -40,12 +39,14 @@ class ContactsListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentContactsBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initObservables()
         initRecycleView()
         addListeners()
@@ -132,7 +133,7 @@ class ContactsListFragment : Fragment() {
             /*ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(
                 user
             )*/
-            ViewPagerContainerFragmentDirections.actionStartDestToContactDetailFragment(user)
+            ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(user)
         )
     }
 }

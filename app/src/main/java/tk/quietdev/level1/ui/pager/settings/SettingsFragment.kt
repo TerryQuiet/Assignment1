@@ -6,17 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.databinding.FragmentSettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.models.User
-import tk.quietdev.level1.ui.pager.ViewPagerContainerFragmentDirections
-import tk.quietdev.level1.ui.pager.contacts.detail.ContactDetailFragmentDirections
+
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
-class SettingsFragment(val pageChange: (Int) -> Unit ) : Fragment() {
+// FIXME: 8/11/2021  
+class SettingsFragment(val pageChange: (Int) -> Unit = {}) : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
     private lateinit var userDetailBinding: UserDetailBinding
     private val viewModel: SettingsViewModel by viewModel()

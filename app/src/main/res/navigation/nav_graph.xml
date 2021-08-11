@@ -7,50 +7,8 @@
 
     <fragment
         android:id="@+id/start_dest"
-        android:name="tk.quietdev.level1.ui.pager.ViewPagerContainerFragment"
-        android:label="ViewPagerContainerFragment" >
-        <action
-            android:id="@+id/action_start_dest_to_contactDetailFragment"
-            app:destination="@id/contactDetailFragment" />
-        <action
-            android:id="@+id/action_start_dest_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
-    </fragment>
-
-   <fragment android:id="@+id/settingsFragment"
-       android:name="tk.quietdev.level1.ui.pager.settings.SettingsFragment"
-       android:label="@string/settings">
-       <action
-           android:id="@+id/action_settingsFragment_to_contactsListFragment"
-           app:destination="@id/contactsListFragment" />
-   </fragment>
-
-    <fragment
-        android:id="@+id/contactsListFragment"
-        android:name="tk.quietdev.level1.ui.pager.contacts.list.ContactsListFragment"
-        android:label="@string/contacts">
-        <action
-            android:id="@+id/action_contactsListFragment_to_contactDetailFragment"
-            app:destination="@id/contactDetailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/contactDetailFragment"
-        android:name="tk.quietdev.level1.ui.pager.contacts.detail.ContactDetailFragment"
-        android:label="@string/profile">
-        <argument
-            android:name="user"
-            app:argType="tk.quietdev.level1.models.User" />
-        <action
-            android:id="@+id/action_contactDetailFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/editProfileFragment"
-        android:name="tk.quietdev.level1.ui.pager.contacts.edit.EditProfileFragment"
-        android:label="@string/edit_profile">
-        <argument
-            android:name="user"
-            app:argType="tk.quietdev.level1.models.User" />
-    </fragment>
+        android:name="tk.quietdev.level1.ui.pager.navhost.ParentNavHostFragment"
+        android:label="MainNavHostFragment"
+        tools:layout="@layout/fragment_navhost_parent"/>
 
 </navigation>
