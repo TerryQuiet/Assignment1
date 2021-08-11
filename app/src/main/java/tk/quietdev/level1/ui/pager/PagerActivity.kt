@@ -12,8 +12,6 @@ import tk.quietdev.level1.databinding.ActivityNavHostHolderBinding
 
 class PagerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNavHostHolderBinding
-    private lateinit var appBarConfiguration: AppBarConfiguration
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

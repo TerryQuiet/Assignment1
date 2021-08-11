@@ -33,7 +33,7 @@ class ParentNavHostFragment : Fragment() {
     ): View =
         FragmentNavhostParentBinding.inflate(inflater, container, false).apply {
             binding = this
-            binding.lifecycleOwner = viewLifecycleOwner
+           // binding.lifecycleOwner = viewLifecycleOwner
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

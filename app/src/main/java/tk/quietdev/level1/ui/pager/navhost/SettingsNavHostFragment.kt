@@ -28,7 +28,7 @@ class SettingsNavHostFragment : Fragment() {
     ): View =
         FragmentNavhostSettingsBinding.inflate(inflater, container, false).apply {
             binding = this
-            binding.lifecycleOwner = viewLifecycleOwner
+            //binding.lifecycleOwner = viewLifecycleOwner
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
