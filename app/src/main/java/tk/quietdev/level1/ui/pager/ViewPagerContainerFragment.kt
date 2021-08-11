@@ -22,7 +22,6 @@ class ViewPagerContainerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentViewpagerContainerBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
