@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 
-class AppbarViewModel : ViewModel() {
+class AppbarSharedViewModel : ViewModel() {
     val currentNavController = MutableLiveData<NavController?>()
 
 }

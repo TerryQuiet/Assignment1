@@ -9,15 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentNavhostListBinding
-import tk.quietdev.level1.ui.pager.AppbarViewModel
+import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
 
 class ListNavHostFragment : Fragment() {
 
     lateinit var binding: FragmentNavhostListBinding
-    private val appbarViewModel: AppbarViewModel by sharedViewModel()
+    private val appbarSharedViewModel: AppbarSharedViewModel by sharedViewModel()
     private var navController: NavController? = null
     private val nestedNavHostFragmentId = R.id.nestedListNavHostFragment
 
@@ -54,7 +53,7 @@ class ListNavHostFragment : Fragment() {
 //        callback.isEnabled = true
 
         // Set this navController as ViewModel's navController
-        appbarViewModel.currentNavController.value = navController
+        appbarSharedViewModel.currentNavController.value = navController
     }
 
     override fun onPause() {

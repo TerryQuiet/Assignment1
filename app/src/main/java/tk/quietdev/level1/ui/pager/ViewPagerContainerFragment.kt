@@ -8,13 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.databinding.FragmentViewpagerContainerBinding
 
 class ViewPagerContainerFragment : Fragment() {
 
     private lateinit var binding: FragmentViewpagerContainerBinding
-    private val appbarViewModel: AppbarViewModel by sharedViewModel()
+    private val appbarSharedViewModel: AppbarSharedViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,8 +41,8 @@ class ViewPagerContainerFragment : Fragment() {
 
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                appbarViewModel.currentNavController.value =
-                    appbarViewModel.currentNavController.value
+                appbarSharedViewModel.currentNavController.value =
+                    appbarSharedViewModel.currentNavController.value
             }
         })
 

@@ -12,10 +12,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentNavhostParentBinding
-import tk.quietdev.level1.ui.pager.AppbarViewModel
+import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
 
 
 class ParentNavHostFragment : Fragment() {
@@ -23,7 +22,7 @@ class ParentNavHostFragment : Fragment() {
     lateinit var binding: FragmentNavhostParentBinding
     private var navController: NavController? = null
     private val nestedNavHostFragmentId = R.id.nestedParentNavHostFragment
-    private val appbarViewModel: AppbarViewModel by sharedViewModel()
+    private val appbarSharedViewModel: AppbarSharedViewModel by sharedViewModel()
 
 
     override fun onCreateView(
@@ -53,7 +52,7 @@ class ParentNavHostFragment : Fragment() {
         binding.toolbar.setupWithNavController(navController!!, appBarConfig)
 
 
-        appbarViewModel.currentNavController.observe(viewLifecycleOwner, Observer { navController ->
+        appbarSharedViewModel.currentNavController.observe(viewLifecycleOwner, Observer { navController ->
             navController?.let {
                 val appBarConfig = AppBarConfiguration(it.graph)
                 binding.toolbar.setupWithNavController(it, appBarConfig)
