@@ -102,4 +102,6 @@ class EditProfileFragment : Fragment() {
             binding.ivProfilePic.loadImage(it)
         }
     }
+
+
 }

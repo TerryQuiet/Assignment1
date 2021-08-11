@@ -18,33 +18,6 @@ class PagerActivity : AppCompatActivity() {
         binding = ActivityNavHostHolderBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        listenBackStackChange()
-
-    }
-
-
-    private fun listenBackStackChange() {
-        // Get NavHostFragment
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host)
-
-        // ChildFragmentManager of NavHostFragment
-        val navHostChildFragmentManager = navHostFragment?.childFragmentManager
-
-        navHostChildFragmentManager?.addOnBackStackChangedListener {
-
-            val backStackEntryCount = navHostChildFragmentManager.backStackEntryCount
-            val fragments = navHostChildFragmentManager.fragments
-            val fragmentCount = fragments.size
-
-            println("🎃 Main graph backStackEntryCount: $backStackEntryCount, fragmentCount: $fragmentCount, fragments: $fragments")
-
-            Toast.makeText(
-                this,
-                "🎃 Main graph backStackEntryCount: $backStackEntryCount, fragmentCount: $fragmentCount, fragments: $fragments",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
     }
 
 }

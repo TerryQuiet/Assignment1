@@ -15,7 +15,7 @@ import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
 
 class ListNavHostFragment : Fragment() {
 
-    lateinit var binding: FragmentNavhostListBinding
+    var binding: FragmentNavhostListBinding? = null
     private val appbarSharedViewModel: AppbarSharedViewModel by sharedViewModel()
     private var navController: NavController? = null
     private val nestedNavHostFragmentId = R.id.nestedListNavHostFragment
@@ -43,6 +43,12 @@ class ListNavHostFragment : Fragment() {
 
     }
 
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+    }
+
 //    private fun listenOnBackPressed() {
 //        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 //    }
@@ -60,6 +66,8 @@ class ListNavHostFragment : Fragment() {
         super.onPause()
 //        callback.isEnabled = false
     }
+
+
 
     /**
      * This callback should be created with Disabled because on rotation ViewPager creates
