@@ -17,7 +17,7 @@ import tk.quietdev.level1.utils.ext.loadImage
 
 // FIXME: 8/11/2021  
 class SettingsFragment(val pageChange: (Int) -> Unit = {}) : Fragment() {
-    private lateinit var binding: FragmentSettingsBinding
+    private var binding: FragmentSettingsBinding? = null
     private lateinit var userDetailBinding: UserDetailBinding
     private val viewModel: SettingsViewModel by viewModel()
 
@@ -28,7 +28,7 @@ class SettingsFragment(val pageChange: (Int) -> Unit = {}) : Fragment() {
     ): View =
         FragmentSettingsBinding.inflate(inflater, container, false).apply {
             binding = this
-            userDetailBinding = binding.topContainer
+            userDetailBinding = binding!!.topContainer
 
         }.root
 
@@ -44,7 +44,7 @@ class SettingsFragment(val pageChange: (Int) -> Unit = {}) : Fragment() {
     }
 
     private fun bindListeners() {
-        binding.apply {
+        binding?.apply {
             btnViewContacts.setOnClickListener {
                 pageChange(1)
             }
@@ -56,12 +56,17 @@ class SettingsFragment(val pageChange: (Int) -> Unit = {}) : Fragment() {
 
     private fun bindValues() {
         val currentUser = viewModel.currentUser
-        binding.topContainer.apply {
+        binding!!.topContainer.apply {
             tvName.text = currentUser.userName
             tvAddress.text = currentUser.physicalAddress
             tvOccupation.text = currentUser.occupation
             ivProfilePic.loadImage(currentUser.pictureUri)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
 }

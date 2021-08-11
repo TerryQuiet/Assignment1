@@ -19,7 +19,7 @@ import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
 
 class ParentNavHostFragment : Fragment() {
 
-    lateinit var binding: FragmentNavhostParentBinding
+    var binding: FragmentNavhostParentBinding? = null
     private var navController: NavController? = null
     private val nestedNavHostFragmentId = R.id.nestedParentNavHostFragment
     private val appbarSharedViewModel: AppbarSharedViewModel by sharedViewModel()
@@ -49,16 +49,21 @@ class ParentNavHostFragment : Fragment() {
 //        listenBackStack()
 
         val appBarConfig = AppBarConfiguration(navController!!.graph)
-        binding.toolbar.setupWithNavController(navController!!, appBarConfig)
+        binding!!.toolbar.setupWithNavController(navController!!, appBarConfig)
 
 
         appbarSharedViewModel.currentNavController.observe(viewLifecycleOwner, Observer { navController ->
             navController?.let {
                 val appBarConfig = AppBarConfiguration(it.graph)
-                binding.toolbar.setupWithNavController(it, appBarConfig)
+                binding!!.toolbar.setupWithNavController(it, appBarConfig)
             }
         })
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
 

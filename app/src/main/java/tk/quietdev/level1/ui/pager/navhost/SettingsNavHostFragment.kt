@@ -15,7 +15,7 @@ import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
 
 class SettingsNavHostFragment : Fragment() {
 
-    lateinit var binding: FragmentNavhostSettingsBinding
+    var binding: FragmentNavhostSettingsBinding? = null
     private val appbarSharedViewModel: AppbarSharedViewModel by sharedViewModel()
     private var navController: NavController? = null
     private val nestedNavHostFragmentId = R.id.nestedSettingsNavHostFragment
@@ -59,6 +59,11 @@ class SettingsNavHostFragment : Fragment() {
     override fun onPause() {
         super.onPause()
 //        callback.isEnabled = false
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     /**
