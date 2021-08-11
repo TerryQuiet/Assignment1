@@ -28,7 +28,6 @@ class ViewPagerContainerFragment : Fragment() {
         binding.viewPager.adapter =
             PagerAdapter(childFragmentManager, viewLifecycleOwner.lifecycle, ::changePage)
 
-
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
                 1 -> "List"
@@ -40,5 +39,19 @@ class ViewPagerContainerFragment : Fragment() {
 
     fun changePage(page: Int) {
         binding.viewPager.setCurrentItem(page, true)
+    }
+
+    override fun onDestroyView() {
+
+        val viewPager2 = binding.viewPager
+
+        /*
+            Without setting ViewPager2 Adapter it causes memory leak
+
+            https://stackoverflow.com/questions/62851425/viewpager2-inside-a-fragment-leaks-after-replacing-the-fragment-its-in-by-navig
+         */
+        viewPager2.adapter = null
+
+        super.onDestroyView()
     }
 }

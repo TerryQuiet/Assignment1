@@ -1,6 +1,7 @@
 package tk.quietdev.level1.ui.pager
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,24 +18,35 @@ class PagerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNavHostHolderBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
-        setSupportActionBar(binding.tbContacts)
-        val navController = findNavController(R.id.nav_host)
-        appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        supportActionBar?.hide()
+
+        listenBackStackChange()
 
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
 
-    override fun onResume() {
-        super.onResume()
+    private fun listenBackStackChange() {
+        // Get NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host)
 
+        // ChildFragmentManager of NavHostFragment
+        val navHostChildFragmentManager = navHostFragment?.childFragmentManager
+
+        navHostChildFragmentManager?.addOnBackStackChangedListener {
+
+            val backStackEntryCount = navHostChildFragmentManager.backStackEntryCount
+            val fragments = navHostChildFragmentManager.fragments
+            val fragmentCount = fragments.size
+
+            println("🎃 Main graph backStackEntryCount: $backStackEntryCount, fragmentCount: $fragmentCount, fragments: $fragments")
+
+            Toast.makeText(
+                this,
+                "🎃 Main graph backStackEntryCount: $backStackEntryCount, fragmentCount: $fragmentCount, fragments: $fragments",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
 }
