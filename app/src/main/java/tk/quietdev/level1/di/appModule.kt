@@ -1,13 +1,12 @@
 package tk.quietdev.level1.di
 
-import androidx.navigation.NavController
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.models.convertors.Convertor
 import tk.quietdev.level1.ui.authorization.AuthViewModel
-import tk.quietdev.level1.ui.pager.AppbarViewModel
+import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
 import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.ui.pager.contacts.detail.ContactDetailViewModel
 import tk.quietdev.level1.ui.pager.contacts.dialog.AddContactViewModel
@@ -29,5 +28,5 @@ val appModule = module {
     viewModel { EditProfileViewModel(get()) }
     viewModel { SettingsViewModel() }
     viewModel { AuthViewModel(get()) }
-    viewModel { AppbarViewModel() }
+    viewModel { AppbarSharedViewModel() }
 }
