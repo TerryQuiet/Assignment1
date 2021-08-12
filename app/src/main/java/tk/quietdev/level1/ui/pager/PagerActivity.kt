@@ -15,8 +15,8 @@ import tk.quietdev.level1.databinding.ActivityPagerBinding
 class PagerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPagerBinding
     private var navController: NavController? = null
-    private val nestedNavHostFragmentId = R.id.nestedParentNavHostFragment
-    private val appbarSharedViewModel: AppbarSharedViewModel by viewModel() // TODO: 8/13/2021 by inject? 
+    private val nestedNavHostFragmentId = R.id.ParentNavHost
+    private val appbarSharedViewModel: AppbarSharedViewModel by viewModel() // TODO: 8/13/2021 by inject?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
