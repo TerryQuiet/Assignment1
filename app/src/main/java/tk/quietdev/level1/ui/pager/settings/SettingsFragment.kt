@@ -29,7 +29,6 @@ class SettingsFragment(val pageChange: (Int) -> Unit = {}) : Fragment() {
         FragmentSettingsBinding.inflate(inflater, container, false).apply {
             binding = this
             userDetailBinding = binding!!.topContainer
-
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,7 +39,6 @@ class SettingsFragment(val pageChange: (Int) -> Unit = {}) : Fragment() {
             bindListeners()
             bindValues()
         }
-
     }
 
     private fun bindListeners() {

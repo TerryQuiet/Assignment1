@@ -17,7 +17,6 @@ class PagerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityNavHostHolderBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
     }
 
 }

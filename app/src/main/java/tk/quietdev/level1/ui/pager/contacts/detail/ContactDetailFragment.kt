@@ -16,10 +16,9 @@ import tk.quietdev.level1.models.User
 import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.utils.ext.loadImage
 
-
 class ContactDetailFragment : Fragment() {
 
-    private var binding: FragmentContactDetailBinding? = null
+    lateinit var binding: FragmentContactDetailBinding
     private lateinit var userDetailBinding: UserDetailBinding
     private val sharedViewModel: ContactsSharedViewModel by sharedViewModel()
     private val viewModel : ContactDetailViewModel by viewModel()
@@ -86,7 +85,7 @@ class ContactDetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        //binding = null
     }
 
 }
