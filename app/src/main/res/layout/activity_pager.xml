@@ -24,7 +24,7 @@
         android:layout_weight="1">
 
         <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/nestedParentNavHostFragment"
+            android:id="@+id/ParentNavHost"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -35,6 +35,4 @@
 
 
 </LinearLayout>
-
-
 
