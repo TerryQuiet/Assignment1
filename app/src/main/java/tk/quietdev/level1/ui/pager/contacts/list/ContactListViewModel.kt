@@ -55,7 +55,6 @@ class ContactListViewModel(
         userList.value = userList.value
     }
 
-
     private fun getHandler(): Handler? {
         if (handler == null) {
             handler = Handler(Looper.getMainLooper())

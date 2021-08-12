@@ -29,7 +29,6 @@ class PagerAdapter(fm: FragmentManager, lf: Lifecycle,val pageChange: (Int) -> U
                         setPrimaryNavigationFragment(fragment)
                     }
                 }
-
             } else {
                 super.onFragmentMaxLifecyclePreUpdated(fragment, maxLifecycleState)
             }

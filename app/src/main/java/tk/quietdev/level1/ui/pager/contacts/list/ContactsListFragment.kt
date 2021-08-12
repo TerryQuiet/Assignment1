@@ -39,14 +39,11 @@ class ContactsListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentContactsBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initObservables()
         initRecycleView()
         addListeners()
@@ -59,7 +56,6 @@ class ContactsListFragment : Fragment() {
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
     }
-
 
     private fun initObservables() {
         viewModel.apply {
