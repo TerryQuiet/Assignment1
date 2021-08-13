@@ -12,7 +12,7 @@ import tk.quietdev.level1.databinding.ActivityPagerBinding
 import tk.quietdev.level1.ui.pager.settings.SettingsFragment
 
 
-class PagerActivity : AppCompatActivity(), SettingsFragment.onListClickedListener {
+class PagerActivity : AppCompatActivity() {
     private var _binding: ActivityPagerBinding? = null
     private val binding get() = _binding!!
     private var navController: NavController? = null
@@ -44,8 +44,6 @@ class PagerActivity : AppCompatActivity(), SettingsFragment.onListClickedListene
         _binding = null
     }
 
-    override fun onListClicked() {
-        TODO("Not yet implemented")
-    }
+
 
 }

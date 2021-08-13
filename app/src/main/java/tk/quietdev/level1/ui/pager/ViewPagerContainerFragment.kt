@@ -9,12 +9,14 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import tk.quietdev.level1.databinding.FragmentViewpagerContainerBinding
+import tk.quietdev.level1.ui.pager.settings.SettingsSharedViewModel
 
 class ViewPagerContainerFragment : Fragment() {
 
     private var _binding: FragmentViewpagerContainerBinding? = null
     private val binding get() = _binding!!
     private val appbarSharedViewModel: AppbarSharedViewModel by sharedViewModel()
+    private val settingsSharedViewModel : SettingsSharedViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,19 +49,25 @@ class ViewPagerContainerFragment : Fragment() {
             }
         })
 
+        settingsSharedViewModel.buttonClicked.observe(viewLifecycleOwner) { buttonClicked ->
+            if (buttonClicked) {
+                changePageToList()
+                settingsSharedViewModel.buttonClicked.value = false
+            }
+
+        }
+
     }
 
-    fun changePage(page: Int) {
-        binding.viewPager.setCurrentItem(page, true)
+    private fun changePageToList() {
+        binding.viewPager.setCurrentItem(1, true)
     }
 
     override fun onDestroyView() {
 
         val viewPager2 = binding.viewPager
-
         /*
             Without setting ViewPager2 Adapter it causes memory leak
-
             https://stackoverflow.com/questions/62851425/viewpager2-inside-a-fragment-leaks-after-replacing-the-fragment-its-in-by-navig
          */
         viewPager2.adapter = null

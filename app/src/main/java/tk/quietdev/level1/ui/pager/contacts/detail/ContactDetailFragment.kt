@@ -18,9 +18,11 @@ import tk.quietdev.level1.utils.ext.loadImage
 
 class ContactDetailFragment : Fragment() {
 
-    var _binding: FragmentContactDetailBinding? = null
+    private var _binding: FragmentContactDetailBinding? = null
     private val binding get() = _binding!!
-    private lateinit var userDetailBinding: UserDetailBinding
+    private var _userDetailBinding: UserDetailBinding? = null
+    private val userDetailBinding get() = _userDetailBinding!!
+
     private val sharedViewModel: ContactsSharedViewModel by sharedViewModel()
     private val viewModel : ContactDetailViewModel by viewModel()
     private val args: ContactDetailFragmentArgs by navArgs()
@@ -33,7 +35,7 @@ class ContactDetailFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.show()
         return FragmentContactDetailBinding.inflate(inflater, container, false).apply {
             _binding = this
-            userDetailBinding = binding.topContainer
+            _userDetailBinding = binding.topContainer
         }.root
     }
 
@@ -52,7 +54,6 @@ class ContactDetailFragment : Fragment() {
             }
         }
     }
-
 
     private fun bindViews() {
         viewModel.currentUser.let {
@@ -87,6 +88,7 @@ class ContactDetailFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        _userDetailBinding = null
     }
 
 }

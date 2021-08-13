@@ -12,6 +12,7 @@ import tk.quietdev.level1.ui.pager.contacts.detail.ContactDetailViewModel
 import tk.quietdev.level1.ui.pager.contacts.dialog.AddContactViewModel
 import tk.quietdev.level1.ui.pager.contacts.edit.EditProfileViewModel
 import tk.quietdev.level1.ui.pager.contacts.list.ContactListViewModel
+import tk.quietdev.level1.ui.pager.settings.SettingsSharedViewModel
 import tk.quietdev.level1.ui.pager.settings.SettingsViewModel
 import tk.quietdev.level1.utils.ContactsFetcher
 
@@ -29,4 +30,7 @@ val appModule = module {
     viewModel { SettingsViewModel() }
     viewModel { AuthViewModel(get()) }
     viewModel { AppbarSharedViewModel() }
+    viewModel { SettingsSharedViewModel() }
+
+
 }
