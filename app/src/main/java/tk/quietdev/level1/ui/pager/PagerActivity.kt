@@ -9,7 +9,6 @@ import androidx.navigation.ui.setupWithNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.ActivityPagerBinding
-import tk.quietdev.level1.ui.pager.settings.SettingsFragment
 
 
 class PagerActivity : AppCompatActivity() {
@@ -23,14 +22,17 @@ class PagerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityPagerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        toolbarSetup()
 
+    }
+
+    private fun toolbarSetup() {
         val parentNavHost =
             supportFragmentManager.findFragmentById(parentNavHost) as? NavHostFragment
         navController = parentNavHost?.navController
 
         val appBarConfig = AppBarConfiguration(navController!!.graph)
         binding.toolbar.setupWithNavController(navController!!, appBarConfig)
-
 
         appbarSharedViewModel.currentNavController.observe(this, { navController ->
             navController?.let {
