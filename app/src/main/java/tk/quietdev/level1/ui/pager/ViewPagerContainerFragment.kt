@@ -29,7 +29,11 @@ class ViewPagerContainerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupViewPager()
+        setObservers()
+    }
 
+    private fun setupViewPager() {
         binding.viewPager.adapter =
             PagerAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
 
@@ -39,9 +43,11 @@ class ViewPagerContainerFragment : Fragment() {
                 else -> "Setting"
             }
         }.attach()
+    }
+
+    private fun setObservers() {
 
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 appbarSharedViewModel.currentNavController.value =
@@ -54,7 +60,6 @@ class ViewPagerContainerFragment : Fragment() {
                 changePageToList()
                 settingsSharedViewModel.buttonClicked.value = false
             }
-
         }
 
     }

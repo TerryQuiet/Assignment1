@@ -14,7 +14,6 @@ import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
-// FIXME: 8/11/2021  
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
