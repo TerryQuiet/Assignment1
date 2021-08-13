@@ -19,7 +19,8 @@ import tk.quietdev.level1.utils.ext.loadImage
 
 class EditProfileFragment : Fragment() {
 
-    private lateinit var binding: FragmentEditProfileBinding
+    private var _binding: FragmentEditProfileBinding? = null
+    private val binding get() = _binding!!
     private val sharedViewModel: ContactsSharedViewModel by sharedViewModel()
     private val viewModel: EditProfileViewModel by viewModel()
     private val args: EditProfileFragmentArgs by navArgs()
@@ -32,7 +33,7 @@ class EditProfileFragment : Fragment() {
     ): View =
         FragmentEditProfileBinding.inflate(inflater, container, false).apply {
             (activity as AppCompatActivity).supportActionBar?.show()
-            binding = this
+            _binding = this
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,6 +102,11 @@ class EditProfileFragment : Fragment() {
             localPictureUri = it
             binding.ivProfilePic.loadImage(it)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 
