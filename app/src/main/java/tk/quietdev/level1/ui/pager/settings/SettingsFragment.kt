@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.databinding.FragmentSettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.models.User
-
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
@@ -21,6 +20,7 @@ class SettingsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var userDetailBinding: UserDetailBinding
     private val viewModel: SettingsViewModel by viewModel()
+    private val settingsSharedViewModel :SettingsSharedViewModel by sharedViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,7 +45,7 @@ class SettingsFragment : Fragment() {
     private fun bindListeners() {
         binding.apply {
             btnViewContacts.setOnClickListener {
-               // onListClickedListener.onListClicked()
+               settingsSharedViewModel.buttonClicked.value = true
             }
             btnEditProfile.setOnClickListener {
 
@@ -68,8 +68,5 @@ class SettingsFragment : Fragment() {
         _binding = null
     }
 
-    interface onListClickedListener {
-        fun onListClicked()
-    }
 
 }

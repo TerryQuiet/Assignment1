@@ -15,7 +15,8 @@ import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
 
 class ListNavHostFragment : Fragment() {
 
-    var binding: FragmentNavhostListBinding? = null
+    private var _binding: FragmentNavhostListBinding? = null
+    private val binding get() = _binding!!
     private val appbarSharedViewModel: AppbarSharedViewModel by sharedViewModel()
     private var navController: NavController? = null
     private val nestedNavHostFragmentId = R.id.nestedListNavHostFragment
@@ -26,8 +27,7 @@ class ListNavHostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View =
         FragmentNavhostListBinding.inflate(inflater, container, false).apply {
-            binding = this
-            //binding.lifecycleOwner = viewLifecycleOwner
+            _binding = this
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,7 +40,7 @@ class ListNavHostFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 
 
