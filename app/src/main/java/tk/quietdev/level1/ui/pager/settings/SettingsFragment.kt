@@ -16,8 +16,9 @@ import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
 // FIXME: 8/11/2021  
-class SettingsFragment(val pageChange: (Int) -> Unit = {}) : Fragment() {
-    private var binding: FragmentSettingsBinding? = null
+class SettingsFragment : Fragment() {
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
     private lateinit var userDetailBinding: UserDetailBinding
     private val viewModel: SettingsViewModel by viewModel()
 
@@ -27,8 +28,8 @@ class SettingsFragment(val pageChange: (Int) -> Unit = {}) : Fragment() {
         savedInstanceState: Bundle?
     ): View =
         FragmentSettingsBinding.inflate(inflater, container, false).apply {
-            binding = this
-            userDetailBinding = binding!!.topContainer
+            _binding = this
+            userDetailBinding = binding.topContainer
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,9 +43,9 @@ class SettingsFragment(val pageChange: (Int) -> Unit = {}) : Fragment() {
     }
 
     private fun bindListeners() {
-        binding?.apply {
+        binding.apply {
             btnViewContacts.setOnClickListener {
-                pageChange(1)
+               // onListClickedListener.onListClicked()
             }
             btnEditProfile.setOnClickListener {
 
@@ -54,7 +55,7 @@ class SettingsFragment(val pageChange: (Int) -> Unit = {}) : Fragment() {
 
     private fun bindValues() {
         val currentUser = viewModel.currentUser
-        binding!!.topContainer.apply {
+        binding.topContainer.apply {
             tvName.text = currentUser.userName
             tvAddress.text = currentUser.physicalAddress
             tvOccupation.text = currentUser.occupation
@@ -64,7 +65,11 @@ class SettingsFragment(val pageChange: (Int) -> Unit = {}) : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
+    }
+
+    interface onListClickedListener {
+        fun onListClicked()
     }
 
 }

@@ -10,7 +10,7 @@ import tk.quietdev.level1.ui.pager.navhost.ListNavHostFragment
 import tk.quietdev.level1.ui.pager.navhost.SettingsNavHostFragment
 import tk.quietdev.level1.ui.pager.settings.SettingsFragment
 
-class PagerAdapter(fm: FragmentManager, lf: Lifecycle,val pageChange: (Int) -> Unit) :
+class PagerAdapter(fm: FragmentManager, lf: Lifecycle) :
         FragmentStateAdapter(fm, lf) {
 
     init {

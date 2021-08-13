@@ -16,6 +16,7 @@ import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
 class SettingsNavHostFragment : Fragment() {
 
     var binding: FragmentNavhostSettingsBinding? = null
+
     private val appbarSharedViewModel: AppbarSharedViewModel by sharedViewModel()
     private var navController: NavController? = null
     private val nestedNavHostFragmentId = R.id.nestedSettingsNavHostFragment
@@ -27,12 +28,10 @@ class SettingsNavHostFragment : Fragment() {
     ): View =
         FragmentNavhostSettingsBinding.inflate(inflater, container, false).apply {
             binding = this
-            //binding.lifecycleOwner = viewLifecycleOwner
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
         val nestedNavHostFragment =
             childFragmentManager.findFragmentById(nestedNavHostFragmentId) as? NavHostFragment
@@ -41,10 +40,8 @@ class SettingsNavHostFragment : Fragment() {
     }
 
 
-
     override fun onResume() {
         super.onResume()
-//        callback.isEnabled = true
         // Set this navController as ViewModel's navController
         appbarSharedViewModel.currentNavController.value = navController
     }

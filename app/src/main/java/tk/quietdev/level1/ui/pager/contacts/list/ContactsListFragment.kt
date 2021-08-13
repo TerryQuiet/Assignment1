@@ -28,7 +28,8 @@ import tk.quietdev.level1.utils.Const
 
 class ContactsListFragment : Fragment() {
 
-    private lateinit var binding: FragmentContactsBinding
+    private var _binding: FragmentContactsBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: ContactListViewModel by viewModel()
     private val contactsSharedViewModel: ContactsSharedViewModel by sharedViewModel()
     private val contactsAdapter: ContactsAdapter by lazy { getContactAdapter() }
@@ -38,7 +39,7 @@ class ContactsListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentContactsBinding.inflate(inflater, container, false)
+        _binding = FragmentContactsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -131,5 +132,10 @@ class ContactsListFragment : Fragment() {
             )*/
             ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(user)
         )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
