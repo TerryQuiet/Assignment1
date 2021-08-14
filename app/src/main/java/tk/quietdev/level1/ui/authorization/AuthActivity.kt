@@ -13,7 +13,6 @@ import tk.quietdev.level1.models.User
 import tk.quietdev.level1.ui.pager.PagerActivity
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.PrefsHelper
-import tk.quietdev.level1.utils.Validator
 
 class AuthActivity : AppCompatActivity() {
 
@@ -45,7 +44,7 @@ class AuthActivity : AppCompatActivity() {
             }
             etEmail.apply {
                 doOnTextChanged { text, _, _, _ ->
-                    if (!text.isNullOrEmpty() && Validator.isEmailValid(text.toString())) {
+                    if (viewModel.isEmailValid(text)) {
                         binding.etEmailParent.isErrorEnabled = false
                     } else {
                         binding.etEmailParent.error = getString(R.string.please_enter_valid_email)
@@ -63,14 +62,14 @@ class AuthActivity : AppCompatActivity() {
                 }
             }
             etPassword.doOnTextChanged { text, _, _, _ ->
-                if (!text.isNullOrEmpty() && Validator.isPasswordValid(text.toString())) {
+                if (viewModel.isPasswordValid(text)) {
                     binding.etPasswordParent.isErrorEnabled = false
                 } else {
                     binding.etPasswordParent.error = getString(R.string.please_enter_valid_password)
                 }
             }
             cbRemember.setOnCheckedChangeListener { _, isChecked ->
-                PrefsHelper.saveBoolean(PrefsHelper.IS_REMEMBER, isChecked)
+                viewModel.updateIsRemember(isChecked)
             }
         }
     }
@@ -94,7 +93,7 @@ class AuthActivity : AppCompatActivity() {
 
     }
 
-    @Deprecated("Not required, but helps with login(fills if pressed OK")
+    @Deprecated("Not required, but helps with login(fills the fields for you if pressed OK)")
     private fun showHelpTip() {
         Snackbar.make(binding.btnRegister, getString(R.string.login_help_tip), Snackbar.LENGTH_LONG)
             .setAction("OK") {
@@ -109,7 +108,7 @@ class AuthActivity : AppCompatActivity() {
         val intent = Intent(this, PagerActivity::class.java).apply {
             putExtra(Const.USER, user)
         }
-        PrefsHelper.saveInt(PrefsHelper.USER_ID, user.id!!)
+        viewModel.saveUser(user)
         startActivity(intent)
         finish()
     }
