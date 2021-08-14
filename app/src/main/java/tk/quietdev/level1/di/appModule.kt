@@ -1,6 +1,7 @@
 package tk.quietdev.level1.di
 
 import org.koin.android.ext.koin.androidApplication
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import tk.quietdev.level1.database.FakeDatabase
@@ -15,11 +16,15 @@ import tk.quietdev.level1.ui.pager.contacts.list.ContactListViewModel
 import tk.quietdev.level1.ui.pager.settings.SettingsSharedViewModel
 import tk.quietdev.level1.ui.pager.settings.SettingsViewModel
 import tk.quietdev.level1.utils.ContactsFetcher
+import tk.quietdev.level1.utils.PrefsHelper
+import tk.quietdev.level1.utils.Validator
 
 
 val appModule = module {
     single { ContactsFetcher(androidApplication()) }
     single { Convertor() }
+    single { Validator() }
+    single { PrefsHelper(androidContext()) }
     single { FakeDatabase(androidApplication().applicationContext, get(), get()) }
 
     viewModel { ContactListViewModel(get()) }
@@ -28,7 +33,7 @@ val appModule = module {
     viewModel { ContactDetailViewModel() }
     viewModel { EditProfileViewModel(get()) }
     viewModel { SettingsViewModel() }
-    viewModel { AuthViewModel(get()) }
+    viewModel { AuthViewModel(get(), get(), get()) }
     viewModel { AppbarSharedViewModel() }
     viewModel { SettingsSharedViewModel() }
 

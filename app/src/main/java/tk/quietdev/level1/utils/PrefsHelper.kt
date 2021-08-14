@@ -4,18 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 
 
-object PrefsHelper {
 
-    private lateinit var preferences: SharedPreferences
+class PrefsHelper(androidContext: Context) {
+    private  val PREFS_NAME = "params"
+     val USER_ID = "USERID"
+     val IS_REMEMBER = "isSaveChecked"
 
-    private const val PREFS_NAME = "params"
-    const val USER_ID = "USERID"
-    const val IS_REMEMBER = "isSaveChecked"
-
-    // init from App
-    fun init(context: Context) {
-        preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-    }
+    private var preferences: SharedPreferences =
+        androidContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     fun clearPreferences() {
         preferences.edit().clear().apply()

@@ -2,7 +2,7 @@ package tk.quietdev.level1.utils
 
 import android.util.Patterns
 
-object Validator {
+class Validator {
     fun isEmailValid(mail: String): Boolean{
        return  Patterns.EMAIL_ADDRESS.matcher(mail).matches()
     }
