@@ -19,12 +19,11 @@ import tk.quietdev.level1.utils.ContactsFetcher
 import tk.quietdev.level1.utils.PrefsHelper
 import tk.quietdev.level1.utils.Validator
 
-
 val appModule = module {
     single { ContactsFetcher(androidApplication()) }
     single { Convertor() }
     single { Validator() }
-    single { PrefsHelper(androidContext()) }
+    single { PrefsHelper(androidApplication().applicationContext) }
     single { FakeDatabase(androidApplication().applicationContext, get(), get()) }
 
     viewModel { ContactListViewModel(get()) }

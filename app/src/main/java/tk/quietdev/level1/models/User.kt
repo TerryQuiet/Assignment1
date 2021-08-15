@@ -15,4 +15,5 @@ data class User(
     var password: String = "11111",
     var birthDate: String? = null,
     var phone: String? = null,
+    var isToRemoveChecked: Boolean = false
 ) : Parcelable

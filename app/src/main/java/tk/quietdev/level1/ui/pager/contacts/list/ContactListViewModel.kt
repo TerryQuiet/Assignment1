@@ -15,6 +15,10 @@ class ContactListViewModel(
     var userList = MutableLiveData<MutableList<User>>()
     private var deletedUserPosition: Int? = null
     private var handler: Handler? = null
+    private val userIdToRemove = mutableListOf<Int>()
+
+    var isRemoveState = MutableLiveData(false)
+
 
     init {
         userList = MutableLiveData(db.getUserList(Const.FAKE_USER_AMOUNT_TO_LIST).toMutableList())
@@ -24,7 +28,7 @@ class ContactListViewModel(
         val user = db.getUserWithNoValidation(id)
         user?.let {
             deletedUserPosition?.let {
-                userList.value?.add(it, user)
+                userList.value?.add(it, user.also { it.isToRemoveChecked = false })
                 deletedUserPosition = null
                 updateLiveData()
             }
@@ -36,13 +40,8 @@ class ContactListViewModel(
         removedUser?.let {
             deletedUserPosition = position
             updateLiveData()
-            /*getHandler()?.apply {
-                removeCallbacksAndMessages(null)
-                postDelayed({
-                    deletedUserPosition = null
-                    handler = null
-                }, Const.TIME_5_SEC + 2000)
-            }*/
+            userIdToRemove.remove(user.id)
+            isRemoveState.value = userIdToRemove.isNotEmpty()
         }
     }
 
@@ -72,6 +71,23 @@ class ContactListViewModel(
            }
            updateLiveData()
        }
+    }
+
+    fun toggleUserRemove(userId: Int) {
+        val isUserRemovedFromList = userIdToRemove.remove(userId)
+        if (!isUserRemovedFromList) {
+            userIdToRemove.add(userId)
+        }
+        isRemoveState.value = userIdToRemove.isNotEmpty()
+    }
+
+    fun removeUsers() {
+        val newList = userList.value?.filter { !userIdToRemove.contains(it.id) }?.toMutableList()
+        newList?.let {
+            userList.value = it
+        }
+        userIdToRemove.clear()
+        isRemoveState.value = false
     }
 
 }

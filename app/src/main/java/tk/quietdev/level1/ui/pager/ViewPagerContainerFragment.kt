@@ -35,7 +35,7 @@ class ViewPagerContainerFragment : Fragment() {
 
     private fun setupViewPager() {
         binding.viewPager.adapter =
-            PagerAdapter(childFragmentManager, viewLifecycleOwner.lifecycle)
+            PagerAdapter(parentFragmentManager, viewLifecycleOwner.lifecycle)
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
