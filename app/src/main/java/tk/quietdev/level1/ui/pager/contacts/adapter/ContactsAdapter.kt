@@ -2,6 +2,7 @@ package tk.quietdev.level1.ui.pager.contacts.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
@@ -12,7 +13,8 @@ import tk.quietdev.level1.utils.OnSwipeCallBack
 
 class ContactsAdapter(
     private val onRemove: (User, Int) -> Unit,
-    private val onItemClickListener: (User) -> Unit
+    private val onClickListener: ContactHolder.OnItemClickListener,
+    private val removeState: MutableLiveData<Boolean>,
 ) : ListAdapter<User, ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -28,7 +30,7 @@ class ContactsAdapter(
                 LayoutInflater.from(parent.context), parent, false
             ),
             onRemove,
-            onItemClickListener
+            onClickListener
         )
     }
 
@@ -50,6 +52,17 @@ class ContactsAdapter(
         }
 
     }
+
+    override fun onViewAttachedToWindow(holder: ContactHolder) {
+        super.onViewAttachedToWindow(holder)
+        holder.setObserver(removeState)
+    }
+
+    override fun onViewDetachedFromWindow(holder: ContactHolder) {
+        super.onViewDetachedFromWindow(holder)
+        holder.removeObserver(removeState)
+    }
+
 
 }
 

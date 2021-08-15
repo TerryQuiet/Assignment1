@@ -5,61 +5,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:theme="@style/Base.Theme.MyApp.WhiteSurface"
     android:layout_marginBottom="@dimen/extra_small_4dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/layout"
+        android:paddingHorizontal="@dimen/normal_16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorSurface"
-        android:paddingHorizontal="@dimen/normal_16dp"
-        android:paddingVertical="@dimen/small_8dp"
-        android:theme="@style/Base.Theme.MyApp.WhiteSurface">
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/ivProfilePic"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_profile"
-            tools:layout_editor_absoluteX="42dp" />
-
-
-        <TextView
-            android:id="@+id/tvName"
+        <CheckBox
+            android:id="@+id/cbRemove"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/normal_16dp"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="@dimen/header2_18sp"
-            app:layout_constraintBottom_toTopOf="@+id/tvOccupation"
-            app:layout_constraintStart_toEndOf="@id/ivProfilePic"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Ava Smith" />
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:text="@null" />
 
-        <TextView
-            android:id="@+id/tvOccupation"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/normal_16dp"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="@dimen/header4_12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ivProfilePic"
-            app:layout_constraintTop_toBottomOf="@+id/tvName"
-            tools:text="Photograph" />
+            android:paddingVertical="@dimen/small_8dp">
 
-        <ImageButton
-            android:id="@+id/image_btn_remove"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_trashcan" />
+            <ImageView
+                android:id="@+id/ivProfilePic"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_profile"
+                tools:layout_editor_absoluteX="42dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/normal_16dp"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="@dimen/header2_18sp"
+                app:layout_constraintBottom_toTopOf="@+id/tvOccupation"
+                app:layout_constraintStart_toEndOf="@id/ivProfilePic"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Ava Smith" />
+
+            <TextView
+                android:id="@+id/tvOccupation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/normal_16dp"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="@dimen/header4_12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivProfilePic"
+                app:layout_constraintTop_toBottomOf="@+id/tvName"
+                tools:text="Photograph" />
+
+            <ImageButton
+                android:id="@+id/image_btn_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_trashcan" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+
 
 </com.google.android.material.card.MaterialCardView>
 

@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,7 @@ import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.models.User
 import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
+import tk.quietdev.level1.ui.pager.contacts.adapter.ContactHolder
 import tk.quietdev.level1.ui.pager.contacts.adapter.ContactsAdapter
 import tk.quietdev.level1.ui.pager.contacts.dialog.AddContactDialog
 import tk.quietdev.level1.utils.Const
@@ -33,6 +33,7 @@ class ContactsListFragment : Fragment() {
     private val viewModel: ContactListViewModel by viewModel()
     private val contactsSharedViewModel: ContactsSharedViewModel by sharedViewModel()
     private val contactsAdapter: ContactsAdapter by lazy { getContactAdapter() }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,8 +62,15 @@ class ContactsListFragment : Fragment() {
     private fun initObservables() {
         viewModel.apply {
             userList.observe(viewLifecycleOwner) { newList ->
-                Log.d(Const.TAG, "initObservables: ${newList.size} ")
                 contactsAdapter.submitList(newList.toList())
+            }
+            isRemoveState.observe(viewLifecycleOwner) { isRemoveState ->
+                if (isRemoveState) {
+                    binding.btnAdd.text = getString(R.string.remove)
+                } else {
+                    binding.btnAdd.text = getString(R.string.add_contact)
+                }
+
             }
         }
         contactsSharedViewModel.apply {
@@ -83,7 +91,9 @@ class ContactsListFragment : Fragment() {
 
     private fun getContactAdapter() = ContactsAdapter(
         onRemove = this::removeUser,
-        onItemClickListener = this::openContactDetail
+        onItemClickListener,
+        viewModel.isRemoveState
+
     )
 
     private fun removeUser(user: User, position: Int) {
@@ -93,6 +103,14 @@ class ContactsListFragment : Fragment() {
 
     private fun addListeners() {
         binding.btnAdd.setOnClickListener {
+            buttonClicked()
+        }
+    }
+
+    private fun buttonClicked() {
+        if (viewModel.isRemoveState.value == true) {
+            viewModel.removeUsers()
+        } else {
             AddContactDialog()
                 .show(childFragmentManager, "")
         }
@@ -125,7 +143,6 @@ class ContactsListFragment : Fragment() {
     }
 
     private fun openContactDetail(user: User) {
-        Log.d(Const.TAG, "openContactDetail: ${user.userName}")
         findNavController().navigate(
             /*ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(
                 user
@@ -137,5 +154,22 @@ class ContactsListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private val onItemClickListener = object : ContactHolder.OnItemClickListener {
+
+        override fun onItemClick(user: User) {
+            if (viewModel.isRemoveState.value == true) {
+                viewModel.toggleUserRemove(user.id!!)
+            } else {
+                openContactDetail(user)
+            }
+        }
+
+        override fun onLongItemClick(user: User): Boolean {
+            viewModel.toggleUserRemove(user.id!!)
+            return true
+        }
+
     }
 }
