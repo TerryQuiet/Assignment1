@@ -3,18 +3,18 @@ package tk.quietdev.level1.ui.pager.contacts.dialog
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import tk.quietdev.level1.database.FakeDatabase
-import tk.quietdev.level1.models.User
+import tk.quietdev.level1.models.UserModel
 
 class AddContactViewModel(private val db: FakeDatabase) : ViewModel() {
 
-    val newUser = MutableLiveData<User>()
+    val newUser = MutableLiveData<UserModel>()
 
     fun addNewUser(
         name: String,
         surname: String,
         occupation: String,
     ) {
-        val newUser = User(
+        val newUser = UserModel(
             userName = "$name $surname",
             email = "$name.$surname@mail.fake",
             occupation = occupation
@@ -22,5 +22,5 @@ class AddContactViewModel(private val db: FakeDatabase) : ViewModel() {
         this.newUser.value = addUserToDb(newUser)
     }
 
-    private fun addUserToDb(user: User) : User = db.addUser(user)
+    private fun addUserToDb(userModel: UserModel) : UserModel = db.addUser(userModel)
 }

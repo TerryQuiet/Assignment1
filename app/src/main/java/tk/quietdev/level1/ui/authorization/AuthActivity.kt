@@ -9,10 +9,9 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.ActivityAuthBinding
-import tk.quietdev.level1.models.User
+import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.PagerActivity
 import tk.quietdev.level1.utils.Const
-import tk.quietdev.level1.utils.PrefsHelper
 
 class AuthActivity : AppCompatActivity() {
 
@@ -29,7 +28,7 @@ class AuthActivity : AppCompatActivity() {
         showHelpTip()
 
         if (viewModel.isRemember.value!!) {
-            viewModel.currentUser.value?.let {
+            viewModel.currentUserModel.value?.let {
                 login(it)
             }
         }
@@ -84,7 +83,7 @@ class AuthActivity : AppCompatActivity() {
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
         viewModel.findUser(email, password)
-        val user = viewModel.currentUser.value
+        val user = viewModel.currentUserModel.value
         if (user != null) {
             login(user)
         } else {
@@ -104,11 +103,11 @@ class AuthActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun login(user: User) {
+    private fun login(userModel: UserModel) {
         val intent = Intent(this, PagerActivity::class.java).apply {
-            putExtra(Const.USER, user)
+            putExtra(Const.USER, userModel)
         }
-        viewModel.saveUser(user)
+        viewModel.saveUser(userModel)
         startActivity(intent)
         finish()
     }

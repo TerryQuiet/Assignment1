@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Base.Theme.MyApp.WhiteSurface" >
+    <style name="Base.Theme.MyApp.WhiteSurface">
         <item name="backgroundColor">@color/white</item>
         <item name="colorOnBackground">@color/black</item>
         <item name="textInputStyle">@style/MyApp.TextInputLayoutStyleOutlineOnWhite</item>
@@ -34,9 +34,12 @@
         <item name="colorOnError">?attr/colorError</item>
         <item name="android:textColorHint">@color/gray</item>
 
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent</item>
-        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyTheme.MediumComponent</item>
-        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MyTheme.LargeComponent</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.MyTheme.SmallComponent
+        </item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.MyTheme.MediumComponent
+        </item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.MyTheme.LargeComponent
+        </item>
         <!--Component styles-->
 
 

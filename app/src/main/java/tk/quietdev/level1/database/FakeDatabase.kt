@@ -4,7 +4,7 @@ package tk.quietdev.level1.database
 import android.content.Context
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import tk.quietdev.level1.models.User
+import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.models.convertors.Convertor
 import tk.quietdev.level1.utils.ContactsFetcher
 import tk.quietdev.level1.utils.ext.readAssetsFile
@@ -19,7 +19,7 @@ class FakeDatabase(
     private var userIds: Int = 0
 
     // all the users in database, using Int as ID
-    private val allFakeUsers: MutableMap<Int, User> = emptyMap<Int, User>().toMutableMap()
+    private val allFakeUsers: MutableMap<Int, UserModel> = emptyMap<Int, UserModel>().toMutableMap()
 
 
     init {
@@ -30,15 +30,15 @@ class FakeDatabase(
 
     var currentUserID: Int? = null
 
-    private fun isPasswordCorrect(user: User?, password: String): Boolean {
-        return (user?.password == password)
+    private fun isPasswordCorrect(userModel: UserModel?, password: String): Boolean {
+        return (userModel?.password == password)
     }
 
 
     private fun addUsersFromJson(string: String) {
         val mapper = jacksonObjectMapper()
-        val userList: List<User> = mapper.readValue(string)
-        userList.forEach { addUser(it) }
+        val userModelList: List<UserModel> = mapper.readValue(string)
+        userModelList.forEach { addUser(it) }
     }
 
     private fun addUsersFromPhone() {
@@ -53,11 +53,11 @@ class FakeDatabase(
      * @param amount the number of users to return, -1 if all
      * @return list of users
      */
-    fun getUserList(amount: Int = -1): List<User> {
+    fun getUserList(amount: Int = -1): List<UserModel> {
         return allFakeUsers.values.take(if (amount < 0) allFakeUsers.size else amount)
     }
 
-    fun getUserWithValidation(email: String, password: String): User? {
+    fun getUserWithValidation(email: String, password: String): UserModel? {
         val id = findIdByEmail(email)
         return if (isPasswordCorrect(allFakeUsers[id], password)) {
             allFakeUsers[id]
@@ -68,7 +68,7 @@ class FakeDatabase(
        return allFakeUsers.values.find { it.email == email }?.id
     }
 
-    fun getUserWithNoValidation(id: Int): User? {
+    fun getUserWithNoValidation(id: Int): UserModel? {
         return allFakeUsers[id]
     }
 
@@ -77,8 +77,8 @@ class FakeDatabase(
      * @return user with Id assigned.
      * this should always be used when user is created.
      */
-    fun addUser(user: User): User {
-        user.apply {
+    fun addUser(userModel: UserModel): UserModel {
+        userModel.apply {
             id = userIds++
             id?.let {
                 allFakeUsers[it] = this
@@ -87,8 +87,8 @@ class FakeDatabase(
         }
     }
 
-    fun updateUser(updatedUser: User) {
-        allFakeUsers[updatedUser.id!!] = updatedUser
+    fun updateUser(updatedUserModel: UserModel) {
+        allFakeUsers[updatedUserModel.id!!] = updatedUserModel
     }
 
 }

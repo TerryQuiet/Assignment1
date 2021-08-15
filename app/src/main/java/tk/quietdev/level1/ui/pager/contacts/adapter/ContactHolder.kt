@@ -6,17 +6,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.databinding.ListItemBinding
-import tk.quietdev.level1.models.User
+import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.ext.loadImage
 
 class ContactHolder(
     private val binding: ListItemBinding,
-    private val onRemove: (User, Int) -> Unit,
+    private val onRemove: (UserModel, Int) -> Unit,
     private val onClickListener: OnItemClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    private var _currentUser: User? = null
-    private val currentUser get() = _currentUser!!
+    private var _currentUserModel: UserModel? = null
+    private val currentUser get() = _currentUserModel!!
     private var isRemoveState = false
 
 
@@ -30,9 +30,9 @@ class ContactHolder(
         }
     }
 
-    fun bind(user: User) {
-        with(user) {
-            _currentUser = this
+    fun bind(userModel: UserModel) {
+        with(userModel) {
+            _currentUserModel = this
             changeBackgroundColor()
             binding.tvName.text = userName
             binding.tvOccupation.text = occupation
@@ -98,8 +98,8 @@ class ContactHolder(
     }
 
     interface OnItemClickListener {
-        fun onItemClick(user: User)
-        fun onLongItemClick(user: User): Boolean
+        fun onItemClick(userModel: UserModel)
+        fun onLongItemClick(userModel: UserModel): Boolean
     }
 
 }

@@ -5,14 +5,14 @@ import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import tk.quietdev.level1.database.FakeDatabase
-import tk.quietdev.level1.models.User
+import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.Const
 
 class ContactListViewModel(
     private val db: FakeDatabase
 ) : ViewModel() {
 
-    var userList = MutableLiveData<MutableList<User>>()
+    var userList = MutableLiveData<MutableList<UserModel>>()
     private var deletedUserPosition: Int? = null
     private var handler: Handler? = null
     private val userIdToRemove = mutableListOf<Int>()
@@ -35,18 +35,18 @@ class ContactListViewModel(
         }
     }
 
-    fun removeUser(user: User, position: Int) {
-        val removedUser = userList.value?.remove(user)
+    fun removeUser(userModel: UserModel, position: Int) {
+        val removedUser = userList.value?.remove(userModel)
         removedUser?.let {
             deletedUserPosition = position
             updateLiveData()
-            userIdToRemove.remove(user.id)
+            userIdToRemove.remove(userModel.id)
             isRemoveState.value = userIdToRemove.isNotEmpty()
         }
     }
 
-    fun addNewUser(user: User) {
-        userList.value?.add(user)
+    fun addNewUser(userModel: UserModel) {
+        userList.value?.add(userModel)
         updateLiveData()
     }
 
@@ -61,11 +61,11 @@ class ContactListViewModel(
         return handler
     }
 
-    fun updateUser(updatedUser: User) {
+    fun updateUser(updatedUserModel: UserModel) {
        userList.value?.let {
            for (i in it.indices) {
-               if (it[i].id == updatedUser.id) {
-                   it[i] = updatedUser
+               if (it[i].id == updatedUserModel.id) {
+                   it[i] = updatedUserModel
                    break
                }
            }

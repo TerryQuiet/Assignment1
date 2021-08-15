@@ -1,25 +1,25 @@
 package tk.quietdev.level1.models.convertors
 
-import tk.quietdev.level1.models.Contact
-import tk.quietdev.level1.models.User
+import tk.quietdev.level1.models.ContactModel
+import tk.quietdev.level1.models.UserModel
 
 class Convertor {
 
     /**
      * @return only contacts with image, and phone number
      */
-    fun convertContactToUser(contact: Contact): User? {
-        val number: String? = if (contact.numbers.isEmpty()) null else contact.numbers.first()
-        val photo = contact.photo
+    fun convertContactToUser(contactModel: ContactModel): UserModel? {
+        val number: String? = if (contactModel.numbers.isEmpty()) null else contactModel.numbers.first()
+        val photo = contactModel.photo
         if (number.isNullOrEmpty() || photo.isNullOrEmpty())
             return null
 
         val email =
-            if (contact.emails.isEmpty()) "${contact.name}@fake.mail" else contact.emails.first()
+            if (contactModel.emails.isEmpty()) "${contactModel.name}@fake.mail" else contactModel.emails.first()
 
-        return User(
+        return UserModel(
             id = null,
-            userName = contact.name,
+            userName = contactModel.name,
             phone = number,
             email = email,
             pictureUri = photo

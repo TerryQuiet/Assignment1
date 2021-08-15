@@ -11,7 +11,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-import tk.quietdev.level1.models.Contact
+import tk.quietdev.level1.models.ContactModel
 import kotlin.collections.set
 
 
@@ -22,9 +22,9 @@ class ContactsFetcher(private val mApplication: Application) : AndroidViewModel(
 /*private val _contactsLiveData = MutableLiveData<ArrayList<Contact>>()
     val contactsLiveData: LiveData<ArrayList<Contact>> = _contactsLiveData*/
 
-    fun fetchContacts(): ArrayList<Contact> {
+    fun fetchContacts(): ArrayList<ContactModel> {
         if (checkContactPermission()) {
-            var contacts = arrayListOf<Contact>()
+            var contacts = arrayListOf<ContactModel>()
             viewModelScope.launch {
                 val contactsListAsync = async { getPhoneContacts() }
                 val contactNumbersAsync = async { getContactNumbers() }
@@ -50,8 +50,8 @@ class ContactsFetcher(private val mApplication: Application) : AndroidViewModel(
         return arrayListOf()
     }
 
-    private suspend fun getPhoneContacts(): ArrayList<Contact> {
-        val contactsList = ArrayList<Contact>()
+    private suspend fun getPhoneContacts(): ArrayList<ContactModel> {
+        val contactsList = ArrayList<ContactModel>()
         val contactsCursor = mApplication.contentResolver?.query(
             ContactsContract.Contacts.CONTENT_URI,
             null,
@@ -69,7 +69,7 @@ class ContactsFetcher(private val mApplication: Application) : AndroidViewModel(
                 val photo = contactsCursor.getString(photoIndex)
                 if (photo.isNullOrEmpty()) continue
                 if (name != null) {
-                    contactsList.add(Contact(id, name).apply {
+                    contactsList.add(ContactModel(id, name).apply {
                         this.photo = photo
                     })
                 }

@@ -18,7 +18,7 @@
         android:label="@string/profile">
         <argument
             android:name="user"
-            app:argType="tk.quietdev.level1.models.User" />
+            app:argType="tk.quietdev.level1.models.UserModel" />
         <action
             android:id="@+id/action_contactDetailFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
@@ -29,7 +29,7 @@
         android:label="@string/edit_profile">
         <argument
             android:name="user"
-            app:argType="tk.quietdev.level1.models.User" />
+            app:argType="tk.quietdev.level1.models.UserModel" />
     </fragment>
 
 </navigation>

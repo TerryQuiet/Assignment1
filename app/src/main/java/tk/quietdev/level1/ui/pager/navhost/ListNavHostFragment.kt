@@ -12,12 +12,13 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentNavhostListBinding
 import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListNavHostFragment : Fragment() {
 
     private var _binding: FragmentNavhostListBinding? = null
     private val appbarSharedViewModel: AppbarSharedViewModel by sharedViewModel()
-    private var navController: NavController? = null
+    var navController: NavController? = null
     private val nestedNavHostFragmentId = R.id.nestedListNavHostFragment
 
     override fun onCreateView(
@@ -41,7 +42,6 @@ class ListNavHostFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 
     override fun onResume() {
