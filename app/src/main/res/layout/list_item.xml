@@ -73,11 +73,9 @@
                 app:srcCompat="@drawable/ic_trashcan" />
 
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-
 
 
 </com.google.android.material.card.MaterialCardView>

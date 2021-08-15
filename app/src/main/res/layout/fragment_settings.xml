@@ -31,8 +31,7 @@
         app:layout_constraintBottom_toTopOf="@+id/glCenterHorizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </include>
+        app:layout_constraintTop_toTopOf="parent"></include>
 
     <include
         android:id="@+id/containerSocialButtons"

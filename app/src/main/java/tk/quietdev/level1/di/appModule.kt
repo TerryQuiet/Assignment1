@@ -37,5 +37,4 @@ val appModule = module {
     viewModel { SettingsSharedViewModel() }
 
 
-
 }

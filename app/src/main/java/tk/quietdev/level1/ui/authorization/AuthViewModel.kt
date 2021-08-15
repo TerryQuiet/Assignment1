@@ -7,7 +7,11 @@ import tk.quietdev.level1.models.User
 import tk.quietdev.level1.utils.PrefsHelper
 import tk.quietdev.level1.utils.Validator
 
-class AuthViewModel(private val db: FakeDatabase, private val validator: Validator, private val prefs : PrefsHelper) : ViewModel() {
+class AuthViewModel(
+    private val db: FakeDatabase,
+    private val validator: Validator,
+    private val prefs: PrefsHelper
+) : ViewModel() {
 
     val isRemember = MutableLiveData(false)
 

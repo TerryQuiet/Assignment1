@@ -51,7 +51,7 @@
 
     </style>
 
-     <!--    Toolbar-->
+    <!--    Toolbar-->
     <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="materialThemeOverlay">@style/ThemeOverlay.MyApp.Toolbar</item>
     </style>
