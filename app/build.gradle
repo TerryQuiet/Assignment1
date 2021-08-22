@@ -6,6 +6,8 @@ plugins {
 
 }
 apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
 
 
 
@@ -70,7 +72,7 @@ dependencies {
     //koin
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
-   // implementation "io.insert-koin:koin-android-viewmodel:$koin_version"
+
 
     //test
     testImplementation 'junit:junit:4.+'
@@ -78,4 +80,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+
+    //hilt
+    implementation 'com.google.dagger:hilt-android:2.38.1'
+    kapt 'com.google.dagger:hilt-compiler:2.38.1'
 }
