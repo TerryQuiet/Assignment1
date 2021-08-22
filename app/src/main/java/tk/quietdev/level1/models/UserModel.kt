@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class User(
+data class UserModel(
     var id: Int? = null,
     var userName: String? = null,
     var email: String,

@@ -3,11 +3,11 @@ package tk.quietdev.level1.ui.pager.contacts.edit
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import tk.quietdev.level1.database.FakeDatabase
-import tk.quietdev.level1.models.User
+import tk.quietdev.level1.models.UserModel
 
 class EditProfileViewModel(private val db: FakeDatabase) : ViewModel() {
 
-    lateinit var currentUser: User
+    lateinit var currentUserModel: UserModel
     var localPictureUri: Uri? = null
 
     /**
@@ -22,7 +22,7 @@ class EditProfileViewModel(private val db: FakeDatabase) : ViewModel() {
         phone: String,
         pictureUri: String
     ): Boolean {
-        val updatedUser = currentUser.copy(
+        val updatedUser = currentUserModel.copy(
             userName = userName,
             email = email,
             occupation = occupation,
@@ -31,9 +31,9 @@ class EditProfileViewModel(private val db: FakeDatabase) : ViewModel() {
             phone = phone,
             pictureUri = pictureUri
         )
-        if (currentUser != updatedUser) {
-            currentUser = updatedUser
-            db.updateUser(currentUser)
+        if (currentUserModel != updatedUser) {
+            currentUserModel = updatedUser
+            db.updateUser(currentUserModel)
             return true
         }
         return false

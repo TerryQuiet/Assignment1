@@ -18,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentContactsBinding
-import tk.quietdev.level1.models.User
+import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.ui.pager.contacts.adapter.ContactHolder
 import tk.quietdev.level1.ui.pager.contacts.adapter.ContactsAdapter
@@ -93,12 +93,11 @@ class ContactsListFragment : Fragment() {
         onRemove = this::removeUser,
         onItemClickListener,
         viewModel.isRemoveState
-
     )
 
-    private fun removeUser(user: User, position: Int) {
-        viewModel.removeUser(user, position)
-        showDeletionUndoSnackBar(user.id!!)
+    private fun removeUser(userModel: UserModel, position: Int) {
+        viewModel.removeUser(userModel, position)
+        showDeletionUndoSnackBar(userModel.id!!)
     }
 
     private fun addListeners() {
@@ -142,12 +141,12 @@ class ContactsListFragment : Fragment() {
             .show()
     }
 
-    private fun openContactDetail(user: User) {
+    private fun openContactDetail(userModel: UserModel) {
         findNavController().navigate(
             /*ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(
                 user
             )*/
-            ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(user)
+            ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(userModel)
         )
     }
 
@@ -158,16 +157,16 @@ class ContactsListFragment : Fragment() {
 
     private val onItemClickListener = object : ContactHolder.OnItemClickListener {
 
-        override fun onItemClick(user: User) {
+        override fun onItemClick(userModel: UserModel) {
             if (viewModel.isRemoveState.value == true) {
-                viewModel.toggleUserRemove(user.id!!)
+                viewModel.toggleUserRemove(userModel.id!!)
             } else {
-                openContactDetail(user)
+                openContactDetail(userModel)
             }
         }
 
-        override fun onLongItemClick(user: User): Boolean {
-            viewModel.toggleUserRemove(user.id!!)
+        override fun onLongItemClick(userModel: UserModel): Boolean {
+            viewModel.toggleUserRemove(userModel.id!!)
             return true
         }
 

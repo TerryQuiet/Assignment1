@@ -10,7 +10,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.databinding.FragmentSettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
-import tk.quietdev.level1.models.User
+import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
@@ -33,9 +33,9 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val user = activity?.intent?.getParcelableExtra<User>(Const.USER)
+        val user = activity?.intent?.getParcelableExtra<UserModel>(Const.USER)
         user?.let {
-            viewModel.currentUser = it
+            viewModel.currentUserModel = it
             bindListeners()
             bindValues()
         }
@@ -53,7 +53,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun bindValues() {
-        val currentUser = viewModel.currentUser
+        val currentUser = viewModel.currentUserModel
         binding.topContainer.apply {
             tvName.text = currentUser.userName
             tvAddress.text = currentUser.physicalAddress

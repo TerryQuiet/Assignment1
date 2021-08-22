@@ -13,7 +13,7 @@ import androidx.navigation.fragment.navArgs
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
-import tk.quietdev.level1.models.User
+import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.utils.ext.loadImage
 
@@ -40,8 +40,8 @@ class EditProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.apply {
-            currentUser = args.user
-            bindValues(currentUser)
+            currentUserModel = args.user
+            bindValues(currentUserModel)
             setListeners()
         }
 
@@ -52,7 +52,7 @@ class EditProfileFragment : Fragment() {
         binding.apply {
             btnSave.setOnClickListener {
                 if (updateUser()) {
-                    sharedViewModel.updatedUser.value = viewModel.currentUser
+                    sharedViewModel.updatedUser.value = viewModel.currentUserModel
                 }
                 findNavController().popBackStack()
             }
@@ -77,20 +77,20 @@ class EditProfileFragment : Fragment() {
                     birthDate = etBirthDate.text.toString(),
                     phone = etPhoneNumber.text.toString(),
                     pictureUri =
-                    if (viewModel.localPictureUri != null) viewModel.localPictureUri.toString() else viewModel.currentUser.pictureUri
+                    if (viewModel.localPictureUri != null) viewModel.localPictureUri.toString() else viewModel.currentUserModel.pictureUri
                 )
         }
     }
 
-    private fun bindValues(user: User) {
+    private fun bindValues(userModel: UserModel) {
         binding.apply {
-            ivProfilePic.loadImage(user.pictureUri)
-            etAddress.setText(user.physicalAddress)
-            etOccupation.setText(user.occupation)
-            etEmail.setText(user.email)
-            etBirthDate.setText(user.birthDate)
-            etPhoneNumber.setText(user.phone)
-            etName.setText(user.userName)
+            ivProfilePic.loadImage(userModel.pictureUri)
+            etAddress.setText(userModel.physicalAddress)
+            etOccupation.setText(userModel.occupation)
+            etEmail.setText(userModel.email)
+            etBirthDate.setText(userModel.birthDate)
+            etPhoneNumber.setText(userModel.phone)
+            etName.setText(userModel.userName)
         }
     }
 

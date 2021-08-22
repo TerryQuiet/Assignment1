@@ -12,7 +12,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import tk.quietdev.level1.databinding.FragmentContactDetailBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
-import tk.quietdev.level1.models.User
+import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.utils.ext.loadImage
 
@@ -41,7 +41,7 @@ class ContactDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.currentUser = args.user
+        viewModel.currentUserModel = args.user
         bindViews()
         setObservers()
     }
@@ -49,14 +49,14 @@ class ContactDetailFragment : Fragment() {
     private fun setObservers() {
         sharedViewModel.updatedUser.observe(viewLifecycleOwner) {
             if (it != null) {
-                viewModel.currentUser = it
+                viewModel.currentUserModel = it
                 bindViews()
             }
         }
     }
 
     private fun bindViews() {
-        viewModel.currentUser.let {
+        viewModel.currentUserModel.let {
             userDetailBinding.apply {
                 tvName.text = it.userName
                 tvAddress.text = it.physicalAddress
@@ -64,7 +64,7 @@ class ContactDetailFragment : Fragment() {
                 ivProfilePic.loadImage(it.pictureUri)
             }
             binding.btnEditProfile.setOnClickListener {
-                openEditFragment(viewModel.currentUser)
+                openEditFragment(viewModel.currentUserModel)
             }
             binding.btnMessage.setOnClickListener {
 
@@ -72,10 +72,10 @@ class ContactDetailFragment : Fragment() {
         }
     }
 
-    private fun openEditFragment(user: User) {
+    private fun openEditFragment(userModel: UserModel) {
         findNavController().navigate(
             ContactDetailFragmentDirections.actionContactDetailFragmentToEditProfileFragment(
-               user
+               userModel
             )
         )
     }

@@ -3,9 +3,7 @@ package tk.quietdev.level1.utils.ext
 
 import android.net.Uri
 import android.widget.ImageView
-import androidx.core.net.toUri
 import com.bumptech.glide.Glide
-import tk.quietdev.level1.models.User
 
 
 fun ImageView.loadImage(url: String?) {
