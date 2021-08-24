@@ -7,18 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.DialogAddContactBinding
 import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 
-
+@AndroidEntryPoint
 class AddContactDialog
  : DialogFragment() {
 
     private lateinit var binding: DialogAddContactBinding
-    private val viewModel: AddContactViewModel by viewModel()
-    private val sharedViewModel: ContactsSharedViewModel by sharedViewModel()
+    private val viewModel: AddContactViewModel by viewModels()
+    private val sharedViewModel: ContactsSharedViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

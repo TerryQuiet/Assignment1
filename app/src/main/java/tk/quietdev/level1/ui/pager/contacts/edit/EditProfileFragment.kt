@@ -8,21 +8,23 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.utils.ext.loadImage
 
+@AndroidEntryPoint
 class EditProfileFragment : Fragment() {
 
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
-    private val sharedViewModel: ContactsSharedViewModel by sharedViewModel()
-    private val viewModel: EditProfileViewModel by viewModel()
+    private val sharedViewModel: ContactsSharedViewModel by activityViewModels()
+    private val viewModel: EditProfileViewModel by viewModels()
     private val args: EditProfileFragmentArgs by navArgs()
 
 

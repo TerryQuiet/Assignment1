@@ -5,18 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentViewpagerContainerBinding
 import tk.quietdev.level1.ui.pager.settings.SettingsSharedViewModel
 
+@AndroidEntryPoint
 class ViewPagerContainerFragment : Fragment() {
 
     private var _binding: FragmentViewpagerContainerBinding? = null
     private val binding get() = _binding!!
-    private val appbarSharedViewModel: AppbarSharedViewModel by sharedViewModel()
-    private val settingsSharedViewModel : SettingsSharedViewModel by sharedViewModel()
+    private val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
+    private val settingsSharedViewModel : SettingsSharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

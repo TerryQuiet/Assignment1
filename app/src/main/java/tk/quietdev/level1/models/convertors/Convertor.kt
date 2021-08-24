@@ -2,8 +2,11 @@ package tk.quietdev.level1.models.convertors
 
 import tk.quietdev.level1.models.ContactModel
 import tk.quietdev.level1.models.UserModel
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class Convertor {
+@Singleton
+class Convertor @Inject constructor(){
 
     /**
      * @return only contacts with image, and phone number

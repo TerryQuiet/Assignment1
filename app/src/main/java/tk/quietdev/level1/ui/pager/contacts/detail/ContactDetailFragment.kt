@@ -6,16 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentContactDetailBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.utils.ext.loadImage
 
+@AndroidEntryPoint
 class ContactDetailFragment : Fragment() {
 
     private var _binding: FragmentContactDetailBinding? = null
@@ -23,8 +25,8 @@ class ContactDetailFragment : Fragment() {
     private var _userDetailBinding: UserDetailBinding? = null
     private val userDetailBinding get() = _userDetailBinding!!
 
-    private val sharedViewModel: ContactsSharedViewModel by sharedViewModel()
-    private val viewModel : ContactDetailViewModel by viewModel()
+    private val sharedViewModel: ContactsSharedViewModel  by activityViewModels()
+    private val viewModel : ContactDetailViewModel by viewModels()
     private val args: ContactDetailFragmentArgs by navArgs()
 
     override fun onCreateView(

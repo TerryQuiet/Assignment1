@@ -2,10 +2,12 @@ package tk.quietdev.level1.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
+import javax.inject.Singleton
 
-
-
-class PrefsHelper(androidContext: Context) {
+@Singleton
+class PrefsHelper @Inject constructor(@ApplicationContext androidContext: Context) {
     private  val PREFS_NAME = "params"
      val USER_ID = "USERID"
      val IS_REMEMBER = "isSaveChecked"
