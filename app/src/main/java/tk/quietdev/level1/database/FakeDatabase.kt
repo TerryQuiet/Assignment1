@@ -4,14 +4,17 @@ package tk.quietdev.level1.database
 import android.content.Context
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import dagger.hilt.android.qualifiers.ApplicationContext
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.models.convertors.Convertor
 import tk.quietdev.level1.utils.ContactsFetcher
 import tk.quietdev.level1.utils.ext.readAssetsFile
+import javax.inject.Inject
+import javax.inject.Singleton
 
-
-class FakeDatabase(
-    context: Context,
+@Singleton
+class FakeDatabase @Inject constructor(
+    @ApplicationContext context: Context,
     private val contactsFetcher: ContactsFetcher,
     private val convertor: Convertor
 ) {

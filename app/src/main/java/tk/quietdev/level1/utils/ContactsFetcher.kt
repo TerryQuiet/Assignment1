@@ -10,14 +10,15 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
 import tk.quietdev.level1.models.ContactModel
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.collections.set
 
 
 // https://medium.com/@kednaik/android-contacts-fetching-using-coroutines-aa0129bffdc4
-
-class ContactsFetcher(private val mApplication: Application) : AndroidViewModel(mApplication) , KoinComponent {
+@Singleton
+class ContactsFetcher @Inject constructor(private val mApplication: Application) : AndroidViewModel(mApplication) {
 
 /*private val _contactsLiveData = MutableLiveData<ArrayList<Contact>>()
     val contactsLiveData: LiveData<ArrayList<Contact>> = _contactsLiveData*/

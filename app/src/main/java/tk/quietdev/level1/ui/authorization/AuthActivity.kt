@@ -3,20 +3,22 @@ package tk.quietdev.level1.ui.authorization
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.google.android.material.snackbar.Snackbar
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.ActivityAuthBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.PagerActivity
 import tk.quietdev.level1.utils.Const
 
+@AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAuthBinding
-    private val viewModel: AuthViewModel by viewModel()
+    private val viewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

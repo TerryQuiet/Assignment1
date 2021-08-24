@@ -1,8 +1,11 @@
 package tk.quietdev.level1.utils
 
 import android.util.Patterns
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class Validator {
+@Singleton
+class Validator @Inject constructor() {
     fun isEmailValid(mail: String): Boolean{
        return  Patterns.EMAIL_ADDRESS.matcher(mail).matches()
     }

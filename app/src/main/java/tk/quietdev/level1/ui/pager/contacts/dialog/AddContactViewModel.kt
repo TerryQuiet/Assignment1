@@ -2,10 +2,13 @@ package tk.quietdev.level1.ui.pager.contacts.dialog
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.models.UserModel
+import javax.inject.Inject
 
-class AddContactViewModel(private val db: FakeDatabase) : ViewModel() {
+@HiltViewModel
+class AddContactViewModel @Inject constructor(private val db: FakeDatabase) : ViewModel() {
 
     val newUser = MutableLiveData<UserModel>()
 

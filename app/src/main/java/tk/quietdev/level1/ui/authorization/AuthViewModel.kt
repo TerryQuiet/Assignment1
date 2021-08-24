@@ -2,12 +2,15 @@ package tk.quietdev.level1.ui.authorization
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.PrefsHelper
 import tk.quietdev.level1.utils.Validator
+import javax.inject.Inject
 
-class AuthViewModel(
+@HiltViewModel
+class AuthViewModel @Inject constructor(
     private val db: FakeDatabase,
     private val validator: Validator,
     private val prefs: PrefsHelper

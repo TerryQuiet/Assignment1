@@ -6,20 +6,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentSettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
+@AndroidEntryPoint
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private lateinit var userDetailBinding: UserDetailBinding
-    private val viewModel: SettingsViewModel by viewModel()
-    private val settingsSharedViewModel :SettingsSharedViewModel by sharedViewModel()
+    private val viewModel: SettingsViewModel by viewModels()
+    private val settingsSharedViewModel :SettingsSharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

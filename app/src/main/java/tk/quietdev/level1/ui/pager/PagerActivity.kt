@@ -1,22 +1,23 @@
 package tk.quietdev.level1.ui.pager
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.ActivityPagerBinding
 
-
+@AndroidEntryPoint
 class PagerActivity : AppCompatActivity() {
     private var _binding: ActivityPagerBinding? = null
     private val binding get() = _binding!!
     private var navController: NavController? = null
     private val parentNavHost = R.id.ParentNavHost
-    private val appbarSharedViewModel: AppbarSharedViewModel by viewModel()
+    private val appbarSharedViewModel: AppbarSharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
