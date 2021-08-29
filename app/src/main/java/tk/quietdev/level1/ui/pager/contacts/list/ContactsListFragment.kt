@@ -144,9 +144,6 @@ class ContactsListFragment : Fragment() {
 
     private fun openContactDetail(userModel: UserModel) {
         findNavController().navigate(
-            /*ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(
-                user
-            )*/
             ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(userModel)
         )
     }

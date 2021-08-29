@@ -17,6 +17,7 @@ import kotlin.collections.set
 
 
 // https://medium.com/@kednaik/android-contacts-fetching-using-coroutines-aa0129bffdc4
+@Deprecated("DO NOT REVIEW, mostly copy paste code that I didn't spent time to understand")
 @Singleton
 class ContactsFetcher @Inject constructor(private val mApplication: Application) : AndroidViewModel(mApplication) {
 

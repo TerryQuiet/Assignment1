@@ -15,5 +15,5 @@ data class UserModel(
     var password: String = "11111",
     var birthDate: String? = null,
     var phone: String? = null,
-    var isToRemoveChecked: Boolean = false
+    var isToRemoveChecked: Boolean = false // FIXME: 8/30/2021 NOT SUPPOSE TO BE HERE 
 ) : Parcelable
