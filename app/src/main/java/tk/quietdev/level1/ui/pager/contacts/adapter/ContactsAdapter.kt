@@ -15,6 +15,7 @@ class ContactsAdapter(
     private val onRemove: (UserModel, Int) -> Unit,
     private val onClickListener: ContactHolder.OnItemClickListener,
     private val removeState: MutableLiveData<Boolean>,
+    private val itemStateChecker: ContactHolder.ItemStateChecker
 ) : ListAdapter<UserModel, ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -30,7 +31,8 @@ class ContactsAdapter(
                 LayoutInflater.from(parent.context), parent, false
             ),
             onRemove,
-            onClickListener
+            onClickListener,
+            itemStateChecker
         )
     }
 
@@ -50,7 +52,6 @@ class ContactsAdapter(
         override fun areContentsTheSame(oldItem: UserModel, newItem: UserModel): Boolean {
             return oldItem == newItem
         }
-
     }
 
     override fun onViewAttachedToWindow(holder: ContactHolder) {
@@ -62,6 +63,8 @@ class ContactsAdapter(
         super.onViewDetachedFromWindow(holder)
         holder.removeObserver(removeState)
     }
+
+   
 
 
 }

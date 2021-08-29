@@ -21,7 +21,7 @@ class Convertor @Inject constructor(){
             if (contactModel.emails.isEmpty()) "${contactModel.name}@fake.mail" else contactModel.emails.first()
 
         return UserModel(
-            id = null,
+            _id = null,
             userName = contactModel.name,
             phone = number,
             email = email,

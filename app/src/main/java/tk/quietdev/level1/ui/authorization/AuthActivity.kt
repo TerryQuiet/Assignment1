@@ -79,19 +79,13 @@ class AuthActivity : AppCompatActivity() {
     /**
      * checks if user is present in a database and proceeds to login if so
      */
-
-
     private fun tryLogin() {
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
         viewModel.findUser(email, password)
-        val user = viewModel.currentUserModel.value
-        if (user != null) {
-            login(user)
-        } else {
-            showHelpTip()
-        }
-
+        viewModel.currentUserModel.value?.let {
+            login(it)
+        } ?: showHelpTip()
     }
 
     @Deprecated("Not required, but helps with login(fills the fields for you if pressed OK)")
@@ -100,6 +94,7 @@ class AuthActivity : AppCompatActivity() {
             .setAction("OK") {
                 binding.etEmail.setText("mail@pm.me")
                 binding.etPassword.setText("11111")
+                tryLogin()
             }
             .setTextColor(Color.WHITE)
             .show()

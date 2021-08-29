@@ -59,15 +59,11 @@ class ViewPagerContainerFragment : Fragment() {
 
         settingsSharedViewModel.buttonClicked.observe(viewLifecycleOwner) { buttonClicked ->
             if (buttonClicked) {
-                changePageToList()
+                binding.viewPager.currentItem = PagerAdapter.Pages.LIST.position
                 settingsSharedViewModel.buttonClicked.value = false
             }
         }
 
-    }
-
-    private fun changePageToList() {
-        binding.viewPager.setCurrentItem(1, true)
     }
 
     override fun onDestroyView() {

@@ -68,7 +68,7 @@ class FakeDatabase @Inject constructor(
     }
 
     private fun findIdByEmail(email: String): Int? {
-       return allFakeUsers.values.find { it.email == email }?.id
+       return allFakeUsers.values.find { it.email == email }?._id
     }
 
     fun getUserWithNoValidation(id: Int): UserModel? {
@@ -82,8 +82,8 @@ class FakeDatabase @Inject constructor(
      */
     fun addUser(userModel: UserModel): UserModel {
         userModel.apply {
-            id = userIds++
-            id?.let {
+            _id = userIds++
+            _id?.let {
                 allFakeUsers[it] = this
             }
             return this
@@ -91,7 +91,7 @@ class FakeDatabase @Inject constructor(
     }
 
     fun updateUser(updatedUserModel: UserModel) {
-        allFakeUsers[updatedUserModel.id!!] = updatedUserModel
+        allFakeUsers[updatedUserModel._id!!] = updatedUserModel
     }
 
 }

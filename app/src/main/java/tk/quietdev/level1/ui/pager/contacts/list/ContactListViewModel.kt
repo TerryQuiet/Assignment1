@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.Const
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,7 +19,7 @@ class ContactListViewModel @Inject constructor(
     var userList = MutableLiveData<MutableList<UserModel>>()
     private var deletedUserPosition: Int? = null
     private var handler: Handler? = null
-    private val userIdToRemove = mutableListOf<Int>()
+    private var  userIdToRemove = TreeSet<Int>()
 
     var isRemoveState = MutableLiveData(false)
 
@@ -31,7 +32,7 @@ class ContactListViewModel @Inject constructor(
         val user = db.getUserWithNoValidation(id)
         user?.let {
             deletedUserPosition?.let {
-                userList.value?.add(it, user.also { it.isToRemoveChecked = false })
+                userList.value?.add(it, user)
                 deletedUserPosition = null
                 updateLiveData()
             }
@@ -43,7 +44,7 @@ class ContactListViewModel @Inject constructor(
         removedUser?.let {
             deletedUserPosition = position
             updateLiveData()
-            userIdToRemove.remove(userModel.id)
+            userIdToRemove.remove(userModel._id)
             isRemoveState.value = userIdToRemove.isNotEmpty()
         }
     }
@@ -67,7 +68,7 @@ class ContactListViewModel @Inject constructor(
     fun updateUser(updatedUserModel: UserModel) {
        userList.value?.let {
            for (i in it.indices) {
-               if (it[i].id == updatedUserModel.id) {
+               if (it[i]._id == updatedUserModel._id) {
                    it[i] = updatedUserModel
                    break
                }
@@ -76,7 +77,7 @@ class ContactListViewModel @Inject constructor(
        }
     }
 
-    fun toggleUserRemove(userId: Int) {
+    fun toggleUserSelected(userId: Int) {
         val isUserRemovedFromList = userIdToRemove.remove(userId)
         if (!isUserRemovedFromList) {
             userIdToRemove.add(userId)
@@ -85,12 +86,16 @@ class ContactListViewModel @Inject constructor(
     }
 
     fun removeUsers() {
-        val newList = userList.value?.filter { !userIdToRemove.contains(it.id) }?.toMutableList()
+        val newList = userList.value?.filter { !userIdToRemove.contains(it._id) }?.toMutableList()
         newList?.let {
             userList.value = it
         }
         userIdToRemove.clear()
         isRemoveState.value = false
+    }
+
+    fun isItemSelected(id: Int) : Boolean {
+        return userIdToRemove.contains(id)
     }
 
 }

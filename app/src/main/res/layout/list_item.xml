@@ -8,14 +8,14 @@
     android:theme="@style/Base.Theme.MyApp.WhiteSurface"
     android:layout_marginBottom="@dimen/extra_small_4dp">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/layout"
         android:paddingHorizontal="@dimen/normal_16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <CheckBox
+        <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/cbRemove"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/small_8dp">
 
-            <ImageView
+            <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivProfilePic"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -38,7 +38,7 @@
                 tools:layout_editor_absoluteX="42dp" />
 
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Ava Smith" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvOccupation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvName"
                 tools:text="Photograph" />
 
-            <ImageButton
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/image_btn_remove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 </com.google.android.material.card.MaterialCardView>

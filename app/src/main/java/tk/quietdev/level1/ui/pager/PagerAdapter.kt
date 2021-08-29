@@ -13,6 +13,11 @@ import tk.quietdev.level1.ui.pager.settings.SettingsFragment
 class PagerAdapter(fm: FragmentManager, lf: Lifecycle) :
         FragmentStateAdapter(fm, lf) {
 
+        enum class Pages(val position: Int) {
+            LIST(1),
+            SETTINGS(0)
+        }
+
         override fun getItemCount(): Int = 2
 
         override fun createFragment(position: Int): Fragment {

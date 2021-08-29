@@ -46,7 +46,6 @@ class ListNavHostFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        // Set this navController as ViewModel's navController
         appbarSharedViewModel.currentNavController.value = navController
     }
 }
