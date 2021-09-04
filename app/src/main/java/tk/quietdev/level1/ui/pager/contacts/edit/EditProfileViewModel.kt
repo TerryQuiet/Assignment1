@@ -3,12 +3,12 @@ package tk.quietdev.level1.ui.pager.contacts.edit
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.repository.Repository
 import javax.inject.Inject
 
 @HiltViewModel
-class EditProfileViewModel @Inject constructor(private val db: FakeDatabase) : ViewModel() {
+class EditProfileViewModel @Inject constructor(private val db: Repository) : ViewModel() {
 
     lateinit var currentUserModel: UserModel
     var localPictureUri: Uri? = null

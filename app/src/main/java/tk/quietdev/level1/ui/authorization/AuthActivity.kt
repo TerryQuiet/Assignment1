@@ -90,7 +90,8 @@ class AuthActivity : AppCompatActivity() {
 
     @Deprecated("Not required, but helps with login(fills the fields for you if pressed OK)")
     private fun showHelpTip() {
-        Snackbar.make(binding.btnRegister, getString(R.string.login_help_tip), Snackbar.LENGTH_LONG)
+        Snackbar.make(binding.btnRegister, getString(
+                R.string.login_help_tip), Snackbar.LENGTH_LONG)
             .setAction("OK") {
                 binding.etEmail.setText("mail@pm.me")
                 binding.etPassword.setText("11111")

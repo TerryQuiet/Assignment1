@@ -13,5 +13,5 @@
     <!--style-->
     <dimen name="wide_button_height_64dp">64dp</dimen>
     <dimen name="details_square_photo">113dp</dimen>
-    <item name="recycle_view_bottom_padding" type="dimen" format="float">64.dp</item>
+
 </resources>
