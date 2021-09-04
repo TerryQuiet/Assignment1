@@ -5,15 +5,15 @@ import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import tk.quietdev.level1.database.FakeDatabase
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.repository.Repository
 import tk.quietdev.level1.utils.Const
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
 class ContactListViewModel @Inject constructor(
-    private val db: FakeDatabase
+    private val db: Repository
 ) : ViewModel() {
 
     var userList = MutableLiveData<MutableList<UserModel>>()
