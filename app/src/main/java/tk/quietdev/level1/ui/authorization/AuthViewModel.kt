@@ -49,6 +49,6 @@ class AuthViewModel @Inject constructor(
     }
 
     fun saveUser(userModel: UserModel) {
-        prefs.saveInt(prefs.USER_ID, userModel.id!!)
+        prefs.saveInt(prefs.USER_ID, userModel._id!!)
     }
 }

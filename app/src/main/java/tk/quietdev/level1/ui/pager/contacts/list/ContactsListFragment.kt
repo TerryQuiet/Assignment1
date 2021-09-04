@@ -27,7 +27,7 @@ import tk.quietdev.level1.ui.pager.contacts.dialog.AddContactDialog
 import tk.quietdev.level1.utils.Const
 
 @AndroidEntryPoint
-class ContactsListFragment : Fragment() {
+class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
@@ -71,7 +71,6 @@ class ContactsListFragment : Fragment() {
                 } else {
                     binding.btnAdd.text = getString(R.string.add_contact)
                 }
-
             }
         }
         contactsSharedViewModel.apply {
@@ -93,12 +92,13 @@ class ContactsListFragment : Fragment() {
     private fun getContactAdapter() = ContactsAdapter(
         onRemove = this::removeUser,
         onItemClickListener,
-        viewModel.isRemoveState
+        viewModel.isRemoveState,
+        this
     )
 
     private fun removeUser(userModel: UserModel, position: Int) {
         viewModel.removeUser(userModel, position)
-        showDeletionUndoSnackBar(userModel.id!!)
+        showDeletionUndoSnackBar(userModel._id!!)
     }
 
     private fun addListeners() {
@@ -157,16 +157,20 @@ class ContactsListFragment : Fragment() {
 
         override fun onItemClick(userModel: UserModel) {
             if (viewModel.isRemoveState.value == true) {
-                viewModel.toggleUserRemove(userModel.id!!)
+                viewModel.toggleUserSelected(userModel._id!!)
             } else {
                 openContactDetail(userModel)
             }
         }
 
         override fun onLongItemClick(userModel: UserModel): Boolean {
-            viewModel.toggleUserRemove(userModel.id!!)
+            viewModel.toggleUserSelected(userModel._id!!)
             return true
         }
 
+    }
+
+    override fun isItemSelected(id:Int): Boolean {
+       return viewModel.isItemSelected(id)
     }
 }
