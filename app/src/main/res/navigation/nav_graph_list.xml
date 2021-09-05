@@ -19,17 +19,7 @@
         <argument
             android:name="user"
             app:argType="tk.quietdev.level1.models.UserModel" />
-        <action
-            android:id="@+id/action_contactDetailFragment_to_editProfileFragment"
-            app:destination="@id/editProfileFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/editProfileFragment"
-        android:name="tk.quietdev.level1.ui.pager.contacts.edit.EditProfileFragment"
-        android:label="@string/edit_profile">
-        <argument
-            android:name="user"
-            app:argType="tk.quietdev.level1.models.UserModel" />
-    </fragment>
+
 
 </navigation>

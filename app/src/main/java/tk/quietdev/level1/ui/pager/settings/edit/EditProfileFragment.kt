@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.pager.contacts.edit
+package tk.quietdev.level1.ui.pager.settings.edit
 
 
 import android.os.Bundle
