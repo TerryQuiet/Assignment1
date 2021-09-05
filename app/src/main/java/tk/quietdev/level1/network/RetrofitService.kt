@@ -6,7 +6,7 @@ import tk.quietdev.level1.models.UserModel
 
 interface RetrofitService {
 
-    @GET("./users")
+    @GET("users")
     suspend fun getUsers() : Response<List<UserModel>>
 
 }

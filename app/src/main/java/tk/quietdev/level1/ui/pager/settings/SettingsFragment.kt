@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentSettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
@@ -21,6 +23,7 @@ class SettingsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var userDetailBinding: UserDetailBinding
     private val viewModel: SettingsViewModel by viewModels()
+    private val sharedViewModel: ContactsSharedViewModel by activityViewModels()
     private val settingsSharedViewModel :SettingsSharedViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -39,7 +42,8 @@ class SettingsFragment : Fragment() {
         user?.let {
             viewModel.currentUserModel = it
             bindListeners()
-            bindValues()
+            setObservers()
+            bindViews()
         }
     }
 
@@ -48,19 +52,36 @@ class SettingsFragment : Fragment() {
             btnViewContacts.setOnClickListener {
                settingsSharedViewModel.buttonClicked.value = true
             }
-            btnEditProfile.setOnClickListener {
-
+            binding.btnEditProfile.setOnClickListener {
+                openEditFragment(viewModel.currentUserModel)
             }
         }
     }
 
-    private fun bindValues() {
+    private fun openEditFragment(userModel: UserModel) {
+        findNavController().navigate(
+            SettingsFragmentDirections.actionSettingsFragmentToEditProfileFragment(
+                userModel
+            )
+        )
+    }
+
+    private fun bindViews() {
         val currentUser = viewModel.currentUserModel
         binding.topContainer.apply {
             tvName.text = currentUser.userName
             tvAddress.text = currentUser.physicalAddress
             tvOccupation.text = currentUser.occupation
             ivProfilePic.loadImage(currentUser.pictureUri)
+        }
+    }
+
+    private fun setObservers() {
+        sharedViewModel.updatedUser.observe(viewLifecycleOwner) {
+            if (it != null) {
+                viewModel.currentUserModel = it
+                bindViews()
+            }
         }
     }
 

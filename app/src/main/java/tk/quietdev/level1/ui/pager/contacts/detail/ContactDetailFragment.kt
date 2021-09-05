@@ -25,7 +25,7 @@ class ContactDetailFragment : Fragment() {
     private var _userDetailBinding: UserDetailBinding? = null
     private val userDetailBinding get() = _userDetailBinding!!
 
-    private val sharedViewModel: ContactsSharedViewModel  by activityViewModels()
+
     private val viewModel : ContactDetailViewModel by viewModels()
     private val args: ContactDetailFragmentArgs by navArgs()
 
@@ -45,16 +45,7 @@ class ContactDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.currentUserModel = args.user
         bindViews()
-        setObservers()
-    }
 
-    private fun setObservers() {
-        sharedViewModel.updatedUser.observe(viewLifecycleOwner) {
-            if (it != null) {
-                viewModel.currentUserModel = it
-                bindViews()
-            }
-        }
     }
 
     private fun bindViews() {
@@ -65,21 +56,7 @@ class ContactDetailFragment : Fragment() {
                 tvOccupation.text = it.occupation
                 ivProfilePic.loadImage(it.pictureUri)
             }
-            binding.btnEditProfile.setOnClickListener {
-                openEditFragment(viewModel.currentUserModel)
-            }
-            binding.btnMessage.setOnClickListener {
-
-            }
         }
-    }
-
-    private fun openEditFragment(userModel: UserModel) {
-        findNavController().navigate(
-            ContactDetailFragmentDirections.actionContactDetailFragmentToEditProfileFragment(
-               userModel
-            )
-        )
     }
 
     override fun onDestroyView() {

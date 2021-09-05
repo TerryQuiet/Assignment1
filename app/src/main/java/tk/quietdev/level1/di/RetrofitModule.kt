@@ -1,31 +1,51 @@
 package tk.quietdev.level1.di
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import tk.quietdev.level1.network.RetrofitService
+import retrofit2.converter.moshi.MoshiConverterFactory
+import tk.quietdev.level1.api.RegesApi
 import javax.inject.Singleton
 
 @Module
 @InstallIn(ActivityComponent::class)
 object RetrofitModule {
-    private const val BASE_URL = "https://restcountries.eu/rest/v2/"
 
     @Singleton
     @Provides
-    fun provideRetrofit(): Retrofit = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl(BASE_URL)
+    fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
+        .apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+    @Singleton
+    @Provides
+    fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+        OkHttpClient
+            .Builder()
+            .addInterceptor(httpLoggingInterceptor)
+            .build()
+
+    @Singleton
+    @Provides
+    fun providesMoshi(): Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(okHttpClient: OkHttpClient, mosh: Moshi): Retrofit = Retrofit.Builder()
+        .addConverterFactory(MoshiConverterFactory.create(mosh))
+        .baseUrl(RegesApi.BASE_URL)
+        .client(okHttpClient)
         .build()
 
-
-
     @Provides
     @Singleton
-    fun provideRetrofitService(retrofit : Retrofit) : RetrofitService = retrofit.create(RetrofitService::class.java)
-
+    fun provideRetrofitService(retrofit : Retrofit) : RegesApi = retrofit.create(RegesApi::class.java)
 
 }
