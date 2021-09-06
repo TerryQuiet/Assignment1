@@ -4,13 +4,15 @@ package tk.quietdev.level1.repository
 import android.content.Context
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import tk.quietdev.level1.api.ShppApi
 
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.ext.readAssetsFile
 
 
-class LocalRepositoryImp (
+class LocalRepositoryImp(
     context: Context,
+    private val api: ShppApi,
 ) : Repository {
 
     private var userIds: Int = 0
@@ -40,7 +42,6 @@ class LocalRepositoryImp (
     }
 
 
-
     /**
      * @param amount the number of users to return, -1 if all
      * @return list of users
@@ -49,7 +50,11 @@ class LocalRepositoryImp (
         return allFakeUsers.values.take(if (amount < 0) allFakeUsers.size else amount)
     }
 
-    override  fun getUserWithValidation(email: String, password: String): UserModel? {
+    override suspend fun <T> userRegistration(user: T) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUserWithValidation(email: String, password: String): UserModel? {
         val id = findIdByEmail(email)
         return if (isPasswordCorrect(allFakeUsers[id], password)) {
             allFakeUsers[id]
@@ -57,8 +62,7 @@ class LocalRepositoryImp (
     }
 
 
-
-    override  fun getUserWithNoValidation(id: Int): UserModel? {
+    override fun getUserWithNoValidation(id: Int): UserModel? {
         return allFakeUsers[id]
     }
 
@@ -77,8 +81,10 @@ class LocalRepositoryImp (
         }
     }
 
-    override  fun updateUser(updatedUserModel: UserModel) {
+    override fun updateUser(updatedUserModel: UserModel) {
         allFakeUsers[updatedUserModel._id!!] = updatedUserModel
     }
+
+
 
 }

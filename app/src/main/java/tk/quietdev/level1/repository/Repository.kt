@@ -8,4 +8,5 @@ interface Repository  {
     fun getUserWithNoValidation(id: Int): UserModel?
     fun getUserWithValidation(email: String, password: String): UserModel?
     fun getUserList(amount: Int = -1): List<UserModel>
+    suspend fun <T> userRegistration(user :T)
 }

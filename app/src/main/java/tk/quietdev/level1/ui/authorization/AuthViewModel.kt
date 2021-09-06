@@ -34,7 +34,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun findUser(email: String, password: String) {
+    suspend fun findUser(email: String, password: String) {
         currentUserModel.value = db.getUserWithValidation(email, password)
     }
 
@@ -51,4 +51,5 @@ class AuthViewModel @Inject constructor(
     fun saveUser(userModel: UserModel) {
         prefs.saveInt(prefs.USER_ID, userModel._id!!)
     }
+
 }

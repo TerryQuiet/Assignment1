@@ -24,7 +24,6 @@ class PagerActivity : AppCompatActivity() {
         _binding = ActivityPagerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         toolbarSetup()
-
     }
 
     private fun toolbarSetup() {
