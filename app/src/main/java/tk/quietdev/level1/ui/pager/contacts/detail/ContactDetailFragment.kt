@@ -25,7 +25,6 @@ class ContactDetailFragment : Fragment() {
     private var _userDetailBinding: UserDetailBinding? = null
     private val userDetailBinding get() = _userDetailBinding!!
 
-
     private val viewModel : ContactDetailViewModel by viewModels()
     private val args: ContactDetailFragmentArgs by navArgs()
 

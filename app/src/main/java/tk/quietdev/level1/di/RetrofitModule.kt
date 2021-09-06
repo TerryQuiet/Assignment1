@@ -6,15 +6,17 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import tk.quietdev.level1.api.RegesApi
+import tk.quietdev.level1.api.ShppApi
 import javax.inject.Singleton
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 object RetrofitModule {
 
     @Singleton
@@ -36,16 +38,17 @@ object RetrofitModule {
     @Provides
     fun providesMoshi(): Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
+
     @Singleton
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, mosh: Moshi): Retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create(mosh))
-        .baseUrl(RegesApi.BASE_URL)
+        .baseUrl(ShppApi.BASE_URL)
         .client(okHttpClient)
         .build()
 
     @Provides
     @Singleton
-    fun provideRetrofitService(retrofit : Retrofit) : RegesApi = retrofit.create(RegesApi::class.java)
+    fun provideRetrofitService(retrofit : Retrofit) : ShppApi = retrofit.create(ShppApi::class.java)
 
 }
