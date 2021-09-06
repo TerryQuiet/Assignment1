@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
             android:textAlignment="center"
             android:textSize="@dimen/header1_24sp" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSubtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -93,26 +93,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/normal_16dp"
+        android:layout_marginBottom="56dp"
         android:text="@string/remember_me"
         android:textColor="?attr/colorOnSurface"
         android:textSize="@dimen/header2_18sp"
-        app:layout_constraintEnd_toStartOf="@id/tvForgotPassword"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/containerEditables" />
-
-    <TextView
-        android:id="@+id/tvForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/normal_16dp"
-        android:ellipsize="end"
-        android:text="@string/forgot_your_password"
-        android:textSize="@dimen/header3_14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/cbRemember"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cbRemember"
-        app:layout_constraintTop_toBottomOf="@id/containerEditables" />
 
 
     <com.google.android.material.button.MaterialButton
@@ -132,7 +120,7 @@
         app:strokeColor="?attr/colorSecondary"
         app:strokeWidth="2dp" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTerms"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -141,9 +129,39 @@
         android:text="@string/auth_terms"
         android:textAlignment="center"
         android:textSize="@dimen/header4_12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvHaveAccount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvHaveAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/normal_16dp"
+        android:text="@string/already_have_an_account"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/header3_14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tvLinkSignIn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvLinkSignIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in"
+        android:textAlignment="center"
+        android:layout_marginHorizontal="@dimen/small_8dp"
+        android:textSize="@dimen/header3_14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvHaveAccount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tvHaveAccount"
+        app:layout_constraintTop_toTopOf="@id/tvHaveAccount" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
