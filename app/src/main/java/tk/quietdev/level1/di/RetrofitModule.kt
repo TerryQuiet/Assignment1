@@ -5,13 +5,11 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import tk.quietdev.level1.api.RegesApi
 import tk.quietdev.level1.api.ShppApi
 import javax.inject.Singleton
 
@@ -49,6 +47,6 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    fun provideRetrofitService(retrofit : Retrofit) : ShppApi = retrofit.create(ShppApi::class.java)
+    fun provideRetrofitService(retrofit: Retrofit): ShppApi = retrofit.create(ShppApi::class.java)
 
 }

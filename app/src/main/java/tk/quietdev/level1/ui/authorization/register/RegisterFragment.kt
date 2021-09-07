@@ -37,7 +37,7 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.regResponce.observe(viewLifecycleOwner) {
+        viewModel.regResponse.observe(viewLifecycleOwner) {
             when (it) {
                 RegisterResponse.Status.ONGOING -> {
                     // show animation

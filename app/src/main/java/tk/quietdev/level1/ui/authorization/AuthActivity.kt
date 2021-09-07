@@ -21,7 +21,7 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        authViewModel.loadPreferences()
+      //  authViewModel.loadPreferences()
     }
 
     fun login(userModel: UserModel) {

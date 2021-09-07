@@ -33,11 +33,11 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
        // showHelpTip()
-        if (authSharedViewModel.isRemember.value!!) {
+        /*if (authSharedViewModel.isRemember.value!!) {
             authSharedViewModel.currentUserModel.value?.let {
                 (activity as AuthActivity).login(it)
             }
-        }
+        }*/
         setListeners()
 
     }
