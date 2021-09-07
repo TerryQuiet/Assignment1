@@ -1,6 +1,7 @@
 package tk.quietdev.level1.ui.authorization.register
 
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

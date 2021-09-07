@@ -29,7 +29,7 @@ class RemoteApiRepository(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUserWithValidation(email: String, password: String): UserModel? {
+    override fun getUserWithValidation(email: String, password: String): UserModel? {
         TODO("Not yet implemented")
     }
 

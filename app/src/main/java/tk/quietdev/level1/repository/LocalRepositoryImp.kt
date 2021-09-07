@@ -54,7 +54,7 @@ class LocalRepositoryImp(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUserWithValidation(email: String, password: String): UserModel? {
+    override fun getUserWithValidation(email: String, password: String): UserModel? {
         val id = findIdByEmail(email)
         return if (isPasswordCorrect(allFakeUsers[id], password)) {
             allFakeUsers[id]

@@ -34,7 +34,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun findUser(email: String, password: String) {
+    suspend fun findUser(email: String, password: String) {
         currentUserModel.value = db.getUserWithValidation(email, password)
     }
 

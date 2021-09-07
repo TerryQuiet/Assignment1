@@ -93,7 +93,7 @@ class LoginFragment : Fragment() {
     private fun tryLogin() {
         val email = binding.etEmail.text.toString()
         val password = binding.etPassword.text.toString()
-        authSharedViewModel.findUser(email, password)
+       // authSharedViewModel.findUser(email, password)
         authSharedViewModel.currentUserModel.value?.let {
             (activity as AuthActivity).login(it)
         } ?: showHelpTip()
