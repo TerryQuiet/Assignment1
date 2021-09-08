@@ -13,7 +13,7 @@ import tk.quietdev.level1.utils.ext.readAssetsFile
 class LocalRepositoryImp(
     context: Context,
     private val api: ShppApi,
-) : Repository {
+) {
 
     private var userIds: Int = 0
 
@@ -46,15 +46,15 @@ class LocalRepositoryImp(
      * @param amount the number of users to return, -1 if all
      * @return list of users
      */
-    override fun getUserList(amount: Int): List<UserModel> {
+     fun getUserList(amount: Int): List<UserModel> {
         return allFakeUsers.values.take(if (amount < 0) allFakeUsers.size else amount)
     }
 
-    override suspend fun <T> userRegistration(user: T) {
+     suspend fun <T> userRegistration(login: String, password: String) {
         TODO("Not yet implemented")
     }
 
-    override fun getUserWithValidation(email: String, password: String): UserModel? {
+     fun getUserWithValidation(email: String, password: String): UserModel? {
         val id = findIdByEmail(email)
         return if (isPasswordCorrect(allFakeUsers[id], password)) {
             allFakeUsers[id]
@@ -62,7 +62,7 @@ class LocalRepositoryImp(
     }
 
 
-    override fun getUserWithNoValidation(id: Int): UserModel? {
+     fun getUserWithNoValidation(id: Int): UserModel? {
         return allFakeUsers[id]
     }
 
@@ -71,7 +71,7 @@ class LocalRepositoryImp(
      * this should always be used when user is created.
      */
 
-    override fun addUser(userModel: UserModel): UserModel {
+     fun addUser(userModel: UserModel): UserModel {
         userModel.apply {
             _id = userIds++
             _id?.let {
@@ -81,7 +81,7 @@ class LocalRepositoryImp(
         }
     }
 
-    override fun updateUser(updatedUserModel: UserModel) {
+     fun updateUser(updatedUserModel: UserModel) {
         allFakeUsers[updatedUserModel._id!!] = updatedUserModel
     }
 

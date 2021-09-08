@@ -1,7 +1,6 @@
 package tk.quietdev.level1.repository
 
 import android.content.Context
-import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -10,8 +9,8 @@ import kotlinx.coroutines.withContext
 import tk.quietdev.level1.R
 import tk.quietdev.level1.api.ShppApi
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.models.shppApi.AuthUser
-import tk.quietdev.level1.models.shppApi.RegisterResponse
+import tk.quietdev.level1.models.shppApi2.AuthResonse
+import tk.quietdev.level1.models.shppApi2.AuthUser
 
 class RemoteApiRepository(
     @ApplicationContext private val androidContext: Context,
@@ -37,11 +36,38 @@ class RemoteApiRepository(
         TODO("Not yet implemented")
     }
 
-    override suspend fun <T> userRegistration(user: T) {
+    override suspend fun userRegistration(login: String, password: String) {
         try {
-            val response = api.createEmployee(user as AuthUser)
+            val response = api.userRegister(AuthUser(login,password))
             if (response.isSuccessful) {
                 // TODO: 9/7/2021
+            } else {
+                withContext(Dispatchers.IO) {
+                    val moshi = moshiResponseMapper()
+                    val x = response.errorBody()?.string()
+                    val errorMessageFromApi =
+                        moshi.fromJson(x)?.message
+                    errorMessageFromApi?.let {
+                        throw UserRegisterError(it)
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            var message = androidContext.getString(R.string.show_unknown_error)
+            if (e is UserRegisterError) {
+                e.message?.let {
+                    message = it
+                }
+            }
+            throw Exception(message)
+        }
+    }
+
+    override suspend fun userLogin(login: String, password: String) {
+        try {
+            val response = api.userLogin(AuthUser(login,password))
+            if (response.isSuccessful) {
+                // TODO: 9/8/2021  
             } else {
                 withContext(Dispatchers.IO) {
                     val moshi = moshiResponseMapper()
@@ -70,12 +96,12 @@ class RemoteApiRepository(
      * @property message user ready error message
      * @property cause the original cause of this exception
      */
-    class UserRegisterError(message: String) :  Exception(message)
+    class UserRegisterError(message: String) : Exception(message)
 
     private fun moshiResponseMapper() = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
-        .adapter(RegisterResponse::class.java)
+        .adapter(AuthResonse::class.java)
 
 
 }

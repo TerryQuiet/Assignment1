@@ -1,8 +1,8 @@
-package tk.quietdev.level1.models.shppApi
+package tk.quietdev.level1.models.shppApi2
 
-class RegisterResponse(
+data class AuthResonse(
     val code: Int,
-    val `data`: List<Any>,
+    val `data`: Data,
     val message: String,
     val status: String
 ) {

@@ -15,11 +15,13 @@ import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentLoginBinding
 import tk.quietdev.level1.ui.authorization.AuthActivity
 import tk.quietdev.level1.ui.authorization.AuthViewModel
+import tk.quietdev.level1.ui.authorization.register.RegisterViewModel
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
+    private val viewModel: LoginViewModel by viewModels()
     private val authSharedViewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
@@ -45,7 +47,10 @@ class LoginFragment : Fragment() {
     private fun setListeners() {
         binding.apply {
             btnRegister.setOnClickListener {
-                tryLogin()
+                viewModel.regUser(
+                    email = etEmail.text.toString(),
+                    passwd = etPassword.text.toString()
+                )
             }
 
             etEmail.apply {
