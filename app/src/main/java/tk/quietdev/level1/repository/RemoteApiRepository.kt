@@ -1,6 +1,7 @@
 package tk.quietdev.level1.repository
 
 import android.content.Context
+import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -11,11 +12,15 @@ import tk.quietdev.level1.api.ShppApi
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.models.shppApi2.AuthResonse
 import tk.quietdev.level1.models.shppApi2.AuthUser
+import tk.quietdev.level1.models.shppApi2.ErrorRegResponse
 
 class RemoteApiRepository(
     @ApplicationContext private val androidContext: Context,
     private val api: ShppApi,
 ) : Repository {
+
+    private val moshi by lazy { moshiResponseMapper() }
+
     override fun updateUser(updatedUserModel: UserModel) {
         TODO("Not yet implemented")
     }
@@ -43,7 +48,6 @@ class RemoteApiRepository(
                 // TODO: 9/7/2021
             } else {
                 withContext(Dispatchers.IO) {
-                    val moshi = moshiResponseMapper()
                     val x = response.errorBody()?.string()
                     val errorMessageFromApi =
                         moshi.fromJson(x)?.message
@@ -67,10 +71,9 @@ class RemoteApiRepository(
         try {
             val response = api.userLogin(AuthUser(login,password))
             if (response.isSuccessful) {
-                // TODO: 9/8/2021  
+                // TODO: 9/8/2021
             } else {
                 withContext(Dispatchers.IO) {
-                    val moshi = moshiResponseMapper()
                     val x = response.errorBody()?.string()
                     val errorMessageFromApi =
                         moshi.fromJson(x)?.message
@@ -101,7 +104,7 @@ class RemoteApiRepository(
     private fun moshiResponseMapper() = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
-        .adapter(AuthResonse::class.java)
+        .adapter(ErrorRegResponse::class.java)
 
 
 }
