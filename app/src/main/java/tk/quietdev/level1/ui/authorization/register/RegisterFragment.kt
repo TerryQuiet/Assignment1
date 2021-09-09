@@ -13,7 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentRegistrationBinding
-import tk.quietdev.level1.data.remote.models.AuthResonse
+import tk.quietdev.level1.data.remote.models.AuthResponse
 import tk.quietdev.level1.ui.authorization.AuthViewModel
 
 @AndroidEntryPoint
@@ -39,16 +39,16 @@ class RegisterFragment : Fragment() {
     private fun setObservers() {
         viewModel.regResponse.observe(viewLifecycleOwner) {
             when (it) {
-                AuthResonse.Status.ONGOING -> {
+                AuthResponse.Status.ONGOING -> {
                     // show animation
                 }
-                AuthResonse.Status.OK -> {
+                AuthResponse.Status.OK -> {
                     findNavController().navigate(RegisterFragmentDirections.regToLog())
                 }
-                AuthResonse.Status.BAD -> {
+                AuthResponse.Status.BAD -> {
                     showErrorSnackbar(viewModel.errorMessage)
                 }
-                AuthResonse.Status.NULL -> {
+                AuthResponse.Status.NULL -> {
                     // request is not send yet
                 }
             }

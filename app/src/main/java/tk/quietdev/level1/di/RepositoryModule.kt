@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import tk.quietdev.level1.data.db.RoomUserDao
 import tk.quietdev.level1.data.remote.ShppApi
 import tk.quietdev.level1.repository.RemoteApiRepository
 import tk.quietdev.level1.repository.Repository
@@ -26,7 +27,8 @@ object RepositoryModule {
     @Provides
     fun provideRemoteRepository(
         api: ShppApi,
+        db : RoomUserDao,
         @ApplicationContext context: Context,
-    ): Repository = RemoteApiRepository(context,api)
+    ): Repository = RemoteApiRepository(context,api, db)
 
 }

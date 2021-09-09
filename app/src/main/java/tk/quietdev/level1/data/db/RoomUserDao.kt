@@ -6,7 +6,7 @@ import tk.quietdev.level1.data.db.model.RoomUser
 
 
 @Dao
-interface roomUserDao {
+interface RoomUserDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(user: RoomUser)

@@ -8,9 +8,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import tk.quietdev.level1.R
+import tk.quietdev.level1.data.db.RoomUserDao
 import tk.quietdev.level1.data.remote.ShppApi
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.data.remote.models.AuthResonse
+import tk.quietdev.level1.data.remote.models.AuthResponse
 import tk.quietdev.level1.data.remote.models.AuthUser
 import tk.quietdev.level1.data.remote.models.ErrorRegResponse
 import kotlin.reflect.KSuspendFunction1
@@ -18,6 +19,7 @@ import kotlin.reflect.KSuspendFunction1
 class RemoteApiRepository(
     @ApplicationContext private val androidContext: Context,
     private val api: ShppApi,
+    private val db: RoomUserDao
 ) : Repository {
 
     private val apiErrorMapper by lazy { moshiErrorResponseMapper() }
@@ -50,7 +52,7 @@ class RemoteApiRepository(
         val response = userAuth(AuthUser(login,password), api::userLogin)
     }
 
-    private suspend fun userAuth(user: AuthUser, method: KSuspendFunction1<AuthUser, Response<AuthResonse>>): Response<AuthResonse>? {
+    private suspend fun userAuth(user: AuthUser, method: KSuspendFunction1<AuthUser, Response<AuthResponse>>): Response<AuthResponse>? {
         try {
             val response = method(user)
             if (response.isSuccessful) {

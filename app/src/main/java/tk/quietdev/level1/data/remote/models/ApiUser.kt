@@ -1,13 +1,15 @@
 package tk.quietdev.level1.data.remote.models
 
-data class apiUser(
+import com.squareup.moshi.Json
+
+data class ApiUser(
     val address: String?,
     val birthday: String?,
     val career: String?,
-    val created_at: String?,
+    @Json(name = "created_at") val createdAt: String?,
     val email: String,
     val id: Int,
     val name: String?,
     val phone: String?,
-    val updated_at: String?
+    @Json(name = "updated_at") val updatedAt: String?
 )
