@@ -5,8 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import tk.quietdev.level1.models.shppApi2.AuthResonse
-import tk.quietdev.level1.models.shppApi2.AuthUser
+import tk.quietdev.level1.data.remote.models.AuthResonse
 import tk.quietdev.level1.repository.Repository
 import javax.inject.Inject
 

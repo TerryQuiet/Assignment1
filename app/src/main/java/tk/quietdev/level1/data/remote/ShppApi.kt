@@ -1,11 +1,11 @@
-package tk.quietdev.level1.api
+package tk.quietdev.level1.data.remote
 
 
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
-import tk.quietdev.level1.models.shppApi2.AuthUser
-import tk.quietdev.level1.models.shppApi2.AuthResonse
+import tk.quietdev.level1.data.remote.models.AuthUser
+import tk.quietdev.level1.data.remote.models.AuthResonse
 
 interface ShppApi {
 

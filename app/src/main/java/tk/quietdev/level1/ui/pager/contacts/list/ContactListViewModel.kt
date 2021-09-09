@@ -44,7 +44,7 @@ class ContactListViewModel @Inject constructor(
         removedUser?.let {
             deletedUserPosition = position
             updateLiveData()
-            userIdToRemove.remove(userModel._id)
+            userIdToRemove.remove(userModel.id)
             isRemoveState.value = userIdToRemove.isNotEmpty()
         }
     }
@@ -68,7 +68,7 @@ class ContactListViewModel @Inject constructor(
     fun updateUser(updatedUserModel: UserModel) {
        userList.value?.let {
            for (i in it.indices) {
-               if (it[i]._id == updatedUserModel._id) {
+               if (it[i].id == updatedUserModel.id) {
                    it[i] = updatedUserModel
                    break
                }
@@ -86,7 +86,7 @@ class ContactListViewModel @Inject constructor(
     }
 
     fun removeUsers() {
-        val newList = userList.value?.filter { !userIdToRemove.contains(it._id) }?.toMutableList()
+        val newList = userList.value?.filter { !userIdToRemove.contains(it.id) }?.toMutableList()
         newList?.let {
             userList.value = it
         }

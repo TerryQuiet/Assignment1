@@ -10,7 +10,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import tk.quietdev.level1.api.ShppApi
+import tk.quietdev.level1.data.remote.ShppApi
 import javax.inject.Singleton
 
 @Module
