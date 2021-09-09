@@ -1,6 +1,6 @@
-package tk.quietdev.level1.models.shppApi2
+package tk.quietdev.level1.data.remote.models
 
-data class User(
+data class apiUser(
     val address: String?,
     val birthday: String?,
     val career: String?,

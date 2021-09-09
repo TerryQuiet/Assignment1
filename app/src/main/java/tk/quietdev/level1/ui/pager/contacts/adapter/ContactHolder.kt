@@ -34,7 +34,7 @@ class ContactHolder(
 
     fun bind(userModel: UserModel) {
         with(userModel) {
-            isSelected = itemStateChecker.isItemSelected(_id!!)
+            isSelected = itemStateChecker.isItemSelected(id!!)
             _currentUserModel = this
             changeBackgroundColor()
             binding.tvName.text = userName

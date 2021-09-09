@@ -13,7 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentRegistrationBinding
-import tk.quietdev.level1.models.shppApi2.AuthResonse
+import tk.quietdev.level1.data.remote.models.AuthResonse
 import tk.quietdev.level1.ui.authorization.AuthViewModel
 
 @AndroidEntryPoint

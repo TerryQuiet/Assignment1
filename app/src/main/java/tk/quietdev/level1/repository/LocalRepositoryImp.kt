@@ -4,7 +4,7 @@ package tk.quietdev.level1.repository
 import android.content.Context
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import tk.quietdev.level1.api.ShppApi
+import tk.quietdev.level1.data.remote.ShppApi
 
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.ext.readAssetsFile
@@ -38,7 +38,7 @@ class LocalRepositoryImp(
 
 
     private fun findIdByEmail(email: String): Int? {
-        return allFakeUsers.values.find { it.email == email }?._id
+        return allFakeUsers.values.find { it.email == email }?.id
     }
 
 
@@ -73,8 +73,8 @@ class LocalRepositoryImp(
 
      fun addUser(userModel: UserModel): UserModel {
         userModel.apply {
-            _id = userIds++
-            _id?.let {
+            id = userIds++
+            id?.let {
                 allFakeUsers[it] = this
             }
             return this
@@ -82,7 +82,7 @@ class LocalRepositoryImp(
     }
 
      fun updateUser(updatedUserModel: UserModel) {
-        allFakeUsers[updatedUserModel._id!!] = updatedUserModel
+        allFakeUsers[updatedUserModel.id!!] = updatedUserModel
     }
 
 

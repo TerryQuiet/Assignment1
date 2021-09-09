@@ -98,7 +98,7 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
     private fun removeUser(userModel: UserModel, position: Int) {
         viewModel.removeUser(userModel, position)
-        showDeletionUndoSnackBar(userModel._id!!)
+        showDeletionUndoSnackBar(userModel.id!!)
     }
 
     private fun addListeners() {
@@ -157,14 +157,14 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
         override fun onItemClick(userModel: UserModel) {
             if (viewModel.isRemoveState.value == true) {
-                viewModel.toggleUserSelected(userModel._id!!)
+                viewModel.toggleUserSelected(userModel.id!!)
             } else {
                 openContactDetail(userModel)
             }
         }
 
         override fun onLongItemClick(userModel: UserModel): Boolean {
-            viewModel.toggleUserSelected(userModel._id!!)
+            viewModel.toggleUserSelected(userModel.id!!)
             return true
         }
 

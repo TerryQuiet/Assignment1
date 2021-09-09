@@ -8,11 +8,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import tk.quietdev.level1.R
-import tk.quietdev.level1.api.ShppApi
+import tk.quietdev.level1.data.remote.ShppApi
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.models.shppApi2.AuthResonse
-import tk.quietdev.level1.models.shppApi2.AuthUser
-import tk.quietdev.level1.models.shppApi2.ErrorRegResponse
+import tk.quietdev.level1.data.remote.models.AuthResonse
+import tk.quietdev.level1.data.remote.models.AuthUser
+import tk.quietdev.level1.data.remote.models.ErrorRegResponse
 import kotlin.reflect.KSuspendFunction1
 
 class RemoteApiRepository(
