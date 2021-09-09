@@ -3,8 +3,8 @@ package tk.quietdev.level1.data.db.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "room_users")
-data class RoomUser(
+@Entity(tableName = "room_current_user_contacts")
+data class RoomCurrentUserContacts(
    @PrimaryKey(autoGenerate = false) val id: Int,
    val address: String?,
    val birthday: String?,
@@ -13,5 +13,6 @@ data class RoomUser(
    val email: String,
    val name: String?,
    val phone: String?,
-   val updatedAt: String?
+   val updatedAt: String?,
+  // val contactOwnerId: Int
 )
