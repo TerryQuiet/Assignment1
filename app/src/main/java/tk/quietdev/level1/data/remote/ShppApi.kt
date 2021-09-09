@@ -3,6 +3,7 @@ package tk.quietdev.level1.data.remote
 
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.Header
 import retrofit2.http.POST
 import tk.quietdev.level1.data.remote.models.AuthUser
 import tk.quietdev.level1.data.remote.models.AuthResponse
@@ -19,6 +20,9 @@ interface ShppApi {
 
     @POST("./user/login")
     suspend fun userLogin(@Body requestBody: AuthUser): Response<AuthResponse>
+
+    @POST("./user/profile")
+    suspend fun getCurrentUser(@Header("Authorization") token : String): Response<AuthResponse>
 
 
 }

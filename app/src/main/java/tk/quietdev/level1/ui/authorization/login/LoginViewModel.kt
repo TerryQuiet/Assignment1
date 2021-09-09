@@ -24,9 +24,8 @@ class LoginViewModel @Inject constructor(
     val dataState: LiveData<DataState<UserModel>>
         get() = _dataState
 
-    fun regUser(email: String, passwd: String) {
+    fun loginUser(email: String, passwd: String) {
         viewModelScope.launch {
-            Log.d("SSS", "regUser: ")
            repository.userLogin(email, passwd).onEach {
                _dataState.value = it
            }.launchIn(viewModelScope)

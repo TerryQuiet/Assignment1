@@ -6,7 +6,7 @@ import tk.quietdev.level1.models.UserModel
 import javax.inject.Inject
 
 class RemoteMapper @Inject constructor() {
-    fun mapRemoteAuthToRoomCurrentUser(userTokenData: UserTokenData): CurrentUser {
+    fun toRoomCurrentUser(userTokenData: UserTokenData): CurrentUser {
         userTokenData.user.apply {
             return CurrentUser(
                 id = id,
@@ -23,7 +23,7 @@ class RemoteMapper @Inject constructor() {
         }
     }
 
-    fun mapRemoteAuthToUser(userTokenData: UserTokenData): UserModel {
+    fun toUser(userTokenData: UserTokenData): UserModel {
         userTokenData.user.apply {
             return UserModel(
             id = id,
