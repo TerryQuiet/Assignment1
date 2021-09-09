@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import tk.quietdev.level1.data.remote.models.AuthResonse
+import tk.quietdev.level1.data.remote.models.AuthResponse
 import tk.quietdev.level1.repository.Repository
 import javax.inject.Inject
 
@@ -14,23 +14,23 @@ class LoginViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
     val isErrorShown = MutableLiveData(false) // disable regButton
-    val regResponse = MutableLiveData(AuthResonse.Status.NULL)
+    val regResponse = MutableLiveData(AuthResponse.Status.NULL)
     var errorMessage = ""
     //the fields need to be here
 
     fun regUser(email: String, passwd: String) {
         viewModelScope.launch {
             try {
-                regResponse.value = AuthResonse.Status.ONGOING
+                regResponse.value = AuthResponse.Status.ONGOING
                 repository.userLogin(email, passwd)
-                regResponse.value = AuthResonse.Status.OK
+                regResponse.value = AuthResponse.Status.OK
             } catch (e: Exception) {
                 e.message?.let {
                     errorMessage = it
                 }
-                regResponse.value = AuthResonse.Status.BAD
+                regResponse.value = AuthResponse.Status.BAD
             } finally {
-                regResponse.value = AuthResonse.Status.NULL
+                regResponse.value = AuthResponse.Status.NULL
             }
         }
     }

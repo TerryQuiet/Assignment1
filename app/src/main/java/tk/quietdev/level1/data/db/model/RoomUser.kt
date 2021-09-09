@@ -3,10 +3,9 @@ package tk.quietdev.level1.data.db.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 @Entity(tableName = "room_user")
 data class RoomUser(
-   @PrimaryKey(autoGenerate = true) val id: Int,
+   @PrimaryKey(autoGenerate = false) val id: Int,
    val address: String?,
    val birthday: String?,
    val career: String?,

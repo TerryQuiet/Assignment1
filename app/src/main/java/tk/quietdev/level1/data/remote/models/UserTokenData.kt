@@ -1,6 +1,6 @@
 package tk.quietdev.level1.data.remote.models
 
-data class Data(
+data class UserTokenData(
     val accessToken: String,
-    val user: apiUser
+    val user: ApiUser
 )

@@ -1,8 +1,8 @@
 package tk.quietdev.level1.data.remote.models
 
-data class AuthResonse(
+data class AuthResponse(
     val code: Int,
-    val `data`: Data,
+    val data: UserTokenData,
     val message: String,
     val status: String
 ) {

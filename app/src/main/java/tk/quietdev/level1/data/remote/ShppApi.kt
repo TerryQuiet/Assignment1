@@ -5,7 +5,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 import tk.quietdev.level1.data.remote.models.AuthUser
-import tk.quietdev.level1.data.remote.models.AuthResonse
+import tk.quietdev.level1.data.remote.models.AuthResponse
 
 interface ShppApi {
 
@@ -15,10 +15,10 @@ interface ShppApi {
 
 
     @POST("./user/register")
-    suspend fun userRegister(@Body requestBody: AuthUser): Response<AuthResonse>
+    suspend fun userRegister(@Body requestBody: AuthUser): Response<AuthResponse>
 
     @POST("./user/login")
-    suspend fun userLogin(@Body requestBody: AuthUser): Response<AuthResonse>
+    suspend fun userLogin(@Body requestBody: AuthUser): Response<AuthResponse>
 
 
 }
