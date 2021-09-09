@@ -14,9 +14,9 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentLoginBinding
+import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.authorization.AuthActivity
 import tk.quietdev.level1.ui.authorization.AuthViewModel
-import tk.quietdev.level1.ui.authorization.register.RegisterViewModel
 import tk.quietdev.level1.utils.DataState
 
 @AndroidEntryPoint
@@ -49,19 +49,20 @@ class LoginFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.dataState.observe(viewLifecycleOwner) {
+            Log.d("SSS", "setObservers: ${it}")
             when (it) {
                 is DataState.Error -> {
-                    Log.d("SSS", "ERR: ")
                     val error = it.exception.message
                     error?.let { message ->
                         showErrorSnackbar(message)
                     }
+                    showHelpTip()
                 }
                 is DataState.Loading -> {
                     Log.d("SSS", "LOAD: ")
                 }
-                is DataState.Success -> {
-                    Log.d("SSS", "setObservers: ")
+                is DataState.Success<UserModel> -> {
+                    (activity as AuthActivity).login(it.data)
                 }
             }
         }
@@ -70,12 +71,10 @@ class LoginFragment : Fragment() {
     private fun setListeners() {
         binding.apply {
             btnRegister.setOnClickListener {
-                Log.d("SSS", "setListeners: ")
-                viewModel.regUser(
+                viewModel.loginUser(
                     email = etEmail.text.toString(),
                     passwd = etPassword.text.toString()
                 )
-
             }
 
             etEmail.apply {
@@ -121,9 +120,6 @@ class LoginFragment : Fragment() {
      * checks if user is present in a database and proceeds to login if so
      */
     private fun tryLogin() {
-        val email = binding.etEmail.text.toString()
-        val password = binding.etPassword.text.toString()
-       // authSharedViewModel.findUser(email, password)
         authSharedViewModel.currentUserModel.value?.let {
             (activity as AuthActivity).login(it)
         } ?: showHelpTip()

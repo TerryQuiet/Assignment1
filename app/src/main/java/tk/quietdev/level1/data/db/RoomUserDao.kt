@@ -24,6 +24,11 @@ interface RoomUserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCurrentUser(user: CurrentUser)
 
+    @Query("SELECT * from room_current_user WHERE single = 1")
+    suspend fun getCurrentUser(): CurrentUser
+
+    @Query("SELECT * from room_current_user WHERE single = 1")
+    fun getCurrentUserFlow(): Flow<CurrentUser>
 
 
 

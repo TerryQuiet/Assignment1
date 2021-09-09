@@ -2,6 +2,7 @@ package tk.quietdev.level1.ui.pager.settings
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,13 +39,11 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val user = activity?.intent?.getParcelableExtra<UserModel>(Const.USER)
-        user?.let {
-            viewModel.currentUserModel = it
+            viewModel.getCurrentUser()
             bindListeners()
             setObservers()
             bindViews()
-        }
+
     }
 
     private fun bindListeners() {
@@ -52,8 +51,14 @@ class SettingsFragment : Fragment() {
             btnViewContacts.setOnClickListener {
                settingsSharedViewModel.buttonClicked.value = true
             }
-            binding.btnEditProfile.setOnClickListener {
-                openEditFragment(viewModel.currentUserModel)
+            btnEditProfile.setOnClickListener {
+                Log.d("SSS", "bindListeners: ")
+                viewModel.currentUserModel.value?.apply {
+                    openEditFragment(this)
+                }
+            }
+            containerSocialButtons.iBtnFacebook.setOnClickListener {
+                viewModel.getCurrentUserTest()
             }
         }
     }
@@ -67,21 +72,27 @@ class SettingsFragment : Fragment() {
     }
 
     private fun bindViews() {
-        val currentUser = viewModel.currentUserModel
-        binding.topContainer.apply {
-            tvName.text = currentUser.userName
-            tvAddress.text = currentUser.physicalAddress
-            tvOccupation.text = currentUser.occupation
-            ivProfilePic.loadImage(currentUser.pictureUri)
+        val currentUser = viewModel.currentUserModel.value
+        currentUser?.apply {
+            binding.topContainer.apply {
+                tvName.text = userName
+                tvAddress.text = physicalAddress
+                tvOccupation.text = occupation
+                ivProfilePic.loadImage(pictureUri)
+            }
         }
+
     }
 
     private fun setObservers() {
         sharedViewModel.updatedUser.observe(viewLifecycleOwner) {
             if (it != null) {
-                viewModel.currentUserModel = it
+             //   viewModel.currentUserModel = it
                 bindViews()
             }
+        }
+        viewModel.currentUserModel.observe(viewLifecycleOwner) {
+            Log.d("222", "setObservers: ")
         }
     }
 
