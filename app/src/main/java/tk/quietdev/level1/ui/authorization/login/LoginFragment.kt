@@ -2,6 +2,7 @@ package tk.quietdev.level1.ui.authorization.login
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import tk.quietdev.level1.databinding.FragmentLoginBinding
 import tk.quietdev.level1.ui.authorization.AuthActivity
 import tk.quietdev.level1.ui.authorization.AuthViewModel
 import tk.quietdev.level1.ui.authorization.register.RegisterViewModel
+import tk.quietdev.level1.utils.DataState
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -41,16 +43,39 @@ class LoginFragment : Fragment() {
             }
         }*/
         setListeners()
+        setObservers()
 
+    }
+
+    private fun setObservers() {
+        viewModel.dataState.observe(viewLifecycleOwner) {
+            when (it) {
+                is DataState.Error -> {
+                    Log.d("SSS", "ERR: ")
+                    val error = it.exception.message
+                    error?.let { message ->
+                        showErrorSnackbar(message)
+                    }
+                }
+                is DataState.Loading -> {
+                    Log.d("SSS", "LOAD: ")
+                }
+                is DataState.Success -> {
+                    Log.d("SSS", "setObservers: ")
+                }
+            }
+        }
     }
 
     private fun setListeners() {
         binding.apply {
             btnRegister.setOnClickListener {
+                Log.d("SSS", "setListeners: ")
                 viewModel.regUser(
                     email = etEmail.text.toString(),
                     passwd = etPassword.text.toString()
                 )
+
             }
 
             etEmail.apply {
@@ -114,8 +139,13 @@ class LoginFragment : Fragment() {
             .setAction("OK") {
                 binding.etEmail.setText("mail@pm.me")
                 binding.etPassword.setText("11111")
-                tryLogin()
             }
+            .setTextColor(Color.WHITE)
+            .show()
+    }
+
+    private fun showErrorSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
             .setTextColor(Color.WHITE)
             .show()
     }

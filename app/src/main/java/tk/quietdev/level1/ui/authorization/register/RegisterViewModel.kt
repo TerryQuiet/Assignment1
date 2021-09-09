@@ -1,6 +1,7 @@
 package tk.quietdev.level1.ui.authorization.register
 
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,7 +23,6 @@ class RegisterViewModel @Inject constructor(
     //the fields need to be here
 
     fun regUser(email: String, passwd: String) {
-        val userToReg = AuthUser(email = email, password = passwd)
         viewModelScope.launch {
             try {
                 regResponse.value = AuthResponse.Status.ONGOING
@@ -32,6 +32,7 @@ class RegisterViewModel @Inject constructor(
                 e.message?.let {
                     errorMessage = it
                 }
+                Log.d("SSS", "regUser: ${e.cause} ")
                 regResponse.value = AuthResponse.Status.BAD
             } finally {
                 regResponse.value = AuthResponse.Status.NULL

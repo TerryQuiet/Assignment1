@@ -2,6 +2,7 @@ package tk.quietdev.level1.data.db
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
+import tk.quietdev.level1.data.db.model.CurrentUser
 import tk.quietdev.level1.data.db.model.RoomUser
 
 
@@ -14,11 +15,16 @@ interface RoomUserDao {
     @Update
     suspend fun update(user: RoomUser)
 
-    @Query("SELECT * from room_user WHERE id = :id")
+    @Query("SELECT * from room_users WHERE id = :id")
     fun getUser(id: Int): Flow<RoomUser>
 
-    @Query("SELECT * from room_user ORDER BY id ASC")
+    @Query("SELECT * from room_users ORDER BY id ASC")
     fun getAllUsers(): Flow<List<RoomUser>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCurrentUser(user: CurrentUser)
+
+
 
 
 }
