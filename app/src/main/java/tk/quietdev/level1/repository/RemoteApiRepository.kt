@@ -1,21 +1,26 @@
 package tk.quietdev.level1.repository
 
 import android.content.Context
+import android.util.Log
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import tk.quietdev.level1.R
 import tk.quietdev.level1.data.db.RoomUserDao
 import tk.quietdev.level1.data.remote.RemoteMapper
 import tk.quietdev.level1.data.remote.ShppApi
-import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.data.remote.models.AuthResponse
 import tk.quietdev.level1.data.remote.models.AuthUser
 import tk.quietdev.level1.data.remote.models.ErrorRegResponse
+import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.utils.DataState
 import kotlin.reflect.KSuspendFunction1
+
 
 class RemoteApiRepository(
     @ApplicationContext private val androidContext: Context,
@@ -46,25 +51,29 @@ class RemoteApiRepository(
         TODO("Not yet implemented")
     }
 
-    override suspend fun userRegistration(login: String, password: String) {
-        val response = userAuth(AuthUser(login,password), api::userRegister)
-    }
+    override suspend fun userRegistration(login: String, password: String): Flow<DataState<UserModel>> =
+         userAuth(AuthUser(login, password), api::userRegister)
 
-    override suspend fun userLogin(login: String, password: String) {
-        val response = userAuth(AuthUser(login,password), api::userLogin)
+    override suspend fun userLogin(login: String, password: String): Flow<DataState<UserModel>> =
+         userAuth(AuthUser(login, password), api::userLogin)
 
-    }
 
-    private suspend fun userAuth(user: AuthUser, method: KSuspendFunction1<AuthUser, Response<AuthResponse>>): Response<AuthResponse>? {
+    private suspend fun userAuth(
+        user: AuthUser,
+        method: KSuspendFunction1<AuthUser, Response<AuthResponse>>
+    ): Flow<DataState<UserModel>> = flow {
+        emit(DataState.Loading)
         try {
+            Log.d("SSS", "userAuth: ")
             val response = method(user)
             if (response.isSuccessful) {
                 val userTokenData = response.body()?.data
                 userTokenData?.let {
-                    val currentUser= remoteMapper.mapRemoteAuthToRoomCurrentUser(it)
+                    val currentUser = remoteMapper.mapRemoteAuthToRoomCurrentUser(it)
                     db.insertCurrentUser(currentUser)
+                    remoteMapper.mapRemoteAuthToUser(it)
+                    emit(DataState.Success(remoteMapper.mapRemoteAuthToUser(it)))
                 }
-                return method(user)
             } else {
                 withContext(Dispatchers.IO) {
                     val x = response.errorBody()?.string()
@@ -82,9 +91,9 @@ class RemoteApiRepository(
                     message = it
                 }
             }
-            throw Exception(message)
+            emit(DataState.Error(java.lang.Exception(message)))
         }
-        return null
+
     }
 
     /**
