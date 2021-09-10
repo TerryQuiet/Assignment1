@@ -6,10 +6,10 @@ data class ApiUser(
     val address: String?,
     val birthday: String?,
     val career: String?,
-    @Json(name = "created_at") val createdAt: String?,
+    @Json(name = "created_at") val createdAt: String? = null,
     val email: String,
-    val id: Int,
+    val id: Int? = null,
     val name: String?,
     val phone: String?,
-    @Json(name = "updated_at") val updatedAt: String?
+    @Json(name = "updated_at") val updatedAt: String? = null
 )

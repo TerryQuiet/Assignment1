@@ -18,4 +18,5 @@ class RoomMapper @Inject constructor() {
             )
         }
     }
+
 }

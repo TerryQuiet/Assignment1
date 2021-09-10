@@ -2,14 +2,14 @@ package tk.quietdev.level1.repository
 
 import android.content.Context
 import android.util.Log
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
 import tk.quietdev.level1.R
@@ -19,11 +19,10 @@ import tk.quietdev.level1.data.remote.RemoteMapper
 import tk.quietdev.level1.data.remote.ShppApi
 import tk.quietdev.level1.data.remote.models.AuthResponse
 import tk.quietdev.level1.data.remote.models.AuthUser
-import tk.quietdev.level1.data.remote.models.ErrorRegResponse
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.DataState
+import tk.quietdev.level1.utils.UserRegisterError
 import kotlin.reflect.KSuspendFunction1
-
 
 class RemoteApiRepository(
     @ApplicationContext private val androidContext: Context,
@@ -33,10 +32,38 @@ class RemoteApiRepository(
     private val roomMapper: RoomMapper,
 ) : Repository {
 
-    private val apiErrorMapper by lazy { moshiErrorResponseMapper() }
+    private val apiErrorMapper by lazy { remoteMapper.moshiErrorResponseMapper() }
 
     override fun updateUser(updatedUserModel: UserModel) {
-        TODO("Not yet implemented")
+        Log.d("TAG", "updateUser called: ${updatedUserModel.userName}")
+        MainScope().launch {
+            withContext(Dispatchers.IO) {
+                updatedUserModel.apply {
+                    val updatedUser = db.getCurrentUser().copy(
+                        address = physicalAddress,
+                        birthday = birthDate,
+                        career = occupation,
+                        email = email,
+                        name = userName,
+                        phone = phone,
+                    )
+                    db.updateCurrentUser(updatedUser)
+                }
+            }
+        }
+        /*     val data = RemoteData(remoteMapper.userToApiUser(updatedUserModel))
+             Log.d("TAG", "updateUser: $data")
+             MainScope().launch {
+                 withContext(Dispatchers.IO) {
+                     val header = HashMap<String, String>()
+                     header["Content-Type"] = "application/json"
+                     header["Authorization"] = "Bearer ${getCurrentUserToken()}"
+                     api.updateUser(header, data)
+                 }
+
+             }*/
+        Log.d("TAG", "updateUser: ${updatedUserModel.userName}")
+
     }
 
     override fun addUser(userModel: UserModel): UserModel {
@@ -56,57 +83,38 @@ class RemoteApiRepository(
     }
 
 
-
-
-
-
-
-
-
-
-    override suspend fun userRegistration(login: String, password: String): Flow<DataState<UserModel>> =
-         userAuth(AuthUser(login, password), api::userRegister)
+    override suspend fun userRegistration(
+        login: String,
+        password: String
+    ): Flow<DataState<UserModel>> =
+        userAuth(AuthUser(login, password), api::userRegister)
 
     override suspend fun userLogin(login: String, password: String): Flow<DataState<UserModel>> =
-         userAuth(AuthUser(login, password), api::userLogin)
+        userAuth(AuthUser(login, password), api::userLogin)
 
-    override suspend fun getCurrentUser(): Flow<UserModel> = flow {
-        try {
-            Log.d("SSS", "getCurrentUser: PRE")
-            val response = api.getCurrentUser("Bearer ${getCurrentUserToken()}")
-            Log.d("SSS", "getCurrentUser: AFT")
-            if (response.isSuccessful) {
-                val userTokenData = response.body()?.data
-                userTokenData?.let {
-                    val currentUser = remoteMapper.toRoomCurrentUser(it)
-                    db.insertCurrentUser(currentUser)
-                    remoteMapper.toUser(it)
-                    emit(remoteMapper.toUser(it))
-                }
-            } else {
-                withContext(Dispatchers.IO) {
-                    val x = response.errorBody()?.string()
-                    val errorMessageFromApi =
-                        apiErrorMapper.fromJson(x)?.message
-                    errorMessageFromApi?.let {
-                        throw UserRegisterError(it)
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Log.d("SSS", "getCurrentUser: ${e.message}")
+
+    override suspend fun currentUserFlow(): Flow<UserModel> = flow {
+        emit(roomMapper.currentUserToUser(db.getCurrentUser()))
+        db.getCurrentUserFlow().transform {
+            emit(roomMapper.currentUserToUser(it))
         }
     }
 
-    override fun getCurrentUserTest(): Flow<UserModel> = flow { db.getCurrentUserFlow().onEach { emit(roomMapper.currentUserToUser(it)) } }
+    override suspend fun getCurrentUserContactsFlow(): Flow<List<UserModel>> {
+        TODO("Not yet implemented")
+    }
 
-
+    override suspend fun cacheCurrentUserContactsFromApi() {
+        val response = api.getCurrentUserContacts(getBearerToken())
+        if (response.isSuccessful) {
+            Log.d("TAG", "cacheCurrentUserContactsFromApi: ")
+        }
+    }
 
     private suspend fun getCurrentUserToken(): String {
-
         return db.getCurrentUser().accessToken
     }
+
 
 
 
@@ -126,13 +134,11 @@ class RemoteApiRepository(
                     emit(DataState.Success(remoteMapper.toUser(it)))
                 }
             } else {
-                withContext(Dispatchers.IO) {
-                    val x = response.errorBody()?.string()
-                    val errorMessageFromApi =
-                        apiErrorMapper.fromJson(x)?.message
-                    errorMessageFromApi?.let {
-                        throw UserRegisterError(it)
-                    }
+                val x = response.errorBody()?.string()
+                val errorMessageFromApi =
+                    apiErrorMapper.fromJson(x)?.message
+                errorMessageFromApi?.let {
+                    throw UserRegisterError(it)
                 }
             }
         } catch (e: Exception) {
@@ -144,23 +150,35 @@ class RemoteApiRepository(
             }
             emit(DataState.Error(Exception(message)))
         }
+    }.flowOn(Dispatchers.IO)
 
+
+    // TODO: 9/10/2021 REDO, write to db only.
+    fun getUserFromApi() = flow {
+        try {
+            val response = api.getCurrentUser(getBearerToken())
+            if (response.isSuccessful) {
+                val user = response.body()?.data?.user
+                user?.let {
+                    emit(remoteMapper.apiUserToUser(it))
+                    // write to db if changed?
+                }
+            } else {
+                val x = response.errorBody()?.string()
+                val errorMessageFromApi =
+                    apiErrorMapper.fromJson(x)?.message
+                errorMessageFromApi?.let {
+                    throw UserRegisterError(it)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-
-
-    /**
-     * Thrown when there was a error registering a new user
-     *
-     * @property message user ready error message
-     * @property cause the original cause of this exception
-     */
-    class UserRegisterError(message: String) : Exception(message)
-
-    private fun moshiErrorResponseMapper() = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
-        .adapter(ErrorRegResponse::class.java)
+    private suspend fun getBearerToken(): String {
+        return "Bearer ${getCurrentUserToken()}"
+    }
 
 
 }

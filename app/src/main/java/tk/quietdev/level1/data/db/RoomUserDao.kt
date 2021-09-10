@@ -24,6 +24,9 @@ interface RoomUserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCurrentUser(user: CurrentUser)
 
+    @Update
+    suspend fun updateCurrentUser(user: CurrentUser)
+
     @Query("SELECT * from room_current_user WHERE single = 1")
     suspend fun getCurrentUser(): CurrentUser
 

@@ -2,10 +2,10 @@ package tk.quietdev.level1.data.db.model
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import tk.quietdev.level1.data.remote.test.User
+import tk.quietdev.level1.data.remote.models.ApiUser
 
 data class UserAndContacts(
-    @Embedded val user: User,
+    @Embedded val user: ApiUser,
     @Relation(
          parentColumn = "id",
          entityColumn = "contactOwnerId"

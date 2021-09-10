@@ -1,6 +1,6 @@
 package tk.quietdev.level1.ui.authorization.login
 
-import android.util.Log
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,5 +30,7 @@ class LoginViewModel @Inject constructor(
                _dataState.value = it
            }.launchIn(viewModelScope)
         }
+
+
     }
 }

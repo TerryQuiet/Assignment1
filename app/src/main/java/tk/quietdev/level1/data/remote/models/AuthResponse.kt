@@ -10,3 +10,8 @@ data class AuthResponse(
         ONGOING, BAD, OK, NULL
     }
 }
+
+data class UserTokenData(
+    val accessToken: String,
+    val user: ApiUser
+)
