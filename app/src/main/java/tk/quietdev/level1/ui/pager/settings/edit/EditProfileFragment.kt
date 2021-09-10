@@ -23,7 +23,6 @@ class EditProfileFragment : Fragment() {
 
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
-    private val sharedViewModel: ContactsSharedViewModel by activityViewModels()
     private val viewModel: EditProfileViewModel by viewModels()
     private val args: EditProfileFragmentArgs by navArgs()
 
@@ -44,8 +43,9 @@ class EditProfileFragment : Fragment() {
         viewModel.apply {
             currentUserModel = args.user
             bindValues(currentUserModel)
-            setListeners()
         }
+
+        setListeners()
 
 
     }
@@ -53,9 +53,7 @@ class EditProfileFragment : Fragment() {
     private fun setListeners() {
         binding.apply {
             btnSave.setOnClickListener {
-                if (updateUser()) {
-                    sharedViewModel.updatedUser.value = viewModel.currentUserModel
-                }
+                if (updateUser())
                 findNavController().popBackStack()
             }
             btnAddPhoto.setOnClickListener {

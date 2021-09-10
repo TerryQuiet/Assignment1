@@ -6,3 +6,4 @@ data class ErrorRegResponse(
     val message: String,
     val status: String
 )
+

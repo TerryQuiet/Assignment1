@@ -8,7 +8,7 @@ import tk.quietdev.level1.repository.Repository
 import javax.inject.Inject
 
 @HiltViewModel
-class EditProfileViewModel @Inject constructor(private val db: Repository) : ViewModel() {
+class EditProfileViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
     lateinit var currentUserModel: UserModel
     var localPictureUri: Uri? = null
@@ -36,7 +36,7 @@ class EditProfileViewModel @Inject constructor(private val db: Repository) : Vie
         )
         if (currentUserModel != updatedUser) {
             currentUserModel = updatedUser
-            db.updateUser(currentUserModel)
+            repository.updateUser(currentUserModel)
             return true
         }
         return false

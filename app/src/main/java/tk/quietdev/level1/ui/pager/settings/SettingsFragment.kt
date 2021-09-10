@@ -15,7 +15,6 @@ import tk.quietdev.level1.databinding.FragmentSettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
-import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
 @AndroidEntryPoint
@@ -35,11 +34,12 @@ class SettingsFragment : Fragment() {
         FragmentSettingsBinding.inflate(inflater, container, false).apply {
             _binding = this
             userDetailBinding = binding.topContainer
+
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-            viewModel.getCurrentUser()
+            viewModel.initRoomObservers()
             bindListeners()
             setObservers()
             bindViews()
@@ -52,13 +52,12 @@ class SettingsFragment : Fragment() {
                settingsSharedViewModel.buttonClicked.value = true
             }
             btnEditProfile.setOnClickListener {
-                Log.d("SSS", "bindListeners: ")
                 viewModel.currentUserModel.value?.apply {
                     openEditFragment(this)
                 }
             }
             containerSocialButtons.iBtnFacebook.setOnClickListener {
-                viewModel.getCurrentUserTest()
+                viewModel.initRoomObservers()
             }
         }
     }
@@ -75,24 +74,23 @@ class SettingsFragment : Fragment() {
         val currentUser = viewModel.currentUserModel.value
         currentUser?.apply {
             binding.topContainer.apply {
-                tvName.text = userName
+                tvName.text = email
                 tvAddress.text = physicalAddress
                 tvOccupation.text = occupation
                 ivProfilePic.loadImage(pictureUri)
             }
         }
-
     }
 
     private fun setObservers() {
         sharedViewModel.updatedUser.observe(viewLifecycleOwner) {
             if (it != null) {
-             //   viewModel.currentUserModel = it
                 bindViews()
             }
         }
         viewModel.currentUserModel.observe(viewLifecycleOwner) {
-            Log.d("222", "setObservers: ")
+            Log.d("TAG", "setObservers: ")
+            bindViews()
         }
     }
 
