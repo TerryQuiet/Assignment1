@@ -19,6 +19,7 @@ import tk.quietdev.level1.data.remote.RemoteMapper
 import tk.quietdev.level1.data.remote.ShppApi
 import tk.quietdev.level1.data.remote.models.AuthResponse
 import tk.quietdev.level1.data.remote.models.AuthUser
+import tk.quietdev.level1.data.remote.models.RemoteData
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.DataState
 import tk.quietdev.level1.utils.UserRegisterError
@@ -51,19 +52,17 @@ class RemoteApiRepository(
                 }
             }
         }
-        /*     val data = RemoteData(remoteMapper.userToApiUser(updatedUserModel))
-             Log.d("TAG", "updateUser: $data")
-             MainScope().launch {
-                 withContext(Dispatchers.IO) {
-                     val header = HashMap<String, String>()
-                     header["Content-Type"] = "application/json"
-                     header["Authorization"] = "Bearer ${getCurrentUserToken()}"
-                     api.updateUser(header, data)
-                 }
+        val data = RemoteData(remoteMapper.userToApiUser(updatedUserModel))
+       // val data = remoteMapper.userToApiUser(updatedUserModel)
+        MainScope().launch {
+            withContext(Dispatchers.IO) {
+                val header = HashMap<String, String>()
+                header["Content-Type"] = "application/json"
+                header["Authorization"] = "Bearer ${getCurrentUserToken()}"
+                api.updateUser(header, data)
+            }
 
-             }*/
-        Log.d("TAG", "updateUser: ${updatedUserModel.userName}")
-
+        }
     }
 
     override fun addUser(userModel: UserModel): UserModel {
@@ -114,8 +113,6 @@ class RemoteApiRepository(
     private suspend fun getCurrentUserToken(): String {
         return db.getCurrentUser().accessToken
     }
-
-
 
 
     private suspend fun userAuth(

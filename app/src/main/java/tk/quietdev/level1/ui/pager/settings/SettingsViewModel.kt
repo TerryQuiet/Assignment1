@@ -21,7 +21,7 @@ class SettingsViewModel @Inject constructor(private val repository: Repository) 
             repository.currentUserFlow().onEach {
                 _currentUserModel.value = it
             }.launchIn(viewModelScope)
-            repository.cacheCurrentUserContactsFromApi()
+          //  repository.cacheCurrentUserContactsFromApi()
         }
     }
 }
