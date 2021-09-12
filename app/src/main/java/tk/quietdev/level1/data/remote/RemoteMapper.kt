@@ -1,9 +1,10 @@
 package tk.quietdev.level1.data.remote
 
+import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import tk.quietdev.level1.data.db.model.AllUsers
-import tk.quietdev.level1.data.db.model.CurrentUser
+import tk.quietdev.level1.data.db.model.RoomUser
+import tk.quietdev.level1.data.db.model.RoomCurrentUser
 import tk.quietdev.level1.data.remote.models.ApiUser
 import tk.quietdev.level1.data.remote.models.ErrorRegResponse
 import tk.quietdev.level1.data.remote.models.UserTokenData
@@ -11,18 +12,10 @@ import tk.quietdev.level1.models.UserModel
 import javax.inject.Inject
 
 class RemoteMapper @Inject constructor() {
-    fun toRoomCurrentUser(userTokenData: UserTokenData): CurrentUser {
+    fun toRoomCurrentUser(userTokenData: UserTokenData): RoomCurrentUser {
         userTokenData.user.apply {
-            return CurrentUser(
+            return RoomCurrentUser(
                 id = id!!,
-                address = address,
-                birthday = birthday,
-                career = career,
-                createdAt = createdAt,
-                email = email,
-                name = name,
-                phone = phone,
-                updatedAt = updatedAt,
                 accessToken = userTokenData.accessToken
             )
         }
@@ -69,9 +62,9 @@ class RemoteMapper @Inject constructor() {
         }
     }
 
-    fun apiUserToAllUsers(apiUser: ApiUser): AllUsers {
+    fun apiUserToRoomUser(apiUser: ApiUser): RoomUser {
         apiUser.apply {
-            return AllUsers(
+            return RoomUser(
                 id = id!!,
                 address = address,
                 birthday = birthday,
@@ -85,7 +78,7 @@ class RemoteMapper @Inject constructor() {
         }
     }
 
-    fun moshiErrorResponseMapper() = Moshi.Builder()
+    fun moshiErrorResponseMapper(): JsonAdapter<ErrorRegResponse> = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
         .adapter(ErrorRegResponse::class.java)

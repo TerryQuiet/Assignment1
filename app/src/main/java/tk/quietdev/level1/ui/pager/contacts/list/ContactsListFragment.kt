@@ -63,9 +63,9 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
     private fun initObservables() {
         viewModel.apply {
-           /* userList.observe(viewLifecycleOwner) { newList ->
+            userList.observe(viewLifecycleOwner) { newList ->
                 contactsAdapter.submitList(newList.toList())
-            }*/
+            }
             isRemoveState.observe(viewLifecycleOwner) { isRemoveState ->
                 if (isRemoveState) {
                     binding.btnAdd.text = getString(R.string.remove)

@@ -5,10 +5,7 @@ import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -23,6 +20,7 @@ import tk.quietdev.level1.data.remote.models.RemoteData
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.DataState
 import tk.quietdev.level1.utils.UserRegisterError
+import kotlin.properties.Delegates
 import kotlin.reflect.KSuspendFunction1
 
 class RemoteApiRepository(
@@ -34,24 +32,25 @@ class RemoteApiRepository(
 ) : Repository {
 
     private val apiErrorMapper by lazy { remoteMapper.moshiErrorResponseMapper() }
+    private var currentUserId by Delegates.notNull<Int>()
 
     override fun updateUser(updatedUserModel: UserModel) {
         Log.d("TAG", "updateUser called: ${updatedUserModel.userName}")
-        MainScope().launch {
-            withContext(Dispatchers.IO) {
-                updatedUserModel.apply {
-                    val updatedUser = db.getCurrentUser().copy(
-                        address = physicalAddress,
-                        birthday = birthDate,
-                        career = occupation,
-                        email = email,
-                        name = userName,
-                        phone = phone,
-                    )
-                    db.updateCurrentUser(updatedUser)
-                }
-            }
-        }
+        /*       MainScope().launch {
+                   withContext(Dispatchers.IO) {
+                       updatedUserModel.apply {
+                           val updatedUser = db.getCurrentUser().copy(
+                               address = physicalAddress,
+                               birthday = birthDate,
+                               career = occupation,
+                               email = email,
+                               name = userName,
+                               phone = phone,
+                           )
+                           db.updateCurrentUser(updatedUser)
+                       }
+                   }
+               }*/
         val data = RemoteData(remoteMapper.userToApiUser(updatedUserModel))
         // val data = remoteMapper.userToApiUser(updatedUserModel)
         MainScope().launch {
@@ -85,17 +84,25 @@ class RemoteApiRepository(
     override suspend fun userRegistration(
         login: String,
         password: String
-    ): Flow<DataState<UserModel>> =
-        userAuth(AuthUser(login, password), api::userRegister)
+    ): Flow<DataState<UserModel>> = userAuth(AuthUser(login, password), api::userRegister)
 
     override suspend fun userLogin(login: String, password: String): Flow<DataState<UserModel>> =
         userAuth(AuthUser(login, password), api::userLogin)
 
-
     override fun currentUserFlow(): Flow<UserModel> =
-        db.getCurrentUserFlow().map {
-            roomMapper.currentUserToUser(it)
+        db.getUser(currentUserId).map { roomMapper.roomUserToUser(it) }
+
+    fun currentUserFlow2(): Flow<UserModel> {
+        db.getCurrentUserFlow().onEach {
+            currentUserId = it.id
         }
+        return db.getUser(currentUserId).map { roomMapper.roomUserToUser(it) }
+    }
+
+
+    override fun getAllUsersFlow(): Flow<List<UserModel>> = db.getAllUsers().map {
+        it.map { roomUser -> roomMapper.roomUserToUser(roomUser) }
+    }
 
     override fun getCurrentUserContactsFlow(): Flow<List<UserModel>> {
         TODO("Not yet implemented")
@@ -105,16 +112,23 @@ class RemoteApiRepository(
         val response = api.getCurrentUserContacts(getBearerToken())
         if (response.isSuccessful) {
             val contacts = response.body()
-            contacts?.let { 
-
+            contacts?.let {
+                val x = it.data.contacts
             }
         }
     }
 
-    private suspend fun getCurrentUserToken(): String {
-        return db.getCurrentUser().accessToken
+    override suspend fun cacheAllUsersFromApi() {
+        Log.d("TAG", "cacheAllUsersFromApi: ")
+        val response = api.getAllUsers(getBearerToken())
+        if (response.isSuccessful) {
+            val contacts = response.body()
+            contacts?.let {
+                val users = it.data.users.map { remote -> remoteMapper.apiUserToRoomUser(remote) }
+                db.insertAllUsers(users)
+            }
+        }
     }
-
 
     private suspend fun userAuth(
         user: AuthUser,
@@ -127,7 +141,9 @@ class RemoteApiRepository(
                 val userTokenData = response.body()?.data
                 userTokenData?.let {
                     val currentUser = remoteMapper.toRoomCurrentUser(it)
-                    db.insertCurrentUser(currentUser)
+                    currentUserId = currentUser.id
+                    val roomUser = remoteMapper.apiUserToRoomUser(it.user)
+                    db.insertCurrentUser(currentUser, roomUser)
                     remoteMapper.toUser(it)
                     emit(DataState.Success(remoteMapper.toUser(it)))
                 }
@@ -146,6 +162,7 @@ class RemoteApiRepository(
                     message = it
                 }
             }
+            e.printStackTrace()
             emit(DataState.Error(Exception(message)))
         }
     }.flowOn(Dispatchers.IO)
@@ -176,6 +193,10 @@ class RemoteApiRepository(
 
     private suspend fun getBearerToken(): String {
         return "Bearer ${getCurrentUserToken()}"
+    }
+
+    private suspend fun getCurrentUserToken(): String {
+        return db.getCurrentUser().accessToken
     }
 
 

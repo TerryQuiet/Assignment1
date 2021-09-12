@@ -16,4 +16,6 @@ interface Repository {
     fun currentUserFlow(): Flow<UserModel>
     fun getCurrentUserContactsFlow(): Flow<List<UserModel>>
     suspend fun cacheCurrentUserContactsFromApi()
+    suspend fun cacheAllUsersFromApi()
+    fun getAllUsersFlow(): Flow<List<UserModel>>
 }
