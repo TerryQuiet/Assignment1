@@ -3,6 +3,7 @@ package tk.quietdev.level1.ui.pager.contacts.list
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -16,7 +17,7 @@ class ContactListViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    var userList = MutableLiveData<MutableList<UserModel>>()
+    var userList = repository.getAllUsersFlow().asLiveData()
     private var deletedUserPosition: Int? = null
     private var  userIdToRemove = TreeSet<Int>()
 
@@ -24,39 +25,23 @@ class ContactListViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            repository.cacheCurrentUserContactsFromApi()
+            repository.cacheAllUsersFromApi()
         }
     }
 
     fun addUserBack(id: Int) {
-        val user = repository.getUserWithNoValidation(id)
-        user?.let {
-            deletedUserPosition?.let {
-                userList.value?.add(it, user)
-                deletedUserPosition = null
-                updateLiveData()
-            }
-        }
+
     }
 
     fun removeUser(userModel: UserModel, position: Int) {
-        val removedUser = userList.value?.remove(userModel)
-        removedUser?.let {
-            deletedUserPosition = position
-            updateLiveData()
-            userIdToRemove.remove(userModel.id)
-            isRemoveState.value = userIdToRemove.isNotEmpty()
-        }
+
     }
 
     fun addNewUser(userModel: UserModel) {
-        userList.value?.add(userModel)
-        updateLiveData()
+
     }
 
-    private fun updateLiveData() {
-        userList.value = userList.value
-    }
+
 
     fun toggleUserSelected(userId: Int) {
         val isUserRemovedFromList = userIdToRemove.remove(userId)
@@ -67,12 +52,7 @@ class ContactListViewModel @Inject constructor(
     }
 
     fun removeUsers() {
-        val newList = userList.value?.filter { !userIdToRemove.contains(it.id) }?.toMutableList()
-        newList?.let {
-            userList.value = it
-        }
-        userIdToRemove.clear()
-        isRemoveState.value = false
+
     }
 
     fun isItemSelected(id: Int) : Boolean {

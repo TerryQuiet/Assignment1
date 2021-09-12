@@ -1,12 +1,12 @@
 package tk.quietdev.level1.data.db
 
-import tk.quietdev.level1.data.db.model.CurrentUser
+import tk.quietdev.level1.data.db.model.RoomUser
 import tk.quietdev.level1.models.UserModel
 import javax.inject.Inject
 
 class RoomMapper @Inject constructor() {
-    fun currentUserToUser (currentUser: CurrentUser) : UserModel {
-        currentUser.apply {
+    fun roomUserToUser (roomCurrentUser: RoomUser) : UserModel {
+        roomCurrentUser.apply {
             return UserModel(
                 id = id,
                 userName = name,

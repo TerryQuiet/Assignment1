@@ -4,6 +4,7 @@ package tk.quietdev.level1.data.remote
 import retrofit2.Response
 import retrofit2.http.*
 import tk.quietdev.level1.data.remote.models.*
+import tk.quietdev.level1.data.remote.test.GetAllUsersResponse
 import tk.quietdev.level1.data.remote.test.GetUserContacts
 
 interface ShppApi {
@@ -23,7 +24,7 @@ interface ShppApi {
     suspend fun getCurrentUser(@Header("Authorization") token : String): Response<GetUser>
 
     @GET("./users")
-    suspend fun getAllUsers(@Header("Authorization") token : String): Response<AuthResponse>
+    suspend fun getAllUsers(@Header("Authorization") token : String): Response<GetAllUsersResponse>
 
     @GET("./user/contacts")
     suspend fun getCurrentUserContacts(@Header("Authorization") token : String): Response<GetUserContacts>
@@ -31,5 +32,7 @@ interface ShppApi {
 
     @POST("./user/profile")
     suspend fun updateUser(@HeaderMap headers: Map<String, String>, @Body updatedApiUser: RemoteData): Response<GetUser>
+
+
 
 }
