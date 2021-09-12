@@ -34,12 +34,11 @@ class SettingsFragment : Fragment() {
         FragmentSettingsBinding.inflate(inflater, container, false).apply {
             _binding = this
             userDetailBinding = binding.topContainer
-
         }.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-            viewModel.initRoomObservers()
+
             bindListeners()
             setObservers()
             bindViews()
@@ -55,9 +54,10 @@ class SettingsFragment : Fragment() {
                 viewModel.currentUserModel.value?.apply {
                     openEditFragment(this)
                 }
+
             }
             containerSocialButtons.iBtnFacebook.setOnClickListener {
-                viewModel.initRoomObservers()
+
             }
         }
     }
