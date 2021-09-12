@@ -8,7 +8,7 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Response
@@ -53,7 +53,7 @@ class RemoteApiRepository(
             }
         }
         val data = RemoteData(remoteMapper.userToApiUser(updatedUserModel))
-       // val data = remoteMapper.userToApiUser(updatedUserModel)
+        // val data = remoteMapper.userToApiUser(updatedUserModel)
         MainScope().launch {
             withContext(Dispatchers.IO) {
                 val header = HashMap<String, String>()
@@ -92,21 +92,22 @@ class RemoteApiRepository(
         userAuth(AuthUser(login, password), api::userLogin)
 
 
-    override suspend fun currentUserFlow(): Flow<UserModel> = flow {
-        emit(roomMapper.currentUserToUser(db.getCurrentUser()))
-        db.getCurrentUserFlow().transform {
-            emit(roomMapper.currentUserToUser(it))
+    override fun currentUserFlow(): Flow<UserModel> =
+        db.getCurrentUserFlow().map {
+            roomMapper.currentUserToUser(it)
         }
-    }
 
-    override suspend fun getCurrentUserContactsFlow(): Flow<List<UserModel>> {
+    override fun getCurrentUserContactsFlow(): Flow<List<UserModel>> {
         TODO("Not yet implemented")
     }
 
     override suspend fun cacheCurrentUserContactsFromApi() {
         val response = api.getCurrentUserContacts(getBearerToken())
         if (response.isSuccessful) {
-            Log.d("TAG", "cacheCurrentUserContactsFromApi: ")
+            val contacts = response.body()
+            contacts?.let { 
+
+            }
         }
     }
 

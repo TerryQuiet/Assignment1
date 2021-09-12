@@ -13,7 +13,7 @@ interface Repository {
     fun getUserList(amount: Int = -1): List<UserModel>
     suspend fun userRegistration(login: String, password: String) : Flow<DataState<UserModel>>
     suspend fun userLogin(login: String, password: String) : Flow<DataState<UserModel>>
-    suspend fun currentUserFlow(): Flow<UserModel>
-    suspend fun getCurrentUserContactsFlow(): Flow<List<UserModel>>
+    fun currentUserFlow(): Flow<UserModel>
+    fun getCurrentUserContactsFlow(): Flow<List<UserModel>>
     suspend fun cacheCurrentUserContactsFromApi()
 }

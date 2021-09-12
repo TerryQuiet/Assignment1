@@ -41,6 +41,7 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentContactsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -62,9 +63,9 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
     private fun initObservables() {
         viewModel.apply {
-            userList.observe(viewLifecycleOwner) { newList ->
+           /* userList.observe(viewLifecycleOwner) { newList ->
                 contactsAdapter.submitList(newList.toList())
-            }
+            }*/
             isRemoveState.observe(viewLifecycleOwner) { isRemoveState ->
                 if (isRemoveState) {
                     binding.btnAdd.text = getString(R.string.remove)
@@ -80,14 +81,18 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
                     contactsSharedViewModel.newUser.value = null
                 }
             }
-            updatedUser.observe(viewLifecycleOwner) {
-                if (it != null) {
-                    viewModel.updateUser(it)
-                    updatedUser.value = null
-                }
-            }
         }
     }
+
+
+
+
+
+
+
+
+
+    // works
 
     private fun getContactAdapter() = ContactsAdapter(
         onRemove = this::removeUser,
