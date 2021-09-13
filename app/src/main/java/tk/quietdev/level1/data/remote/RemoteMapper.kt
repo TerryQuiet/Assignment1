@@ -3,6 +3,7 @@ package tk.quietdev.level1.data.remote
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+
 import tk.quietdev.level1.data.db.model.RoomUser
 import tk.quietdev.level1.data.db.model.RoomCurrentUser
 import tk.quietdev.level1.data.db.model.RoomCurrentUserContacts

@@ -1,5 +1,6 @@
 package tk.quietdev.level1.di
 
+
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -11,6 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import tk.quietdev.level1.data.remote.ShppApi
+import tk.quietdev.level1.di.test.MyInterceptor
 import javax.inject.Singleton
 
 @Module
@@ -29,7 +31,10 @@ object RetrofitModule {
     fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
         OkHttpClient
             .Builder()
-            .addInterceptor(httpLoggingInterceptor)
+            //.addInterceptor(httpLoggingInterceptor)
+
+            .addNetworkInterceptor(httpLoggingInterceptor)
+            .addInterceptor(MyInterceptor())
             .build()
 
     @Singleton
@@ -44,6 +49,8 @@ object RetrofitModule {
         .baseUrl(ShppApi.BASE_URL)
         .client(okHttpClient)
         .build()
+
+
 
     @Provides
     @Singleton
