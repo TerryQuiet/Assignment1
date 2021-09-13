@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,6 @@ import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.ui.pager.contacts.adapter.ContactHolder
 import tk.quietdev.level1.ui.pager.contacts.adapter.ContactsAdapter
-import tk.quietdev.level1.ui.pager.contacts.dialog.AddContactDialog
 import tk.quietdev.level1.utils.Const
 
 @AndroidEntryPoint
@@ -63,14 +63,28 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
     private fun initObservables() {
         viewModel.apply {
-            userList.observe(viewLifecycleOwner) { newList ->
-                contactsAdapter.submitList(newList.toList())
-            }
-            isRemoveState.observe(viewLifecycleOwner) { isRemoveState ->
-                if (isRemoveState) {
-                    binding.btnAdd.text = getString(R.string.remove)
-                } else {
-                    binding.btnAdd.text = getString(R.string.add_contact)
+            listState.observe(viewLifecycleOwner) { isRemoveState ->
+                when (isRemoveState) {
+                    ListState.DELETION -> {
+                        binding.btnAdd.text = getString(R.string.remove)
+                    }
+                    ListState.NORMAL -> {
+                        binding.btnAdd.text = getString(R.string.add_contact)
+                        allList.removeObservers(viewLifecycleOwner)
+                        userList.observe(viewLifecycleOwner) { newList ->
+                            Log.d("TAG", "initObservables: ${newList.size}")
+                            contactsAdapter.submitList(newList.toList())
+                        }
+
+                    }
+                    else -> {
+                        binding.btnAdd.text = getString(R.string.cancel)
+                        userList.removeObservers(viewLifecycleOwner)
+                        allList.observe(viewLifecycleOwner) { newList ->
+                            contactsAdapter.submitList(newList.toList())
+                        }
+
+                    }
                 }
             }
         }
@@ -84,26 +98,18 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
         }
     }
 
-
-
-
-
-
-
-
-
     // works
 
     private fun getContactAdapter() = ContactsAdapter(
         onRemove = this::removeUser,
         onItemClickListener,
-        viewModel.isRemoveState,
+        viewModel.listState,
         this
     )
 
     private fun removeUser(userModel: UserModel, position: Int) {
         viewModel.removeUser(userModel, position)
-        showDeletionUndoSnackBar(userModel.id!!)
+        showDeletionUndoSnackBar(userModel.id)
     }
 
     private fun addListeners() {
@@ -113,12 +119,19 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
     }
 
     private fun buttonClicked() {
-        if (viewModel.isRemoveState.value == true) {
-            viewModel.removeUsers()
-        } else {
-            AddContactDialog()
-                .show(childFragmentManager, "")
+        when (viewModel.listState.value) {
+            ListState.DELETION -> {
+                viewModel.removeUsers()
+            }
+            ListState.NORMAL -> {
+                viewModel.addState()
+            }
+            else -> {
+                viewModel.listState.value = ListState.NORMAL
+            }
         }
+
+
     }
 
 
@@ -149,7 +162,9 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
     private fun openContactDetail(userModel: UserModel) {
         findNavController().navigate(
-            ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(userModel)
+            ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(
+                userModel
+            )
         )
     }
 
@@ -161,21 +176,21 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
     private val onItemClickListener = object : ContactHolder.OnItemClickListener {
 
         override fun onItemClick(userModel: UserModel) {
-            if (viewModel.isRemoveState.value == true) {
-                viewModel.toggleUserSelected(userModel.id!!)
+            if (viewModel.listState.value == ListState.DELETION) {
+                viewModel.toggleUserSelected(userModel.id)
             } else {
                 openContactDetail(userModel)
             }
         }
 
         override fun onLongItemClick(userModel: UserModel): Boolean {
-            viewModel.toggleUserSelected(userModel.id!!)
+            viewModel.toggleUserSelected(userModel.id)
             return true
         }
 
     }
 
-    override fun isItemSelected(id:Int): Boolean {
-       return viewModel.isItemSelected(id)
+    override fun isItemSelected(id: Int): Boolean {
+        return viewModel.isItemSelected(id)
     }
 }

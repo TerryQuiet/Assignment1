@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/drawable/ic_add.xml" value="0.23020833333333332" />
+        <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/drawable/ic_launcher_background.xml" value="0.23020833333333332" />
+        <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/drawable/ic_linkedin.xml" value="0.21614583333333334" />
+        <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/drawable/ic_profile.xml" value="0.23020833333333332" />
+        <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/drawable/ic_trashcan.xml" value="0.21614583333333334" />
+        <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/drawable/ic_vkontakte.xml" value="0.23020833333333332" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/activity_auth.xml" value="0.25" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/activity_nav_host_holder.xml" value="0.17831813576494426" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/activity_pager.xml" value="0.36666666666666664" />

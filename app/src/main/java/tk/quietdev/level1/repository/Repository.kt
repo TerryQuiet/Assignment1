@@ -1,6 +1,5 @@
 package tk.quietdev.level1.repository
 
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.DataState

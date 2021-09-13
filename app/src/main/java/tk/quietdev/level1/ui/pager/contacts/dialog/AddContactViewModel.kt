@@ -17,12 +17,7 @@ class AddContactViewModel @Inject constructor(private val db: Repository) : View
         surname: String,
         occupation: String,
     ) {
-        val newUser = UserModel(
-            userName = "$name $surname",
-            email = "$name.$surname@mail.fake",
-            occupation = occupation
-        )
-        this.newUser.value = addUserToDb(newUser)
+
     }
 
     private fun addUserToDb(userModel: UserModel) : UserModel = db.addUser(userModel)

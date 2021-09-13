@@ -5,6 +5,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import tk.quietdev.level1.data.db.model.RoomUser
 import tk.quietdev.level1.data.db.model.RoomCurrentUser
+import tk.quietdev.level1.data.db.model.RoomCurrentUserContacts
 import tk.quietdev.level1.data.remote.models.ApiUser
 import tk.quietdev.level1.data.remote.models.ErrorRegResponse
 import tk.quietdev.level1.data.remote.models.UserTokenData
@@ -52,6 +53,7 @@ class RemoteMapper @Inject constructor() {
     fun userToApiUser(userModel: UserModel): ApiUser {
         userModel.apply {
             return ApiUser(
+                id = id,
                 address = physicalAddress,
                 birthday = birthDate,
                 career = occupation,
@@ -65,7 +67,7 @@ class RemoteMapper @Inject constructor() {
     fun apiUserToRoomUser(apiUser: ApiUser): RoomUser {
         apiUser.apply {
             return RoomUser(
-                id = id!!,
+                id = id,
                 address = address,
                 birthday = birthday,
                 career = career,
@@ -76,6 +78,10 @@ class RemoteMapper @Inject constructor() {
                 updatedAt = updatedAt,
             )
         }
+    }
+
+    fun apiUserToID(apiUser: ApiUser) : RoomCurrentUserContacts {
+        return RoomCurrentUserContacts(apiUser.id)
     }
 
     fun moshiErrorResponseMapper(): JsonAdapter<ErrorRegResponse> = Moshi.Builder()
