@@ -49,5 +49,11 @@ interface RoomUserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCurrentUserContacts(list: List<RoomCurrentUserContacts>)
 
+    @Query("SELECT * from room_current_user_contacts ORDER BY id ASC")
+    fun getCurrentUserContactsIds(): Flow<List<Int>>
+
+    @Query("SELECT * FROM room_all_users where id IN (:ids)")
+    fun getUsersByIds(ids: List<Int>): Flow<List<RoomUser>>
+
 
 }

@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UserModel(
-    var id: Int? = null,
+    var id: Int,
     var userName: String? = null,
     var email: String,
     var occupation: String? = "Not provided",

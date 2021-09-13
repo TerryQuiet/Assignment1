@@ -33,6 +33,7 @@ class RemoteApiRepository(
 
     private val apiErrorMapper by lazy { remoteMapper.moshiErrorResponseMapper() }
     private var currentUserId by Delegates.notNull<Int>()
+    private var contactsIds = listOf<Int>()
 
     override fun updateUser(updatedUserModel: UserModel) {
         Log.d("TAG", "updateUser called: ${updatedUserModel.userName}")
@@ -105,7 +106,9 @@ class RemoteApiRepository(
     }
 
     override fun getCurrentUserContactsFlow(): Flow<List<UserModel>> {
-        TODO("Not yet implemented")
+        Log.d("TAG", "getCurrentUserContactsFlow: $contactsIds")
+        return db.getUsersByIds(contactsIds)
+            .map { it.map { roomUser -> roomMapper.roomUserToUser(roomUser) } }
     }
 
     override suspend fun cacheCurrentUserContactsFromApi() {
@@ -113,7 +116,11 @@ class RemoteApiRepository(
         if (response.isSuccessful) {
             val contacts = response.body()
             contacts?.let {
-                val x = it.data.contacts
+                val list =
+                    it.data.contacts.flatten().map { remote -> remoteMapper.apiUserToID(remote) }
+
+                    db.insertCurrentUserContacts(list)
+                 contactsIds =   list.map { us -> us.id }
             }
         }
     }

@@ -17,15 +17,21 @@ class ContactListViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    var userList = repository.getAllUsersFlow().asLiveData()
-    private var deletedUserPosition: Int? = null
-    private var  userIdToRemove = TreeSet<Int>()
+    // var userList = repository.getAllUsersFlow().asLiveData()
+    var userList = repository.getCurrentUserContactsFlow().asLiveData()
+    var allList = repository.getAllUsersFlow().asLiveData()
 
-    var isRemoveState = MutableLiveData(false)
+    //
+    private var deletedUserPosition: Int? = null
+    private var userIdToRemove = TreeSet<Int>()
+
+    var listState = MutableLiveData(ListState.NORMAL)
+
 
     init {
         viewModelScope.launch {
             repository.cacheAllUsersFromApi()
+            repository.cacheCurrentUserContactsFromApi()
         }
     }
 
@@ -41,6 +47,13 @@ class ContactListViewModel @Inject constructor(
 
     }
 
+    fun watchUserContacts() {
+        userList = repository.getCurrentUserContactsFlow().asLiveData()
+    }
+
+    fun watchAllUsers() {
+        userList = repository.getAllUsersFlow().asLiveData()
+    }
 
 
     fun toggleUserSelected(userId: Int) {
@@ -48,15 +61,23 @@ class ContactListViewModel @Inject constructor(
         if (!isUserRemovedFromList) {
             userIdToRemove.add(userId)
         }
-        isRemoveState.value = userIdToRemove.isNotEmpty()
+        listState.value = if (userIdToRemove.isNotEmpty()) ListState.DELETION else ListState.NORMAL
     }
 
     fun removeUsers() {
 
     }
 
-    fun isItemSelected(id: Int) : Boolean {
+    fun isItemSelected(id: Int): Boolean {
         return userIdToRemove.contains(id)
     }
 
+    fun addState() {
+        listState.value = ListState.ADDITION
+    }
+
+}
+
+enum class ListState {
+    NORMAL, DELETION, ADDITION
 }
