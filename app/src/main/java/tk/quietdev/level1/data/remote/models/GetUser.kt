@@ -1,7 +1,5 @@
 package tk.quietdev.level1.data.remote.models
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 data class GetUser(
     val code: Int,

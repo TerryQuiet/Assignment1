@@ -10,5 +10,5 @@ class GetUserContacts(
 )
 
 class DataUserContacts(
-    val contacts: List<List<ApiUser>>
+    val contacts: List<ApiUser>
 )

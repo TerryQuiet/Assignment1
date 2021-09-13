@@ -61,7 +61,6 @@ class RemoteApiRepository(
                 header["Authorization"] = "Bearer ${getCurrentUserToken()}"
                 api.updateUser(header, data)
             }
-
         }
     }
 
@@ -117,10 +116,10 @@ class RemoteApiRepository(
             val contacts = response.body()
             contacts?.let {
                 val list =
-                    it.data.contacts.flatten().map { remote -> remoteMapper.apiUserToID(remote) }
-
+                    it.data.contacts.map { remote -> remoteMapper.apiUserToID(remote) }
                     db.insertCurrentUserContacts(list)
                  contactsIds =   list.map { us -> us.id }
+                Log.d("TAG", "cacheCurrentUserContactsFromApi: $contactsIds")
             }
         }
     }

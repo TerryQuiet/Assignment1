@@ -13,7 +13,6 @@ interface ShppApi {
         const val BASE_URL = "http://188.40.127.78:7777/api/"
     }
 
-
     @POST("./user/register")
     suspend fun userRegister(@Body requestBody: AuthUser): Response<AuthResponse>
 
