@@ -31,9 +31,7 @@ object RetrofitModule {
     fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
         OkHttpClient
             .Builder()
-            //.addInterceptor(httpLoggingInterceptor)
-
-            .addNetworkInterceptor(httpLoggingInterceptor)
+            .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(MyInterceptor())
             .build()
 

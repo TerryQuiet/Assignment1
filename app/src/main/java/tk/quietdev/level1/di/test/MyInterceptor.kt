@@ -24,8 +24,11 @@ class MyInterceptor : Interceptor {
             it.request(Long.MAX_VALUE)
             val buffer: Buffer = source.buffer
             val responseBodyString: String = buffer.clone().readString(Charset.forName("UTF-8"))
+            Log.d("TAG", "intercept pre fix: $responseBodyString")
+            val fixed = responseBodyString.fixJson()
+            Log.d("TAG", "intercept after fix: $fixed")
             val contentType = response.body?.contentType()
-            val body = responseBodyString.fixJson().toResponseBody(contentType)
+            val body = fixed.toResponseBody(contentType)
             return response.newBuilder().body(body).build()
         }
         return response
