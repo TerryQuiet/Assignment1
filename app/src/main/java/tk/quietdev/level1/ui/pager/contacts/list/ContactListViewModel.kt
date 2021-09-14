@@ -19,9 +19,8 @@ class ContactListViewModel @Inject constructor(
 ) : ViewModel() {
 
     var userList = repository.getCurrentUserContactsFlow().asLiveData()
-    var allList = repository.getAllUsersFlow().asLiveData()
 
-    //
+
     private var deletedUserPosition: Int? = null
     private var userIdToRemove = TreeSet<Int>()
 

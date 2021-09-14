@@ -34,7 +34,6 @@ class RemoteApiRepository(
 
     private val apiErrorMapper by lazy { remoteMapper.moshiErrorResponseMapper() }
 
-
     override fun updateUser(updatedUserModel: UserModel) {
         Log.d("TAG", "updateUser called: ${updatedUserModel.userName}")
         /*       MainScope().launch {
@@ -79,7 +78,6 @@ class RemoteApiRepository(
     override fun getUserList(amount: Int): List<UserModel> {
         TODO("Not yet implemented")
     }
-
 
     override suspend fun userRegistration(
         login: String,
@@ -132,7 +130,6 @@ class RemoteApiRepository(
         }
     )
 
-
     private suspend fun userAuth(
         user: AuthUser,
         method: KSuspendFunction1<AuthUser, Response<AuthResponse>>
@@ -182,7 +179,6 @@ class RemoteApiRepository(
             query = {
                 flow {
                     val userIds = db.getCurrentUserContactsIds().map { it.id }
-                    Log.d("TAG", "getCurrentUserContactsFlow: ${userIds}")
                     emitAll(
                         db.getUsersByIds(userIds).map { it.map { roomMapper.roomUserToUser(it) } })
                 }
