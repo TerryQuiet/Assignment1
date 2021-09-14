@@ -6,7 +6,7 @@ import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 import tk.quietdev.level1.data.db.model.RoomUser
 import tk.quietdev.level1.data.db.model.RoomCurrentUser
-import tk.quietdev.level1.data.db.model.RoomCurrentUserContacts
+import tk.quietdev.level1.data.db.model.RoomUserContactsIds
 import tk.quietdev.level1.data.remote.models.ApiUser
 import tk.quietdev.level1.data.remote.models.ErrorRegResponse
 import tk.quietdev.level1.data.remote.models.UserTokenData
@@ -17,28 +17,14 @@ class RemoteMapper @Inject constructor() {
     fun toRoomCurrentUser(userTokenData: UserTokenData): RoomCurrentUser {
         userTokenData.user.apply {
             return RoomCurrentUser(
-                id = id!!,
+                id = id,
                 accessToken = userTokenData.accessToken
             )
         }
     }
 
-    fun toUser(userTokenData: UserTokenData): UserModel {
+    fun toUser(userTokenData: UserTokenData): UserModel {  // todo get rid of it
         userTokenData.user.apply {
-            return UserModel(
-                id = id,
-                userName = name,
-                email = email,
-                occupation = career,
-                physicalAddress = address,
-                birthDate = birthday,
-                phone = phone,
-            )
-        }
-    }
-
-    fun apiUserToUser(apiUser: ApiUser): UserModel {
-        apiUser.apply {
             return UserModel(
                 id = id,
                 userName = name,
@@ -81,8 +67,9 @@ class RemoteMapper @Inject constructor() {
         }
     }
 
-    fun apiUserToID(apiUser: ApiUser) : RoomCurrentUserContacts {
-        return RoomCurrentUserContacts(apiUser.id)
+
+    fun apiUserToID(apiUser: ApiUser) : RoomUserContactsIds {
+        return RoomUserContactsIds(apiUser.id)
     }
 
     fun moshiErrorResponseMapper(): JsonAdapter<ErrorRegResponse> = Moshi.Builder()

@@ -2,7 +2,6 @@ package tk.quietdev.level1.ui.pager.settings
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +22,6 @@ class SettingsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var userDetailBinding: UserDetailBinding
     private val viewModel: SettingsViewModel by viewModels()
-    private val sharedViewModel: ContactsSharedViewModel by activityViewModels()
     private val settingsSharedViewModel :SettingsSharedViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -38,11 +36,8 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
             bindListeners()
             setObservers()
-            bindViews()
-
     }
 
     private fun bindListeners() {
@@ -52,7 +47,10 @@ class SettingsFragment : Fragment() {
             }
             btnEditProfile.setOnClickListener {
                 viewModel.currentUserModel.value?.apply {
-                    openEditFragment(this)
+                    this.data?.let {
+                        openEditFragment(it)
+                    }
+
                 }
 
             }
@@ -70,9 +68,8 @@ class SettingsFragment : Fragment() {
         )
     }
 
-    private fun bindViews() {
-        val currentUser = viewModel.currentUserModel.value
-        currentUser?.apply {
+    private fun bindViews(userModel: UserModel) {
+        userModel.apply {
             binding.topContainer.apply {
                 tvName.text = email
                 tvAddress.text = physicalAddress
@@ -83,14 +80,10 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setObservers() {
-        sharedViewModel.updatedUser.observe(viewLifecycleOwner) {
-            if (it != null) {
-                bindViews()
-            }
-        }
         viewModel.currentUserModel.observe(viewLifecycleOwner) {
-            Log.d("TAG", "setObservers: ")
-            bindViews()
+            it.data?.let { currentUser ->
+                bindViews(currentUser)
+            }
         }
     }
 
@@ -98,6 +91,5 @@ class SettingsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }
