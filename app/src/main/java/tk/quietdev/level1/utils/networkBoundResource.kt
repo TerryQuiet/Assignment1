@@ -20,6 +20,5 @@ inline fun <ResultType, RequestType> networkBoundResource(
     } else {
         query().map { Resource.Success(it) }
     }
-
     emitAll(flow)
 }

@@ -4,12 +4,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,7 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.ui.pager.contacts.adapter.ContactHolder
 import tk.quietdev.level1.ui.pager.contacts.adapter.ContactsAdapter
 import tk.quietdev.level1.utils.Const
@@ -32,7 +29,6 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ContactListViewModel by viewModels()
-    private val contactsSharedViewModel: ContactsSharedViewModel by activityViewModels()
     private val contactsAdapter: ContactsAdapter by lazy { getContactAdapter() }
 
 
@@ -41,7 +37,6 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentContactsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -70,32 +65,22 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
                     }
                     ListState.NORMAL -> {
                         binding.btnAdd.text = getString(R.string.add_contact)
-                        allList.removeObservers(viewLifecycleOwner)
-                        userList.observe(viewLifecycleOwner) { newList ->
-                            Log.d("TAG", "initObservables: ${newList.size}")
-                            contactsAdapter.submitList(newList.toList())
-                        }
-
+                        viewModel.watchUserContacts()
                     }
                     else -> {
                         binding.btnAdd.text = getString(R.string.cancel)
-                        userList.removeObservers(viewLifecycleOwner)
-                        allList.observe(viewLifecycleOwner) { newList ->
-                            contactsAdapter.submitList(newList.toList())
-                        }
-
+                        viewModel.watchAllUsers()
+                    }
+                }
+                userList.observe(viewLifecycleOwner) {
+                    val list = it.data
+                    list?.let { userList ->
+                        contactsAdapter.submitList(userList)
                     }
                 }
             }
         }
-        contactsSharedViewModel.apply {
-            newUser.observe(viewLifecycleOwner) { newUser ->
-                newUser?.let {
-                    viewModel.addNewUser(newUser)
-                    contactsSharedViewModel.newUser.value = null
-                }
-            }
-        }
+
     }
 
     // works

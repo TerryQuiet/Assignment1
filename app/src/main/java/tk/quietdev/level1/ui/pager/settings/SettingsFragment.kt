@@ -22,7 +22,6 @@ class SettingsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var userDetailBinding: UserDetailBinding
     private val viewModel: SettingsViewModel by viewModels()
-    private val sharedViewModel: ContactsSharedViewModel by activityViewModels()
     private val settingsSharedViewModel :SettingsSharedViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -85,7 +84,6 @@ class SettingsFragment : Fragment() {
             it.data?.let { currentUser ->
                 bindViews(currentUser)
             }
-
         }
     }
 
@@ -93,6 +91,5 @@ class SettingsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 
 }

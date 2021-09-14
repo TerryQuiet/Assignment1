@@ -11,5 +11,4 @@ import javax.inject.Singleton
 @HiltViewModel
 class ContactsSharedViewModel @Inject constructor(): ViewModel() {
     val newUser = MutableLiveData<UserModel>(null)
-    val updatedUser = MutableLiveData<UserModel>(null)
 }

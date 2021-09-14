@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.repository.RemoteApiRepository
 import tk.quietdev.level1.repository.Repository
 import java.util.*
 import javax.inject.Inject
@@ -17,7 +18,6 @@ class ContactListViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    // var userList = repository.getAllUsersFlow().asLiveData()
     var userList = repository.getCurrentUserContactsFlow().asLiveData()
     var allList = repository.getAllUsersFlow().asLiveData()
 
@@ -26,14 +26,6 @@ class ContactListViewModel @Inject constructor(
     private var userIdToRemove = TreeSet<Int>()
 
     var listState = MutableLiveData(ListState.NORMAL)
-
-
-    init {
-        viewModelScope.launch {
-            repository.cacheAllUsersFromApi()
-            repository.cacheCurrentUserContactsFromApi()
-        }
-    }
 
     fun addUserBack(id: Int) {
 

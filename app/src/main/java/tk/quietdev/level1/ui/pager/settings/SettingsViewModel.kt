@@ -13,7 +13,5 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(repository: Repository) : ViewModel() {
 
-   // val currentUserModel : LiveData<UserModel> = repository.currentUserFlow().asLiveData()
-   // val currentUserModel : LiveData<UserModel> = (repository as RemoteApiRepository).currentUserFlow2().asLiveData()
-    val currentUserModel : LiveData<Resource<UserModel>> = (repository as RemoteApiRepository).currentUserFlow3().asLiveData()
+    val currentUserModel = repository.currentUserFlow().asLiveData()
 }
