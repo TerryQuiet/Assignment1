@@ -20,6 +20,7 @@ import tk.quietdev.level1.data.remote.models.RemoteData
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.DataState
 import tk.quietdev.level1.utils.UserRegisterError
+import tk.quietdev.level1.utils.networkBoundResource
 import kotlin.properties.Delegates
 import kotlin.reflect.KSuspendFunction1
 
@@ -99,6 +100,24 @@ class RemoteApiRepository(
         return db.getUser(currentUserId).map { roomMapper.roomUserToUser(it) }
     }
 
+    fun currentUserFlow3() = networkBoundResource(
+        query = {
+            db.getUser(currentUserId).map { roomMapper.roomUserToUser(it) }
+        },
+        fetch = {
+            api.getCurrentUser(getBearerToken())
+        },
+        saveFetchResult = { response ->
+            if (response.isSuccessful) {
+                val apiUser = response.body()?.data?.user
+                apiUser?.let {
+                    val roomUser = remoteMapper.apiUserToRoomUser(it)
+                    db.insert(roomUser)
+                }
+            } // todo implement on unsuccessful response
+        }
+    )
+
 
     override fun getAllUsersFlow(): Flow<List<UserModel>> = db.getAllUsers().map {
         it.map { roomUser -> roomMapper.roomUserToUser(roomUser) }
@@ -117,8 +136,8 @@ class RemoteApiRepository(
             contacts?.let {
                 val list =
                     it.data.contacts.map { remote -> remoteMapper.apiUserToID(remote) }
-                    db.insertCurrentUserContacts(list)
-                 contactsIds =   list.map { us -> us.id }
+                db.insertCurrentUserContacts(list)
+                contactsIds = list.map { us -> us.id }
                 Log.d("TAG", "cacheCurrentUserContactsFromApi: $contactsIds")
             }
         }
