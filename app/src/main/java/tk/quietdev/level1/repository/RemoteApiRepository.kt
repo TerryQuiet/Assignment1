@@ -163,7 +163,11 @@ class RemoteApiRepository(
     override fun getCurrentUserContactsFlow() =
         networkBoundResource(
             query = {
-                  flow { emitAll(db.getCurrentUserContactsIds().map { it.id }.let { db.getUsersByIds(it).map { it.map { roomMapper.roomUserToUser(it) } } }) }
+                flow {
+                    emitAll(db.getCurrentUserContactsIds().map { it.id }.let {
+                        db.getUsersByIds(it).map { it.map { roomMapper.roomUserToUser(it) } }
+                    })
+                }
             },
             fetch = {
                 api.getCurrentUserContacts(getBearerToken())
@@ -294,6 +298,32 @@ class RemoteApiRepository(
             }
         )
     }
+
+
+    fun getCurrentUserContactsFlowConverter() =
+        networkBoundResource(
+            firstQuery = { db.getCurrentUserContactsIdsFlow() },
+            secondQuery = { db.getUsersByIds(it.map { it.id }) },
+            convertToResult = { it.map { roomMapper.roomUserToUser(it) } },
+            fetch = {
+                api.getCurrentUserContacts(getBearerToken())
+            },
+            saveFetchResult = { response ->
+                if (response.isSuccessful) {
+                    val userIds =
+                        response.body()?.data?.contacts?.map {
+                            remoteMapper.apiUserToID(it)
+                        }
+                    val userList =
+                        response.body()?.data?.contacts?.map {
+                            remoteMapper.apiUserToRoomUser(it)
+                        }
+                    if (userIds != null && userList != null) {
+                        db.insert(userIds, userList)
+                    }
+                }
+            } // todo implement on unsuccessful response
+        )
 
 
 }
