@@ -28,9 +28,14 @@ interface ShppApi {
     @GET("./user/contacts")
     suspend fun getCurrentUserContacts(@Header("Authorization") token : String): Response<GetUserContacts>
 
-
     @POST("./user/profile")
     suspend fun updateUser(@HeaderMap headers: Map<String, String>, @Body updatedApiUser: RemoteData): Response<GetUser>
+
+    @POST("./user/contact/add")
+    suspend fun addUserContact(@HeaderMap headers: Map<String, String>, @Body contactId: Int): Response<GetUserContacts>
+
+    @POST("./user/contact/delete")
+    suspend fun deleteUserContact(@HeaderMap headers: Map<String, String>, @Body contactId: Int): Response<GetUserContacts>
 
 
 
