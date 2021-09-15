@@ -82,6 +82,9 @@ interface RoomUserDao {
     fun getUsersExcludingId(ids: List<Int>): Flow<List<RoomUser>>
 
     @Query("SELECT * from room_current_user_contacts_ids ORDER BY id ASC")
+    fun getCurrentUserContactsIdsFlow(): Flow<List<RoomUserContactsIds>>
+
+    @Query("SELECT * from room_current_user_contacts_ids ORDER BY id ASC")
     suspend fun getCurrentUserContactsIds(): List<RoomUserContactsIds>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

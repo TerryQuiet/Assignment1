@@ -9,13 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.ui.pager.contacts.list.ContactListViewModel
-import tk.quietdev.level1.ui.pager.contacts.list.ListState
+import tk.quietdev.level1.utils.ListState
 import tk.quietdev.level1.utils.ext.loadImage
 
 class ContactHolder(
     private val binding: ListItemBinding,
-    private val onRemove: (UserModel, Int) -> Unit,
     private val onClickListener: OnItemClickListener,
     private val itemStateChecker: ItemStateChecker
 ) : RecyclerView.ViewHolder(binding.root) {
@@ -28,7 +26,7 @@ class ContactHolder(
 
     private val stateObserver = Observer<ListState> { removeState ->
         when (removeState) {
-            ListState.DELETION ->  {
+            ListState.MULTISELECT ->  {
                 bindDeletion()
                 isRemoveState = true
             }
@@ -58,7 +56,7 @@ class ContactHolder(
 
     fun bind(userModel: UserModel) {
         with(userModel) {
-            isSelected = itemStateChecker.isItemSelected(id!!)
+            isSelected = itemStateChecker.isItemSelected(id)
             _currentUserModel = this
             changeBackgroundColor()
             binding.tvName.text = userName
@@ -102,7 +100,6 @@ class ContactHolder(
         changeBackgroundColor()
     }
 
-
     // TODO: 8/15/2021 get current theme colors? 
     private fun changeBackgroundColor() {
         if (isSelected) {
@@ -113,7 +110,7 @@ class ContactHolder(
     }
 
     fun remove() {
-        onRemove(currentUser, absoluteAdapterPosition)
+        onClickListener.onIconClick(currentUser, absoluteAdapterPosition)
     }
 
     fun setObserver(removeState: MutableLiveData<ListState>) {
@@ -127,6 +124,7 @@ class ContactHolder(
     interface OnItemClickListener {
         fun onItemClick(userModel: UserModel)
         fun onLongItemClick(userModel: UserModel): Boolean
+        fun onIconClick(userModel: UserModel, position: Int)
     }
 
     interface ItemStateChecker {

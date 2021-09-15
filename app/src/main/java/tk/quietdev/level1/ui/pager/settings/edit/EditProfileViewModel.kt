@@ -2,7 +2,9 @@ package tk.quietdev.level1.ui.pager.settings.edit
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.repository.Repository
 import javax.inject.Inject
@@ -36,7 +38,9 @@ class EditProfileViewModel @Inject constructor(private val repository: Repositor
         )
         if (currentUserModel != updatedUser) {
             currentUserModel = updatedUser
-            repository.updateUser(currentUserModel)
+            viewModelScope.launch {
+                repository.updateUser(currentUserModel)
+            }
             return true
         }
         return false

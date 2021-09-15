@@ -14,6 +14,7 @@ import tk.quietdev.level1.data.db.RoomMapper
 import tk.quietdev.level1.data.db.RoomUserDao
 import tk.quietdev.level1.data.remote.RemoteMapper
 import tk.quietdev.level1.data.remote.ShppApi
+import tk.quietdev.level1.data.remote.models.ApiUserContactManipulation
 import tk.quietdev.level1.data.remote.models.AuthResponse
 import tk.quietdev.level1.data.remote.models.AuthUser
 import tk.quietdev.level1.data.remote.models.RemoteData
@@ -21,7 +22,6 @@ import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.DataState
 import tk.quietdev.level1.utils.UserRegisterError
 import tk.quietdev.level1.utils.networkBoundResource
-import kotlin.properties.Delegates
 import kotlin.reflect.KSuspendFunction1
 
 class RemoteApiRepository(
@@ -34,7 +34,7 @@ class RemoteApiRepository(
 
     private val apiErrorMapper by lazy { remoteMapper.moshiErrorResponseMapper() }
 
-    override fun updateUser(updatedUserModel: UserModel) {
+    override suspend fun updateUser(updatedUserModel: UserModel) {
         Log.d("TAG", "updateUser called: ${updatedUserModel.userName}")
         /*       MainScope().launch {
                    withContext(Dispatchers.IO) {
@@ -55,13 +55,11 @@ class RemoteApiRepository(
         // val data = remoteMapper.userToApiUser(updatedUserModel)
         MainScope().launch {
             withContext(Dispatchers.IO) {
-                val header = HashMap<String, String>()
-                header["Content-Type"] = "application/json"
-                header["Authorization"] = "Bearer ${getCurrentUserToken()}"
-                api.updateUser(header, data)
+                api.updateUser(getAuthHeaders(), data)
             }
         }
     }
+
 
     override fun addUser(userModel: UserModel): UserModel {
         TODO("Not yet implemented")
@@ -108,27 +106,8 @@ class RemoteApiRepository(
         }
     )
 
-    override fun getAllUsersFlow() = networkBoundResource(
-        query = {
-            flow {
-                val userIds = db.getCurrentUserContactsIds().map { it.id }.toMutableList()
-                userIds.add(db.getCurrentUser().id)
-                emitAll(db.getUsersExcludingId(userIds).map { it.map { roomMapper.roomUserToUser(it) } })
-            }
-        },
-        fetch = {
-            api.getAllUsers(getBearerToken())
-        },
-        saveFetchResult = { response ->
-            if (response.isSuccessful) {
-                val apiUsers = response.body()?.data?.users
-                apiUsers?.let {
-                    val roomUsers = it.map { remoteMapper.apiUserToRoomUser(it) }
-                    db.insertAllUsers(roomUsers)
-                }
-            } // todo implement on unsuccessful response
-        }
-    )
+
+
 
     private suspend fun userAuth(
         user: AuthUser,
@@ -174,11 +153,21 @@ class RemoteApiRepository(
         return db.getCurrentUser().accessToken
     }
 
+    private suspend fun getAuthHeaders(): HashMap<String, String> {
+        val header = HashMap<String, String>()
+        header["Content-Type"] = "application/json"
+        header["Authorization"] = "Bearer ${getCurrentUserToken()}"
+        return header
+    }
+
     override fun getCurrentUserContactsFlow() =
         networkBoundResource(
             query = {
                 flow {
-                    val userIds = db.getCurrentUserContactsIds().map { it.id }
+                    var userIds = db.getCurrentUserContactsIds().map { it.id }
+                    db.getCurrentUserContactsIdsFlow().onEach {
+                        Log.d("TAG", "getCurrentUserContactsFlow: DSAFDASGFSDGFSGFSDSDFG")
+                        userIds = it.map { it.id } }
                     emitAll(
                         db.getUsersByIds(userIds).map { it.map { roomMapper.roomUserToUser(it) } })
                 }
@@ -199,11 +188,91 @@ class RemoteApiRepository(
                     if (userIds != null && userList != null) {
                         db.insert(userIds, userList)
                     }
-
                 }
 
             } // todo implement on unsuccessful response
         )
+
+
+
+     fun getAllUsersFlow2() = networkBoundResource(
+        query = {
+            flow {
+                var userIds =
+                    db.getUsersByIds(listOf(2)).first().map {  it.id }
+
+                emitAll(
+                    db.getUsersByIds(userIds).map { it.map { roomMapper.roomUserToUser(it) } })
+            }
+        },
+        fetch = {
+            api.getAllUsers(getBearerToken())
+        },
+        saveFetchResult = { response ->
+            if (response.isSuccessful) {
+                val apiUsers = response.body()?.data?.users
+                apiUsers?.let {
+                    val roomUsers = it.map { remoteMapper.apiUserToRoomUser(it) }
+                    db.insertAllUsers(roomUsers)
+                }
+            } // todo implement on unsuccessful response
+        }
+    )
+
+    override fun getAllUsersFlow() = networkBoundResource(
+        query = {
+            flow {
+                val userIds = db.getCurrentUserContactsIdsFlow().first().map { it.id }.toMutableList()
+                userIds.add(db.getCurrentUser().id)
+                emitAll(db.getUsersExcludingId(userIds).map { it.map { roomMapper.roomUserToUser(it) } })
+            }
+        },
+        fetch = {
+            api.getAllUsers(getBearerToken())
+        },
+        saveFetchResult = { response ->
+            if (response.isSuccessful) {
+                val apiUsers = response.body()?.data?.users
+                apiUsers?.let {
+                    val roomUsers = it.map { remoteMapper.apiUserToRoomUser(it) }
+                    db.insertAllUsers(roomUsers)
+                }
+            } // todo implement on unsuccessful response
+        }
+    )
+
+    override suspend fun addUserContact(userModel: UserModel) {
+        Log.d("TAG", "addUserContact: ")
+        api.addUserContact(getAuthHeaders(), ApiUserContactManipulation(userModel.id))
+    }
+
+    override suspend fun removeUserContact(userModel: UserModel) {
+        networkBoundResource(
+            fetch = {
+                api.removeUserContact(
+                    getAuthHeaders(),
+                    ApiUserContactManipulation(userModel.id)
+                )
+            },
+            saveFetchResult = { response ->
+                Log.d("TAG", "removeUserContact: on response ")
+                if (response.isSuccessful) {
+                    val userIds =
+                        response.body()?.data?.contacts?.map {
+                            remoteMapper.apiUserToID(it)
+                        }
+                    val userList =
+                        response.body()?.data?.contacts?.map {
+                            remoteMapper.apiUserToRoomUser(it)
+                        }
+                    if (userIds != null && userList != null) {
+                        Log.d("TAG", "removeUserContact: on response ")
+                        db.insert(userIds, userList)
+                    }
+                }
+            }
+        )
+    }
 
 
 }

@@ -6,11 +6,14 @@
 
     <fragment
         android:id="@+id/contactsListFragment"
-        android:name="tk.quietdev.level1.ui.pager.contacts.list.ContactsListFragment"
+        android:name="tk.quietdev.level1.ui.pager.contacts.list.usercontacts.ContactsListFragment"
         android:label="@string/contacts">
         <action
             android:id="@+id/action_contactsListFragment_to_contactDetailFragment"
             app:destination="@id/contactDetailFragment" />
+        <action
+            android:id="@+id/action_contactsListFragment_to_addContactsListFragment"
+            app:destination="@id/addContactsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/contactDetailFragment"
@@ -19,6 +22,14 @@
         <argument
             android:name="user"
             app:argType="tk.quietdev.level1.models.UserModel" />
+    </fragment>
+    <fragment
+        android:id="@+id/addContactsListFragment"
+        android:name="tk.quietdev.level1.ui.pager.contacts.list.addcontacts.AddContactsListFragment"
+        android:label="AddContactsListFragment" >
+        <action
+            android:id="@+id/action_addContactsListFragment_to_contactDetailFragment"
+            app:destination="@id/contactDetailFragment" />
     </fragment>
 
 

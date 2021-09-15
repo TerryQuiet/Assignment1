@@ -1,5 +1,6 @@
 package tk.quietdev.level1.utils
 
+import android.util.Log
 import kotlinx.coroutines.flow.*
 
 inline fun <ResultType, RequestType> networkBoundResource(
@@ -21,4 +22,16 @@ inline fun <ResultType, RequestType> networkBoundResource(
         query().map { Resource.Success(it) }
     }
     emitAll(flow)
+}
+
+suspend inline fun <RequestType> networkBoundResource(
+    crossinline fetch: suspend () -> RequestType,
+    crossinline saveFetchResult: suspend (RequestType) -> Unit,
+) {
+    try {
+        Log.d("TAG", "networkBoundResource: ")
+        saveFetchResult(fetch())
+    } catch (throwable: Throwable) {
+        Log.d("TAG", "networkBoundResource: EERR ${throwable.printStackTrace()}")
+    }
 }

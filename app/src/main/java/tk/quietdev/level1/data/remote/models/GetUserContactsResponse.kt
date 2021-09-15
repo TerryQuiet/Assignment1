@@ -2,7 +2,7 @@ package tk.quietdev.level1.data.remote.test
 
 import tk.quietdev.level1.data.remote.models.ApiUser
 
-class GetUserContacts(
+class GetUserContactsResponse(
     val code: Int,
     val data: DataUserContacts,
     val message: String,

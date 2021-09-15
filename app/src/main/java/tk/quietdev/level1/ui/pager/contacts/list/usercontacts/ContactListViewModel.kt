@@ -1,6 +1,7 @@
-package tk.quietdev.level1.ui.pager.contacts.list
+package tk.quietdev.level1.ui.pager.contacts.list.usercontacts
 
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -8,8 +9,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.repository.RemoteApiRepository
 import tk.quietdev.level1.repository.Repository
+import tk.quietdev.level1.utils.ListState
 import java.util.*
 import javax.inject.Inject
 
@@ -21,7 +22,7 @@ class ContactListViewModel @Inject constructor(
     var userList = repository.getCurrentUserContactsFlow().asLiveData()
 
     private var deletedUserPosition: Int? = null
-    private var userIdToRemove = TreeSet<Int>()
+    private var multiSelectList = TreeSet<Int>()
 
     var listState = MutableLiveData(ListState.NORMAL)
 
@@ -29,45 +30,31 @@ class ContactListViewModel @Inject constructor(
 
     }
 
-    fun removeUser(userModel: UserModel, position: Int) {
-
+    fun removeContact(userModel: UserModel, position: Int) {
+        viewModelScope.launch {
+            Log.d("TAG", "removeContact: viewModel")
+            repository.removeUserContact(userModel)
+        }
     }
 
     fun addNewUser(userModel: UserModel) {
 
     }
 
-    fun watchUserContacts() {
-        userList = repository.getCurrentUserContactsFlow().asLiveData()
-    }
-
-    fun watchAllUsers() {
-        userList = repository.getAllUsersFlow().asLiveData()
-    }
-
 
     fun toggleUserSelected(userId: Int) {
-        val isUserRemovedFromList = userIdToRemove.remove(userId)
+        val isUserRemovedFromList = multiSelectList.remove(userId)
         if (!isUserRemovedFromList) {
-            userIdToRemove.add(userId)
+            multiSelectList.add(userId)
         }
-        listState.value = if (userIdToRemove.isNotEmpty()) ListState.DELETION else ListState.NORMAL
+        listState.value = if (multiSelectList.isNotEmpty()) ListState.MULTISELECT else ListState.NORMAL
     }
 
-    fun removeUsers() {
-
-    }
 
     fun isItemSelected(id: Int): Boolean {
-        return userIdToRemove.contains(id)
+        return multiSelectList.contains(id)
     }
 
-    fun addState() {
-        listState.value = ListState.ADDITION
-    }
 
-}
 
-enum class ListState {
-    NORMAL, DELETION, ADDITION
 }

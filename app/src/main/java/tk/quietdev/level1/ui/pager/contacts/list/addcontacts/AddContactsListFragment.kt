@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.pager.contacts.list
+package tk.quietdev.level1.ui.pager.contacts.list.addcontacts
 
 import android.graphics.Color
 import android.os.Bundle
@@ -22,15 +22,15 @@ import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.adapter.ContactHolder
 import tk.quietdev.level1.ui.pager.contacts.adapter.ContactsAdapter
 import tk.quietdev.level1.utils.Const
+import tk.quietdev.level1.utils.ListState
 
 @AndroidEntryPoint
-class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
+class AddContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: ContactListViewModel by viewModels()
-    private val contactsAdapter: ContactsAdapter by lazy { getContactAdapter() }
-
+    private val viewModel: AddContactListViewModel by viewModels()
+    private val contactsAdapter: ContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,18 +58,14 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
     private fun initObservables() {
         viewModel.apply {
-            listState.observe(viewLifecycleOwner) { isRemoveState ->
-                when (isRemoveState) {
-                    ListState.DELETION -> {
-                        binding.btnAdd.text = getString(R.string.remove)
+            listState.observe(viewLifecycleOwner) { state ->
+                when (state) {
+                    ListState.MULTISELECT -> {
+                        binding.btnAdd.text = getString(R.string.add_contact)
+                        binding.btnAdd.visibility = View.VISIBLE
                     }
                     ListState.NORMAL -> {
-                        binding.btnAdd.text = getString(R.string.add_contact)
-                        viewModel.watchUserContacts()
-                    }
-                    else -> {
-                        binding.btnAdd.text = getString(R.string.cancel)
-                        viewModel.watchAllUsers()
+                        binding.btnAdd.visibility = View.GONE
                     }
                 }
                 userList.observe(viewLifecycleOwner) {
@@ -86,37 +82,26 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
     // works
 
     private fun getContactAdapter() = ContactsAdapter(
-        onRemove = this::removeUser,
         onItemClickListener,
         viewModel.listState,
         this
     )
 
-    private fun removeUser(userModel: UserModel, position: Int) {
-        viewModel.removeUser(userModel, position)
-        showDeletionUndoSnackBar(userModel.id)
+    private fun addUser(userModel: UserModel) {
+        viewModel.addUserContact(userModel)
+        //showDeletionUndoSnackBar(userModel.id)
     }
 
     private fun addListeners() {
         binding.btnAdd.setOnClickListener {
-            buttonClicked()
+            fabClicked()
         }
     }
 
-    private fun buttonClicked() {
-        when (viewModel.listState.value) {
-            ListState.DELETION -> {
-                viewModel.removeUsers()
-            }
-            ListState.NORMAL -> {
-                viewModel.addState()
-            }
-            else -> {
-                viewModel.listState.value = ListState.NORMAL
-            }
+    private fun fabClicked() {
+        if (viewModel.listState.value == ListState.MULTISELECT) {
+        //    viewModel.removeUsers() // todo add users
         }
-
-
     }
 
 
@@ -147,7 +132,7 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
     private fun openContactDetail(userModel: UserModel) {
         findNavController().navigate(
-            ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(
+            AddContactsListFragmentDirections.actionAddContactsListFragmentToContactDetailFragment(
                 userModel
             )
         )
@@ -161,7 +146,7 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
     private val onItemClickListener = object : ContactHolder.OnItemClickListener {
 
         override fun onItemClick(userModel: UserModel) {
-            if (viewModel.listState.value == ListState.DELETION) {
+            if (viewModel.listState.value == ListState.MULTISELECT) {
                 viewModel.toggleUserSelected(userModel.id)
             } else {
                 openContactDetail(userModel)
@@ -172,6 +157,9 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
             viewModel.toggleUserSelected(userModel.id)
             return true
         }
+
+        override fun onIconClick(userModel: UserModel, position: Int) = addUser(userModel)
+
 
     }
 
