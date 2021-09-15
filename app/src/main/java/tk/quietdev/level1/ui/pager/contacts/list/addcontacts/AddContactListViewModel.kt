@@ -1,4 +1,4 @@
-package tk.quietdev.level1.ui.pager.contacts.list
+package tk.quietdev.level1.ui.pager.contacts.list.addcontacts
 
 
 import androidx.lifecycle.MutableLiveData
@@ -8,17 +8,17 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.repository.RemoteApiRepository
 import tk.quietdev.level1.repository.Repository
+import tk.quietdev.level1.utils.ListState
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class ContactListViewModel @Inject constructor(
+class AddContactListViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    var userList = repository.getCurrentUserContactsFlow().asLiveData()
+    var userList = repository.getAllUsersFlow().asLiveData()
 
     private var deletedUserPosition: Int? = null
     private var userIdToRemove = TreeSet<Int>()
@@ -37,21 +37,12 @@ class ContactListViewModel @Inject constructor(
 
     }
 
-    fun watchUserContacts() {
-        userList = repository.getCurrentUserContactsFlow().asLiveData()
-    }
-
-    fun watchAllUsers() {
-        userList = repository.getAllUsersFlow().asLiveData()
-    }
-
-
     fun toggleUserSelected(userId: Int) {
         val isUserRemovedFromList = userIdToRemove.remove(userId)
         if (!isUserRemovedFromList) {
             userIdToRemove.add(userId)
         }
-        listState.value = if (userIdToRemove.isNotEmpty()) ListState.DELETION else ListState.NORMAL
+        listState.value = if (userIdToRemove.isNotEmpty()) ListState.MULTISELECT else ListState.NORMAL
     }
 
     fun removeUsers() {
@@ -62,12 +53,12 @@ class ContactListViewModel @Inject constructor(
         return userIdToRemove.contains(id)
     }
 
-    fun addState() {
-        listState.value = ListState.ADDITION
+    fun addUserContact(userModel: UserModel) {
+        viewModelScope.launch {
+            repository.addUserContact(userModel)
+        }
     }
 
+
 }
 
-enum class ListState {
-    NORMAL, DELETION, ADDITION
-}

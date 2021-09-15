@@ -67,7 +67,6 @@ class RemoteMapper @Inject constructor() {
         }
     }
 
-
     fun apiUserToID(apiUser: ApiUser) : RoomUserContactsIds {
         return RoomUserContactsIds(apiUser.id)
     }

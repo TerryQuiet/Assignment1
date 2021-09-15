@@ -9,12 +9,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.ui.pager.contacts.list.ContactListViewModel
-import tk.quietdev.level1.ui.pager.contacts.list.ListState
+import tk.quietdev.level1.utils.ListState
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
 class ContactsAdapter(
-    private val onRemove: (UserModel, Int) -> Unit,
     private val onClickListener: ContactHolder.OnItemClickListener,
     private val removeState: MutableLiveData<ListState>,
     private val itemStateChecker: ContactHolder.ItemStateChecker
@@ -32,7 +30,6 @@ class ContactsAdapter(
             ListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ),
-            onRemove,
             onClickListener,
             itemStateChecker
         )

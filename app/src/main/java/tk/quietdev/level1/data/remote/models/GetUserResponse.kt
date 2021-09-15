@@ -1,7 +1,7 @@
 package tk.quietdev.level1.data.remote.models
 
 
-data class GetUser(
+data class GetUserResponse(
     val code: Int,
     val data: RemoteData,
     val message: String,

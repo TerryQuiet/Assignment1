@@ -6,7 +6,6 @@ import tk.quietdev.level1.data.db.model.RoomCurrentUser
 import tk.quietdev.level1.data.db.model.RoomUser
 import tk.quietdev.level1.data.db.model.RoomUserContactsIds
 
-
 @Dao
 interface RoomUserDao {
 
@@ -56,30 +55,18 @@ interface RoomUserDao {
     @Query("SELECT * from room_current_user WHERE single = 1")
     fun getCurrentUserFlow(): Flow<RoomCurrentUser>
 
-/*    @Transaction
-    open suspend fun insertCurrentUserContacts(list: List<RoomUserContacts>) {
-        _clearCurrentUserContacts()
-        _insertCurrentUserContacts(list)
-    }
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun _insertCurrentUserContacts(list: List<RoomUserContacts>)
-
-
-    @Query("DELETE from room_current_user_contacts")
-    fun _clearCurrentUserContacts()
-
-
-    @Query("SELECT * from room_current_user_contacts ORDER BY id ASC")
-    fun getCurrentUserContacts(): Flow<List<RoomUserContacts>>*/
-
-
     // by ID
     @Query("SELECT * FROM room_all_users where id IN (:ids)")
     fun getUsersByIds(ids: List<Int>): Flow<List<RoomUser>>
 
+    @Query("SELECT * FROM room_all_users where id IN (:ids)")
+    suspend fun getUsersByIdsS(ids: List<Int>): List<RoomUser>
+
     @Query("SELECT * FROM room_all_users where id NOT IN (:ids)")
     fun getUsersExcludingId(ids: List<Int>): Flow<List<RoomUser>>
+
+    @Query("SELECT * from room_current_user_contacts_ids ORDER BY id ASC")
+    fun getCurrentUserContactsIdsFlow(): Flow<List<RoomUserContactsIds>>
 
     @Query("SELECT * from room_current_user_contacts_ids ORDER BY id ASC")
     suspend fun getCurrentUserContactsIds(): List<RoomUserContactsIds>
@@ -96,5 +83,12 @@ interface RoomUserDao {
         _insertAllUsers(roomUsers)
         _insert(listIds)
     }
+
+   /* @Transaction
+    open suspend  fun getCurrentUserContacts() : Flow<List<RoomUser>> {
+        val userContactsIds = getCurrentUserContactsIds().map { it.id }
+        return getUsersByIds(userContactsIds)
+    }*/
+
 
 }
