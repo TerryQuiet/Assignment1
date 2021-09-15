@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +69,9 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
                     }
                 }
                 userList.observe(viewLifecycleOwner) {
+
                     val list = it.data
+                    Log.d("TAG", "initObservables: ${it.data?.size}")
                     list?.let { userList ->
                         contactsAdapter.submitList(userList)
                     }

@@ -12,6 +12,7 @@ import retrofit2.Response
 import tk.quietdev.level1.R
 import tk.quietdev.level1.data.db.RoomMapper
 import tk.quietdev.level1.data.db.RoomUserDao
+import tk.quietdev.level1.data.db.UserDatabase
 import tk.quietdev.level1.data.remote.RemoteMapper
 import tk.quietdev.level1.data.remote.ShppApi
 import tk.quietdev.level1.data.remote.models.ApiUserContactManipulation
@@ -28,6 +29,7 @@ class RemoteApiRepository(
     @ApplicationContext private val androidContext: Context,
     private val api: ShppApi,
     private val db: RoomUserDao,
+    private val dbR: UserDatabase,
     private val remoteMapper: RemoteMapper,
     private val roomMapper: RoomMapper,
 ) : Repository {
@@ -107,8 +109,6 @@ class RemoteApiRepository(
     )
 
 
-
-
     private suspend fun userAuth(
         user: AuthUser,
         method: KSuspendFunction1<AuthUser, Response<AuthResponse>>
@@ -163,14 +163,35 @@ class RemoteApiRepository(
     override fun getCurrentUserContactsFlow() =
         networkBoundResource(
             query = {
-                flow {
-                    var userIds = db.getCurrentUserContactsIds().map { it.id }
-                    db.getCurrentUserContactsIdsFlow().onEach {
-                        Log.d("TAG", "getCurrentUserContactsFlow: DSAFDASGFSDGFSGFSDSDFG")
-                        userIds = it.map { it.id } }
-                    emitAll(
-                        db.getUsersByIds(userIds).map { it.map { roomMapper.roomUserToUser(it) } })
+                  flow { emitAll(db.getCurrentUserContactsIds().map { it.id }.let { db.getUsersByIds(it).map { it.map { roomMapper.roomUserToUser(it) } } }) }
+            },
+            fetch = {
+                api.getCurrentUserContacts(getBearerToken())
+            },
+            saveFetchResult = { response ->
+                if (response.isSuccessful) {
+                    val userIds =
+                        response.body()?.data?.contacts?.map {
+                            remoteMapper.apiUserToID(it)
+                        }
+                    val userList =
+                        response.body()?.data?.contacts?.map {
+                            remoteMapper.apiUserToRoomUser(it)
+                        }
+                    if (userIds != null && userList != null) {
+                        db.insert(userIds, userList)
+                    }
                 }
+
+            } // todo implement on unsuccessful response
+        )
+
+    fun getCurrentUserContactIdsFlow() = db.getCurrentUserContactsIdsFlow().map { it.map { it.id } }
+    fun getCurrentUserContactsFlow(list: List<Int>) =
+        networkBoundResource(
+            query = {
+                Log.d("TAG", "getCurrentUserContactsFlow: ${list.size}")
+                db.getUsersByIds(list).map { it.map { roomMapper.roomUserToUser(it) } }
             },
             fetch = {
                 api.getCurrentUserContacts(getBearerToken())
@@ -194,12 +215,11 @@ class RemoteApiRepository(
         )
 
 
-
-     fun getAllUsersFlow2() = networkBoundResource(
+    fun getAllUsersFlow2() = networkBoundResource(
         query = {
             flow {
                 var userIds =
-                    db.getUsersByIds(listOf(2)).first().map {  it.id }
+                    db.getUsersByIds(listOf(2)).first().map { it.id }
 
                 emitAll(
                     db.getUsersByIds(userIds).map { it.map { roomMapper.roomUserToUser(it) } })
@@ -222,9 +242,12 @@ class RemoteApiRepository(
     override fun getAllUsersFlow() = networkBoundResource(
         query = {
             flow {
-                val userIds = db.getCurrentUserContactsIdsFlow().first().map { it.id }.toMutableList()
+                val userIds =
+                    db.getCurrentUserContactsIdsFlow().first().map { it.id }.toMutableList()
                 userIds.add(db.getCurrentUser().id)
-                emitAll(db.getUsersExcludingId(userIds).map { it.map { roomMapper.roomUserToUser(it) } })
+                emitAll(
+                    db.getUsersExcludingId(userIds)
+                        .map { it.map { roomMapper.roomUserToUser(it) } })
             }
         },
         fetch = {
@@ -255,7 +278,6 @@ class RemoteApiRepository(
                 )
             },
             saveFetchResult = { response ->
-                Log.d("TAG", "removeUserContact: on response ")
                 if (response.isSuccessful) {
                     val userIds =
                         response.body()?.data?.contacts?.map {
@@ -266,7 +288,6 @@ class RemoteApiRepository(
                             remoteMapper.apiUserToRoomUser(it)
                         }
                     if (userIds != null && userList != null) {
-                        Log.d("TAG", "removeUserContact: on response ")
                         db.insert(userIds, userList)
                     }
                 }
