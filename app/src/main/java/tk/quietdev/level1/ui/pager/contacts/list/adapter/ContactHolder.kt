@@ -1,12 +1,10 @@
-package tk.quietdev.level1.ui.pager.contacts.adapter
+package tk.quietdev.level1.ui.pager.contacts.list.adapter
 
 import android.graphics.Color
 import android.view.View
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.ListState
@@ -27,31 +25,15 @@ class ContactHolder(
     private val stateObserver = Observer<ListState> { removeState ->
         when (removeState) {
             ListState.MULTISELECT ->  {
-                bindDeletion()
+                binding.cbRemove.visibility = View.VISIBLE
                 isRemoveState = true
             }
             ListState.NORMAL -> {
-                bindNormal()
+                binding.cbRemove.visibility = View.GONE
                 isRemoveState = false
             }
-            else -> bindAddition()
+            else -> binding.cbRemove.visibility = View.GONE
         }
-    }
-
-    private fun bindAddition() {
-        binding.cbRemove.visibility = View.GONE
-        val icon = AppCompatResources.getDrawable(binding.root.context, R.drawable.ic_add)
-        binding.imageBtnRemove.setImageDrawable(icon)
-    }
-
-    private fun bindNormal() {
-        binding.cbRemove.visibility = View.GONE
-        val icon = AppCompatResources.getDrawable(binding.root.context, R.drawable.ic_trashcan)
-        binding.imageBtnRemove.setImageDrawable(icon)
-    }
-
-    private fun bindDeletion() {
-        binding.cbRemove.visibility = View.VISIBLE
     }
 
     fun bind(userModel: UserModel) {
@@ -59,8 +41,8 @@ class ContactHolder(
             isSelected = itemStateChecker.isItemSelected(id)
             _currentUserModel = this
             changeBackgroundColor()
-            binding.tvName.text = userName
-            binding.tvOccupation.text = occupation
+            binding.tvName.text = email // TODO: 9/15/2021 fix
+            binding.tvOccupation.text = id.toString() // TODO: 9/15/2021 fix
             binding.ivProfilePic.loadImage(pictureUri)
             binding.cbRemove.isChecked = isSelected
             setListeners()
@@ -69,7 +51,7 @@ class ContactHolder(
 
     private fun setListeners() {
         binding.apply {
-            imageBtnRemove.setOnClickListener {
+            imageBtn.setOnClickListener {
                 remove()
             }
             cbRemove.setOnClickListener {

@@ -17,6 +17,6 @@ interface Repository {
     fun getCurrentUserContactsFlow(): Flow<Resource<List<UserModel>>>
     fun getAllUsersFlow(): Flow<Resource<List<UserModel>>>
     suspend fun addUserContact(userModel: UserModel)
-    suspend fun updateUser(updatedUserModel: UserModel)
+    fun updateUser(updatedUserModel: UserModel): Flow<Resource<UserModel>>
     suspend fun removeUserContact(userModel: UserModel)
 }

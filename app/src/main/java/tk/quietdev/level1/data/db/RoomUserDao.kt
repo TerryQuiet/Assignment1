@@ -10,7 +10,7 @@ import tk.quietdev.level1.data.db.model.RoomUserContactsIds
 interface RoomUserDao {
 
     // All users list
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(user: RoomUser)
 
     @Query("SELECT * from room_all_users WHERE id = :id")
@@ -85,10 +85,8 @@ interface RoomUserDao {
     }
 
    /* @Transaction
-    open suspend  fun getCurrentUserContacts() : Flow<List<RoomUser>> {
-        val userContactsIds = getCurrentUserContactsIds().map { it.id }
-        return getUsersByIds(userContactsIds)
-    }*/
+    open suspend fun getCurrentUserContacts() : Flow<List<RoomUser>> =
+         getUsersByIds(getCurrentUserContactsIds().map { it.id })*/
 
 
 }

@@ -24,9 +24,7 @@ class ContactListViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
 
-    //var userList = MutableLiveData<Resource<List<UserModel>>>()
-
-    var userList =  (repository as RemoteApiRepository).getCurrentUserContactsFlowConverter().asLiveData()
+    var userList = MutableLiveData<Resource<List<UserModel>>>()
 
     private var deletedUserPosition: Int? = null
     private var multiSelectList = TreeSet<Int>()
@@ -37,11 +35,11 @@ class ContactListViewModel @Inject constructor(
 
     }
 
-   /* init {
+    init {
         (repository as RemoteApiRepository).getCurrentUserContactIdsFlow().onEach {
             userList.value = repository.getCurrentUserContactsFlow(it).first()
         }.launchIn(viewModelScope)
-    }*/
+    }
 
     fun removeContact(userModel: UserModel, position: Int) {
         viewModelScope.launch {

@@ -20,8 +20,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.ui.pager.contacts.adapter.ContactHolder
-import tk.quietdev.level1.ui.pager.contacts.adapter.ContactsAdapter
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactHolder
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactsAdapter
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ListState
 
@@ -78,7 +78,6 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
                 }
             }
         }
-
     }
 
     // works

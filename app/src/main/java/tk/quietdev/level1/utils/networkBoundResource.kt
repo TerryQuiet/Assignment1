@@ -16,36 +16,15 @@ inline fun <ResultType, RequestType> networkBoundResource(
             saveFetchResult(fetch())
             query().map { Resource.Success(it) }
         } catch (throwable: Throwable) {
+            Log.d("TAG", "networkBoundResource: EERR ${throwable.printStackTrace()}")
+            Log.d("TAG", "networkBoundResource: ${throwable.message}")
             query().map { Resource.Error(throwable.message ?: "error while data fetch", it) }
         }
     } else {
+        Log.d("TAG", "networkBoundResource: SHOULD NEVER HAPPEN")
         query().map { Resource.Success(it) }
     }
-    emitAll(flow)
-}
 
-inline fun <ResultType, RequestType, FlowToObserve, FlowToConvert> networkBoundResource(
-    crossinline firstQuery: () -> Flow<FlowToObserve>,
-    crossinline secondQuery: (FlowToObserve) -> Flow<FlowToConvert>,
-    crossinline convertToResult: (FlowToConvert) -> ResultType,
-    crossinline fetch: suspend () -> RequestType,
-    crossinline saveFetchResult: suspend (RequestType) -> Unit,
-    crossinline shouldFetch: (FlowToObserve) -> Boolean = { true }
-) = flow {
-    val data = firstQuery().first()
-    val flow = if (shouldFetch(data)) {
-        val convertedData = convertToResult(secondQuery(data).first())
-        emit(Resource.Loading(convertedData))
-        try {
-            saveFetchResult(fetch())
-            firstQuery().map {
-                Resource.Success(convertToResult(secondQuery(data).first())) }
-        } catch (throwable: Throwable) {
-            firstQuery().map { Resource.Error(throwable.message ?: "error while data fetch", convertToResult(secondQuery(data).first())) }
-        }
-    } else {
-        firstQuery().map { Resource.Success(convertToResult(secondQuery(data).first())) }
-    }
     emitAll(flow)
 }
 
@@ -59,5 +38,6 @@ suspend inline fun <RequestType> networkBoundResource(
         saveFetchResult(fetch())
     } catch (throwable: Throwable) {
         Log.d("TAG", "networkBoundResource: EERR ${throwable.printStackTrace()}")
+        Log.d("TAG", "networkBoundResource: ${throwable.message}")
     }
 }

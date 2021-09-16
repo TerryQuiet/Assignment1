@@ -57,10 +57,10 @@ class ViewPagerContainerFragment : Fragment() {
             }
         })
 
-        settingsSharedViewModel.buttonClicked.observe(viewLifecycleOwner) { buttonClicked ->
+        settingsSharedViewModel.viewMyContactsButtonClicked.observe(viewLifecycleOwner) { buttonClicked ->
             if (buttonClicked) {
                 binding.viewPager.currentItem = PagerAdapter.Pages.LIST.position
-                settingsSharedViewModel.buttonClicked.value = false
+                settingsSharedViewModel.viewMyContactsButtonClicked.value = false
             }
         }
 
