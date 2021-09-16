@@ -2,20 +2,20 @@ package tk.quietdev.level1.ui.pager.settings.edit
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
+import tk.quietdev.level1.utils.Resource
 import tk.quietdev.level1.utils.ext.loadImage
 
 @AndroidEntryPoint
@@ -39,22 +39,33 @@ class EditProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel.apply {
-            currentUserModel = args.user
-            bindValues(currentUserModel)
-        }
-
         setListeners()
+        setObservers()
+    }
 
-
+    private fun setObservers() {
+        viewModel.currentUserModel.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Success<UserModel> -> {
+                    if (it.message == "OnUpdate") {
+                        findNavController().popBackStack()
+                    } else {
+                        it.data?.let { userModel ->
+                            bindValues(userModel)
+                        }
+                    }
+                }
+                else -> "todo"
+            }
+            Log.d("TAG", "setObservers: ")
+        }
     }
 
     private fun setListeners() {
         binding.apply {
             btnSave.setOnClickListener {
-                if (updateUser())
-                findNavController().popBackStack()
+                updateUser()
+                //  findNavController().popBackStack()
             }
             btnAddPhoto.setOnClickListener {
                 getAction.launch(
@@ -67,18 +78,17 @@ class EditProfileFragment : Fragment() {
     /**
      * @return returns true if user was updated
      */
-    private fun updateUser(): Boolean {
+    private fun updateUser() {
         binding.apply {
-          return viewModel.updateUser(
-                    userName = etName.text.toString(),
-                    email = etEmail.text.toString(),
-                    occupation = etOccupation.text.toString(),
-                    physicalAddress = etAddress.text.toString(),
-                    birthDate = etBirthDate.text.toString(),
-                    phone = etPhoneNumber.text.toString(),
-                    pictureUri =
-                    if (viewModel.localPictureUri != null) viewModel.localPictureUri.toString() else viewModel.currentUserModel.pictureUri
-                )
+            return viewModel.updateUser(
+                userName = etName.text.toString(),
+                email = etEmail.text.toString(),
+                occupation = etOccupation.text.toString(),
+                physicalAddress = etAddress.text.toString(),
+                birthDate = etBirthDate.text.toString(),
+                phone = etPhoneNumber.text.toString(),
+                // pictureUri = if (viewModel.localPictureUri != null) viewModel.localPictureUri.toString() else viewModel.currentUserModel.value.data.pictureUri
+            )
         }
     }
 

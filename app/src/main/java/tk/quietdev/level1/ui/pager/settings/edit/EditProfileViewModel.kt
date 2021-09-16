@@ -1,18 +1,22 @@
 package tk.quietdev.level1.ui.pager.settings.edit
 
 import android.net.Uri
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
-import tk.quietdev.level1.models.UserModel
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import tk.quietdev.level1.repository.Repository
 import javax.inject.Inject
+import kotlin.math.log
 
 @HiltViewModel
 class EditProfileViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
-    lateinit var currentUserModel: UserModel
+    var currentUserModel = repository.currentUserFlow().asLiveData() as MutableLiveData
     var localPictureUri: Uri? = null
 
     /**
@@ -25,24 +29,30 @@ class EditProfileViewModel @Inject constructor(private val repository: Repositor
         physicalAddress: String,
         birthDate: String,
         phone: String,
-        pictureUri: String
-    ): Boolean {
-        val updatedUser = currentUserModel.copy(
-            userName = userName,
-            email = email,
-            occupation = occupation,
-            physicalAddress = physicalAddress,
-            birthDate = birthDate,
-            phone = phone,
-            pictureUri = pictureUri
-        )
-        if (currentUserModel != updatedUser) {
-            currentUserModel = updatedUser
-            viewModelScope.launch {
-                repository.updateUser(currentUserModel)
+        pictureUri: String? = null
+    ) {
+        val currentUser = currentUserModel.value?.data
+        Log.d("TAG", "updateUser: $currentUser")
+        currentUser?.let { it ->
+            val updatedUser = it.copy(
+                userName = userName,
+                email = email,
+                occupation = occupation,
+                physicalAddress = physicalAddress,
+                birthDate = birthDate,
+                phone = phone,
+                pictureUri = pictureUri
+            )
+            if (currentUser != updatedUser) {
+                //this does not work, I don't understand why
+           /*currentUserModel =
+                    repository.updateUser(updatedUser).asLiveData() as MutableLiveData*/
+                repository.updateUser(updatedUser).onEach {
+                    it.message = "OnUpdate"
+                    currentUserModel.value = it
+                }.launchIn(viewModelScope)
             }
-            return true
         }
-        return false
+
     }
 }

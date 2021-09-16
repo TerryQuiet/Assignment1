@@ -7,5 +7,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsSharedViewModel @Inject constructor(): ViewModel() {
-    val buttonClicked = MutableLiveData(false)
+    val viewMyContactsButtonClicked = MutableLiveData(false)
 }
