@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
@@ -33,6 +34,18 @@ class ViewPagerContainerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViewPager()
         setObservers()
+        setListeners()
+    }
+
+    private fun setListeners() {
+        binding.ivCross.setOnClickListener {
+            appbarSharedViewModel.showSearchLayout(false)
+        }
+
+        binding.etSearch.doOnTextChanged {
+                text, _, _, _ ->
+            appbarSharedViewModel.searchText.value = text.toString()
+        }
     }
 
     private fun setupViewPager() {
@@ -64,11 +77,8 @@ class ViewPagerContainerFragment : Fragment() {
             }
         }
 
-        appbarSharedViewModel.isSearchIconClicked.observe(viewLifecycleOwner) {
-            if (it) {
-                appbarSharedViewModel.navBarVisibility.value = View.GONE
-                binding.searchTopBar.visibility = View.VISIBLE
-            }
+        appbarSharedViewModel.searchLayoutVisibility.observe(viewLifecycleOwner) {
+            binding.searchTopBar.visibility = it
         }
 
 

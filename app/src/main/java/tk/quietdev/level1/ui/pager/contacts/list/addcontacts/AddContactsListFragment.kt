@@ -85,6 +85,10 @@ class AddContactsListFragment : Fragment(), ItemStateChecker {
             }
         }
 
+        appbarSharedViewModel.searchText.observe(viewLifecycleOwner) {
+            viewModel.changeSearchQuery(it)
+        }
+
     }
 
     // works
@@ -105,11 +109,6 @@ class AddContactsListFragment : Fragment(), ItemStateChecker {
     private fun addListeners() {
         binding.btnAdd.setOnClickListener {
             fabClicked()
-        }
-        appbarSharedViewModel.isSearchIconClicked.observe(viewLifecycleOwner) {
-            if (it) {
-
-            }
         }
     }
 
@@ -156,6 +155,7 @@ class AddContactsListFragment : Fragment(), ItemStateChecker {
     override fun onPause() {
         super.onPause()
         appbarSharedViewModel.searchIconVisibility.value = View.GONE
+        appbarSharedViewModel.showSearchLayout(false)
     }
 
     override fun onResume() {
@@ -172,8 +172,7 @@ class AddContactsListFragment : Fragment(), ItemStateChecker {
     private val onItemClickListener = object : ContactHolder.OnItemClickListener {
 
         override fun onItemClick(userModel: UserModel) {
-            if (viewModel.listState.value == ListState.MULTISELECT) {
-            } else {
+            if (viewModel.listState.value != ListState.MULTISELECT) {
                 openContactDetail(userModel)
             }
         }

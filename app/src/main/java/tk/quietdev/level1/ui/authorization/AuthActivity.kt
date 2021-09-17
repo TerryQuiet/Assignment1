@@ -2,6 +2,7 @@ package tk.quietdev.level1.ui.authorization
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,16 +20,16 @@ class AuthActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (authViewModel.isRemember)
+            login()
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-      //  authViewModel.loadPreferences()
+
     }
 
-    fun login(userModel: UserModel) {
-        val intent = Intent(this, PagerActivity::class.java).apply {
-            putExtra(Const.USER, userModel)
-        }
-        authViewModel.saveUser(userModel)
+    fun login() {
+        authViewModel.updateIsRemember()
+        val intent = Intent(this, PagerActivity::class.java)
         startActivity(intent)
         finish()
     }

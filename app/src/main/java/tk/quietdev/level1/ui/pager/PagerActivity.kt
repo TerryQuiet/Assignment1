@@ -34,7 +34,7 @@ class PagerActivity : AppCompatActivity() {
       binding.toolbar.setOnMenuItemClickListener {menuItem ->
           when (menuItem.itemId) {
               R.id.menu_search -> {
-                  appbarSharedViewModel.isSearchIconClicked.value = true
+                  appbarSharedViewModel.showSearchLayout(true)
                   true
               }
               else -> false

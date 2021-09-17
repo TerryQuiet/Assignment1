@@ -4,7 +4,6 @@ package tk.quietdev.level1.ui.pager.contacts.list.usercontacts
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
@@ -36,22 +35,17 @@ class ContactListViewModel @Inject constructor(
     }
 
     init {
-        (repository as RemoteApiRepository).getCurrentUserContactIdsFlow().onEach {
-            userList.value = repository.getCurrentUserContactsFlow(it).first()
-        }.launchIn(viewModelScope)
+            (repository as RemoteApiRepository).getCurrentUserContactIdsFlow().onEach {
+                Log.d("TAG", "$it: ")
+                it.data?.let {
+                    userList.value = repository.getCurrentUserContactsFlow(it).first()
+                }
+            }.launchIn(viewModelScope)
     }
 
     fun removeContact(userModel: UserModel, position: Int) {
-        viewModelScope.launch {
-            Log.d("TAG", "removeContact: viewModel")
-            repository.removeUserContact(userModel)
-        }
+        repository.removeUserContact(userModel).launchIn(viewModelScope) // todo cancel after result?
     }
-
-    fun addNewUser(userModel: UserModel) {
-
-    }
-
 
     fun toggleUserSelected(userId: Int) {
         val isUserRemovedFromList = multiSelectList.remove(userId)
@@ -61,7 +55,6 @@ class ContactListViewModel @Inject constructor(
         listState.value =
             if (multiSelectList.isNotEmpty()) ListState.MULTISELECT else ListState.NORMAL
     }
-
 
     fun isItemSelected(id: Int): Boolean {
         return multiSelectList.contains(id)

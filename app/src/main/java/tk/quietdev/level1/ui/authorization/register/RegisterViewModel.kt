@@ -1,15 +1,18 @@
 package tk.quietdev.level1.ui.authorization.register
 
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import tk.quietdev.level1.data.remote.models.AuthResponse
-import tk.quietdev.level1.data.remote.models.AuthUser
+import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.repository.Repository
+import tk.quietdev.level1.utils.Resource
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,26 +21,21 @@ class RegisterViewModel @Inject constructor(
 ) : ViewModel() {
 
     val isErrorShown = MutableLiveData(false) // disable regButton
-    val regResponse = MutableLiveData(AuthResponse.Status.NULL)
-    var errorMessage = ""
-    //the fields need to be here
+
+    private val _dataState: MutableLiveData<Resource<UserModel?>> = MutableLiveData()
+
+    val dataState: LiveData<Resource<UserModel?>>
+        get() = _dataState
+
+    private var registerJob: Job? = null
 
     fun regUser(email: String, passwd: String) {
-        viewModelScope.launch {
-            try {
-                regResponse.value = AuthResponse.Status.ONGOING
-                repository.userRegistration(email, passwd)
-                regResponse.value = AuthResponse.Status.OK
-            } catch (e: Exception) {
-                e.message?.let {
-                    errorMessage = it
-                }
-                Log.d("SSS", "regUser: ${e.cause} ")
-                regResponse.value = AuthResponse.Status.BAD
-            } finally {
-                regResponse.value = AuthResponse.Status.NULL
+        registerJob = repository.userRegistration(email, passwd).onEach {
+            _dataState.value = it
+            if (it is Resource.Success) {
+                registerJob?.cancel()
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
 }

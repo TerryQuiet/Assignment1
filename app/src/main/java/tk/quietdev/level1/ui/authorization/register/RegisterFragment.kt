@@ -2,11 +2,13 @@ package tk.quietdev.level1.ui.authorization.register
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -14,14 +16,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentRegistrationBinding
 import tk.quietdev.level1.data.remote.models.AuthResponse
+import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.ui.authorization.AuthActivity
 import tk.quietdev.level1.ui.authorization.AuthViewModel
+import tk.quietdev.level1.utils.Resource
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegistrationBinding
     private val viewModel: RegisterViewModel by viewModels()
-    private val authSharedViewModel: AuthViewModel by viewModels()
+    private val authSharedViewModel: AuthViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,19 +42,21 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.regResponse.observe(viewLifecycleOwner) {
+        viewModel.dataState.observe(viewLifecycleOwner) {
             when (it) {
-                AuthResponse.Status.ONGOING -> {
-                    // show animation
+                is Resource.Error -> {
+                    val error = it.message
+                    error?.let { message ->
+                        showErrorSnackbar(message)
+                    }
+                    binding.progressCircular.visibility = View.GONE
                 }
-                AuthResponse.Status.OK -> {
-                    findNavController().navigate(RegisterFragmentDirections.regToLog())
+                is Resource.Loading -> {
+                    binding.progressCircular.visibility = View.VISIBLE
                 }
-                AuthResponse.Status.BAD -> {
-                    showErrorSnackbar(viewModel.errorMessage)
-                }
-                AuthResponse.Status.NULL -> {
-                    // request is not send yet
+                is Resource.Success<UserModel?> -> {
+                    (activity as AuthActivity).login()
+                    binding.progressCircular.visibility = View.GONE
                 }
             }
         }
@@ -88,7 +95,7 @@ class RegisterFragment : Fragment() {
                 }
             }
             cbRemember.setOnCheckedChangeListener { _, isChecked ->
-                authSharedViewModel.updateIsRemember(isChecked)
+                authSharedViewModel.isRemember= isChecked
             }
             tvLinkSignIn.setOnClickListener {
                 findNavController().navigate(RegisterFragmentDirections.regToLog())
