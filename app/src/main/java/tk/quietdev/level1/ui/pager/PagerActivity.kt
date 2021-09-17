@@ -1,6 +1,7 @@
 package tk.quietdev.level1.ui.pager
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -19,26 +20,55 @@ class PagerActivity : AppCompatActivity() {
     private val parentNavHost = R.id.ParentNavHost
     private val appbarSharedViewModel: AppbarSharedViewModel by viewModels()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityPagerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         toolbarSetup()
+        setObservers()
+        setListeners()
+    }
+
+    private fun setListeners() {
+      binding.toolbar.setOnMenuItemClickListener {menuItem ->
+          when (menuItem.itemId) {
+              R.id.menu_search -> {
+                  appbarSharedViewModel.isSearchIconClicked.value = true
+                  true
+              }
+              else -> false
+          }
+      }
+    }
+
+    private fun setObservers() {
+        appbarSharedViewModel.currentNavController.observe(this, { navController ->
+            navController?.let {
+                binding.toolbar.setupWithNavController(it, AppBarConfiguration(it.graph))
+            }
+        })
+
+        appbarSharedViewModel.navBarVisibility.observe(this) {
+            binding.toolbar.visibility = it
+        }
+
+        appbarSharedViewModel.searchIconVisibility.observe(this) {
+            val searchIcon = binding.toolbar.menu.findItem(R.id.menu_search)
+            searchIcon.isVisible = it == View.VISIBLE
+        }
     }
 
     private fun toolbarSetup() {
         val parentNavHost =
             supportFragmentManager.findFragmentById(parentNavHost) as? NavHostFragment
         navController = parentNavHost?.navController
-
+        binding.toolbar.inflateMenu(R.menu.contacts_menu)
+        val x = binding.toolbar.menu.findItem(R.id.menu_search)
         val appBarConfig = AppBarConfiguration(navController!!.graph)
         binding.toolbar.setupWithNavController(navController!!, appBarConfig)
+        //binding.toolbar.visibility = View.GONE
 
-        appbarSharedViewModel.currentNavController.observe(this, { navController ->
-            navController?.let {
-                binding.toolbar.setupWithNavController(it, AppBarConfiguration(it.graph))
-            }
-        })
     }
 
     override fun onDestroy() {

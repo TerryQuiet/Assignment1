@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,19 +21,21 @@ import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.ItemStateChecker
 import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactHolder
 import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactsAdapter
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactsAddListAdapter
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ListState
 
 @AndroidEntryPoint
-class AddContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
+class AddContactsListFragment : Fragment(), ItemStateChecker {
 
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AddContactListViewModel by viewModels()
     private val contactsAdapter: ContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
+    private val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,10 +48,13 @@ class AddContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initObservables()
         initRecycleView()
         addListeners()
     }
+
+
 
     private fun initRecycleView() {
         binding.recycleView.apply {
@@ -82,10 +89,12 @@ class AddContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
     // works
 
-    private fun getContactAdapter() = ContactsAddListAdapter(
+    private fun getContactAdapter() = ContactsAdapter(
         onItemClickListener,
         viewModel.listState,
-        this
+        this,
+        ContactHolder.HolderType.ADD
+
     )
 
     private fun addUser(userModel: UserModel) {
@@ -96,6 +105,11 @@ class AddContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
     private fun addListeners() {
         binding.btnAdd.setOnClickListener {
             fabClicked()
+        }
+        appbarSharedViewModel.isSearchIconClicked.observe(viewLifecycleOwner) {
+            if (it) {
+
+            }
         }
     }
 
@@ -114,7 +128,7 @@ class AddContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
         )
             .setTextColor(Color.WHITE)
             .setAction(getString(R.string.add_back)) {
-                viewModel.addUserBack(id)
+
             }
             .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
@@ -139,6 +153,17 @@ class AddContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
         )
     }
 
+    override fun onPause() {
+        super.onPause()
+        appbarSharedViewModel.searchIconVisibility.value = View.GONE
+    }
+
+    override fun onResume() {
+        super.onResume()
+        appbarSharedViewModel.searchIconVisibility.value = View.VISIBLE
+    }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -148,14 +173,12 @@ class AddContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
         override fun onItemClick(userModel: UserModel) {
             if (viewModel.listState.value == ListState.MULTISELECT) {
-                viewModel.toggleUserSelected(userModel.id)
             } else {
                 openContactDetail(userModel)
             }
         }
 
         override fun onLongItemClick(userModel: UserModel): Boolean {
-            viewModel.toggleUserSelected(userModel.id)
             return true
         }
 
@@ -164,7 +187,8 @@ class AddContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
 
     }
 
-    override fun isItemSelected(id: Int): Boolean {
-        return viewModel.isItemSelected(id)
+    override fun isItemAdded(id: Int): Boolean {
+        return viewModel.isItemAdded(id)
     }
+
 }

@@ -64,6 +64,15 @@ class ViewPagerContainerFragment : Fragment() {
             }
         }
 
+        appbarSharedViewModel.isSearchIconClicked.observe(viewLifecycleOwner) {
+            if (it) {
+                appbarSharedViewModel.navBarVisibility.value = View.GONE
+                binding.searchTopBar.visibility = View.VISIBLE
+            }
+        }
+
+
+
     }
 
     override fun onDestroyView() {

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -20,18 +21,21 @@ import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.ItemStateChecker
 import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactHolder
 import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactsAdapter
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ListState
 
 @AndroidEntryPoint
-class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
+class ContactsListFragment : Fragment(), ItemStateChecker {
 
     private var _binding: FragmentContactsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ContactListViewModel by viewModels()
     private val contactsAdapter: ContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
+    private val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,7 +89,8 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
     private fun getContactAdapter() = ContactsAdapter(
         onItemClickListener,
         viewModel.listState,
-        this
+        this,
+        ContactHolder.HolderType.REMOVE
     )
 
     private fun removeContact(userModel: UserModel, position: Int) {
@@ -150,6 +155,16 @@ class ContactsListFragment : Fragment(), ContactHolder.ItemStateChecker {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        appbarSharedViewModel.searchIconVisibility.value = View.GONE
+    }
+
+    override fun onResume() {
+        super.onResume()
+        appbarSharedViewModel.searchIconVisibility.value = View.VISIBLE
     }
 
     private val onItemClickListener = object : ContactHolder.OnItemClickListener {
