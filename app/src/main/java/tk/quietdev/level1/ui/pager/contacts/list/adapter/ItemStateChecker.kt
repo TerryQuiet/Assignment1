@@ -4,3 +4,7 @@ interface ItemStateChecker {
     fun isItemSelected(id: Int): Boolean = false
     fun isItemAdded(id: Int): Boolean = false
 }
+
+enum class ItemState {
+    SELECTED, ADDED, PENDING
+}

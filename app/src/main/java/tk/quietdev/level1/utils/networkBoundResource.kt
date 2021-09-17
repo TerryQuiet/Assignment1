@@ -24,20 +24,6 @@ inline fun <ResultType, RequestType> networkBoundResource(
         Log.d("TAG", "networkBoundResource: SHOULD NEVER HAPPEN")
         query().map { Resource.Success(it) }
     }
-
     emitAll(flow)
 }
 
-
-suspend inline fun <RequestType> networkBoundResource(
-    crossinline fetch: suspend () -> RequestType,
-    crossinline saveFetchResult: suspend (RequestType) -> Unit,
-) {
-    try {
-        Log.d("TAG", "networkBoundResource: ")
-        saveFetchResult(fetch())
-    } catch (throwable: Throwable) {
-        Log.d("TAG", "networkBoundResource: EERR ${throwable.printStackTrace()}")
-        Log.d("TAG", "networkBoundResource: ${throwable.message}")
-    }
-}

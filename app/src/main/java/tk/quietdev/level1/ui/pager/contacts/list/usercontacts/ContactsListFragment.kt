@@ -160,6 +160,7 @@ class ContactsListFragment : Fragment(), ItemStateChecker {
     override fun onPause() {
         super.onPause()
         appbarSharedViewModel.searchIconVisibility.value = View.GONE
+        appbarSharedViewModel.showSearchLayout(false)
     }
 
     override fun onResume() {

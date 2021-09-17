@@ -17,7 +17,7 @@ import tk.quietdev.level1.databinding.FragmentLoginBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.authorization.AuthActivity
 import tk.quietdev.level1.ui.authorization.AuthViewModel
-import tk.quietdev.level1.utils.DataState
+import tk.quietdev.level1.utils.Resource
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -36,7 +36,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       // showHelpTip()
+        // showHelpTip()
         /*if (authSharedViewModel.isRemember.value!!) {
             authSharedViewModel.currentUserModel.value?.let {
                 (activity as AuthActivity).login(it)
@@ -51,18 +51,18 @@ class LoginFragment : Fragment() {
         viewModel.dataState.observe(viewLifecycleOwner) {
             Log.d("SSS", "setObservers: ${it}")
             when (it) {
-                is DataState.Error -> {
-                    val error = it.exception.message
+                is Resource.Error -> {
+                    val error = it.message
                     error?.let { message ->
                         showErrorSnackbar(message)
                     }
-                    showHelpTip()
+                    //showHelpTip()
                 }
-                is DataState.Loading -> {
+                is Resource.Loading -> {
                     Log.d("SSS", "LOAD: ")
                 }
-                is DataState.Success<UserModel> -> {
-                    (activity as AuthActivity).login(it.data)
+                is Resource.Success<UserModel> -> {
+                    (activity as AuthActivity).login(it.data!!)
                 }
             }
         }

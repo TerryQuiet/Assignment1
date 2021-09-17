@@ -2,6 +2,7 @@ package tk.quietdev.level1.ui.authorization.register
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentRegistrationBinding
 import tk.quietdev.level1.data.remote.models.AuthResponse
+import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.ui.authorization.AuthActivity
 import tk.quietdev.level1.ui.authorization.AuthViewModel
+import tk.quietdev.level1.utils.Resource
 
 @AndroidEntryPoint
 class RegisterFragment : Fragment() {
@@ -37,19 +41,19 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setObservers() {
-        viewModel.regResponse.observe(viewLifecycleOwner) {
+        viewModel.dataState.observe(viewLifecycleOwner) {
             when (it) {
-                AuthResponse.Status.ONGOING -> {
-                    // show animation
+                is Resource.Error -> {
+                    val error = it.message
+                    error?.let { message ->
+                        showErrorSnackbar(message)
+                    }
                 }
-                AuthResponse.Status.OK -> {
-                    findNavController().navigate(RegisterFragmentDirections.regToLog())
+                is Resource.Loading -> {
+                    Log.d("SSS", "LOAD: ")
                 }
-                AuthResponse.Status.BAD -> {
-                    showErrorSnackbar(viewModel.errorMessage)
-                }
-                AuthResponse.Status.NULL -> {
-                    // request is not send yet
+                is Resource.Success<UserModel> -> {
+                    (activity as AuthActivity).login(it.data!!)
                 }
             }
         }

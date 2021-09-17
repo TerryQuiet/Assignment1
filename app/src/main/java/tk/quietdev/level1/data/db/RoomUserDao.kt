@@ -45,6 +45,7 @@ interface RoomUserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @Transaction
     open suspend fun insertCurrentUser(roomCurrentUser: RoomCurrentUser, roomUser: RoomUser) {
+        _clearUserContactsList()
         insert(roomUser)
         _insertCurrentUser(roomCurrentUser)
     }
@@ -75,7 +76,7 @@ interface RoomUserDao {
     suspend fun _insert(list: List<RoomUserContactsIds>)
 
     @Query("DELETE from room_current_user_contacts_ids")
-    fun _clearUserContactsList()
+    suspend fun _clearUserContactsList()
 
     @Transaction
     open suspend fun insert(listIds: List<RoomUserContactsIds>, roomUsers: List<RoomUser>) {
