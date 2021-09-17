@@ -13,47 +13,74 @@ import tk.quietdev.level1.utils.ext.loadImage
 class ContactHolder(
     private val binding: ListItemBinding,
     private val onClickListener: OnItemClickListener,
-    private val itemStateChecker: ItemStateChecker
+    private val itemStateChecker: ItemStateChecker,
+    private val holderType: HolderType
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private var _currentUserModel: UserModel? = null
     private val currentUser get() = _currentUserModel!!
-    private var isRemoveState = false
+    private var isMultiselectState = false
     private var isSelected = false
+    private var isAdded = false
 
-
-    private val stateObserver = Observer<ListState> { removeState ->
-        when (removeState) {
-            ListState.MULTISELECT ->  {
+    private val stateObserver = Observer<ListState> { state ->
+        when (state) {
+            ListState.MULTISELECT -> {
                 binding.cbRemove.visibility = View.VISIBLE
-                isRemoveState = true
+                isMultiselectState = true
             }
             ListState.NORMAL -> {
                 binding.cbRemove.visibility = View.GONE
-                isRemoveState = false
+                isMultiselectState = false
             }
             else -> binding.cbRemove.visibility = View.GONE
         }
     }
 
     fun bind(userModel: UserModel) {
-        with(userModel) {
-            isSelected = itemStateChecker.isItemSelected(id)
-            _currentUserModel = this
-            changeBackgroundColor()
-            binding.tvName.text = email // TODO: 9/15/2021 fix
-            binding.tvOccupation.text = id.toString() // TODO: 9/15/2021 fix
-            binding.ivProfilePic.loadImage(pictureUri)
-            binding.cbRemove.isChecked = isSelected
-            setListeners()
+        binding.apply {
+            with(userModel) {
+                isSelected = itemStateChecker.isItemSelected(id)
+                _currentUserModel = this
+                changeBackgroundColor()
+                tvName.text = email // TODO: 9/15/2021 fix
+                tvOccupation.text = id.toString() // TODO: 9/15/2021 fix
+                ivProfilePic.loadImage(pictureUri)
+                cbRemove.isChecked = isSelected
+                setListeners()
+            }
+            when (holderType) {
+                HolderType.ADD -> {
+                    isAdded = itemStateChecker.isItemAdded(userModel.id)
+                    if (!isAdded) {
+                        layoutBtnAdd.visibility = View.VISIBLE
+                        binding.ivAdded.visibility = View.GONE
+                        imageBtnAdd.setOnClickListener {
+                            onIconClick()
+                        }
+                        layoutBtnAdd.setOnClickListener {
+                            onIconClick()
+                        }
+                    } else {
+                        layoutBtnAdd.visibility = View.GONE
+                        binding.ivAdded.visibility = View.VISIBLE
+                    }
+
+                }
+                HolderType.REMOVE -> {
+                    imageBtnRemove.visibility = View.VISIBLE
+                    imageBtnRemove.setOnClickListener {
+                        onIconClick()
+                    }
+                }
+            }
         }
     }
 
+
+
     private fun setListeners() {
         binding.apply {
-            imageBtn.setOnClickListener {
-                remove()
-            }
             cbRemove.setOnClickListener {
                 onItemClicked()
             }
@@ -68,7 +95,7 @@ class ContactHolder(
     }
 
     private fun onItemClicked() {
-        if (isRemoveState) {
+        if (isMultiselectState) {
             toggleState()
         }
         onClickListener.onItemClick(currentUser)
@@ -91,8 +118,12 @@ class ContactHolder(
         }
     }
 
-    fun remove() {
+    fun onIconClick() {
         onClickListener.onIconClick(currentUser, absoluteAdapterPosition)
+        if (holderType == HolderType.ADD) {
+            binding.layoutBtnAdd.visibility = View.GONE
+            binding.ivAdded.visibility = View.VISIBLE
+        }
     }
 
     fun setObserver(removeState: MutableLiveData<ListState>) {
@@ -109,10 +140,8 @@ class ContactHolder(
         fun onIconClick(userModel: UserModel, position: Int)
     }
 
-    interface ItemStateChecker {
-        fun isItemSelected(id: Int) : Boolean
+    enum class HolderType {
+        REMOVE, ADD
     }
-
-
 
 }

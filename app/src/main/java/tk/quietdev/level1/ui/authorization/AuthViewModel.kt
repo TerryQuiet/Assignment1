@@ -34,9 +34,6 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    suspend fun findUser(email: String, password: String) {
-        currentUserModel.value = db.getUserWithValidation(email, password)
-    }
 
     fun isPasswordValid(text: CharSequence?) =
         !text.isNullOrEmpty() && validator.isPasswordValid(text.toString())

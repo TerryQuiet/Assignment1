@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -14,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentSettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
 import tk.quietdev.level1.utils.ext.loadImage
 
 @AndroidEntryPoint
@@ -22,7 +24,8 @@ class SettingsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var userDetailBinding: UserDetailBinding
     private val viewModel: SettingsViewModel by viewModels()
-    private val settingsSharedViewModel :SettingsSharedViewModel by activityViewModels()
+    private val settingsSharedViewModel: SettingsSharedViewModel by activityViewModels()
+    private val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,14 +39,14 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-            bindListeners()
-            setObservers()
+        bindListeners()
+        setObservers()
     }
 
     private fun bindListeners() {
         binding.apply {
             btnViewContacts.setOnClickListener {
-               settingsSharedViewModel.viewMyContactsButtonClicked.value = true
+                settingsSharedViewModel.viewMyContactsButtonClicked.value = true
             }
             btnEditProfile.setOnClickListener {
                 viewModel.currentUserModel.value?.apply {

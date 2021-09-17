@@ -15,14 +15,17 @@ import tk.quietdev.level1.utils.OnSwipeCallBack
 open class ContactsAdapter(
     private val onClickListener: ContactHolder.OnItemClickListener,
     private val removeState: MutableLiveData<ListState>,
-    private val itemStateChecker: ContactHolder.ItemStateChecker,
+    private val itemStateChecker: ItemStateChecker,
+    private val holderType: ContactHolder.HolderType
 ) : ListAdapter<UserModel, ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener {
 
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        val onSwipeCallBack = OnSwipeCallBack(this)
-        ItemTouchHelper(onSwipeCallBack).attachToRecyclerView(recyclerView)
+        if (holderType == ContactHolder.HolderType.REMOVE) {
+            val onSwipeCallBack = OnSwipeCallBack(this)
+            ItemTouchHelper(onSwipeCallBack).attachToRecyclerView(recyclerView)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
@@ -31,7 +34,8 @@ open class ContactsAdapter(
                 LayoutInflater.from(parent.context), parent, false
             ),
             onClickListener,
-            itemStateChecker
+            itemStateChecker,
+            holderType
         )
     }
 
@@ -40,7 +44,7 @@ open class ContactsAdapter(
     }
 
     override fun onHolderSwiped(viewHolder: RecyclerView.ViewHolder) {
-        (viewHolder as ContactHolder).remove()
+        (viewHolder as ContactHolder).onIconClick()
     }
 
     override fun onViewAttachedToWindow(holder: ContactHolder) {
