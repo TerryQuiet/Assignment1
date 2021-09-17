@@ -22,9 +22,9 @@ class RegisterViewModel @Inject constructor(
 
     val isErrorShown = MutableLiveData(false) // disable regButton
 
-    private val _dataState: MutableLiveData<Resource<UserModel>> = MutableLiveData()
+    private val _dataState: MutableLiveData<Resource<UserModel?>> = MutableLiveData()
 
-    val dataState: LiveData<Resource<UserModel>>
+    val dataState: LiveData<Resource<UserModel?>>
         get() = _dataState
 
     private var registerJob: Job? = null

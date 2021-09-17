@@ -1,6 +1,7 @@
 package tk.quietdev.level1.ui.pager.contacts.list.usercontacts
 
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.repository.RemoteApiRepository
 import tk.quietdev.level1.repository.Repository
@@ -33,9 +35,12 @@ class ContactListViewModel @Inject constructor(
     }
 
     init {
-        (repository as RemoteApiRepository).getCurrentUserContactIdsFlow().onEach {
-            userList.value = repository.getCurrentUserContactsFlow(it).first()
-        }.launchIn(viewModelScope)
+            (repository as RemoteApiRepository).getCurrentUserContactIdsFlow().onEach {
+                Log.d("TAG", "$it: ")
+                it.data?.let {
+                    userList.value = repository.getCurrentUserContactsFlow(it).first()
+                }
+            }.launchIn(viewModelScope)
     }
 
     fun removeContact(userModel: UserModel, position: Int) {

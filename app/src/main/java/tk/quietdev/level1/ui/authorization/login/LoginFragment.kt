@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -24,7 +25,7 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
     private val viewModel: LoginViewModel by viewModels()
-    private val authSharedViewModel: AuthViewModel by viewModels()
+    private val authSharedViewModel: AuthViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,13 +36,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // showHelpTip()
-        /*if (authSharedViewModel.isRemember.value!!) {
-            authSharedViewModel.currentUserModel.value?.let {
-                (activity as AuthActivity).login(it)
-            }
-        }*/
         setListeners()
         setObservers()
 
@@ -49,20 +43,21 @@ class LoginFragment : Fragment() {
 
     private fun setObservers() {
         viewModel.dataState.observe(viewLifecycleOwner) {
-            Log.d("SSS", "setObservers: ${it}")
             when (it) {
                 is Resource.Error -> {
                     val error = it.message
                     error?.let { message ->
                         showErrorSnackbar(message)
                     }
-                    //showHelpTip()
+                    showHelpTip()
+                    binding.progressCircular.visibility = View.GONE
                 }
                 is Resource.Loading -> {
-                    Log.d("SSS", "LOAD: ")
+                    binding.progressCircular.visibility = View.VISIBLE
                 }
-                is Resource.Success<UserModel> -> {
-                    (activity as AuthActivity).login(it.data!!)
+                is Resource.Success<UserModel?> -> {
+                    (activity as AuthActivity).login()
+                    binding.progressCircular.visibility = View.GONE
                 }
             }
         }
@@ -106,23 +101,14 @@ class LoginFragment : Fragment() {
             }
 
             cbRemember.setOnCheckedChangeListener { _, isChecked ->
-                authSharedViewModel.updateIsRemember(isChecked)
+                authSharedViewModel.isRemember = isChecked
+                Log.d("TAG", "setListeners: ${authSharedViewModel.isRemember}")
             }
 
             tvLinkSignUp.setOnClickListener {
                 findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegistrationFragment())
             }
         }
-    }
-
-
-    /**
-     * checks if user is present in a database and proceeds to login if so
-     */
-    private fun tryLogin() {
-        authSharedViewModel.currentUserModel.value?.let {
-            (activity as AuthActivity).login(it)
-        } ?: showHelpTip()
     }
 
     @Deprecated("Not required, but helps with login(fills the fields for you if pressed OK)")

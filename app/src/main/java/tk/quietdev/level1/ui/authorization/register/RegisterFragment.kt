@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -25,7 +26,7 @@ class RegisterFragment : Fragment() {
 
     private lateinit var binding: FragmentRegistrationBinding
     private val viewModel: RegisterViewModel by viewModels()
-    private val authSharedViewModel: AuthViewModel by viewModels()
+    private val authSharedViewModel: AuthViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,12 +49,14 @@ class RegisterFragment : Fragment() {
                     error?.let { message ->
                         showErrorSnackbar(message)
                     }
+                    binding.progressCircular.visibility = View.GONE
                 }
                 is Resource.Loading -> {
-                    Log.d("SSS", "LOAD: ")
+                    binding.progressCircular.visibility = View.VISIBLE
                 }
-                is Resource.Success<UserModel> -> {
-                    (activity as AuthActivity).login(it.data!!)
+                is Resource.Success<UserModel?> -> {
+                    (activity as AuthActivity).login()
+                    binding.progressCircular.visibility = View.GONE
                 }
             }
         }
@@ -92,7 +95,7 @@ class RegisterFragment : Fragment() {
                 }
             }
             cbRemember.setOnCheckedChangeListener { _, isChecked ->
-                authSharedViewModel.updateIsRemember(isChecked)
+                authSharedViewModel.isRemember= isChecked
             }
             tvLinkSignIn.setOnClickListener {
                 findNavController().navigate(RegisterFragmentDirections.regToLog())

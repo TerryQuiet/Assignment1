@@ -1,6 +1,7 @@
 package tk.quietdev.level1.ui.authorization.login
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,9 +20,10 @@ class LoginViewModel @Inject constructor(
     private val repository: Repository
 ) : ViewModel() {
     val isErrorShown = MutableLiveData(false) // disable regButton
-    private val _dataState: MutableLiveData<Resource<UserModel>> = MutableLiveData()
 
-    val dataState: LiveData<Resource<UserModel>>
+    private val _dataState: MutableLiveData<Resource<UserModel?>> = MutableLiveData()
+
+    val dataState: LiveData<Resource<UserModel?>>
         get() = _dataState
     
     private var loginJob: Job? = null
@@ -29,6 +31,7 @@ class LoginViewModel @Inject constructor(
     fun loginUser(email: String, passwd: String) {
     loginJob = repository.userLogin(email, passwd).onEach {
             _dataState.value = it
+            Log.d("TAG", "loginUser:VM $it")
             if (it is Resource.Success) {
                 loginJob?.cancel()
             }

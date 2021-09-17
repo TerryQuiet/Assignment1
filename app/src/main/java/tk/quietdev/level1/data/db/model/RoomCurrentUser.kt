@@ -7,5 +7,13 @@ import androidx.room.PrimaryKey
 data class RoomCurrentUser(
    @PrimaryKey(autoGenerate = false)  val single: Boolean = true,
    val id: Int,
+   val address: String?,
+   val birthday: String?,
+   val career: String?,
+   val createdAt: String?,
+   val email: String,
+   val name: String?,
+   val phone: String?,
+   val updatedAt: String?,
    val accessToken: String
 )

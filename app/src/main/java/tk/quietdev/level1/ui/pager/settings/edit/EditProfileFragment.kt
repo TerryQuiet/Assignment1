@@ -15,6 +15,7 @@ import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.ui.authorization.AuthActivity
 import tk.quietdev.level1.utils.Resource
 import tk.quietdev.level1.utils.ext.loadImage
 
@@ -47,17 +48,23 @@ class EditProfileFragment : Fragment() {
         viewModel.currentUserModel.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success<UserModel> -> {
+                    binding.progressCircular.visibility = View.GONE
                     if (it.message == "OnUpdate") {
                         findNavController().popBackStack()
                     } else {
                         it.data?.let { userModel ->
                             bindValues(userModel)
                         }
+
                     }
                 }
-                else -> "todo"
+                is Resource.Error -> {
+                    binding.progressCircular.visibility = View.GONE
+                }
+                is Resource.Loading -> {
+                    binding.progressCircular.visibility = View.VISIBLE
+                }
             }
-            Log.d("TAG", "setObservers: ")
         }
     }
 
@@ -79,6 +86,7 @@ class EditProfileFragment : Fragment() {
      * @return returns true if user was updated
      */
     private fun updateUser() {
+        binding.progressCircular.visibility = View.VISIBLE
         binding.apply {
             return viewModel.updateUser(
                 userName = etName.text.toString(),

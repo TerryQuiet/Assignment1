@@ -15,7 +15,15 @@ class RemoteMapper @Inject constructor() {
         userTokenData.user.apply {
             return RoomCurrentUser(
                 id = id,
-                accessToken = userTokenData.accessToken
+                accessToken = userTokenData.accessToken,
+                address = address,
+                birthday = birthday,
+                career = career,
+                createdAt = createdAt,
+                email = email,
+                name = name,
+                phone = phone,
+                updatedAt = updatedAt,
             )
         }
     }

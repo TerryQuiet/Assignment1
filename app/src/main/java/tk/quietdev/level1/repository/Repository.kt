@@ -10,8 +10,8 @@ interface Repository {
     fun getUserWithNoValidation(id: Int): UserModel?
     fun getUserWithValidation(email: String, password: String): UserModel?
     fun getUserList(amount: Int = -1): List<UserModel>
-    fun userRegistration(login: String, password: String): Flow<Resource<UserModel>>
-    fun userLogin(login: String, password: String): Flow<Resource<UserModel>>
+    fun userRegistration(login: String, password: String): Flow<Resource<UserModel?>>
+    fun userLogin(login: String, password: String): Flow<Resource<UserModel?>>
     fun currentUserFlow(): Flow<Resource<UserModel>>
     fun getAllUsersFlow(): Flow<Resource<List<UserModel>>>
     fun addUserContact(userModel: UserModel): Flow<Resource<List<UserModel>>>
