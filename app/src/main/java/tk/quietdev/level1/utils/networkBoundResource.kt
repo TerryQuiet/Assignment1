@@ -14,7 +14,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
     val flow = if (shouldFetch(data)) {
         emit(Resource.Loading(data))
         try {
-            delay(2222)
+            delay(Const.NETWORK_DELAY_SIMULATION)
             saveFetchResult(fetch())
             query().map { Resource.Success(it) }
         } catch (throwable: Throwable) {
@@ -23,23 +23,7 @@ inline fun <ResultType, RequestType> networkBoundResource(
             query().map { Resource.Error(throwable.message ?: "error while data fetch", it) }
         }
     } else {
-        Log.d("TAG", "networkBoundResource: SHOULD NEVER HAPPEN")
         query().map { Resource.Success(it) }
     }
     emitAll(flow)
-}
-
-
-inline fun <ResultType, RequestType> networkBoundResourceFetch(
-    crossinline query: () -> Flow<ResultType>,
-    crossinline fetch: suspend () -> RequestType,
-    crossinline saveFetchResult: suspend (RequestType) -> Unit,
-) = flow {
-        emit(Resource.Loading<ResultType>(null))
-    try {
-        saveFetchResult(fetch())
-        emitAll(query().map { (Resource.Success(it)) })
-    } catch (throwable: Throwable) {
-        emitAll(query().map { (Resource.Error(throwable.message ?: "error while data fetch", it)) })
-    }
 }

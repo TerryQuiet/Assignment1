@@ -25,11 +25,7 @@ class AddContactListViewModel @Inject constructor(
     var userList: MutableLiveData<Resource<List<UserModel>>> = MutableLiveData()
     private lateinit var userListAll: Resource<List<UserModel>>
 
-    /* var userList = repository.getAllUsersFlow().asLiveData().map {
-         serchQueryMap(it)
-     } as MutableLiveData*/
-
-    private fun serchQueryMap(it: Resource<List<UserModel>>): Resource<List<UserModel>> =
+    private fun searchQueryMap(it: Resource<List<UserModel>>): Resource<List<UserModel>> =
         when (it) {
             is Resource.Error -> it
             is Resource.Success -> Resource.Success((it.data?.filter { it.email.startsWith(search) }
@@ -41,14 +37,14 @@ class AddContactListViewModel @Inject constructor(
     init {
         repository.getAllUsersFlow().onEach {
             userListAll = it
-            userList.value = serchQueryMap(userListAll)
+            userList.value = searchQueryMap(userListAll)
         }.launchIn(viewModelScope)
     }
 
     fun changeSearchQuery(text: String) {
         search = text
         userList.value?.let {
-            userList.value = serchQueryMap(userListAll)
+            userList.value = searchQueryMap(userListAll)
         }
     }
 

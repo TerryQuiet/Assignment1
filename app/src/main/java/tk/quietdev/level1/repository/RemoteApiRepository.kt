@@ -21,7 +21,6 @@ import tk.quietdev.level1.data.remote.test.GetUserContactsResponse
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.UserRegisterError
 import tk.quietdev.level1.utils.networkBoundResource
-import tk.quietdev.level1.utils.networkBoundResourceFetch
 import kotlin.reflect.KSuspendFunction1
 
 class RemoteApiRepository(
@@ -71,7 +70,7 @@ class RemoteApiRepository(
     private fun userAuth(
         call: KSuspendFunction1<AuthUser, Response<AuthResponse>>,
         authUser: AuthUser
-    ) = networkBoundResourceFetch(
+    ) = networkBoundResource(
         query = {
             db.getCurrentUserFlow().map {
                 if (it == null) it else roomMapper.roomCurrentUserToUser(it)
