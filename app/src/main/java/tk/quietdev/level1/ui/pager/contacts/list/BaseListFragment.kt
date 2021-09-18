@@ -10,17 +10,19 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactHolderBase
 import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactsAdapter
 import tk.quietdev.level1.ui.pager.contacts.list.adapter.ItemStateChecker
+import kotlin.reflect.KProperty
 
 abstract class BaseListFragment : Fragment(), ItemStateChecker {
 
     private var _binding: FragmentContactsBinding? = null
     protected val binding get() = _binding!!
     protected val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
-    protected val contactsAdapter: ContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
+    protected open val contactsAdapter: ContactsAdapter<ContactHolderBase> by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
 
-    abstract fun getContactAdapter() : ContactsAdapter
+    abstract fun getContactAdapter() : ContactsAdapter<ContactHolderBase>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -63,3 +65,5 @@ abstract class BaseListFragment : Fragment(), ItemStateChecker {
         appbarSharedViewModel.searchIconVisibility.value = View.VISIBLE
     }
 }
+
+
