@@ -1,5 +1,6 @@
 package tk.quietdev.level1.ui.pager.contacts.list.adapter
 
+
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
@@ -12,34 +13,31 @@ import tk.quietdev.level1.utils.DiffCallBack
 import tk.quietdev.level1.utils.ListState
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
-open class ContactsAdapter(
-    private val onClickListener: ContactHolder.OnItemClickListener,
+open class ContactsAdapter<T : ContactHolderBase>(
     private val removeState: MutableLiveData<ListState>,
-    private val itemStateChecker: ItemStateChecker,
-    private val holderType: ContactHolder.HolderType
-) : ListAdapter<UserModel, ContactHolder>(DiffCallBack), OnSwipeCallBack.Listener {
+    private val holderType: ContactHolderBase.HolderType,
+    private val holder: T
+) : ListAdapter<UserModel, T>(DiffCallBack), OnSwipeCallBack.Listener {
 
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        if (holderType == ContactHolder.HolderType.REMOVE) {
+        if (holderType == ContactHolderBase.HolderType.REMOVE) {
             val onSwipeCallBack = OnSwipeCallBack(this)
             ItemTouchHelper(onSwipeCallBack).attachToRecyclerView(recyclerView)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolder {
-        return ContactHolder(
-            ListItemBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
-            ),
-            onClickListener,
-            itemStateChecker,
-            holderType
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): T {
+
+        holder.binding = ListItemBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
         )
+
+        return holder
     }
 
-    override fun onBindViewHolder(holder: ContactHolder, position: Int) {
+    override fun onBindViewHolder(holder: T, position: Int) {
         holder.bind(getItem(position))
     }
 
@@ -47,14 +45,16 @@ open class ContactsAdapter(
         (viewHolder as ContactHolder).onIconClick()
     }
 
-    override fun onViewAttachedToWindow(holder: ContactHolder) {
+    override fun onViewAttachedToWindow(holder: T) {
         super.onViewAttachedToWindow(holder)
-        holder.setObserver(removeState)
+        if (holder is ContactHolder)
+            holder.setObserver(removeState)
     }
 
-    override fun onViewDetachedFromWindow(holder: ContactHolder) {
+    override fun onViewDetachedFromWindow(holder: T) {
         super.onViewDetachedFromWindow(holder)
-        holder.removeObserver(removeState)
+        if (holder is ContactHolder)
+            holder.removeObserver(removeState)
     }
 
 

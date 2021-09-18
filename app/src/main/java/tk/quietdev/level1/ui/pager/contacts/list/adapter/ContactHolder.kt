@@ -4,57 +4,47 @@ import android.graphics.Color
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.ListState
-import tk.quietdev.level1.utils.ext.loadImage
 
 class ContactHolder(
-    private val binding: ListItemBinding,
-    private val onClickListener: OnItemClickListener,
-    private val itemStateChecker: ItemStateChecker,
-    private val holderType: HolderType
-) : RecyclerView.ViewHolder(binding.root) {
+    binding: ListItemBinding?,
+    onClickListener: OnItemClickListener,
+    itemStateChecker: ItemStateChecker,
+    holderType: HolderType
+) : ContactHolderBase(binding, onClickListener, itemStateChecker, holderType) {
 
-    private var _currentUserModel: UserModel? = null
-    private val currentUser get() = _currentUserModel!!
+
     private var isMultiselectState = false
     private var isSelected = false
     private var isAdded = false
 
     private val stateObserver = Observer<ListState> { state ->
-        when (state) {
-            ListState.MULTISELECT -> {
-                binding.cbRemove.visibility = View.VISIBLE
-                isMultiselectState = true
+        binding?.apply {
+            when (state) {
+                ListState.MULTISELECT -> {
+                    cbRemove.visibility = View.VISIBLE
+                    isMultiselectState = true
+                }
+                ListState.NORMAL -> {
+                    cbRemove.visibility = View.GONE
+                    isMultiselectState = false
+                }
+                else -> cbRemove.visibility = View.GONE
             }
-            ListState.NORMAL -> {
-                binding.cbRemove.visibility = View.GONE
-                isMultiselectState = false
-            }
-            else -> binding.cbRemove.visibility = View.GONE
         }
     }
 
-    fun bind(userModel: UserModel) {
-        binding.apply {
-            with(userModel) {
-                isSelected = itemStateChecker.isItemSelected(id)
-                _currentUserModel = this
-                changeBackgroundColor()
-                tvName.text = email // TODO: 9/15/2021 fix
-                tvOccupation.text = id.toString() // TODO: 9/15/2021 fix
-                ivProfilePic.loadImage(pictureUri)
-                cbRemove.isChecked = isSelected
-                setListeners()
-            }
+
+    override fun bindSpecial(userModel: UserModel) {
+        binding?.apply {
             when (holderType) {
                 HolderType.ADD -> {
                     isAdded = itemStateChecker.isItemAdded(userModel.id)
                     if (!isAdded) {
                         layoutBtnAdd.visibility = View.VISIBLE
-                        binding.ivAdded.visibility = View.GONE
+                        ivAdded.visibility = View.GONE
                         imageBtnAdd.setOnClickListener {
                             onIconClick()
                         }
@@ -63,11 +53,14 @@ class ContactHolder(
                         }
                     } else {
                         layoutBtnAdd.visibility = View.GONE
-                        binding.ivAdded.visibility = View.VISIBLE
+                        ivAdded.visibility = View.VISIBLE
                     }
 
                 }
                 HolderType.REMOVE -> {
+                    changeBackgroundColor()
+                    isSelected = itemStateChecker.isItemSelected(userModel.id)
+                    cbRemove.isChecked = isSelected
                     imageBtnRemove.visibility = View.VISIBLE
                     imageBtnRemove.setOnClickListener {
                         onIconClick()
@@ -77,10 +70,8 @@ class ContactHolder(
         }
     }
 
-
-
-    private fun setListeners() {
-        binding.apply {
+    override fun setListeners() {
+        binding?.apply {
             cbRemove.setOnClickListener {
                 onItemClicked()
             }
@@ -104,7 +95,7 @@ class ContactHolder(
     private fun toggleState() {
         currentUser.apply {
             isSelected = !isSelected
-            binding.cbRemove.isChecked = isSelected
+            binding?.cbRemove?.isChecked = isSelected
         }
         changeBackgroundColor()
     }
@@ -112,19 +103,23 @@ class ContactHolder(
     // TODO: 8/15/2021 get current theme colors? 
     private fun changeBackgroundColor() {
         if (isSelected) {
-            binding.layout.setBackgroundColor(Color.GRAY)
+            binding?.layout?.setBackgroundColor(Color.GRAY)
         } else {
-            binding.layout.setBackgroundColor(Color.TRANSPARENT)
+            binding?.layout?.setBackgroundColor(Color.TRANSPARENT)
         }
     }
 
+
     fun onIconClick() {
         onClickListener.onIconClick(currentUser, absoluteAdapterPosition)
-        if (holderType == HolderType.ADD) {
-            binding.layoutBtnAdd.visibility = View.GONE
-            binding.ivAdded.visibility = View.VISIBLE
+        binding?.apply {
+            if (holderType == HolderType.ADD) {
+                layoutBtnAdd.visibility = View.GONE
+                ivAdded.visibility = View.VISIBLE
+            }
         }
     }
+
 
     fun setObserver(removeState: MutableLiveData<ListState>) {
         removeState.observeForever(stateObserver)
@@ -134,14 +129,5 @@ class ContactHolder(
         removeState.removeObserver(stateObserver)
     }
 
-    interface OnItemClickListener {
-        fun onItemClick(userModel: UserModel)
-        fun onLongItemClick(userModel: UserModel): Boolean
-        fun onIconClick(userModel: UserModel, position: Int)
-    }
-
-    enum class HolderType {
-        REMOVE, ADD
-    }
 
 }

@@ -32,7 +32,6 @@ class EditProfileViewModel @Inject constructor(private val repository: Repositor
         pictureUri: String? = null
     ) {
         val currentUser = currentUserModel.value?.data
-        Log.d("TAG", "updateUser: $currentUser")
         currentUser?.let { it ->
             val updatedUser = it.copy(
                 userName = userName,
