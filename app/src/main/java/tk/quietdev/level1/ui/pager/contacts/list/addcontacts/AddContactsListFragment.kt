@@ -6,9 +6,9 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.list.BaseListFragment
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactHolder
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactHolderBase
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactsAdapter
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.AddContactsAdapter
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.holders.ContactHolderBase
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.RemoveContactsAdapter
 import tk.quietdev.level1.utils.ListState
 
 @AndroidEntryPoint
@@ -41,24 +41,11 @@ class AddContactsListFragment : BaseListFragment() {
 
     // works
 
-    /*override fun getContactAdapter() = ContactsAdapter(
-        onItemClickListener,
-        viewModel.listState,
-        this,
-        ContactHolderBase.HolderType.ADD
-    )*/
-
-    override fun getContactAdapter(): ContactsAdapter<ContactHolderBase> = ContactsAdapter(
-        holder = ContactHolder(
-            null,
-            holderType = ContactHolderBase.HolderType.REMOVE,
-            itemStateChecker = this,
-            onClickListener = onItemClickListener
-        ),
-        removeState =  viewModel.listState,
-        holderType = ContactHolderBase.HolderType.REMOVE
-
+    override fun getContactAdapter() = AddContactsAdapter(
+        onClickListener = onItemClickListener,
+        holderState = viewModel.holderState
     )
+
 
     private fun addUser(userModel: UserModel) {
         viewModel.addUserContact(userModel)
@@ -89,8 +76,5 @@ class AddContactsListFragment : BaseListFragment() {
 
     }
 
-    override fun isItemAdded(id: Int): Boolean {
-        return viewModel.isItemAdded(id)
-    }
 
 }
