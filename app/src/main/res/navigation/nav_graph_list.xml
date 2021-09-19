@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/contactsListFragment"
-        android:name="tk.quietdev.level1.ui.pager.contacts.list.usercontacts.RemoveContactsListFragment"
+        android:name="tk.quietdev.level1.ui.pager.contacts.list.removecontacts.RemoveContactsListFragment"
         android:label="@string/contacts">
         <action
             android:id="@+id/action_contactsListFragment_to_contactDetailFragment"

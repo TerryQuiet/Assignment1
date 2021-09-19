@@ -20,6 +20,7 @@ class AppbarSharedViewModel @Inject constructor() : ViewModel() {
         if (!toShow) {
             searchLayoutVisibility.value = View.GONE
             navBarVisibility.value = View.VISIBLE
+            searchText.value = ""
         } else {
             searchLayoutVisibility.value = View.VISIBLE
             navBarVisibility.value = View.GONE

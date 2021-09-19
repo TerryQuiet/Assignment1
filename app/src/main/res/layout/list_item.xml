@@ -86,6 +86,8 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/layoutBtnAdd"
+                    android:paddingVertical="@dimen/small_8dp"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
@@ -121,13 +123,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    android:indeterminate="true"
-                    />
+                    android:indeterminate="true" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

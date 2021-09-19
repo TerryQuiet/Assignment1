@@ -1,10 +1,9 @@
-package tk.quietdev.level1.ui.pager.contacts.list.usercontacts
+package tk.quietdev.level1.ui.pager.contacts.list.removecontacts
 
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -23,7 +22,7 @@ import tk.quietdev.level1.utils.Const
 @AndroidEntryPoint
 class RemoveContactsListFragment : BaseListFragment() {
 
-    private val viewModelRemove: RemoveContactListViewModel by viewModels()
+    override val viewModel: RemoveContactListViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,8 +30,9 @@ class RemoveContactsListFragment : BaseListFragment() {
     }
 
     override fun initObservables() {
-        viewModelRemove.apply {
-            listState.observe(viewLifecycleOwner) { listState ->
+        super.initObservables()
+        viewModel.apply {
+            contactsToRemove.observe(viewLifecycleOwner) { listState ->
                 when (listState.isEmpty()) {
                     false -> {
                         binding.btnAdd.text = getString(R.string.remove)
@@ -40,14 +40,7 @@ class RemoveContactsListFragment : BaseListFragment() {
                     true -> {
                         binding.btnAdd.text = getString(R.string.add_contact)
                     }
-                }
-                userList.observe(viewLifecycleOwner) {
 
-                    val list = it.data
-                    Log.d("TAG", "initObservables: ${it.data?.size}")
-                    list?.let { userList ->
-                        contactsAdapter.submitList(userList)
-                    }
                 }
             }
         }
@@ -57,14 +50,13 @@ class RemoveContactsListFragment : BaseListFragment() {
 
     override fun getContactAdapter() = RemoveContactsAdapter(
         onClickListener = onItemClickListener,
-        removeState = viewModelRemove.listState,
-        holderState = viewModelRemove.holderState
+        removeState = viewModel.contactsToRemove,
+        holderState = viewModel.holderState
     )
 
 
     private fun removeContact(userModel: UserModel, position: Int) {
-        viewModelRemove.removeContact(userModel, position)
-
+        viewModel.removeContact(userModel.id, position)
         showDeletionUndoSnackBar(userModel.id)
     }
 
@@ -75,9 +67,9 @@ class RemoveContactsListFragment : BaseListFragment() {
     }
 
     private fun fabClicked() {
-        when (viewModelRemove.listState.value?.isEmpty()) {
+        when (viewModel.contactsToRemove.value?.isEmpty()) {
             false -> {
-                // TODO: 9/18/2021 remove all
+                viewModel.removeAll()
             }
             true -> {
                 findNavController().navigate(
@@ -97,7 +89,7 @@ class RemoveContactsListFragment : BaseListFragment() {
         )
             .setTextColor(Color.WHITE)
             .setAction(getString(R.string.add_back)) {
-                viewModelRemove.addUserBack(id)
+                viewModel.addUserBack(id)
             }
             .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
@@ -125,22 +117,22 @@ class RemoveContactsListFragment : BaseListFragment() {
     // we need to remove whoever have added state.
     override fun onResume() {
         super.onResume()
-        viewModelRemove.holderState.value = viewModelRemove.holderState.value?.filterValues { HolderState.ADDED != it }?.toMutableMap()
+        viewModel.holderState.value = viewModel.holderState.value?.filterValues { HolderState.SUCCESS != it }?.toMutableMap()
     }
 
 
     private val onItemClickListener = object : ContactHolderBase.OnItemClickListener {
 
         override fun onItemClick(userModel: UserModel) {
-            if (!viewModelRemove.listState.value.isNullOrEmpty()) {
-                viewModelRemove.toggleUserSelected(userModel.id)
+            if (!viewModel.contactsToRemove.value.isNullOrEmpty()) {
+                viewModel.toggleUserSelected(userModel.id)
             } else {
                 openContactDetail(userModel)
             }
         }
 
         override fun onLongItemClick(userModel: UserModel): Boolean {
-            viewModelRemove.toggleUserSelected(userModel.id)
+            viewModel.toggleUserSelected(userModel.id)
             return true
         }
 

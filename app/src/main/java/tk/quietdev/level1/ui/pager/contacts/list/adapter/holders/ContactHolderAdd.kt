@@ -9,7 +9,6 @@ class ContactHolderAdd(
     onClickListener: OnItemClickListener,
 ) : ContactHolderBase(binding, onClickListener) {
 
-
     override fun bind(userModel: UserModel) {
         super.bind(userModel)
         binding.apply {
@@ -24,5 +23,9 @@ class ContactHolderAdd(
         }
     }
 
+    override fun addedState() {
+        super.addedState()
+        binding.ivAdded.visibility = View.VISIBLE
+    }
 
 }

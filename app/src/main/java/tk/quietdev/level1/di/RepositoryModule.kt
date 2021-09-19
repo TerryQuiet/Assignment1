@@ -10,8 +10,8 @@ import tk.quietdev.level1.data.db.RoomMapper
 import tk.quietdev.level1.data.db.RoomUserDao
 import tk.quietdev.level1.data.remote.RemoteMapper
 import tk.quietdev.level1.data.remote.ShppApi
-import tk.quietdev.level1.repository.RemoteApiRepository
-import tk.quietdev.level1.repository.Repository
+import tk.quietdev.level1.data.repository.RemoteApiRepository
+import tk.quietdev.level1.data.repository.Repository
 import javax.inject.Singleton
 
 @Module
