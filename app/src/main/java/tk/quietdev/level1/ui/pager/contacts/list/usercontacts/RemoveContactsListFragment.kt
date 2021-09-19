@@ -148,7 +148,4 @@ class RemoveContactsListFragment : BaseListFragment() {
             removeContact(userModel, position)
     }
 
-    override fun isItemSelected(id: Int): Boolean {
-        return viewModelRemove.isItemSelected(id)
-    }
 }

@@ -11,10 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
 import tk.quietdev.level1.ui.pager.contacts.list.adapter.BaseContactsAdapter
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.RemoveContactsAdapter
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.HolderStateChecker
 
-abstract class BaseListFragment : Fragment(), HolderStateChecker {
+abstract class BaseListFragment : Fragment() {
 
     private var _binding: FragmentContactsBinding? = null
     protected val binding get() = _binding!!
