@@ -13,22 +13,23 @@ import kotlinx.coroutines.launch
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.repository.RemoteApiRepository
 import tk.quietdev.level1.repository.Repository
+import tk.quietdev.level1.ui.pager.contacts.list.BaseListViewModel
 import tk.quietdev.level1.utils.ListState
 import tk.quietdev.level1.utils.Resource
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class ContactListViewModel @Inject constructor(
-    private val repository: Repository
-) : ViewModel() {
+class RemoveContactListViewModel @Inject constructor(
+    repository: Repository
+) : BaseListViewModel(repository) {
 
-    var userList = MutableLiveData<Resource<List<UserModel>>>()
+
 
     private var deletedUserPosition: Int? = null
-    private var multiSelectList = TreeSet<Int>()
 
-    var listState = MutableLiveData(ListState.NORMAL)
+
+    var listState = MutableLiveData<List<Int>>(listOf())
 
     fun addUserBack(id: Int) {
 
@@ -44,20 +45,22 @@ class ContactListViewModel @Inject constructor(
     }
 
     fun removeContact(userModel: UserModel, position: Int) {
+        listState.value = listState.value?.minus(listOf(userModel.id))
         repository.removeUserContact(userModel).launchIn(viewModelScope) // todo cancel after result?
+        action(repository::removeUserContact, userModel)
     }
 
     fun toggleUserSelected(userId: Int) {
-        val isUserRemovedFromList = multiSelectList.remove(userId)
-        if (!isUserRemovedFromList) {
-            multiSelectList.add(userId)
+        if (listState.value?.contains(userId) == true) {
+            listState.value = listState.value?.minus(userId)
+        } else {
+            listState.value = listState.value?.plus(userId)
         }
-        listState.value =
-            if (multiSelectList.isNotEmpty()) ListState.MULTISELECT else ListState.NORMAL
+
     }
 
     fun isItemSelected(id: Int): Boolean {
-        return multiSelectList.contains(id)
+        return listState.value?.contains(id) == true
     }
 
 

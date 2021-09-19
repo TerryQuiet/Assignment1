@@ -25,8 +25,6 @@ class EditProfileFragment : Fragment() {
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
     private val viewModel: EditProfileViewModel by viewModels()
-    private val args: EditProfileFragmentArgs by navArgs()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,7 +53,6 @@ class EditProfileFragment : Fragment() {
                         it.data?.let { userModel ->
                             bindValues(userModel)
                         }
-
                     }
                 }
                 is Resource.Error -> {
@@ -72,7 +69,6 @@ class EditProfileFragment : Fragment() {
         binding.apply {
             btnSave.setOnClickListener {
                 updateUser()
-                //  findNavController().popBackStack()
             }
             btnAddPhoto.setOnClickListener {
                 getAction.launch(
@@ -82,13 +78,10 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-    /**
-     * @return returns true if user was updated
-     */
     private fun updateUser() {
         binding.progressCircular.visibility = View.VISIBLE
         binding.apply {
-            return viewModel.updateUser(
+            viewModel.updateUser(
                 userName = etName.text.toString(),
                 email = etEmail.text.toString(),
                 occupation = etOccupation.text.toString(),

@@ -4,11 +4,11 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import tk.quietdev.level1.R
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.list.BaseListFragment
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactHolder
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactsAdapter
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.AddContactsAdapter
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.holders.ContactHolderBase
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.RemoveContactsAdapter
 import tk.quietdev.level1.utils.ListState
 
 @AndroidEntryPoint
@@ -20,10 +20,6 @@ class AddContactsListFragment : BaseListFragment() {
         viewModel.apply {
             listState.observe(viewLifecycleOwner) { state ->
                 when (state) {
-                    ListState.MULTISELECT -> {
-                        binding.btnAdd.text = getString(R.string.add_contact)
-                        binding.btnAdd.visibility = View.VISIBLE
-                    }
                     ListState.NORMAL -> {
                         binding.btnAdd.visibility = View.GONE
                     }
@@ -45,12 +41,11 @@ class AddContactsListFragment : BaseListFragment() {
 
     // works
 
-    override fun getContactAdapter() = ContactsAdapter(
-        onItemClickListener,
-        viewModel.listState,
-        this,
-        ContactHolder.HolderType.ADD
+    override fun getContactAdapter() = AddContactsAdapter(
+        onClickListener = onItemClickListener,
+        holderState = viewModel.holderState
     )
+
 
     private fun addUser(userModel: UserModel) {
         viewModel.addUserContact(userModel)
@@ -65,7 +60,7 @@ class AddContactsListFragment : BaseListFragment() {
         )
     }
 
-    private val onItemClickListener = object : ContactHolder.OnItemClickListener {
+    private val onItemClickListener = object : ContactHolderBase.OnItemClickListener {
 
         override fun onItemClick(userModel: UserModel) {
             if (viewModel.listState.value != ListState.MULTISELECT) {
@@ -81,8 +76,5 @@ class AddContactsListFragment : BaseListFragment() {
 
     }
 
-    override fun isItemAdded(id: Int): Boolean {
-        return viewModel.isItemAdded(id)
-    }
 
 }

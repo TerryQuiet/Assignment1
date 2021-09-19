@@ -6,15 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentContactDetailBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
-import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.ui.pager.contacts.ContactsSharedViewModel
 import tk.quietdev.level1.utils.ext.loadImage
 
 @AndroidEntryPoint
@@ -24,8 +20,7 @@ class ContactDetailFragment : Fragment() {
     private val binding get() = _binding!!
     private var _userDetailBinding: UserDetailBinding? = null
     private val userDetailBinding get() = _userDetailBinding!!
-
-    private val viewModel : ContactDetailViewModel by viewModels()
+    private val viewModel: ContactDetailViewModel by viewModels()
     private val args: ContactDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
