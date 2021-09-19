@@ -7,5 +7,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContactDetailViewModel @Inject constructor() : ViewModel() {
-    lateinit var currentUserModel : UserModel
+    lateinit var currentUserModel: UserModel
 }

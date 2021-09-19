@@ -6,7 +6,7 @@ import tk.quietdev.level1.models.UserModel
 import javax.inject.Inject
 
 class RoomMapper @Inject constructor() {
-    fun roomUserToUser (roomCurrentUser: RoomUser) : UserModel {
+    fun roomUserToUser(roomCurrentUser: RoomUser): UserModel {
         roomCurrentUser.apply {
             return UserModel(
                 id = id,
@@ -20,7 +20,7 @@ class RoomMapper @Inject constructor() {
         }
     }
 
-    fun roomCurrentUserToUser(roomCurrentUser: RoomCurrentUser) : UserModel {
+    fun roomCurrentUserToUser(roomCurrentUser: RoomCurrentUser): UserModel {
         roomCurrentUser.apply {
             return UserModel(
                 id = id,

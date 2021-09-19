@@ -19,7 +19,7 @@ class ViewPagerContainerFragment : Fragment() {
     private var _binding: FragmentViewpagerContainerBinding? = null
     private val binding get() = _binding!!
     private val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
-    private val settingsSharedViewModel : SettingsSharedViewModel by activityViewModels()
+    private val settingsSharedViewModel: SettingsSharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,8 +42,7 @@ class ViewPagerContainerFragment : Fragment() {
             appbarSharedViewModel.showSearchLayout(false)
         }
 
-        binding.etSearch.doOnTextChanged {
-                text, _, _, _ ->
+        binding.etSearch.doOnTextChanged { text, _, _, _ ->
             appbarSharedViewModel.searchText.value = text.toString()
         }
     }
@@ -80,7 +79,6 @@ class ViewPagerContainerFragment : Fragment() {
         appbarSharedViewModel.searchLayoutVisibility.observe(viewLifecycleOwner) {
             binding.searchTopBar.visibility = it
         }
-
 
 
     }

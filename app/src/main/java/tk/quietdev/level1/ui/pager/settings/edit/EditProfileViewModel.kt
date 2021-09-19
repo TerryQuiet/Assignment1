@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import tk.quietdev.level1.data.repository.Repository
+import tk.quietdev.level1.utils.Const
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,10 +43,10 @@ class EditProfileViewModel @Inject constructor(private val repository: Repositor
             )
             if (currentUser != updatedUser) {
                 //this does not work, I don't understand why
-           /*currentUserModel =
-                    repository.updateUser(updatedUser).asLiveData() as MutableLiveData*/
+                /*currentUserModel =
+                         repository.updateUser(updatedUser).asLiveData() as MutableLiveData*/
                 repository.updateUser(updatedUser).onEach {
-                    it.message = "OnUpdate"
+                    it.message = Const.ON_USER_UPDATE
                     currentUserModel.value = it
                 }.launchIn(viewModelScope)
             }

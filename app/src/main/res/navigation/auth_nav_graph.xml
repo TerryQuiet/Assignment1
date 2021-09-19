@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="tk.quietdev.level1.ui.authorization.login.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment">
         <action
             android:id="@+id/action_loginFragment_to_registrationFragment"
             app:destination="@id/registrationFragment" />
@@ -21,6 +21,6 @@
             android:id="@+id/reg_to_log"
             app:destination="@id/loginFragment"
             app:popUpTo="@+id/loginFragment"
-            app:popUpToInclusive="true"/>
-        </fragment>
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

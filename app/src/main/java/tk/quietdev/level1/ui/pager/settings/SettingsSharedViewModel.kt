@@ -6,6 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsSharedViewModel @Inject constructor(): ViewModel() {
+class SettingsSharedViewModel @Inject constructor() : ViewModel() {
     val viewMyContactsButtonClicked = MutableLiveData(false)
 }

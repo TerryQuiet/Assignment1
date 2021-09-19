@@ -1,7 +1,6 @@
 package tk.quietdev.level1.ui.pager.contacts.list.removecontacts
 
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +22,7 @@ class RemoveContactListViewModel @Inject constructor(
     var contactsToRemove = MutableLiveData<List<Int>>(listOf())
 
     fun addUserBack(id: Int) {
-          addUserContact(id)
+        addUserContact(id)
     }
 
     init {

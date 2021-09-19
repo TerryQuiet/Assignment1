@@ -39,7 +39,7 @@ abstract class BaseListFragment : Fragment() {
     }
 
     open fun initObservables() {
-       viewModel.apply {
+        viewModel.apply {
             userList.observe(viewLifecycleOwner) {
                 val list = it.data
                 list?.let { userList ->

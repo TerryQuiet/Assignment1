@@ -39,7 +39,6 @@ interface RoomUserDao {
     @Query("SELECT * from room_all_users ORDER BY id ASC")
     fun getAllUsers(): Flow<List<RoomUser>>
 
-
     // Current user
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun _insertCurrentUser(userRoom: RoomCurrentUser)
@@ -48,7 +47,6 @@ interface RoomUserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     @Transaction
     open suspend fun insertCurrentUser(roomCurrentUser: RoomCurrentUser, roomUser: RoomUser) {
-        //_clearUserContactsList() //todo fix
         insert(roomUser)
         _insertCurrentUser(roomCurrentUser)
     }
@@ -62,9 +60,6 @@ interface RoomUserDao {
     // by ID
     @Query("SELECT * FROM room_all_users where id IN (:ids)")
     fun getUsersByIds(ids: List<Int>): Flow<List<RoomUser>>
-
-    @Query("SELECT * FROM room_all_users where id IN (:ids)")
-    suspend fun getUsersByIdsS(ids: List<Int>): List<RoomUser>
 
     @Query("SELECT * FROM room_all_users where id NOT IN (:ids)")
     fun getUsersExcludingId(ids: List<Int>): Flow<List<RoomUser>>

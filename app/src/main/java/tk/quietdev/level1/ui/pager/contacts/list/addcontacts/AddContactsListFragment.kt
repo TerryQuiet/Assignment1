@@ -41,7 +41,7 @@ class AddContactsListFragment : BaseListFragment() {
     private val onItemClickListener = object : ContactHolderBase.OnItemClickListener {
 
         override fun onItemClick(userModel: UserModel) {
-                openContactDetail(userModel)
+            openContactDetail(userModel)
         }
 
         override fun onLongItemClick(userModel: UserModel): Boolean {

@@ -8,7 +8,6 @@
     tools:context=".ui.pager.settings.SettingsFragment">
 
 
-
     <LinearLayout
         android:id="@+id/containerMessage"
         android:layout_width="match_parent"
@@ -170,16 +169,15 @@
         android:id="@+id/progressCircular"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:background="#CC434343"
         android:clickable="true"
-        android:background="#CC434343">
+        android:visibility="gone">
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:indeterminate="true"
-             />
+            android:indeterminate="true" />
     </FrameLayout>
 
 

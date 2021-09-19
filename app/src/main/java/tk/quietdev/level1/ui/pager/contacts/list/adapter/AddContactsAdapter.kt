@@ -11,8 +11,7 @@ import tk.quietdev.level1.ui.pager.contacts.list.adapter.holders.ContactHolderBa
 class AddContactsAdapter(
     onClickListener: ContactHolderBase.OnItemClickListener,
     holderState: MutableLiveData<MutableMap<Int, HolderState>>
-) : BaseContactsAdapter(onClickListener, holderState)
-     {
+) : BaseContactsAdapter(onClickListener, holderState) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolderBase {
         return ContactHolderAdd(

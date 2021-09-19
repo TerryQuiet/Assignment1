@@ -6,9 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import tk.quietdev.level1.data.repository.Repository
-import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.list.BaseListViewModel
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.HolderState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,9 +22,6 @@ class AddContactListViewModel @Inject constructor(
             userList.value = searchQueryMap(userListAll)
         }.launchIn(viewModelScope)
     }
-
-
-
 
 
 }

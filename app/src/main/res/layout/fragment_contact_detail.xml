@@ -49,7 +49,6 @@
     </include>
 
 
-
     <Button
         android:id="@+id/btnMessage"
         android:layout_width="0dp"

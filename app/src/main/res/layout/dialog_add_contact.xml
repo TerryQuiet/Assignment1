@@ -64,8 +64,7 @@
             android:layout_marginTop="@dimen/small_8dp"
             android:text="@string/cancel"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etOccupationParent">
-        </Button>
+            app:layout_constraintTop_toBottomOf="@id/etOccupationParent"></Button>
 
 
         <Button
@@ -74,8 +73,7 @@
             android:layout_height="wrap_content"
             android:text="@string/add_contact"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/bntCancel">
-        </Button>
+            app:layout_constraintTop_toTopOf="@id/bntCancel"></Button>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

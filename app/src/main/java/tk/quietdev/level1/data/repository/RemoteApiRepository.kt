@@ -1,8 +1,6 @@
 package tk.quietdev.level1.data.repository
 
-import android.content.Context
 import android.util.Log
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -16,14 +14,13 @@ import tk.quietdev.level1.data.remote.models.ApiUserContactManipulation
 import tk.quietdev.level1.data.remote.models.AuthResponse
 import tk.quietdev.level1.data.remote.models.AuthUser
 import tk.quietdev.level1.data.remote.models.GetUserResponse
+import tk.quietdev.level1.data.remote.networkBoundResource
 import tk.quietdev.level1.data.remote.test.GetUserContactsResponse
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.UserRegisterError
-import tk.quietdev.level1.data.remote.networkBoundResource
 import kotlin.reflect.KSuspendFunction1
 
 class RemoteApiRepository(
-    @ApplicationContext private val androidContext: Context,
     private val api: ShppApi,
     private val db: RoomUserDao,
     private val remoteMapper: RemoteMapper,
@@ -104,7 +101,6 @@ class RemoteApiRepository(
     fun getCurrentUserContactsFlow(list: List<Int>) =
         networkBoundResource(
             query = {
-                Log.d("TAG", "getCurrentUserContactsFlow: $list")
                 db.getUsersByIds(list).map {
 
                     it.map { roomMapper.roomUserToUser(it) }

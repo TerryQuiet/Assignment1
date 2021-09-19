@@ -15,7 +15,7 @@ class RemoveContactsAdapter(
     val removeState: MutableLiveData<List<Int>>,
     holderState: MutableLiveData<MutableMap<Int, HolderState>>,
 
-) : BaseContactsAdapter(onClickListener, holderState),
+    ) : BaseContactsAdapter(onClickListener, holderState),
     OnSwipeCallBack.Listener {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {

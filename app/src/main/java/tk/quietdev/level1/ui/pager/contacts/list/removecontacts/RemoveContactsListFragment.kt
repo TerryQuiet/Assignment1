@@ -14,9 +14,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.list.BaseListFragment
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.holders.ContactHolderBase
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.RemoveContactsAdapter
 import tk.quietdev.level1.ui.pager.contacts.list.adapter.HolderState
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.RemoveContactsAdapter
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.holders.ContactHolderBase
 import tk.quietdev.level1.utils.Const
 
 @AndroidEntryPoint
@@ -45,7 +45,6 @@ class RemoveContactsListFragment : BaseListFragment() {
             }
         }
     }
-
 
 
     override fun getContactAdapter() = RemoveContactsAdapter(
@@ -117,7 +116,8 @@ class RemoveContactsListFragment : BaseListFragment() {
     // we need to remove whoever have added state.
     override fun onResume() {
         super.onResume()
-        viewModel.holderState.value = viewModel.holderState.value?.filterValues { HolderState.SUCCESS != it }?.toMutableMap()
+        viewModel.holderState.value =
+            viewModel.holderState.value?.filterValues { HolderState.SUCCESS != it }?.toMutableMap()
     }
 
 
