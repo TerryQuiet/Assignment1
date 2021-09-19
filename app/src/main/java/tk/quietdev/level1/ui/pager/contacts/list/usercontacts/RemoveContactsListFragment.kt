@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -14,36 +13,31 @@ import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFI
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
-import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.contacts.list.BaseListFragment
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactHolder
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactHolderBase
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactsAdapter
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.holders.ContactHolderBase
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.RemoveContactsAdapter
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.HolderState
 import tk.quietdev.level1.utils.Const
-import tk.quietdev.level1.utils.ListState
 
 @AndroidEntryPoint
-class ContactsListFragment : BaseListFragment() {
+class RemoveContactsListFragment : BaseListFragment() {
 
-    private val viewModel: ContactListViewModel by viewModels()
+    private val viewModelRemove: RemoveContactListViewModel by viewModels()
 
-
-
-
-  /*  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         addListeners()
-    }*/
+    }
 
     override fun initObservables() {
-        viewModel.apply {
+        viewModelRemove.apply {
             listState.observe(viewLifecycleOwner) { listState ->
-                when (listState) {
-                    ListState.MULTISELECT -> {
+                when (listState.isEmpty()) {
+                    false -> {
                         binding.btnAdd.text = getString(R.string.remove)
                     }
-                    ListState.NORMAL -> {
+                    true -> {
                         binding.btnAdd.text = getString(R.string.add_contact)
                     }
                 }
@@ -59,29 +53,18 @@ class ContactsListFragment : BaseListFragment() {
         }
     }
 
-    // works
 
-    override fun getContactAdapter(): ContactsAdapter<ContactHolderBase> = ContactsAdapter(
-        holder = ContactHolder(
-            null,
-            holderType = ContactHolderBase.HolderType.REMOVE,
-            itemStateChecker = this,
-            onClickListener = onItemClickListener
-        ),
-        removeState =  viewModel.listState,
-        holderType = ContactHolderBase.HolderType.REMOVE
 
+    override fun getContactAdapter() = RemoveContactsAdapter(
+        onClickListener = onItemClickListener,
+        removeState = viewModelRemove.listState,
+        holderState = viewModelRemove.holderState
     )
 
-   /* override fun getContactAdapter() = ContactsAdapter(
-        onItemClickListener,
-        viewModel.listState,
-        this,
-        ContactHolder.HolderType.REMOVE
-    )*/
 
     private fun removeContact(userModel: UserModel, position: Int) {
-        viewModel.removeContact(userModel, position)
+        viewModelRemove.removeContact(userModel, position)
+
         showDeletionUndoSnackBar(userModel.id)
     }
 
@@ -92,13 +75,13 @@ class ContactsListFragment : BaseListFragment() {
     }
 
     private fun fabClicked() {
-        when (viewModel.listState.value) {
-            ListState.MULTISELECT -> {
+        when (viewModelRemove.listState.value?.isEmpty()) {
+            false -> {
                 // TODO: 9/18/2021 remove all
             }
-            ListState.NORMAL -> {
+            true -> {
                 findNavController().navigate(
-                    ContactsListFragmentDirections
+                    RemoveContactsListFragmentDirections
                         .actionContactsListFragmentToAddContactsListFragment()
                 )
             }
@@ -114,7 +97,7 @@ class ContactsListFragment : BaseListFragment() {
         )
             .setTextColor(Color.WHITE)
             .setAction(getString(R.string.add_back)) {
-                viewModel.addUserBack(id)
+                viewModelRemove.addUserBack(id)
             }
             .addCallback(object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
                 override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
@@ -133,25 +116,31 @@ class ContactsListFragment : BaseListFragment() {
 
     private fun openContactDetail(userModel: UserModel) {
         findNavController().navigate(
-            ContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(
+            RemoveContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(
                 userModel
             )
         )
+    }
+
+    // we need to remove whoever have added state.
+    override fun onResume() {
+        super.onResume()
+        viewModelRemove.holderState.value = viewModelRemove.holderState.value?.filterValues { HolderState.ADDED != it }?.toMutableMap()
     }
 
 
     private val onItemClickListener = object : ContactHolderBase.OnItemClickListener {
 
         override fun onItemClick(userModel: UserModel) {
-            if (viewModel.listState.value == ListState.MULTISELECT) {
-                viewModel.toggleUserSelected(userModel.id)
+            if (!viewModelRemove.listState.value.isNullOrEmpty()) {
+                viewModelRemove.toggleUserSelected(userModel.id)
             } else {
                 openContactDetail(userModel)
             }
         }
 
         override fun onLongItemClick(userModel: UserModel): Boolean {
-            viewModel.toggleUserSelected(userModel.id)
+            viewModelRemove.toggleUserSelected(userModel.id)
             return true
         }
 
@@ -160,6 +149,6 @@ class ContactsListFragment : BaseListFragment() {
     }
 
     override fun isItemSelected(id: Int): Boolean {
-        return viewModel.isItemSelected(id)
+        return viewModelRemove.isItemSelected(id)
     }
 }

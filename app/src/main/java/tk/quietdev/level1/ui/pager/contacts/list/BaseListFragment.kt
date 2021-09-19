@@ -10,19 +10,18 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactHolderBase
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.ContactsAdapter
-import tk.quietdev.level1.ui.pager.contacts.list.adapter.ItemStateChecker
-import kotlin.reflect.KProperty
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.BaseContactsAdapter
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.RemoveContactsAdapter
+import tk.quietdev.level1.ui.pager.contacts.list.adapter.HolderStateChecker
 
-abstract class BaseListFragment : Fragment(), ItemStateChecker {
+abstract class BaseListFragment : Fragment(), HolderStateChecker {
 
     private var _binding: FragmentContactsBinding? = null
     protected val binding get() = _binding!!
     protected val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
-    protected open val contactsAdapter: ContactsAdapter<ContactHolderBase> by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
+    protected open val contactsAdapter: BaseContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
 
-    abstract fun getContactAdapter() : ContactsAdapter<ContactHolderBase>
+    abstract fun getContactAdapter(): BaseContactsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,

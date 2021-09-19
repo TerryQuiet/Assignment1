@@ -69,7 +69,6 @@ class EditProfileFragment : Fragment() {
         binding.apply {
             btnSave.setOnClickListener {
                 updateUser()
-                //  findNavController().popBackStack()
             }
             btnAddPhoto.setOnClickListener {
                 getAction.launch(

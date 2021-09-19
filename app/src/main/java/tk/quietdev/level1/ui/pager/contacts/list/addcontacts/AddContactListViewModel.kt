@@ -2,13 +2,12 @@ package tk.quietdev.level1.ui.pager.contacts.list.addcontacts
 
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.repository.Repository
+import tk.quietdev.level1.ui.pager.contacts.list.BaseListViewModel
 import tk.quietdev.level1.utils.ListState
 import tk.quietdev.level1.utils.Resource
 import java.util.*
@@ -16,13 +15,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddContactListViewModel @Inject constructor(
-    private val repository: Repository
-) : ViewModel() {
+    repository: Repository
+) : BaseListViewModel(repository) {
 
     private var search = ""
     private var addedContacts = TreeSet<Int>()
     var listState = MutableLiveData(ListState.NORMAL)
-    var userList: MutableLiveData<Resource<List<UserModel>>> = MutableLiveData()
+
+
     private lateinit var userListAll: Resource<List<UserModel>>
 
     private fun searchQueryMap(it: Resource<List<UserModel>>): Resource<List<UserModel>> =
@@ -48,16 +48,16 @@ class AddContactListViewModel @Inject constructor(
         }
     }
 
-
-    fun isItemAdded(id: Int): Boolean {
-        return addedContacts.contains(id)
-    }
-
     fun addUserContact(userModel: UserModel) {
         addedContacts.add(userModel.id)
-        repository.addUserContact(userModel).launchIn(viewModelScope)  // todo cancel after result
+        action(repository::addUserContact, userModel)
+
     }
+
+
 
 
 }
+
+
 
