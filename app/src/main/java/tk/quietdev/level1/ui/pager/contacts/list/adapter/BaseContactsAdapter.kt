@@ -9,19 +9,18 @@ import tk.quietdev.level1.utils.DiffCallBack
 abstract class BaseContactsAdapter(
     protected val onClickListener: ContactHolderBase.OnItemClickListener,
     private val holderState: MutableLiveData<MutableMap<Int, HolderState>>,
-) : ListAdapter<UserModel, ContactHolderBase>(DiffCallBack)
- {
-     override fun onViewAttachedToWindow(holder: ContactHolderBase) {
-         super.onViewAttachedToWindow(holder)
-         holder.setHolderStateObserver(holderState)
-     }
+) : ListAdapter<UserModel, ContactHolderBase>(DiffCallBack) {
+    override fun onViewAttachedToWindow(holder: ContactHolderBase) {
+        super.onViewAttachedToWindow(holder)
+        holder.setHolderStateObserver(holderState)
+    }
 
-     override fun onBindViewHolder(holder: ContactHolderBase, position: Int) {
-         holder.bind(getItem(position))
-     }
+    override fun onBindViewHolder(holder: ContactHolderBase, position: Int) {
+        holder.bind(getItem(position))
+    }
 
-     override fun onViewDetachedFromWindow(holder: ContactHolderBase) {
-         super.onViewDetachedFromWindow(holder)
-         holder.removeHolderStateObserver(holderState)
-     }
+    override fun onViewDetachedFromWindow(holder: ContactHolderBase) {
+        super.onViewDetachedFromWindow(holder)
+        holder.removeHolderStateObserver(holderState)
+    }
 }

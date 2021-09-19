@@ -172,7 +172,6 @@
             </Button>
 
 
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -182,9 +181,9 @@
         android:id="@+id/progressCircular"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:background="#CC434343"
         android:clickable="true"
-        android:background="#CC434343">
+        android:visibility="visible">
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:layout_width="match_parent"

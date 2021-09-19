@@ -49,7 +49,6 @@ object RetrofitModule {
         .build()
 
 
-
     @Provides
     @Singleton
     fun provideRetrofitService(retrofit: Retrofit): ShppApi = retrofit.create(ShppApi::class.java)

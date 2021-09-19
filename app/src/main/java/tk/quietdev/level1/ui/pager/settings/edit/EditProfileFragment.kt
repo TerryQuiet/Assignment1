@@ -2,7 +2,6 @@ package tk.quietdev.level1.ui.pager.settings.edit
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.ui.authorization.AuthActivity
+import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.Resource
 import tk.quietdev.level1.utils.ext.loadImage
 
@@ -47,7 +45,7 @@ class EditProfileFragment : Fragment() {
             when (it) {
                 is Resource.Success<UserModel> -> {
                     binding.progressCircular.visibility = View.GONE
-                    if (it.message == "OnUpdate") {
+                    if (it.message == Const.ON_USER_UPDATE) {
                         findNavController().popBackStack()
                     } else {
                         it.data?.let { userModel ->

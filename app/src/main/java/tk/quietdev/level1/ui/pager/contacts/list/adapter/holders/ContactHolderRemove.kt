@@ -17,8 +17,9 @@ class ContactHolderRemove(
     private val listStateObserver = Observer<List<Int>> { selectedList ->
         binding.apply {
             if (selectedList.isNotEmpty()) { // multiselectMode
+                cbRemove.visibility = View.VISIBLE
                 userModelId?.let {
-                    if (selectedList.contains(it)) {
+                    if (selectedList.contains(it)) { // item selected
                         cbRemove.isChecked = true
                         layout.setBackgroundColor(Color.GRAY)
                     } else {
@@ -26,7 +27,6 @@ class ContactHolderRemove(
                         layout.setBackgroundColor(Color.TRANSPARENT)
                     }
                 }
-                cbRemove.visibility = View.VISIBLE
             } else {
                 cbRemove.visibility = View.GONE
                 layout.setBackgroundColor(Color.TRANSPARENT)

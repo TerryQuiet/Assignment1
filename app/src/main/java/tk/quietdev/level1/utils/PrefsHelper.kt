@@ -8,9 +8,9 @@ import javax.inject.Singleton
 
 @Singleton
 class PrefsHelper @Inject constructor(@ApplicationContext androidContext: Context) {
-    private  val PREFS_NAME = "params"
-     val USER_ID = "USERID"
-     val IS_REMEMBER = "isSaveChecked"
+    private val PREFS_NAME = "params"
+    val USER_ID = "USERID"
+    val IS_REMEMBER = "isSaveChecked"
 
     private var preferences: SharedPreferences =
         androidContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)

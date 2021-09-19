@@ -6,8 +6,8 @@ import javax.inject.Singleton
 
 @Singleton
 class Validator @Inject constructor() {
-    fun isEmailValid(mail: String): Boolean{
-       return  Patterns.EMAIL_ADDRESS.matcher(mail).matches()
+    fun isEmailValid(mail: String): Boolean {
+        return Patterns.EMAIL_ADDRESS.matcher(mail).matches()
     }
 
     fun isPasswordValid(toString: String): Boolean {

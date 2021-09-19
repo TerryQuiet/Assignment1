@@ -31,15 +31,15 @@ class PagerActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-      binding.toolbar.setOnMenuItemClickListener {menuItem ->
-          when (menuItem.itemId) {
-              R.id.menu_search -> {
-                  appbarSharedViewModel.showSearchLayout(true)
-                  true
-              }
-              else -> false
-          }
-      }
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_search -> {
+                    appbarSharedViewModel.showSearchLayout(true)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun setObservers() {
@@ -64,10 +64,8 @@ class PagerActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(parentNavHost) as? NavHostFragment
         navController = parentNavHost?.navController
         binding.toolbar.inflateMenu(R.menu.contacts_menu)
-        val x = binding.toolbar.menu.findItem(R.id.menu_search)
-        val appBarConfig = AppBarConfiguration(navController!!.graph)
+                val appBarConfig = AppBarConfiguration(navController!!.graph)
         binding.toolbar.setupWithNavController(navController!!, appBarConfig)
-        //binding.toolbar.visibility = View.GONE
 
     }
 
@@ -75,7 +73,6 @@ class PagerActivity : AppCompatActivity() {
         super.onDestroy()
         _binding = null
     }
-
 
 
 }

@@ -2,7 +2,6 @@ package tk.quietdev.level1.ui.authorization.register
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,6 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentRegistrationBinding
-import tk.quietdev.level1.data.remote.models.AuthResponse
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.authorization.AuthActivity
 import tk.quietdev.level1.ui.authorization.AuthViewModel
@@ -95,7 +93,7 @@ class RegisterFragment : Fragment() {
                 }
             }
             cbRemember.setOnCheckedChangeListener { _, isChecked ->
-                authSharedViewModel.isRemember= isChecked
+                authSharedViewModel.isRemember = isChecked
             }
             tvLinkSignIn.setOnClickListener {
                 findNavController().navigate(RegisterFragmentDirections.regToLog())

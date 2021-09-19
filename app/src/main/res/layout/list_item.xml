@@ -87,7 +87,9 @@
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/layoutBtnAdd"
                     android:layout_width="wrap_content"
+
                     android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/small_8dp"
                     android:visibility="gone"
                     tools:visibility="visible">
 
@@ -120,14 +122,10 @@
                     android:id="@+id/spinner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:indeterminate="true"
-                    />
+                    android:visibility="gone" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

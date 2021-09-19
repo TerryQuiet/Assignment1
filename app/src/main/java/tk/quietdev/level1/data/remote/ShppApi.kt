@@ -20,23 +20,31 @@ interface ShppApi {
     suspend fun userLogin(@Body requestBody: AuthUser): Response<AuthResponse>
 
     @GET("./user/profile")
-    suspend fun getCurrentUser(@Header("Authorization") token : String): Response<GetUserResponse>
+    suspend fun getCurrentUser(@Header("Authorization") token: String): Response<GetUserResponse>
 
     @GET("./users")
-    suspend fun getAllUsers(@Header("Authorization") token : String): Response<GetAllUsersResponse>
+    suspend fun getAllUsers(@Header("Authorization") token: String): Response<GetAllUsersResponse>
 
     @GET("./user/contacts")
-    suspend fun getCurrentUserContacts(@Header("Authorization") token : String): Response<GetUserContactsResponse>
+    suspend fun getCurrentUserContacts(@Header("Authorization") token: String): Response<GetUserContactsResponse>
 
     @POST("./user/profile/edit")
-    suspend fun updateUser(@HeaderMap headers: Map<String, String>, @Body updatedApiUser: ApiUpdatedUser): Response<GetUserResponse>
+    suspend fun updateUser(
+        @HeaderMap headers: Map<String, String>,
+        @Body updatedApiUser: ApiUpdatedUser
+    ): Response<GetUserResponse>
 
     @POST("./user/contact/add")
-    suspend fun addUserContact(@HeaderMap headers: Map<String, String>, @Body requestBody: ApiUserContactManipulation): Response<GetUserContactsResponse>
+    suspend fun addUserContact(
+        @HeaderMap headers: Map<String, String>,
+        @Body requestBody: ApiUserContactManipulation
+    ): Response<GetUserContactsResponse>
 
     @POST("./user/contact/delete")
-    suspend fun removeUserContact(@HeaderMap headers: Map<String, String>, @Body requestBody: ApiUserContactManipulation): Response<GetUserContactsResponse>
-
+    suspend fun removeUserContact(
+        @HeaderMap headers: Map<String, String>,
+        @Body requestBody: ApiUserContactManipulation
+    ): Response<GetUserContactsResponse>
 
 
 }

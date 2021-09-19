@@ -1,8 +1,10 @@
-package tk.quietdev.level1.utils
+package tk.quietdev.level1.data.remote
 
 import android.util.Log
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import tk.quietdev.level1.utils.Const
+import tk.quietdev.level1.utils.Resource
 
 inline fun <ResultType, RequestType> networkBoundResource(
     crossinline query: () -> Flow<ResultType>,

@@ -49,7 +49,7 @@ class LoginFragment : Fragment() {
                     error?.let { message ->
                         showErrorSnackbar(message)
                     }
-                    showHelpTip()
+                    //showHelpTip()
                     binding.progressCircular.visibility = View.GONE
                 }
                 is Resource.Loading -> {

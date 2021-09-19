@@ -2,15 +2,11 @@ package tk.quietdev.level1.ui.authorization
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.ActivityAuthBinding
-import tk.quietdev.level1.models.UserModel
-
 import tk.quietdev.level1.ui.pager.PagerActivity
-import tk.quietdev.level1.utils.Const
 
 @AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {

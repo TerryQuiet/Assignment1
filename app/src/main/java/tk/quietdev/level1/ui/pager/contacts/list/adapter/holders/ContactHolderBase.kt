@@ -20,6 +20,7 @@ abstract class ContactHolderBase(
     protected val currentUser get() = _currentUserModel!!
 
     private val holderStateObserver = Observer<MutableMap<Int, HolderState>> { state ->
+        binding.spinner.visibility = View.GONE
         state[currentUser.id]?.let {
             binding.apply {
                 when (it) {
@@ -28,25 +29,30 @@ abstract class ContactHolderBase(
                         layoutBtnAdd.visibility = View.GONE
                         imageBtnRemove.visibility = View.GONE
                     }
-                    HolderState.ADDED -> {
-                        spinner.visibility = View.GONE
-                        layoutBtnAdd.visibility = View.GONE
-                        ivAdded.visibility = View.VISIBLE
+                    HolderState.SUCCESS -> {
+                        addedState()
                     }
                     HolderState.FAIL -> {
                         spinner.visibility = View.GONE
                         ivAdded.visibility = View.GONE
-                        // layoutBtnAdd.visibility = View.VISIBLE
                     }
                 }
             }
         }
+    }
 
+    protected open fun addedState() {
+        binding.apply {
+            spinner.visibility = View.GONE
+            layoutBtnAdd.visibility = View.GONE
+            ivAdded.visibility = View.GONE
+        }
     }
 
 
     open fun bind(userModel: UserModel) {
         binding.apply {
+
             with(userModel) {
                 _currentUserModel = this
                 tvName.text = email // TODO: 9/15/2021 fix

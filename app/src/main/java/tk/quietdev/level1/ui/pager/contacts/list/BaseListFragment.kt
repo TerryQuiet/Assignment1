@@ -16,8 +16,10 @@ abstract class BaseListFragment : Fragment() {
 
     private var _binding: FragmentContactsBinding? = null
     protected val binding get() = _binding!!
-    protected val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
+    private val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
     protected open val contactsAdapter: BaseContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
+
+    protected abstract val viewModel: BaseListViewModel
 
     abstract fun getContactAdapter(): BaseContactsAdapter
 
@@ -36,7 +38,19 @@ abstract class BaseListFragment : Fragment() {
         initRecycleView()
     }
 
-    abstract fun initObservables()
+    open fun initObservables() {
+        viewModel.apply {
+            userList.observe(viewLifecycleOwner) {
+                val list = it.data
+                list?.let { userList ->
+                    contactsAdapter.submitList(userList)
+                }
+            }
+            appbarSharedViewModel.searchText.observe(viewLifecycleOwner) {
+                viewModel.changeSearchQuery(it)
+            }
+        }
+    }
 
     private fun initRecycleView() {
         binding.recycleView.apply {
@@ -44,6 +58,7 @@ abstract class BaseListFragment : Fragment() {
             adapter = contactsAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
+
     }
 
     override fun onDestroyView() {

@@ -23,6 +23,7 @@
         <!--and menus. colorError is used to indicate an error state for components such as-->
         <!--text fields.-->
         <item name="backgroundColor">@color/dark_blue_500</item>
+        <item name="colorBackgroundFloating">@color/orange_500</item>
         <item name="android:windowBackground">?attr/backgroundColor</item>
         <item name="colorSurface">?attr/backgroundColor</item>
 
@@ -48,6 +49,8 @@
         <item name="android:windowAnimationStyle">@style/WindowAnimations</item>
         <item name="android:textColor">?attr/colorOnSurface</item>
         <!--statusBar-->
+        <item name="android:statusBarColor">?android:textColorHint</item>
+        <item name="android:windowLightStatusBar">true</item>
 
 
         <!--app bar basically-->

@@ -9,8 +9,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'dagger.hilt.android.plugin'
 
 
-
-
 android {
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
@@ -76,7 +74,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //canary
-   // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
+    // debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.4'
 
     //hilt
     implementation 'com.google.dagger:hilt-android:2.38.1'

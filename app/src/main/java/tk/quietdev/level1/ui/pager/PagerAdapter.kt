@@ -8,22 +8,21 @@ import tk.quietdev.level1.ui.pager.navhost.ListNavHostFragment
 import tk.quietdev.level1.ui.pager.navhost.SettingsNavHostFragment
 
 class PagerAdapter(fm: FragmentManager, lf: Lifecycle) :
-        FragmentStateAdapter(fm, lf) {
+    FragmentStateAdapter(fm, lf) {
 
-        enum class Pages(val position: Int) {
-            LIST(1),
-            SETTINGS(0)
-        }
-
-        override fun getItemCount(): Int = 2
-
-        override fun createFragment(position: Int): Fragment {
-            return when (position) {
-                1 -> ListNavHostFragment()
-                else -> SettingsNavHostFragment()
-            }
-        }
-
-
-
+    enum class Pages(val position: Int) {
+        LIST(1),
+        SETTINGS(0)
     }
+
+    override fun getItemCount(): Int = 2
+
+    override fun createFragment(position: Int): Fragment {
+        return when (position) {
+            1 -> ListNavHostFragment()
+            else -> SettingsNavHostFragment()
+        }
+    }
+
+
+}
