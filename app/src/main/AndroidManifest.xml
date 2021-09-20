@@ -16,7 +16,7 @@
         android:theme="@style/Base.Theme.MyApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.pager.PagerActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true"></activity>
 
         <activity

@@ -3,15 +3,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_parent"
-    app:startDestination="@id/parent_dest">
+    app:startDestination="@+id/profileFragment">
 
-    <!-- MainFragment-->
+
     <fragment
-        android:id="@+id/parent_dest"
-        android:name="tk.quietdev.level1.ui.pager.ViewPagerContainerFragment"
+        android:id="@+id/viewPagerContainer"
+        android:name="tk.quietdev.level1.ui.main.myprofile.contacts.pager.ViewPagerContainerFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_viewpager_container">
-
+        <argument
+            android:name="userId"
+            app:argType="integer" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="tk.quietdev.level1.ui.main.myprofile.edit.EditProfileFragment"
+        android:label="@string/edit_profile"
+        tools:layout="@layout/fragment_edit_profile">
+        <argument
+            android:name="user"
+            app:argType="tk.quietdev.level1.models.UserModel" />
+    </fragment>
+
+
+
+    <fragment
+        android:id="@+id/contactDetailFragment"
+        android:name="tk.quietdev.level1.ui.main.myprofile.contacts.detail.ContactDetailFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_contact_detail">
+        <argument
+            android:name="user"
+            app:argType="tk.quietdev.level1.models.UserModel" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addContactsListFragment"
+        android:name="tk.quietdev.level1.ui.main.myprofile.contacts.list.addcontacts.AddContactsListFragment"
+        android:label="AddContactsListFragment">
+        <action
+            android:id="@+id/action_addContactsListFragment_to_viewPagerContainer"
+            app:destination="@id/viewPagerContainer" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="tk.quietdev.level1.ui.main.myprofile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_removeContactsListFragment"
+            app:destination="@id/removeContactsListFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/removeContactsListFragment"
+        android:name="tk.quietdev.level1.ui.main.myprofile.contacts.list.removecontacts.RemoveContactsListFragment"
+        android:label="RemoveContactsListFragment"
+        tools:layout="@layout/fragment_contacts"
+        >
+        <action
+            android:id="@+id/action_removeContactsListFragment_to_addContactsListFragment"
+            app:destination="@id/addContactsListFragment" />
+        <action
+            android:id="@+id/action_removeContactsListFragment_to_viewPagerContainer"
+            app:destination="@id/viewPagerContainer" />
+    </fragment>
+
 
 </navigation>
