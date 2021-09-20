@@ -3,30 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_parent"
-    app:startDestination="@+id/parent_dest">
+    app:startDestination="@+id/viewPagerContainer">
 
 
     <fragment
-        android:id="@+id/parent_dest"
+        android:id="@+id/viewPagerContainer"
         android:name="tk.quietdev.level1.ui.pager.ViewPagerContainerFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_viewpager_container">
         <action
-            android:id="@+id/action_parent_dest_to_editProfileFragment"
+            android:id="@+id/action_pager_dest_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
         <action
-            android:id="@+id/action_parent_dest_to_contactDetailFragment"
+            android:id="@+id/action_pager_dest_to_contactDetailFragment"
             app:destination="@id/contactDetailFragment" />
         <action
-            android:id="@+id/action_parent_dest_to_addContactsListFragment"
+            android:id="@+id/action_pager_dest_to_addContactsListFragment"
             app:destination="@id/addContactsListFragment" />
     </fragment>
-
-
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="tk.quietdev.level1.ui.pager.settings.SettingsFragment"
-        android:label="@string/settings"/>
 
 
     <fragment
@@ -39,10 +33,6 @@
     </fragment>
 
 
-    <fragment
-        android:id="@+id/contactsListFragment"
-        android:name="tk.quietdev.level1.ui.pager.contacts.list.removecontacts.RemoveContactsListFragment"
-        android:label="@string/contacts"/>
 
     <fragment
         android:id="@+id/contactDetailFragment"

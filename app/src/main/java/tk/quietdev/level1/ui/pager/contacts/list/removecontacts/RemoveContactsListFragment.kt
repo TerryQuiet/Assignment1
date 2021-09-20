@@ -13,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.ui.pager.ViewPagerContainerFragmentDirections
 import tk.quietdev.level1.ui.pager.contacts.list.BaseListFragment
 import tk.quietdev.level1.ui.pager.contacts.list.adapter.HolderState
 import tk.quietdev.level1.ui.pager.contacts.list.adapter.RemoveContactsAdapter
@@ -72,8 +73,8 @@ class RemoveContactsListFragment : BaseListFragment() {
             }
             true -> {
                 findNavController().navigate(
-                    RemoveContactsListFragmentDirections
-                        .actionContactsListFragmentToAddContactsListFragment()
+                    ViewPagerContainerFragmentDirections
+                        .actionPagerDestToAddContactsListFragment()
                 )
             }
         }
@@ -107,7 +108,7 @@ class RemoveContactsListFragment : BaseListFragment() {
 
     private fun openContactDetail(userModel: UserModel) {
         findNavController().navigate(
-            RemoveContactsListFragmentDirections.actionContactsListFragmentToContactDetailFragment(
+            ViewPagerContainerFragmentDirections.actionPagerDestToContactDetailFragment(
                 userModel
             )
         )

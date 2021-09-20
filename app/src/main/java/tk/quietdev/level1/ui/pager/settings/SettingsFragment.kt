@@ -15,6 +15,7 @@ import tk.quietdev.level1.databinding.FragmentSettingsBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.pager.AppbarSharedViewModel
+import tk.quietdev.level1.ui.pager.ViewPagerContainerFragmentDirections
 import tk.quietdev.level1.utils.ext.loadImage
 
 @AndroidEntryPoint
@@ -63,7 +64,7 @@ class SettingsFragment : Fragment() {
 
     private fun openEditFragment(userModel: UserModel) {
         findNavController().navigate(
-            SettingsFragmentDirections.actionSettingsFragmentToEditProfileFragment(
+            ViewPagerContainerFragmentDirections.actionPagerDestToEditProfileFragment(
                 userModel
             )
         )
