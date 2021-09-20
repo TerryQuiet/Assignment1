@@ -9,11 +9,14 @@
     <fragment
         android:id="@+id/viewPagerContainer"
         android:name="tk.quietdev.level1.ui.main.myprofile.contacts.pager.ViewPagerContainerFragment"
-        android:label="MainFragment"
+        android:label="list"
         tools:layout="@layout/fragment_viewpager_container">
         <argument
             android:name="userId"
             app:argType="integer" />
+        <argument
+            android:name="type"
+            app:argType="tk.quietdev.level1.ui.main.myprofile.contacts.pager.ViewPagerType" />
     </fragment>
 
 
@@ -26,7 +29,6 @@
             android:name="user"
             app:argType="tk.quietdev.level1.models.UserModel" />
     </fragment>
-
 
 
     <fragment
@@ -42,7 +44,7 @@
     <fragment
         android:id="@+id/addContactsListFragment"
         android:name="tk.quietdev.level1.ui.main.myprofile.contacts.list.addcontacts.AddContactsListFragment"
-        android:label="AddContactsListFragment">
+        android:label="Find user">
         <action
             android:id="@+id/action_addContactsListFragment_to_viewPagerContainer"
             app:destination="@id/viewPagerContainer" />
@@ -50,8 +52,8 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="tk.quietdev.level1.ui.main.myprofile.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        android:label="My profile"
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_removeContactsListFragment"
             app:destination="@id/removeContactsListFragment" />
@@ -62,9 +64,8 @@
     <fragment
         android:id="@+id/removeContactsListFragment"
         android:name="tk.quietdev.level1.ui.main.myprofile.contacts.list.removecontacts.RemoveContactsListFragment"
-        android:label="RemoveContactsListFragment"
-        tools:layout="@layout/fragment_contacts"
-        >
+        android:label="Contact list"
+        tools:layout="@layout/fragment_contacts">
         <action
             android:id="@+id/action_removeContactsListFragment_to_addContactsListFragment"
             app:destination="@id/addContactsListFragment" />

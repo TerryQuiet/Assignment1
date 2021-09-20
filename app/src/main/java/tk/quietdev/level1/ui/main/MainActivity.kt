@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,7 +19,6 @@ import tk.quietdev.level1.databinding.ActivityPagerBinding
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityPagerBinding? = null
     private val binding get() = _binding!!
-    private val parentNavHost = R.id.ParentNavHost
     private val appbarSharedViewModel: AppbarSharedViewModel by viewModels()
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         toolbarSetup()
         setObservers()
         setListeners()
+
     }
 
     private fun setListeners() {
@@ -43,9 +44,21 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        binding.ivCross.setOnClickListener {
+            appbarSharedViewModel.showSearchLayout(false)
+        }
+
+        binding.etSearch.doOnTextChanged { text, _, _, _ ->
+            appbarSharedViewModel.searchText.value = text.toString()
+        }
     }
 
     private fun setObservers() {
+
+        appbarSharedViewModel.searchLayoutVisibility.observe(this) {
+            binding.searchTopBar.visibility = it
+        }
 
         appbarSharedViewModel.navBarVisibility.observe(this) {
             binding.toolbar.visibility = it
@@ -59,16 +72,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun toolbarSetup() {
         val parentNavHost =
-            supportFragmentManager.findFragmentById(parentNavHost) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.ParentNavHost) as NavHostFragment
         navController = parentNavHost.navController
-        binding.toolbar.inflateMenu(R.menu.contacts_menu)
         appBarConfiguration = AppBarConfiguration(navController.graph)
 
-        setSupportActionBar(binding.toolbar)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-
+        binding.toolbar.inflateMenu(R.menu.contacts_menu)
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
-
 
     }
 

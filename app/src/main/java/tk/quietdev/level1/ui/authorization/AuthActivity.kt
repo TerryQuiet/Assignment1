@@ -20,7 +20,6 @@ class AuthActivity : AppCompatActivity() {
             login()
         binding = ActivityAuthBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
     }
 
     fun login() {

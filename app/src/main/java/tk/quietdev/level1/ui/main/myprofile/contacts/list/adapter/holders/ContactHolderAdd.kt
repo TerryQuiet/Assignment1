@@ -23,8 +23,8 @@ class ContactHolderAdd(
         }
     }
 
-    override fun addedState() {
-        super.addedState()
+    override fun successState() {
+        super.successState()
         binding.ivAdded.visibility = View.VISIBLE
     }
 

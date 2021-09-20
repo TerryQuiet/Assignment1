@@ -19,7 +19,7 @@ class AddContactListViewModel @Inject constructor(
     init {
         repository.getAllUsersFlow().onEach {
             userListAll = it
-            userList.value = searchQueryMap(userListAll)
+            userListToShow.value = searchQueryMap(userListAll)
         }.launchIn(viewModelScope)
     }
 
