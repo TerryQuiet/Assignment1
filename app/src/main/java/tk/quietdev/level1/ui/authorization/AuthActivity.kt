@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.ActivityAuthBinding
-import tk.quietdev.level1.ui.pager.PagerActivity
+import tk.quietdev.level1.ui.main.MainActivity
 
 @AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
@@ -25,7 +25,7 @@ class AuthActivity : AppCompatActivity() {
 
     fun login() {
         authViewModel.updateIsRemember()
-        val intent = Intent(this, PagerActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
