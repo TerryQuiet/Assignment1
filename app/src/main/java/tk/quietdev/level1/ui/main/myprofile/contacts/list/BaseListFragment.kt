@@ -16,7 +16,7 @@ abstract class BaseListFragment : Fragment() {
 
     private var _binding: FragmentContactsBinding? = null
     protected val binding get() = _binding!!
-    private val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
+    protected val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
     protected open val contactsAdapter: BaseContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
 
     protected abstract val viewModel: BaseListViewModel

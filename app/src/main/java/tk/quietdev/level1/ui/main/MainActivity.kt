@@ -9,7 +9,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
@@ -67,6 +66,11 @@ class MainActivity : AppCompatActivity() {
         appbarSharedViewModel.searchIconVisibility.observe(this) {
             val searchIcon = binding.toolbar.menu.findItem(R.id.menu_search)
             searchIcon?.isVisible = it == View.VISIBLE
+        }
+
+        appbarSharedViewModel.appBarLabel.observe(this) {
+            if (it != "")
+            binding.toolbar.title = it
         }
     }
 

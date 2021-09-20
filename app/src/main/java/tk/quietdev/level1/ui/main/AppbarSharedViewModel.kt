@@ -13,6 +13,7 @@ class AppbarSharedViewModel @Inject constructor() : ViewModel() {
     val searchLayoutVisibility = MutableLiveData(View.GONE)
     val searchIconVisibility = MutableLiveData(View.GONE)
     val searchText = MutableLiveData("")
+    val appBarLabel = MutableLiveData("")
 
     fun showSearchLayout(toShow: Boolean) {
         if (!toShow) {

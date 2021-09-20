@@ -14,6 +14,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.utils.CalendarUtil
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.Resource
 import tk.quietdev.level1.utils.ext.loadImage
@@ -25,10 +26,11 @@ class EditProfileFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: EditProfileViewModel by viewModels()
 
-    val datePicker =
+    private val datePicker =
         MaterialDatePicker.Builder.datePicker()
             .setTitleText("Select date")
             .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+            .setCalendarConstraints(CalendarUtil.getConstrains().build())
             .build()
 
     override fun onCreateView(
@@ -47,17 +49,13 @@ class EditProfileFragment : Fragment() {
         setObservers()
     }
 
-
-
-
-
     private fun setObservers() {
         viewModel.currentUserModel.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success<UserModel> -> {
                     binding.progressCircular.visibility = View.GONE
                     if (it.message == Const.ON_USER_UPDATE) {
-                        findNavController().popBackStack()
+                        findNavController().navigateUp()
                     } else {
                         it.data?.let { userModel ->
                             bindValues(userModel)
@@ -114,10 +112,8 @@ class EditProfileFragment : Fragment() {
             etOccupation.setText(userModel.occupation)
             etEmail.setText(userModel.email)
             etBirthDate.setText(userModel.birthDate)
-            etBirthDate.setOnFocusChangeListener { _, focused ->
-                if (focused) {
-                    datePicker.show(childFragmentManager, "tag")
-                }
+            etBirthDateParent.setEndIconOnClickListener {
+                datePicker.show(childFragmentManager, "tag")
             }
             etPhoneNumber.setText(userModel.phone)
             etName.setText(userModel.userName)
