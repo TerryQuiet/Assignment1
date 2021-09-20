@@ -14,7 +14,7 @@ class RoomMapper @Inject constructor() {
                 email = email,
                 occupation = career,
                 physicalAddress = address,
-                birthDate = birthday,
+                birthDate = birthday?.take(10),
                 phone = phone,
             )
         }
@@ -28,7 +28,7 @@ class RoomMapper @Inject constructor() {
                 email = email,
                 occupation = career,
                 physicalAddress = address,
-                birthDate = birthday,
+                birthDate = birthday?.take(10),
                 phone = phone,
             )
         }

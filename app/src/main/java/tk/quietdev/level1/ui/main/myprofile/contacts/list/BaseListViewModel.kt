@@ -72,14 +72,14 @@ abstract class BaseListViewModel(
         when (it) {
             is Resource.Error -> it
             is Resource.Success -> Resource.Success((it.data?.filter {
-                it.email.startsWith(
+                it.email.contains(
                     search,
                     true
                 )
             }
                 ?: listOf()))
             is Resource.Loading -> Resource.Loading((it.data?.filter {
-                it.email.startsWith(
+                it.email.contains(
                     search,
                     true
                 )
