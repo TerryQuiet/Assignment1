@@ -2,6 +2,7 @@ package tk.quietdev.level1.ui.pager.settings.edit
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
 import tk.quietdev.level1.models.UserModel
@@ -23,6 +25,12 @@ class EditProfileFragment : Fragment() {
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
     private val viewModel: EditProfileViewModel by viewModels()
+
+    val datePicker =
+        MaterialDatePicker.Builder.datePicker()
+            .setTitleText("Select date")
+            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+            .build()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +47,10 @@ class EditProfileFragment : Fragment() {
         setListeners()
         setObservers()
     }
+
+
+
+
 
     private fun setObservers() {
         viewModel.currentUserModel.observe(viewLifecycleOwner) {
@@ -74,6 +86,12 @@ class EditProfileFragment : Fragment() {
                 )
             }
         }
+        datePicker.addOnPositiveButtonClickListener {
+            datePicker.selection?.let {
+                binding.etBirthDate.setText(viewModel.getShortDate(it))
+            }
+
+        }
     }
 
     private fun updateUser() {
@@ -98,6 +116,11 @@ class EditProfileFragment : Fragment() {
             etOccupation.setText(userModel.occupation)
             etEmail.setText(userModel.email)
             etBirthDate.setText(userModel.birthDate)
+            etBirthDate.setOnFocusChangeListener { _, focused ->
+                if (focused) {
+                    datePicker.show(childFragmentManager, "tag")
+                }
+            }
             etPhoneNumber.setText(userModel.phone)
             etName.setText(userModel.userName)
         }

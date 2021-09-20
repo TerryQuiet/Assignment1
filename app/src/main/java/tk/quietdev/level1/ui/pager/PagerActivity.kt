@@ -7,7 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.ActivityPagerBinding
@@ -16,10 +19,10 @@ import tk.quietdev.level1.databinding.ActivityPagerBinding
 class PagerActivity : AppCompatActivity() {
     private var _binding: ActivityPagerBinding? = null
     private val binding get() = _binding!!
-    private var navController: NavController? = null
     private val parentNavHost = R.id.ParentNavHost
     private val appbarSharedViewModel: AppbarSharedViewModel by viewModels()
-
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +34,7 @@ class PagerActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+   /*     binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_search -> {
                     appbarSharedViewModel.showSearchLayout(true)
@@ -39,39 +42,47 @@ class PagerActivity : AppCompatActivity() {
                 }
                 else -> false
             }
-        }
+        }*/
     }
 
     private fun setObservers() {
-        appbarSharedViewModel.currentNavController.observe(this, { navController ->
-            navController?.let {
-                binding.toolbar.setupWithNavController(it, AppBarConfiguration(it.graph))
-            }
-        })
 
-        appbarSharedViewModel.navBarVisibility.observe(this) {
+  /*      appbarSharedViewModel.navBarVisibility.observe(this) {
             binding.toolbar.visibility = it
         }
 
         appbarSharedViewModel.searchIconVisibility.observe(this) {
             val searchIcon = binding.toolbar.menu.findItem(R.id.menu_search)
             searchIcon.isVisible = it == View.VISIBLE
-        }
+        }*/
     }
 
     private fun toolbarSetup() {
         val parentNavHost =
-            supportFragmentManager.findFragmentById(parentNavHost) as? NavHostFragment
-        navController = parentNavHost?.navController
-        binding.toolbar.inflateMenu(R.menu.contacts_menu)
-                val appBarConfig = AppBarConfiguration(navController!!.graph)
-        binding.toolbar.setupWithNavController(navController!!, appBarConfig)
+            supportFragmentManager.findFragmentById(parentNavHost) as NavHostFragment
+        navController = parentNavHost.navController
+        //binding.toolbar.inflateMenu(R.menu.contacts_menu)
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        bottomNavigationView.setupWithNavController(navController)
+
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.settingsFragment, R.id.contactsListFragment)
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        binding.toolbar.setupWithNavController(navController, appBarConfiguration)
+        setSupportActionBar(binding.toolbar)
 
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration)
     }
 
 

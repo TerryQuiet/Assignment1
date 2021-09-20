@@ -10,6 +10,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import tk.quietdev.level1.data.repository.Repository
 import tk.quietdev.level1.utils.Const
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,6 +56,17 @@ class EditProfileViewModel @Inject constructor(private val repository: Repositor
                 }.launchIn(viewModelScope)
             }
         }
-
     }
+
+
+    fun getShortDate(ts:Long?):String{
+        if(ts == null) return ""
+        //Get instance of calendar
+        val calendar = Calendar.getInstance(Locale.getDefault())
+        //get current date from ts
+        calendar.timeInMillis = ts
+        //return formatted date
+        return android.text.format.DateFormat.format("yyyy-MM-dd", calendar).toString()
+    }
+
 }

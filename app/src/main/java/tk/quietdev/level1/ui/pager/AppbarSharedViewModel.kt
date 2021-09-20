@@ -9,7 +9,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppbarSharedViewModel @Inject constructor() : ViewModel() {
-    val currentNavController = MutableLiveData<NavController?>()
 
     val navBarVisibility = MutableLiveData(View.VISIBLE)
     val searchLayoutVisibility = MutableLiveData(View.GONE)
