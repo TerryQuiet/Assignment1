@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -34,6 +33,7 @@ class ViewPagerContainerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentViewpagerContainerBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -41,8 +41,14 @@ class ViewPagerContainerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         if (viewModel.currentPage == -1) {
             when (args.type) {
-                ViewPagerType.CONTACTS -> viewModel.initCurrentUserContacts(args.userId)
-                ViewPagerType.ALL_USERS -> viewModel.initAllUsers(args.userId)
+                ViewPagerType.CONTACTS -> {
+                    appbarSharedViewModel.appBarLabel.value = "My contacts"
+                    viewModel.initCurrentUserContacts(args.userId)
+                }
+                ViewPagerType.ALL_USERS -> {
+                    appbarSharedViewModel.appBarLabel.value = "All users"
+                    viewModel.initAllUsers(args.userId)
+                }
             }
 
         }

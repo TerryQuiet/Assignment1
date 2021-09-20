@@ -67,6 +67,11 @@ class MainActivity : AppCompatActivity() {
             val searchIcon = binding.toolbar.menu.findItem(R.id.menu_search)
             searchIcon?.isVisible = it == View.VISIBLE
         }
+
+        appbarSharedViewModel.appBarLabel.observe(this) {
+            if (it != "")
+            binding.toolbar.title = it
+        }
     }
 
     private fun toolbarSetup() {
