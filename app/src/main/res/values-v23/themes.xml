@@ -46,7 +46,7 @@
 
         <!--My addiction-->
 
-        <item name="android:windowAnimationStyle">@style/WindowAnimations</item>
+
         <item name="android:textColor">?attr/colorOnSurface</item>
         <!--statusBar-->
         <item name="android:statusBarColor">?android:textColorHint</item>

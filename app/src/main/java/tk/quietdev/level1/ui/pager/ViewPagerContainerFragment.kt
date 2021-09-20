@@ -72,7 +72,7 @@ class ViewPagerContainerFragment : Fragment() {
         }
 
         appbarSharedViewModel.searchLayoutVisibility.observe(viewLifecycleOwner) {
-            binding.searchTopBar.visibility = it
+           // binding.searchTopBar.visibility = it
         }
 
 

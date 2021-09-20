@@ -34,7 +34,7 @@ class PagerActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-   /*     binding.toolbar.setOnMenuItemClickListener { menuItem ->
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.menu_search -> {
                     appbarSharedViewModel.showSearchLayout(true)
@@ -42,37 +42,33 @@ class PagerActivity : AppCompatActivity() {
                 }
                 else -> false
             }
-        }*/
+        }
     }
 
     private fun setObservers() {
 
-  /*      appbarSharedViewModel.navBarVisibility.observe(this) {
+        appbarSharedViewModel.navBarVisibility.observe(this) {
             binding.toolbar.visibility = it
         }
 
         appbarSharedViewModel.searchIconVisibility.observe(this) {
             val searchIcon = binding.toolbar.menu.findItem(R.id.menu_search)
-            searchIcon.isVisible = it == View.VISIBLE
-        }*/
+            searchIcon?.isVisible = it == View.VISIBLE
+        }
     }
 
     private fun toolbarSetup() {
         val parentNavHost =
             supportFragmentManager.findFragmentById(parentNavHost) as NavHostFragment
         navController = parentNavHost.navController
-        //binding.toolbar.inflateMenu(R.menu.contacts_menu)
+        binding.toolbar.inflateMenu(R.menu.contacts_menu)
+        appBarConfiguration = AppBarConfiguration(navController.graph)
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
-        bottomNavigationView.setupWithNavController(navController)
-
-        appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.settingsFragment, R.id.contactsListFragment)
-        )
+        setSupportActionBar(binding.toolbar)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         binding.toolbar.setupWithNavController(navController, appBarConfiguration)
-        setSupportActionBar(binding.toolbar)
+
 
     }
 

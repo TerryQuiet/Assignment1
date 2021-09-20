@@ -3,17 +3,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_parent"
-    app:startDestination="@+id/nav_graph_settings">
+    app:startDestination="@+id/parent_dest">
 
-    <!-- MainFragment-->
+
     <fragment
         android:id="@+id/parent_dest"
         android:name="tk.quietdev.level1.ui.pager.ViewPagerContainerFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_viewpager_container">
+        <action
+            android:id="@+id/action_parent_dest_to_editProfileFragment"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_parent_dest_to_contactDetailFragment"
+            app:destination="@id/contactDetailFragment" />
+        <action
+            android:id="@+id/action_parent_dest_to_addContactsListFragment"
+            app:destination="@id/addContactsListFragment" />
     </fragment>
 
-    <include app:graph="@navigation/nav_graph_settings"/>
-    <include app:graph="@navigation/nav_graph_list"/>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="tk.quietdev.level1.ui.pager.settings.SettingsFragment"
+        android:label="@string/settings"/>
+
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="tk.quietdev.level1.ui.pager.settings.edit.EditProfileFragment"
+        android:label="@string/edit_profile">
+        <argument
+            android:name="user"
+            app:argType="tk.quietdev.level1.models.UserModel" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/contactsListFragment"
+        android:name="tk.quietdev.level1.ui.pager.contacts.list.removecontacts.RemoveContactsListFragment"
+        android:label="@string/contacts"/>
+
+    <fragment
+        android:id="@+id/contactDetailFragment"
+        android:name="tk.quietdev.level1.ui.pager.contacts.detail.ContactDetailFragment"
+        android:label="@string/profile">
+        <argument
+            android:name="user"
+            app:argType="tk.quietdev.level1.models.UserModel" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addContactsListFragment"
+        android:name="tk.quietdev.level1.ui.pager.contacts.list.addcontacts.AddContactsListFragment"
+        android:label="AddContactsListFragment">
+        <action
+            android:id="@+id/action_addContactsListFragment_to_contactDetailFragment"
+            app:destination="@id/contactDetailFragment" />
+    </fragment>
+
+
+
 
 </navigation>
