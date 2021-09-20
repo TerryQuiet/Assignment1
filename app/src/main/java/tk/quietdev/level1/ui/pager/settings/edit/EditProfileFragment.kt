@@ -46,7 +46,7 @@ class EditProfileFragment : Fragment() {
                 is Resource.Success<UserModel> -> {
                     binding.progressCircular.visibility = View.GONE
                     if (it.message == Const.ON_USER_UPDATE) {
-                        findNavController().popBackStack()
+                        findNavController().navigateUp()
                     } else {
                         it.data?.let { userModel ->
                             bindValues(userModel)
