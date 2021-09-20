@@ -13,6 +13,7 @@
         android:id="@+id/ivProfilePic"
         android:layout_width="@dimen/details_square_photo"
         android:layout_height="@dimen/details_square_photo"
+        android:layout_margin="@dimen/small_8dp"
         android:layout_gravity="center"
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
         app:srcCompat="@drawable/ic_profile" />

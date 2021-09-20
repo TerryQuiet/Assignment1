@@ -29,7 +29,7 @@ class RemoveContactListViewModel @Inject constructor(
         (repository as RemoteApiRepository).getCurrentUserContactIdsFlow().onEach {
             it.data?.let {
                 userListAll = repository.getCurrentUserContactsFlow(it).first()
-                userList.value = searchQueryMap(userListAll)
+                userListToShow.value = searchQueryMap(userListAll)
             }
         }.launchIn(viewModelScope)
     }

@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.HolderState
 import tk.quietdev.level1.utils.ext.loadImage
 
 
@@ -30,10 +29,9 @@ abstract class ContactHolderBase(
                         imageBtnRemove.visibility = View.GONE
                     }
                     HolderState.SUCCESS -> {
-                        addedState()
+                        successState()
                     }
                     HolderState.FAIL -> {
-                        spinner.visibility = View.GONE
                         ivAdded.visibility = View.GONE
                     }
                 }
@@ -41,9 +39,8 @@ abstract class ContactHolderBase(
         }
     }
 
-    protected open fun addedState() {
+    protected open fun successState() {
         binding.apply {
-            spinner.visibility = View.GONE
             layoutBtnAdd.visibility = View.GONE
             ivAdded.visibility = View.GONE
         }

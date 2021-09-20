@@ -14,9 +14,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.BaseListFragment
-import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.HolderState
+import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.HolderState
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.RemoveContactsAdapter
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderBase
+import tk.quietdev.level1.ui.main.myprofile.contacts.pager.ViewPagerType
 import tk.quietdev.level1.utils.Const
 
 @AndroidEntryPoint
@@ -108,7 +109,8 @@ class RemoveContactsListFragment : BaseListFragment() {
     private fun openContactDetail(userModel: UserModel) {
         findNavController().navigate(
             RemoveContactsListFragmentDirections.actionRemoveContactsListFragmentToViewPagerContainer(
-                userModel.id
+                userModel.id,
+                ViewPagerType.CONTACTS
             )
         )
     }

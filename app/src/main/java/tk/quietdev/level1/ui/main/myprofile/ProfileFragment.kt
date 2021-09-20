@@ -22,7 +22,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var userDetailBinding: UserDetailBinding
     private val viewModel: ProfileViewModel by viewModels()
-    private val profileSharedViewModel: ProfileSharedViewModel by activityViewModels()
+
 
 
     override fun onCreateView(

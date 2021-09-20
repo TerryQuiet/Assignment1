@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderBase
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderRemove
+import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.HolderState
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
 class RemoveContactsAdapter(

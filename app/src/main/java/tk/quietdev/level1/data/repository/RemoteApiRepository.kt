@@ -88,7 +88,7 @@ class RemoteApiRepository(
         saveFetchResult = { onGetUserResponse(it) }
     )
 
-    fun getCurrentUserContactIdsFlow() = networkBoundResource(
+    override fun getCurrentUserContactIdsFlow() = networkBoundResource(
         query = {
             db.getCurrentUserContactsIdsFlow().map {
                 it.map { it.id }
@@ -98,7 +98,7 @@ class RemoteApiRepository(
         saveFetchResult = { onGetUserContactsResponse(it) }
     )
 
-    fun getCurrentUserContactsFlow(list: List<Int>) =
+    override fun getCurrentUserContactsFlow(list: List<Int>) =
         networkBoundResource(
             query = {
                 db.getUsersByIds(list).map {

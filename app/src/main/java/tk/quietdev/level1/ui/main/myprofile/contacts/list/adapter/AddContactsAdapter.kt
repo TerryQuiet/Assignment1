@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderAdd
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderBase
+import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.HolderState
 
 
 class AddContactsAdapter(

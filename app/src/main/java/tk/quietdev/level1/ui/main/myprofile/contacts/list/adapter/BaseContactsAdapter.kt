@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ListAdapter
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderBase
+import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.HolderState
 import tk.quietdev.level1.utils.DiffCallBack
 
 abstract class BaseContactsAdapter(

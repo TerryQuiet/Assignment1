@@ -10,6 +10,7 @@ import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.BaseListFragment
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.AddContactsAdapter
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderBase
+import tk.quietdev.level1.ui.main.myprofile.contacts.pager.ViewPagerType
 
 @AndroidEntryPoint
 class AddContactsListFragment : BaseListFragment() {
@@ -33,7 +34,8 @@ class AddContactsListFragment : BaseListFragment() {
     private fun openContactDetail(userModel: UserModel) {
         findNavController().navigate(
             AddContactsListFragmentDirections.actionAddContactsListFragmentToViewPagerContainer(
-                userModel.id
+                userModel.id,
+                ViewPagerType.ALL_USERS
             )
         )
     }

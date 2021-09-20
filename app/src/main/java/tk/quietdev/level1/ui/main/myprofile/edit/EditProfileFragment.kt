@@ -89,7 +89,6 @@ class EditProfileFragment : Fragment() {
             datePicker.selection?.let {
                 binding.etBirthDate.setText(viewModel.getShortDate(it))
             }
-
         }
     }
 

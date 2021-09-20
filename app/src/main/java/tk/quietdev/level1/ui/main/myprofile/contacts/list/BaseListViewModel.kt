@@ -9,16 +9,16 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import tk.quietdev.level1.data.repository.Repository
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.HolderState
+import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.HolderState
 import tk.quietdev.level1.utils.Resource
 
 
 abstract class BaseListViewModel(
     protected val repository: Repository
 ) : ViewModel() {
-    val userList = MutableLiveData<Resource<List<UserModel>>>()
+    val userListToShow = MutableLiveData<Resource<List<UserModel>>>()
     val holderState = MutableLiveData(mutableMapOf<Int, HolderState>())
-    val actionJobs = mutableMapOf<Int, Job>()
+    private val actionJobs = mutableMapOf<Int, Job>()
 
     abstract var search: String
 
@@ -53,8 +53,8 @@ abstract class BaseListViewModel(
 
     fun changeSearchQuery(text: String) {
         search = text
-        userList.value?.let {
-            userList.value = searchQueryMap(userListAll)
+        userListToShow.value?.let {
+            userListToShow.value = searchQueryMap(userListAll)
         }
     }
 

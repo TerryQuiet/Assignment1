@@ -14,19 +14,9 @@ import tk.quietdev.level1.utils.Const
 class PagerAdapter(fm: FragmentManager, lf: Lifecycle,private val userListAll: List<UserModel>?) :
     FragmentStateAdapter(fm, lf) {
 
-    enum class Pages(val position: Int) {
-        LIST(1),
-        SETTINGS(0)
-    }
-
-    fun test() {
-
-    }
-
     override fun getItemCount(): Int = userListAll?.size ?: 0
 
     override fun createFragment(position: Int): Fragment {
-        Log.d("TAG", "createFragment: $position")
         val fragment = ContactDetailFragment()
         val userModel = userListAll?.get(position)
         userModel?.let {
