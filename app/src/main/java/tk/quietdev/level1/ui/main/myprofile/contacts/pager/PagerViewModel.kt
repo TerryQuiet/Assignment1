@@ -25,10 +25,11 @@ class PagerViewModel @Inject constructor(
     var currentPage: Int = -1
 
     fun initCurrentUserContacts(selectedUserId: Int) {
-        job = repository.getCurrentUserContactIdsFlow().onEach {
+        job = repository.getCurrentUserContactIdsFlow(false).onEach {
+            Log.d("TAG", "initCurrentUserContacts: ${it.message}")
             if (it is Resource.Success) {
                 it.data?.let {
-                    val list= repository.getCurrentUserContactsFlow(it).first().data ?: listOf()
+                    val list= repository.getCurrentUserContactsFlow(it, false).first().data ?: listOf()
                     initPage(selectedUserId, list)
                     userListAll.value = list
                     job?.cancel()

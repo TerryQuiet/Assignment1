@@ -145,7 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/date_of_birth"
-                    app:endIconMode="clear_text"
+                    app:endIconMode="custom"
                     app:endIconDrawable="@drawable/ic_baseline_calendar_today_24"
                     app:endIconTint="?attr/colorPrimary"
                     android:singleLine="true">

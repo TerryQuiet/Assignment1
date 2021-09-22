@@ -13,6 +13,7 @@ interface Repository {
     fun addUserContact(userModelId: Int): Flow<Resource<List<UserModel>>>
     fun updateUser(updatedUserModel: UserModel): Flow<Resource<UserModel>>
     fun removeUserContact(userModelId: Int): Flow<Resource<List<UserModel>>>
-    fun getCurrentUserContactIdsFlow(): Flow<Resource<List<Int>>>
-    fun getCurrentUserContactsFlow(list: List<Int>): Flow<Resource<List<UserModel>>>
+    fun getCurrentUserContactIdsFlow(shouldFetch: Boolean = true): Flow<Resource<List<Int>>>
+    fun getCurrentUserContactsFlow(list: List<Int>, shouldFetch: Boolean = true): Flow<Resource<List<UserModel>>>
+
 }
