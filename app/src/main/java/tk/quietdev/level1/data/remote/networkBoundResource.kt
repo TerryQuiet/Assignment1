@@ -18,14 +18,22 @@ inline fun <ResultType, RequestType> networkBoundResource(
         try {
             delay(Const.NETWORK_DELAY_SIMULATION)
             saveFetchResult(fetch())
-            query().map { Resource.Success(it) }
+            query().map {
+                Resource.Success(it).apply {
+                    this.message = "REMOTE"
+                }
+            }
         } catch (throwable: Throwable) {
             Log.d("TAG", "networkBoundResource: EERR ${throwable.printStackTrace()}")
             Log.d("TAG", "networkBoundResource: ${throwable.message}")
             query().map { Resource.Error(throwable.message ?: "error while data fetch", it) }
         }
     } else {
-        query().map { Resource.Success(it) }
+        query().map {
+            Resource.Success(it).apply {
+                this.message = "LOCAL"
+            }
+        }
     }
     emitAll(flow)
 }

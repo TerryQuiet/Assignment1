@@ -1,10 +1,7 @@
 package tk.quietdev.level1.data.repository
 
 import android.util.Log
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import retrofit2.Response
 import tk.quietdev.level1.data.db.RoomMapper
 import tk.quietdev.level1.data.db.RoomUserDao
@@ -17,6 +14,7 @@ import tk.quietdev.level1.data.remote.models.GetUserResponse
 import tk.quietdev.level1.data.remote.networkBoundResource
 import tk.quietdev.level1.data.remote.test.GetUserContactsResponse
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.utils.Resource
 import tk.quietdev.level1.utils.UserRegisterError
 import kotlin.reflect.KSuspendFunction1
 
@@ -37,7 +35,8 @@ class RemoteApiRepository(
             val data = remoteMapper.userToApiUserUpdate(updatedUserModel)
             api.updateUser(getAuthHeaders(), data)
         },
-        saveFetchResult = { onGetUserResponse(it) }
+        saveFetchResult = { onGetUserResponse(it) },
+
     )
 
     override fun userRegistration(login: String, password: String) =
@@ -88,17 +87,18 @@ class RemoteApiRepository(
         saveFetchResult = { onGetUserResponse(it) }
     )
 
-    override fun getCurrentUserContactIdsFlow() = networkBoundResource(
+    override fun getCurrentUserContactIdsFlow(shouldFetch: Boolean): Flow<Resource<List<Int>>> = networkBoundResource(
         query = {
             db.getCurrentUserContactsIdsFlow().map {
                 it.map { it.id }
             }
         },
         fetch = { api.getCurrentUserContacts(getBearerToken()) },
-        saveFetchResult = { onGetUserContactsResponse(it) }
+        saveFetchResult = { onGetUserContactsResponse(it) },
+        shouldFetch = { shouldFetch }
     )
 
-    override fun getCurrentUserContactsFlow(list: List<Int>) =
+    override fun getCurrentUserContactsFlow(list: List<Int>, shouldFetch: Boolean) =
         networkBoundResource(
             query = {
                 db.getUsersByIds(list).map {
@@ -108,7 +108,8 @@ class RemoteApiRepository(
 
             },
             fetch = { api.getCurrentUserContacts(getBearerToken()) },
-            saveFetchResult = { onGetUserContactsResponse(it) }
+            saveFetchResult = { onGetUserContactsResponse(it) },
+            shouldFetch = { shouldFetch }
         )
 
     override fun getAllUsersFlow() = networkBoundResource(
