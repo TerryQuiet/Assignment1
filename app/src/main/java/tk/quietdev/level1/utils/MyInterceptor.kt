@@ -10,6 +10,8 @@ import tk.quietdev.level1.utils.ext.fixJson
 import java.nio.charset.Charset
 
 
+// I had a problem where response from API was missing closing bracket, this is my fix.
+// After AVD update there is no such problem anymore.
 class MyInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request = chain.request()

@@ -1,18 +1,13 @@
 package tk.quietdev.level1.data.repository
 
-import android.util.Log
 import kotlinx.coroutines.flow.*
 import retrofit2.Response
 import tk.quietdev.level1.data.db.RoomMapper
 import tk.quietdev.level1.data.db.RoomUserDao
 import tk.quietdev.level1.data.remote.RemoteMapper
 import tk.quietdev.level1.data.remote.ShppApi
-import tk.quietdev.level1.data.remote.models.ApiUserContactManipulation
-import tk.quietdev.level1.data.remote.models.AuthResponse
-import tk.quietdev.level1.data.remote.models.AuthUser
-import tk.quietdev.level1.data.remote.models.GetUserResponse
+import tk.quietdev.level1.data.remote.models.*
 import tk.quietdev.level1.data.remote.networkBoundResource
-import tk.quietdev.level1.data.remote.test.GetUserContactsResponse
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.Resource
 import tk.quietdev.level1.utils.UserRegisterError
@@ -55,7 +50,6 @@ class RemoteApiRepository(
             }
         },
         fetch = {
-            Log.d("TAG", "userAuth: ")
             call(authUser)
         },
         saveFetchResult = { response ->
@@ -210,7 +204,7 @@ class RemoteApiRepository(
     private suspend fun getAuthHeaders(): HashMap<String, String> {
         val header = HashMap<String, String>()
         header["Content-Type"] = "application/json"
-        header["Authorization"] = "Bearer ${getCurrentUserToken()}"
+        header["Authorization"] = getBearerToken()
         return header
     }
 

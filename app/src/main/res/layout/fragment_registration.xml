@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.myprofile.ProfileFragment">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/containerMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,9 +36,9 @@
             android:text="@string/auth_instruction"
             android:textAlignment="center"
             android:textSize="@dimen/header4_12sp" />
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/containerEditables"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <CheckBox
         android:id="@+id/cbRemember"
@@ -171,7 +171,8 @@
         android:layout_height="match_parent"
         android:background="#CC434343"
         android:clickable="true"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="gone">
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:layout_width="match_parent"

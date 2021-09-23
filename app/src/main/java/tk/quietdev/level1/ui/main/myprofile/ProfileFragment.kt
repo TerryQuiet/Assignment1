@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,7 +43,6 @@ class ProfileFragment : Fragment() {
     private fun bindListeners() {
         binding.apply {
             btnViewContacts.setOnClickListener {
-               // profileSharedViewModel.viewMyContactsButtonClicked.value = true
                 findNavController().navigate(
                     ProfileFragmentDirections.actionProfileFragmentToRemoveContactsListFragment()
                 )

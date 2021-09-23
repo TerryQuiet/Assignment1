@@ -26,7 +26,7 @@
     <include
         android:id="@+id/topContainer"
         layout="@layout/user_detail"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/glCenterHorizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,9 +38,12 @@
         layout="@layout/social_buttons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btnEditProfile"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/glForButtons">
+        app:layout_constraintTop_toBottomOf="@id/glForButtons"
+        app:layout_constraintVertical_chainStyle="spread_inside">
 
     </include>
 
@@ -52,9 +55,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/normal_16dp"
         android:text="@string/edit_profile"
-        app:layout_constraintBottom_toTopOf="@id/btnViewContacts"
+        app:layout_constraintBottom_toTopOf="@+id/btnViewContacts"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/containerSocialButtons"
         app:strokeColor="?attr/colorOnSurface"
         app:strokeWidth="2dp" />
 

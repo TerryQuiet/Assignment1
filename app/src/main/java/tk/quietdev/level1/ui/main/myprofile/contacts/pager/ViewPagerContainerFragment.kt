@@ -1,7 +1,6 @@
 package tk.quietdev.level1.ui.main.myprofile.contacts.pager
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,8 +56,6 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     private fun setListeners() {
-
-
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -71,9 +68,6 @@ class ViewPagerContainerFragment : Fragment() {
     private fun setupViewPager(list: List<UserModel>) {
         binding.viewPager.adapter =
             PagerAdapter(childFragmentManager, viewLifecycleOwner.lifecycle, list)
-
-        Log.d("TAG", "setupViewPager: ${viewModel.currentPage}")
-
         binding.viewPager.setCurrentItem(viewModel.currentPage, false)
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
@@ -84,7 +78,6 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     private fun setObservers() {
-
         viewModel.userListAll.observe(viewLifecycleOwner) {
             if (it.isNotEmpty())
                 setupViewPager(it)
@@ -92,7 +85,6 @@ class ViewPagerContainerFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-
         _binding = null
         super.onDestroyView()
     }

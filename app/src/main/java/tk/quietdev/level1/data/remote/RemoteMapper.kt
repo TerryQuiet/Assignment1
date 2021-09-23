@@ -28,34 +28,6 @@ class RemoteMapper @Inject constructor() {
         }
     }
 
-    fun toUser(userTokenData: UserTokenData): UserModel {  // todo get rid of it
-        userTokenData.user.apply {
-            return UserModel(
-                id = id,
-                userName = name,
-                email = email,
-                occupation = career,
-                physicalAddress = address,
-                birthDate = birthday,
-                phone = phone,
-            )
-        }
-    }
-
-    fun userToApiUser(userModel: UserModel): ApiUser {
-        userModel.apply {
-            return ApiUser(
-                id = id,
-                address = physicalAddress,
-                birthday = birthDate,
-                career = occupation,
-                email = email,
-                name = userName,
-                phone = phone,
-            )
-        }
-    }
-
     fun apiUserToRoomUser(apiUser: ApiUser): RoomUser {
         apiUser.apply {
             return RoomUser(
@@ -79,6 +51,7 @@ class RemoteMapper @Inject constructor() {
     fun userToApiUserUpdate(userModel: UserModel): ApiUpdatedUser {
         userModel.apply {
             return ApiUpdatedUser(
+
                 ApiInternalUpdatedUser(
                     name = userName,
                     phone = phone,
