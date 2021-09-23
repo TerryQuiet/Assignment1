@@ -5,6 +5,8 @@ import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
 
+
+// I DID NOT SPENT TIME HERE. COPY PASTE FROM MATERIAL.io , and some adjustments to make it work.
 object CalendarUtil {
     private val today = MaterialDatePicker.todayInUtcMilliseconds()
     private val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))

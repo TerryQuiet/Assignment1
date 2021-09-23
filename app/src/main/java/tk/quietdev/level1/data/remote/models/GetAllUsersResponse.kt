@@ -1,6 +1,4 @@
-package tk.quietdev.level1.data.remote.test
-
-import tk.quietdev.level1.data.remote.models.ApiUser
+package tk.quietdev.level1.data.remote.models
 
 data class GetAllUsersResponse(
     val code: Int,

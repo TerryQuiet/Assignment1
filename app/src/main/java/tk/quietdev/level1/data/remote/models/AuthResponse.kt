@@ -5,11 +5,7 @@ data class AuthResponse(
     val data: UserTokenData,
     val message: String,
     val status: String
-) {
-    enum class Status {
-        ONGOING, BAD, OK, NULL
-    }
-}
+)
 
 data class UserTokenData(
     val accessToken: String,

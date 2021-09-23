@@ -4,8 +4,6 @@ package tk.quietdev.level1.data.remote
 import retrofit2.Response
 import retrofit2.http.*
 import tk.quietdev.level1.data.remote.models.*
-import tk.quietdev.level1.data.remote.test.GetAllUsersResponse
-import tk.quietdev.level1.data.remote.test.GetUserContactsResponse
 
 interface ShppApi {
 

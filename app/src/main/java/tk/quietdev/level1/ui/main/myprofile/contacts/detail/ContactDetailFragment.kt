@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.databinding.FragmentContactDetailBinding
 import tk.quietdev.level1.databinding.UserDetailBinding
@@ -22,7 +21,6 @@ class ContactDetailFragment : Fragment() {
     private var _userDetailBinding: UserDetailBinding? = null
     private val userDetailBinding get() = _userDetailBinding!!
     private val viewModel: ContactDetailViewModel by viewModels()
-    private val args: ContactDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,8 +36,6 @@ class ContactDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //viewModel.currentUserModel = args.user
-
         arguments?.takeIf { it.containsKey(Const.CONTACT_DETAIL) }?.apply {
             viewModel.currentUserModel = getParcelable(Const.CONTACT_DETAIL)!!
         }
