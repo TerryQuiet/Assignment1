@@ -5,5 +5,5 @@ object Const {
     const val TIME_5_SEC = 5000L
     const val TAG = "tk.quietdev.debugging"
     const val CONTACT_DETAIL = "contactDetail"
-    val NETWORK_DELAY_SIMULATION = 0L
+    const val NETWORK_DELAY_SIMULATION = 0L
 }

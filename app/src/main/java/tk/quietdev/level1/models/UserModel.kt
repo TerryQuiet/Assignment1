@@ -12,7 +12,6 @@ data class UserModel(
     var occupation: String? = "Not provided",
     var physicalAddress: String? = "Not provided",
     var pictureUri: String? = "https://i.pravatar.cc/150?u=${email}",
-    var password: String = "11111",
     var birthDate: String? = null,
     var phone: String? = null,
 ) : Parcelable

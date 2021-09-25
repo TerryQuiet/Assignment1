@@ -204,7 +204,7 @@ class RemoteApiRepository(
     private suspend fun getAuthHeaders(): HashMap<String, String> {
         val header = HashMap<String, String>()
         header["Content-Type"] = "application/json"
-        header["Authorization"] = "Bearer ${getCurrentUserToken()}"
+        header["Authorization"] = getBearerToken()
         return header
     }
 

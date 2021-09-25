@@ -1,6 +1,5 @@
 package tk.quietdev.level1.data.remote
 
-import android.util.Log
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import tk.quietdev.level1.utils.Const
@@ -24,8 +23,6 @@ inline fun <ResultType, RequestType> networkBoundResource(
                 }
             }
         } catch (throwable: Throwable) {
-            Log.d("TAG", "networkBoundResource: EERR ${throwable.printStackTrace()}")
-            Log.d("TAG", "networkBoundResource: ${throwable.message}")
             query().map { Resource.Error(throwable.message ?: "error while data fetch", it) }
         }
     } else {

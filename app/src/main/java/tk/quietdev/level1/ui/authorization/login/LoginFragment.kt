@@ -38,7 +38,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setListeners()
         setObservers()
-
+        authSharedViewModel
     }
 
     private fun setObservers() {

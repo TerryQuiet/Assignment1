@@ -51,6 +51,7 @@ class RemoteMapper @Inject constructor() {
     fun userToApiUserUpdate(userModel: UserModel): ApiUpdatedUser {
         userModel.apply {
             return ApiUpdatedUser(
+
                 ApiInternalUpdatedUser(
                     name = userName,
                     phone = phone,
