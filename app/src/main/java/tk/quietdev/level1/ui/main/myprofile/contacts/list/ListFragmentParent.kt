@@ -1,44 +1,31 @@
 package tk.quietdev.level1.ui.main.myprofile.contacts.list
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.ui.main.AppbarSharedViewModel
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.BaseContactsAdapter
 
-abstract class BaseListFragment : Fragment() {
+abstract class ListFragmentParent :
+    BaseFragment<FragmentContactsBinding>(FragmentContactsBinding::inflate) {
 
-    private var _binding: FragmentContactsBinding? = null
-    protected val binding get() = _binding!!
-    protected val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
+    private val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
     protected open val contactsAdapter: BaseContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
 
-    protected abstract val viewModel: BaseListViewModel
+    protected abstract val viewModel: ParentListViewModel
 
     abstract fun getContactAdapter(): BaseContactsAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentContactsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initObservables()
         initRecycleView()
     }
 
-    open fun initObservables() {
+    override fun setObservers() {
         viewModel.apply {
             userListToShow.observe(viewLifecycleOwner) {
                 val list = it.data
@@ -59,11 +46,6 @@ abstract class BaseListFragment : Fragment() {
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onPause() {

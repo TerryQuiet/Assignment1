@@ -19,8 +19,7 @@ class RemoteApiRepository(
     private val remoteMapper: RemoteMapper,
     private val roomMapper: RoomMapper,
 ) : Repository {
-
-    private val apiErrorMapper by lazy { remoteMapper.moshiErrorResponseMapper() }
+    private val shppApiErrorMapper by lazy { remoteMapper.shppApiErrorResponseMapper() }
 
     override fun updateUser(updatedUserModel: UserModel) = networkBoundResource(
         query = {
@@ -30,8 +29,7 @@ class RemoteApiRepository(
             val data = remoteMapper.userToApiUserUpdate(updatedUserModel)
             api.updateUser(getAuthHeaders(), data)
         },
-        saveFetchResult = { onGetUserResponse(it) },
-
+        saveFetchResult = { onGetUserResponse(it) }
     )
 
     override fun userRegistration(login: String, password: String) =
@@ -62,7 +60,7 @@ class RemoteApiRepository(
                 }
             } else {
                 val errorMessageFromApi =
-                    apiErrorMapper.fromJson(response.errorBody()?.string())?.message
+                    shppApiErrorMapper.fromJson(response.errorBody()?.string())?.message
                 errorMessageFromApi?.let {
                     throw UserRegisterError(it)
                 }
@@ -81,16 +79,17 @@ class RemoteApiRepository(
         saveFetchResult = { onGetUserResponse(it) }
     )
 
-    override fun getCurrentUserContactIdsFlow(shouldFetch: Boolean): Flow<Resource<List<Int>>> = networkBoundResource(
-        query = {
-            db.getCurrentUserContactsIdsFlow().map {
-                it.map { it.id }
-            }
-        },
-        fetch = { api.getCurrentUserContacts(getBearerToken()) },
-        saveFetchResult = { onGetUserContactsResponse(it) },
-        shouldFetch = { shouldFetch }
-    )
+    override fun getCurrentUserContactIdsFlow(shouldFetch: Boolean): Flow<Resource<List<Int>>> =
+        networkBoundResource(
+            query = {
+                db.getCurrentUserContactsIdsFlow().map {
+                    it.map { it.id }
+                }
+            },
+            fetch = { api.getCurrentUserContacts(getBearerToken()) },
+            saveFetchResult = { onGetUserContactsResponse(it) },
+            shouldFetch = { shouldFetch }
+        )
 
     override fun getCurrentUserContactsFlow(list: List<Int>, shouldFetch: Boolean) =
         networkBoundResource(

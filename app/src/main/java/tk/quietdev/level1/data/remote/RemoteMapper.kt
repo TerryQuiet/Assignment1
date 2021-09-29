@@ -63,7 +63,7 @@ class RemoteMapper @Inject constructor() {
         }
     }
 
-    fun moshiErrorResponseMapper(): JsonAdapter<ErrorRegResponse> = Moshi.Builder()
+    fun shppApiErrorResponseMapper(): JsonAdapter<ErrorRegResponse> = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
         .adapter(ErrorRegResponse::class.java)

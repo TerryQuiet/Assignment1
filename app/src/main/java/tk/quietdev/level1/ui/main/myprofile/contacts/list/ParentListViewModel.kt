@@ -13,7 +13,7 @@ import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.Holder
 import tk.quietdev.level1.utils.Resource
 
 
-abstract class BaseListViewModel(
+abstract class ParentListViewModel(
     protected val repository: Repository
 ) : ViewModel() {
     val userListToShow = MutableLiveData<Resource<List<UserModel>>>()

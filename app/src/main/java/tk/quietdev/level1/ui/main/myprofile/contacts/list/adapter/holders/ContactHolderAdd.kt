@@ -7,7 +7,7 @@ import tk.quietdev.level1.models.UserModel
 class ContactHolderAdd(
     binding: ListItemBinding,
     onClickListener: OnItemClickListener,
-) : ContactHolderBase(binding, onClickListener) {
+) : ContactHolderParent(binding, onClickListener) {
 
     override fun bind(userModel: UserModel) {
         super.bind(userModel)

@@ -7,13 +7,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.ui.main.myprofile.contacts.list.BaseListFragment
+import tk.quietdev.level1.ui.main.myprofile.contacts.list.ListFragmentParent
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.AddContactsAdapter
-import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderBase
+import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderParent
 import tk.quietdev.level1.ui.main.myprofile.contacts.pager.ViewPagerType
 
 @AndroidEntryPoint
-class AddContactsListFragment : BaseListFragment() {
+class AddContactsListFragment : ListFragmentParent() {
 
     override val viewModel: AddContactListViewModel by viewModels()
 
@@ -40,7 +40,7 @@ class AddContactsListFragment : BaseListFragment() {
         )
     }
 
-    private val onItemClickListener = object : ContactHolderBase.OnItemClickListener {
+    private val onItemClickListener = object : ContactHolderParent.OnItemClickListener {
 
         override fun onItemClick(userModel: UserModel) {
             openContactDetail(userModel)

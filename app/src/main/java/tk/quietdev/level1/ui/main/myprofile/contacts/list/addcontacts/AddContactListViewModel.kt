@@ -6,13 +6,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import tk.quietdev.level1.data.repository.Repository
-import tk.quietdev.level1.ui.main.myprofile.contacts.list.BaseListViewModel
+import tk.quietdev.level1.ui.main.myprofile.contacts.list.ParentListViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class AddContactListViewModel @Inject constructor(
     repository: Repository
-) : BaseListViewModel(repository) {
+) : ParentListViewModel(repository) {
 
     override var search = ""
 

@@ -1,17 +1,14 @@
 package tk.quietdev.level1.ui.main.myprofile.edit
 
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
+import tk.quietdev.level1.BaseFragment
+import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.CalendarUtil
@@ -20,59 +17,44 @@ import tk.quietdev.level1.utils.Resource
 import tk.quietdev.level1.utils.ext.loadImage
 
 @AndroidEntryPoint
-class EditProfileFragment : Fragment() {
+class EditProfileFragment :
+    BaseFragment<FragmentEditProfileBinding>(FragmentEditProfileBinding::inflate) {
 
-    private var _binding: FragmentEditProfileBinding? = null
-    private val binding get() = _binding!!
     private val viewModel: EditProfileViewModel by viewModels()
-
-    private val datePicker =
+    private val datePicker by lazy {
         MaterialDatePicker.Builder.datePicker()
-            .setTitleText("Select date")
+            .setTitleText(getString(R.string.select_date))
             .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
             .setCalendarConstraints(CalendarUtil.getConstrains().build())
             .build()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View =
-        FragmentEditProfileBinding.inflate(inflater, container, false).apply {
-            (activity as AppCompatActivity).supportActionBar?.show()
-            _binding = this
-        }.root
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setListeners()
-        setObservers()
     }
 
-    private fun setObservers() {
-        viewModel.currentUserModel.observe(viewLifecycleOwner) {
-            when (it) {
-                is Resource.Success<UserModel> -> {
-                    binding.progressCircular.visibility = View.GONE
-                    if (it.message == Const.ON_USER_UPDATE) {
-                        findNavController().navigateUp()
-                    } else {
-                        it.data?.let { userModel ->
-                            bindValues(userModel)
+    override fun setObservers() {
+        viewModel.currentUserModel.observe(viewLifecycleOwner) { resource ->
+            binding.apply {
+                when (resource) {
+                    is Resource.Success<UserModel> -> {
+                        progressCircular.visibility = View.GONE
+                        if (resource.message == Const.ON_USER_UPDATE) {
+                            findNavController().navigateUp()
+                        } else {
+                            resource.data?.let { userModel ->
+                                bindValues(userModel)
+                            }
                         }
                     }
-                }
-                is Resource.Error -> {
-                    binding.progressCircular.visibility = View.GONE
-                }
-                is Resource.Loading -> {
-                    binding.progressCircular.visibility = View.VISIBLE
+                    is Resource.Error -> {
+                        progressCircular.visibility = View.GONE
+                    }
+                    is Resource.Loading -> {
+                        progressCircular.visibility = View.VISIBLE
+                    }
                 }
             }
         }
     }
 
-    private fun setListeners() {
+    override fun setListeners() {
         binding.apply {
             btnSave.setOnClickListener {
                 updateUser()
@@ -82,17 +64,18 @@ class EditProfileFragment : Fragment() {
                     "image/"
                 )
             }
-        }
-        datePicker.addOnPositiveButtonClickListener {
-            datePicker.selection?.let {
-                binding.etBirthDate.setText(viewModel.getShortDate(it))
+            datePicker.addOnPositiveButtonClickListener {
+                datePicker.selection?.let {
+                    etBirthDate.setText(viewModel.getShortDate(it))
+                }
             }
         }
+
     }
 
     private fun updateUser() {
-        binding.progressCircular.visibility = View.VISIBLE
         binding.apply {
+            progressCircular.visibility = View.VISIBLE
             viewModel.updateUser(
                 userName = etName.text.toString(),
                 email = etEmail.text.toString(),
@@ -120,7 +103,6 @@ class EditProfileFragment : Fragment() {
         }
     }
 
-
     private val getAction = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) {
@@ -129,11 +111,5 @@ class EditProfileFragment : Fragment() {
             binding.ivProfilePic.loadImage(it)
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 
 }

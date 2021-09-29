@@ -1,17 +1,14 @@
 package tk.quietdev.level1.ui.authorization.register
 
 import android.graphics.Color
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.R
 import tk.quietdev.level1.databinding.FragmentRegistrationBinding
 import tk.quietdev.level1.models.UserModel
@@ -20,26 +17,14 @@ import tk.quietdev.level1.ui.authorization.AuthViewModel
 import tk.quietdev.level1.utils.Resource
 
 @AndroidEntryPoint
-class RegisterFragment : Fragment() {
+class RegisterFragment :
+    BaseFragment<FragmentRegistrationBinding>(FragmentRegistrationBinding::inflate) {
 
-    private lateinit var binding: FragmentRegistrationBinding
     private val viewModel: RegisterViewModel by viewModels()
     private val authSharedViewModel: AuthViewModel by activityViewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = FragmentRegistrationBinding.inflate(inflater, container, false).apply {
-        binding = this
-    }.root
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setListeners()
-        setObservers()
-    }
-
-    private fun setObservers() {
+    override fun setObservers() {
         viewModel.dataState.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Error -> {
@@ -60,7 +45,7 @@ class RegisterFragment : Fragment() {
         }
     }
 
-    private fun setListeners() {
+    override fun setListeners() {
         binding.apply {
             btnRegister.setOnClickListener {
                 viewModel.regUser(

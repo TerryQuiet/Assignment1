@@ -1,41 +1,23 @@
 package tk.quietdev.level1.ui.main.myprofile.contacts.detail
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.databinding.FragmentContactDetailBinding
-import tk.quietdev.level1.databinding.UserDetailBinding
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 
 @AndroidEntryPoint
-class ContactDetailFragment : Fragment() {
-
-    private var _binding: FragmentContactDetailBinding? = null
-    private val binding get() = _binding!!
-    private var _userDetailBinding: UserDetailBinding? = null
-    private val userDetailBinding get() = _userDetailBinding!!
+class ContactDetailFragment :
+    BaseFragment<FragmentContactDetailBinding>(FragmentContactDetailBinding::inflate) {
     private val viewModel: ContactDetailViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        (activity as AppCompatActivity).supportActionBar?.show()
-        return FragmentContactDetailBinding.inflate(inflater, container, false).apply {
-            _binding = this
-            _userDetailBinding = binding.topContainer
-        }.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.show()
         arguments?.takeIf { it.containsKey(Const.CONTACT_DETAIL) }?.apply {
             viewModel.currentUserModel = getParcelable(Const.CONTACT_DETAIL)!!
         }
@@ -44,19 +26,13 @@ class ContactDetailFragment : Fragment() {
 
     private fun bindViews() {
         viewModel.currentUserModel.let {
-            userDetailBinding.apply {
+            binding.topContainer.apply {
                 tvName.text = it.userName
                 tvAddress.text = it.physicalAddress
                 tvOccupation.text = it.occupation
                 ivProfilePic.loadImage(it.pictureUri)
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        _userDetailBinding = null
     }
 
 }

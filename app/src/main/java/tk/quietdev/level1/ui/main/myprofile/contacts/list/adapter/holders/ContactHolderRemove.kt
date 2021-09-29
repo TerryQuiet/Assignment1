@@ -10,7 +10,7 @@ import tk.quietdev.level1.models.UserModel
 class ContactHolderRemove(
     binding: ListItemBinding,
     onClickListener: OnItemClickListener,
-) : ContactHolderBase(binding, onClickListener) {
+) : ContactHolderParent(binding, onClickListener) {
 
     private var userModelId: Int? = null
 

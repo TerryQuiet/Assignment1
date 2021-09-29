@@ -24,6 +24,7 @@ object RetrofitModule {
     fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
         .apply {
             level = HttpLoggingInterceptor.Level.BODY
+
         }
 
     @Singleton
