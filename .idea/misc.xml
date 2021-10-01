@@ -14,6 +14,7 @@
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/activity_auth.xml" value="0.25" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/activity_nav_host_holder.xml" value="0.17831813576494426" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/activity_pager.xml" value="0.25" />
+        <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/activity_test.xml" value="0.21944444444444444" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/dialog_add_contact.xml" value="0.1286231884057971" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/fragment_auth.xml" value="0.29270833333333335" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/fragment_contact_detail.xml" value="0.25" />
@@ -31,6 +32,9 @@
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/fragment_viewpager_container.xml" value="0.25" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/list_item.xml" value="0.33" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/list_item_add_contact.xml" value="0.5" />
+        <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/list_item_custom.xml" value="0.33" />
+        <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/list_item_new.xml" value="0.17962962962962964" />
+        <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/list_item_remove.xml" value="0.33" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/social_buttons.xml" value="0.22" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/layout/user_detail.xml" value="0.1286231884057971" />
         <entry key="..\:/study/0AND/SHPP_ANDR/shpp_mentor_course/app/src/main/res/menu/bottom_nav.xml" value="0.24947916666666667" />

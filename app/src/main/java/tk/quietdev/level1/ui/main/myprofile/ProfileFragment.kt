@@ -34,10 +34,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
                         openEditFragment(it)
                     }
                 }
-
-            }
-            containerSocialButtons.iBtnFacebook.setOnClickListener {
-
             }
         }
     }

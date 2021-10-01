@@ -1,6 +1,7 @@
 package tk.quietdev.level1.ui.authorization.login
 
 import android.graphics.Color
+import android.os.Bundle
 import android.view.View
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
@@ -21,6 +22,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     private val viewModel: LoginViewModel by viewModels()
     private val authSharedViewModel: AuthViewModel by activityViewModels()
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        if (authSharedViewModel.isRemember)
+            viewModel.tokenLogin()
+    }
 
     override fun setObservers() {
         viewModel.dataState.observe(viewLifecycleOwner) {
@@ -46,7 +54,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     override fun setListeners() {
         binding.apply {
             btnRegister.setOnClickListener {
-                viewModel.loginUser(
+                viewModel.passwordLogin(
                     email = etEmail.text.toString(),
                     passwd = etPassword.text.toString()
                 )

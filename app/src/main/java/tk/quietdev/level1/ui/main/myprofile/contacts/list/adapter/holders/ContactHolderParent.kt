@@ -1,17 +1,17 @@
 package tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders
 
 
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import tk.quietdev.level1.databinding.ListItemBinding
+import tk.quietdev.level1.databinding.ListItemNewBinding
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.ui.ListHolderView
 import tk.quietdev.level1.utils.ext.loadImage
 
 
 abstract class ContactHolderParent(
-    protected val binding: ListItemBinding,
+    protected val binding: ListItemNewBinding,
     protected val onClickListener: OnItemClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -19,42 +19,31 @@ abstract class ContactHolderParent(
     protected val currentUser get() = _currentUserModel!!
 
     private val holderStateObserver = Observer<MutableMap<Int, HolderState>> { state ->
-        binding.spinner.visibility = View.GONE
+        binding.holder.buttonState = ListHolderView.ButtonState.NORMAL
         state[currentUser.id]?.let {
-            binding.apply {
-                when (it) {
+            binding.holder.apply {
+                buttonState = when (it) {
                     HolderState.PENDING -> {
-                        spinner.visibility = View.VISIBLE
-                        layoutBtnAdd.visibility = View.GONE
-                        imageBtnRemove.visibility = View.GONE
+                        ListHolderView.ButtonState.SPINNER
                     }
                     HolderState.SUCCESS -> {
-                        successState()
+                        ListHolderView.ButtonState.DONE
                     }
                     HolderState.FAIL -> {
-                        ivAdded.visibility = View.GONE
+                        ListHolderView.ButtonState.NORMAL
                     }
                 }
             }
         }
     }
 
-    protected open fun successState() {
-        binding.apply {
-            layoutBtnAdd.visibility = View.GONE
-            ivAdded.visibility = View.GONE
-        }
-    }
-
-
     open fun bind(userModel: UserModel) {
-        binding.apply {
-
+        binding.holder.apply {
             with(userModel) {
                 _currentUserModel = this
-                tvName.text = email // TODO: 9/15/2021 fix
-                tvOccupation.text = id.toString() // TODO: 9/15/2021 fix
-                ivProfilePic.loadImage(pictureUri)
+                title.text = email
+                subtitle.text = id.toString()
+                picture.loadImage(pictureUri)
                 setListeners()
             }
         }
@@ -63,9 +52,6 @@ abstract class ContactHolderParent(
 
     protected open fun setListeners() {
         binding.apply {
-            cbRemove.setOnClickListener {
-                onItemClicked()
-            }
             root.setOnClickListener {
                 onItemClicked()
             }

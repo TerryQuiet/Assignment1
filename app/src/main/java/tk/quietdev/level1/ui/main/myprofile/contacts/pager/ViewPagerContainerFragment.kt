@@ -12,6 +12,7 @@ import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.databinding.FragmentViewpagerContainerBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.main.AppbarSharedViewModel
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -19,7 +20,14 @@ class ViewPagerContainerFragment :
     BaseFragment<FragmentViewpagerContainerBinding>(FragmentViewpagerContainerBinding::inflate) {
 
     private val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
-    private val viewModel: PagerViewModel by viewModels()
+    @Inject
+    lateinit var assistedFactory: ParentPagerViewModelFactory
+    private val viewModel: ParentPagerViewModel by viewModels {
+        ParentPagerViewModel.Factory(
+            assistedFactory,
+            "s"
+        )
+    }
     private val args: ViewPagerContainerFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

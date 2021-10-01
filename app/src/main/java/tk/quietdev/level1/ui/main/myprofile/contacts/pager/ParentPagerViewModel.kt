@@ -3,8 +3,11 @@ package tk.quietdev.level1.ui.main.myprofile.contacts.pager
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
@@ -12,11 +15,10 @@ import kotlinx.coroutines.flow.onEach
 import tk.quietdev.level1.data.repository.Repository
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.Resource
-import javax.inject.Inject
 
-@HiltViewModel
-class PagerViewModel @Inject constructor(
-    val repository: Repository
+class ParentPagerViewModel @AssistedInject constructor(
+    val repository: Repository,
+    @Assisted string: String
 ) : ViewModel() {
 
     var userListAll: MutableLiveData<List<UserModel>> = MutableLiveData(listOf())
@@ -62,4 +64,18 @@ class PagerViewModel @Inject constructor(
         }
     }
 
+    class Factory(
+        private val assistedFactory: ParentPagerViewModelFactory,
+        private val name: String,
+    ) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return assistedFactory.create(name) as T
+        }
+    }
+
+}
+
+@AssistedFactory
+interface ParentPagerViewModelFactory {
+    fun create(name: String): ParentPagerViewModel
 }

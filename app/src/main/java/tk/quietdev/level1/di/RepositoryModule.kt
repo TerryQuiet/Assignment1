@@ -8,6 +8,7 @@ import tk.quietdev.level1.data.db.RoomMapper
 import tk.quietdev.level1.data.db.RoomUserDao
 import tk.quietdev.level1.data.remote.RemoteMapper
 import tk.quietdev.level1.data.remote.ShppApi
+import tk.quietdev.level1.data.repository.AccessTokenRepositoryImpl
 import tk.quietdev.level1.data.repository.RemoteApiRepository
 import tk.quietdev.level1.data.repository.Repository
 import javax.inject.Singleton
@@ -28,6 +29,14 @@ object RepositoryModule {
         api = api,
         remoteMapper = remoteMapper,
         roomMapper = roomMapper
+    )
+
+    @Singleton
+    @Provides
+    fun provideAccessTokenRepository(
+        db: RoomUserDao,
+    ): AccessTokenRepositoryImpl = AccessTokenRepositoryImpl(
+        db = db,
     )
 
 }

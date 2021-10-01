@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import tk.quietdev.level1.databinding.ListItemBinding
+import tk.quietdev.level1.databinding.ListItemNewBinding
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderParent
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderRemove
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.HolderState
@@ -27,7 +27,7 @@ class RemoveContactsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolderParent {
         return ContactHolderRemove(
-            ListItemBinding.inflate(
+            ListItemNewBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             ),
             onClickListener

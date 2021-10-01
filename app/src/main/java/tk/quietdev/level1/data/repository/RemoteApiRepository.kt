@@ -1,5 +1,6 @@
 package tk.quietdev.level1.data.repository
 
+import android.util.Log
 import kotlinx.coroutines.flow.*
 import retrofit2.Response
 import tk.quietdev.level1.data.db.RoomMapper
@@ -21,16 +22,17 @@ class RemoteApiRepository(
 ) : Repository {
     private val shppApiErrorMapper by lazy { remoteMapper.shppApiErrorResponseMapper() }
 
-    override fun updateUser(updatedUserModel: UserModel) = networkBoundResource(
-        query = {
-            db.getUser(updatedUserModel.id).map { roomMapper.roomUserToUser(it) }
-        },
-        fetch = {
-            val data = remoteMapper.userToApiUserUpdate(updatedUserModel)
-            api.updateUser(getAuthHeaders(), data)
-        },
-        saveFetchResult = { onGetUserResponse(it) }
-    )
+    override fun updateUser(updatedUserModel: UserModel): Flow<Resource<UserModel?>> =
+        networkBoundResource(
+            query = {
+                db.getUser(updatedUserModel.id).map { roomMapper.roomUserToUser(it) }
+            },
+            fetch = {
+                val data = remoteMapper.userToApiUserUpdate(updatedUserModel)
+                api.updateUser(getAuthHeaders(), data)
+            },
+            saveFetchResult = { onGetUserResponse(it) }
+        )
 
     override fun userRegistration(login: String, password: String) =
         userAuth(api::userRegister, AuthUser(email = login, password = password))
@@ -68,11 +70,11 @@ class RemoteApiRepository(
         },
     )
 
-    override fun currentUserFlow() = networkBoundResource(
+    override fun currentUserFlow(): Flow<Resource<UserModel?>> = networkBoundResource(
         query = {
             flow {
-                val userIds = db.getCurrentUser().id
-                emitAll(db.getUser(userIds).map { roomMapper.roomUserToUser(it) })
+                val userId = db.getCurrentUser().id
+                emitAll(db.getUser(userId).map { roomMapper.roomUserToUser(it) })
             }
         },
         fetch = { api.getCurrentUser(getBearerToken()) },
@@ -183,11 +185,18 @@ class RemoteApiRepository(
     }
 
     private suspend fun onGetUserResponse(response: Response<GetUserResponse>) {
+        Log.d("TAG", "onGetUserResponse: $response")
         if (response.isSuccessful) {
             val apiUser = response.body()?.data?.user
             apiUser?.let {
                 val roomUser = remoteMapper.apiUserToRoomUser(it)
                 db.insert(roomUser)
+            }
+        } else {
+            val errorMessageFromApi =
+                shppApiErrorMapper.fromJson(response.errorBody()?.string())?.message
+            errorMessageFromApi?.let {
+                throw UserRegisterError(it)
             }
         }
     }

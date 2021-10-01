@@ -1,14 +1,13 @@
 package tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders
 
-import android.graphics.Color
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import tk.quietdev.level1.databinding.ListItemBinding
+import tk.quietdev.level1.databinding.ListItemNewBinding
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.ui.ListHolderView
 
 class ContactHolderRemove(
-    binding: ListItemBinding,
+    binding: ListItemNewBinding,
     onClickListener: OnItemClickListener,
 ) : ContactHolderParent(binding, onClickListener) {
 
@@ -17,19 +16,12 @@ class ContactHolderRemove(
     private val listStateObserver = Observer<List<Int>> { selectedList ->
         binding.apply {
             if (selectedList.isNotEmpty()) { // multiselectMode
-                cbRemove.visibility = View.VISIBLE
+                binding.holder.multiselectState = true
                 userModelId?.let {
-                    if (selectedList.contains(it)) { // item selected
-                        cbRemove.isChecked = true
-                        layout.setBackgroundColor(Color.GRAY)
-                    } else {
-                        cbRemove.isChecked = false
-                        layout.setBackgroundColor(Color.TRANSPARENT)
-                    }
+                    binding.holder.isHolderChecked = selectedList.contains(it)
                 }
             } else {
-                cbRemove.visibility = View.GONE
-                layout.setBackgroundColor(Color.TRANSPARENT)
+                binding.holder.multiselectState = false
             }
         }
     }
@@ -37,13 +29,10 @@ class ContactHolderRemove(
     override fun bind(userModel: UserModel) {
         super.bind(userModel)
         binding.apply {
+            binding.holder.holderType = ListHolderView.HolderType.REMOVE
             userModelId = userModel.id
-            cbRemove.isChecked = false
-            binding.layout.setBackgroundColor(Color.TRANSPARENT)
-            imageBtnRemove.visibility = View.VISIBLE
-            imageBtnRemove.setOnClickListener {
-                onIconClick()
-            }
+            binding.holder.isHolderChecked = false
+            binding.holder.setOnButtonClickListener { onIconClick() }
         }
     }
 

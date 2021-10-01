@@ -6,14 +6,6 @@ import tk.quietdev.level1.data.db.model.RoomCurrentUser
 import tk.quietdev.level1.data.db.model.RoomUser
 import tk.quietdev.level1.data.db.model.RoomUserContactsIds
 
-
-/*Note that the function with @Transaction needs to be open. Room will generate a
-    concrete implementation of your DAO, either extending your abstract class or
-    implementing your interface. To make @Transaction work, Room code-generates an
-    overriding function that wraps a call to your implementation in a transaction.
-    However, in Kotlin, concrete functions cannot be overridden without the open
-    keyword. Leaving that keyword off may result in strange compile error messages.*/
-
 @Dao
 interface RoomUserDao {
 
