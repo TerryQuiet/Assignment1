@@ -1,13 +1,13 @@
 package tk.quietdev.level1.ui.authorization.login
 
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import tk.quietdev.level1.data.repository.Repository
@@ -26,10 +26,17 @@ class LoginViewModel @Inject constructor(
 
     private var loginJob: Job? = null
 
-    fun loginUser(email: String, passwd: String) {
-        loginJob = repository.userLogin(email, passwd).onEach {
+    fun tokenLogin() {
+        login(repository.currentUserFlow())
+    }
+
+    fun passwordLogin(email: String, passwd: String) {
+        login(repository.userLogin(email, passwd))
+    }
+
+    private fun login(currentUserFlow: Flow<Resource<UserModel?>>) {
+        loginJob = currentUserFlow.onEach {
             _dataState.value = it
-            Log.d("TAG", "loginUser:VM $it")
             if (it is Resource.Success) {
                 loginJob?.cancel()
             }

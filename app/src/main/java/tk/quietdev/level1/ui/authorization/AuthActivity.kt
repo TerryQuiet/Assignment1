@@ -11,15 +11,12 @@ import tk.quietdev.level1.ui.main.MainActivity
 @AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityAuthBinding
     private val authViewModel: AuthViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (authViewModel.isRemember)
-            login()
-        binding = ActivityAuthBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(ActivityAuthBinding.inflate(layoutInflater).root)
+
     }
 
     fun login() {

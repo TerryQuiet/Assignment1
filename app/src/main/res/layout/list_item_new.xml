@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<tk.quietdev.level1.ui.ListHolderView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/holder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/Base.Theme.MyApp.WhiteSurface"
+    app:holderSubtitle="Subtitle"
+    app:holderTitle="Title"
+    app:holderPicture="@drawable/ic_profile"
+    app:holderType="REMOVE" />
+
+

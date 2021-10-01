@@ -1,58 +1,45 @@
 package tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders
 
-import android.graphics.Color
-import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import tk.quietdev.level1.databinding.ListItemBinding
+import tk.quietdev.level1.databinding.ListItemNewBinding
 import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.ui.ListHolderView
 
 class ContactHolderRemove(
-    binding: ListItemBinding,
+    binding: ListItemNewBinding,
     onClickListener: OnItemClickListener,
 ) : ContactHolderParent(binding, onClickListener) {
 
     private var userModelId: Int? = null
 
     private val listStateObserver = Observer<List<Int>> { selectedList ->
-        binding.apply {
+        binding.holder.apply {
             if (selectedList.isNotEmpty()) { // multiselectMode
-                cbRemove.visibility = View.VISIBLE
+                multiselectState = true
                 userModelId?.let {
-                    if (selectedList.contains(it)) { // item selected
-                        cbRemove.isChecked = true
-                        layout.setBackgroundColor(Color.GRAY)
-                    } else {
-                        cbRemove.isChecked = false
-                        layout.setBackgroundColor(Color.TRANSPARENT)
-                    }
+                    isHolderChecked = selectedList.contains(it)
                 }
             } else {
-                cbRemove.visibility = View.GONE
-                layout.setBackgroundColor(Color.TRANSPARENT)
+                multiselectState = false
             }
         }
     }
 
     override fun bind(userModel: UserModel) {
         super.bind(userModel)
-        binding.apply {
+        binding.holder.apply {
+            holderType = ListHolderView.HolderType.REMOVE
             userModelId = userModel.id
-            cbRemove.isChecked = false
-            binding.layout.setBackgroundColor(Color.TRANSPARENT)
-            imageBtnRemove.visibility = View.VISIBLE
-            imageBtnRemove.setOnClickListener {
-                onIconClick()
-            }
+            isHolderChecked = false
+            setOnButtonClickListener { onIconClick() }
         }
     }
 
     override fun setListeners() {
         super.setListeners()
-        binding.apply {
-            root.setOnLongClickListener {
-                onClickListener.onLongItemClick(currentUser)
-            }
+        binding.root.setOnLongClickListener {
+            onClickListener.onLongItemClick(currentUser)
         }
     }
 

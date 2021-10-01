@@ -33,7 +33,7 @@ class EditProfileFragment :
         viewModel.currentUserModel.observe(viewLifecycleOwner) { resource ->
             binding.apply {
                 when (resource) {
-                    is Resource.Success<UserModel> -> {
+                    is Resource.Success -> {
                         progressCircular.visibility = View.GONE
                         if (resource.message == Const.ON_USER_UPDATE) {
                             findNavController().navigateUp()
