@@ -21,8 +21,6 @@ abstract class ParentListViewModel(
     private val actionJobs = mutableMapOf<Int, Job>()
 
     abstract var search: String
-
-
     protected lateinit var userListAll: Resource<List<UserModel>>
 
     fun action(
@@ -66,7 +64,6 @@ abstract class ParentListViewModel(
             onFail = {}
         )
     }
-
 
     protected fun searchQueryMap(it: Resource<List<UserModel>>): Resource<List<UserModel>> =
         when (it) {

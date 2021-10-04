@@ -3,6 +3,7 @@ package tk.quietdev.level1.ui.main.myprofile.contacts.list.removecontacts
 import android.graphics.Color
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.BaseTransientBottomBar
@@ -40,6 +41,7 @@ class RemoveContactsListFragment : ListFragmentParent() {
     }
 
     override fun getContactAdapter() = RemoveContactsAdapter(
+        AppCompatResources.getDrawable(requireContext(), R.drawable.ic_trashcan),
         onClickListener = onItemClickListener,
         removeState = viewModel.contactsToRemove,
         holderState = viewModel.holderState

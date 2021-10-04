@@ -15,7 +15,6 @@ abstract class ListFragmentParent :
 
     private val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
     protected open val contactsAdapter: BaseContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
-
     protected abstract val viewModel: ParentListViewModel
 
     abstract fun getContactAdapter(): BaseContactsAdapter
@@ -45,7 +44,6 @@ abstract class ListFragmentParent :
             adapter = contactsAdapter
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
-
     }
 
     override fun onPause() {
