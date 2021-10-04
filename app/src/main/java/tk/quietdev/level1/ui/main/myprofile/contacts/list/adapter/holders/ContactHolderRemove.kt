@@ -1,38 +1,50 @@
 package tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders
 
+import android.graphics.Color
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import tk.quietdev.level1.databinding.ListItemNewBinding
+import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.ui.ListHolderView
 
 class ContactHolderRemove(
-    binding: ListItemNewBinding,
+    binding: ListItemBinding,
     onClickListener: OnItemClickListener,
 ) : ContactHolderParent(binding, onClickListener) {
 
     private var userModelId: Int? = null
 
     private val listStateObserver = Observer<List<Int>> { selectedList ->
-        binding.holder.apply {
-            if (selectedList.isNotEmpty()) { // multiselectMode
-                multiselectState = true
+        binding.apply {
+            val isMultiselect = selectedList.isNotEmpty()
+            showMultiSelect(isMultiselect)
+            if (isMultiselect) { // multiselectMode
                 userModelId?.let {
-                    isHolderChecked = selectedList.contains(it)
+                    showHolderSelected(selectedList.contains(it))
+
                 }
-            } else {
-                multiselectState = false
             }
         }
     }
 
+    private fun showHolderSelected(contains: Boolean) {
+        binding.cbRemove.isChecked = contains
+        if (contains) {
+            binding.background.setBackgroundColor(Color.GRAY)
+        } else {
+            binding.background.setBackgroundColor(Color.TRANSPARENT)
+        }
+    }
+
+    private fun showMultiSelect(b: Boolean) {
+        binding.cbRemove.visibility = if (b) View.VISIBLE else View.GONE
+    }
+
     override fun bind(userModel: UserModel) {
         super.bind(userModel)
-        binding.holder.apply {
-            holderType = ListHolderView.HolderType.REMOVE
+        binding.apply {
             userModelId = userModel.id
-            isHolderChecked = false
-            setOnButtonClickListener { onIconClick() }
+            //isHolderChecked = false
         }
     }
 

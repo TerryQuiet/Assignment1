@@ -15,7 +15,7 @@
 -->
 
 <resources>
-    <declare-styleable name="ListHolderView">
+<!--    <declare-styleable name="ListHolderView">
         <attr name="backgroundColor" format="color" />
         <attr name="holderIsCheckable" format="boolean" />
         <attr name="holderTitle" format="string" />
@@ -32,5 +32,5 @@
 
         <attr name="holderPicture" format="reference" />
 
-    </declare-styleable>
+    </declare-styleable>-->
 </resources>

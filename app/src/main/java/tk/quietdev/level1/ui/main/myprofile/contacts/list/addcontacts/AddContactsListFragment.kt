@@ -3,9 +3,11 @@ package tk.quietdev.level1.ui.main.myprofile.contacts.list.addcontacts
 
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
+import tk.quietdev.level1.R
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.ListFragmentParent
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.AddContactsAdapter
@@ -23,6 +25,7 @@ class AddContactsListFragment : ListFragmentParent() {
     }
 
     override fun getContactAdapter() = AddContactsAdapter(
+        getDrawable(requireContext(), R.drawable.ic_add),
         onClickListener = onItemClickListener,
         holderState = viewModel.holderState
     )

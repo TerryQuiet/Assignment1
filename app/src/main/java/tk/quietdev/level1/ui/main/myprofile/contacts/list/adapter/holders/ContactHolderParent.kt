@@ -1,16 +1,16 @@
 package tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders
 
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import tk.quietdev.level1.databinding.ListItemNewBinding
+import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.ui.ListHolderView
 import tk.quietdev.level1.utils.ext.loadImage
 
 
 abstract class ContactHolderParent(
-    protected val binding: ListItemNewBinding,
+    protected val binding: ListItemBinding,
     protected val onClickListener: OnItemClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -18,31 +18,48 @@ abstract class ContactHolderParent(
     protected val currentUser get() = _currentUserModel!!
 
     private val holderStateObserver = Observer<MutableMap<Int, HolderState>> { state ->
-        binding.holder.buttonState = ListHolderView.ButtonState.NORMAL
+        showNormalState()
         state[currentUser.id]?.let {
-            binding.holder.apply {
+            binding.apply {
                 when (it) {
                     HolderState.PENDING -> {
-                        buttonState = ListHolderView.ButtonState.SPINNER
+                        spinner.visibility = View.VISIBLE
                     }
                     HolderState.SUCCESS -> {
-                        buttonState = ListHolderView.ButtonState.DONE
+                        ivDone.visibility = View.VISIBLE
                     }
                     HolderState.FAIL -> {
                         //ivAdded.visibility = View.GONE
                     }
+
                 }
             }
         }
     }
 
+    private fun hideButtons() {
+        with(binding) {
+            btnMainAction.visibility = View.GONE
+            spinner.visibility = View.GONE
+            ivDone.visibility = View.GONE
+        }
+    }
+
+    private fun showNormalState() {
+        with(binding) {
+            btnMainAction.visibility = View.VISIBLE
+            spinner.visibility = View.GONE
+            ivDone.visibility = View.GONE
+        }
+    }
+
     open fun bind(userModel: UserModel) {
-        binding.holder.apply {
+        binding.apply {
             with(userModel) {
                 _currentUserModel = this
-                title.text = email
-                subtitle.text = id.toString()
-                picture.loadImage(pictureUri)
+                tvName.text = email
+                tvOccupation.text = id.toString()
+                ivProfilePic.loadImage(pictureUri)
                 setListeners()
             }
         }
@@ -56,6 +73,11 @@ abstract class ContactHolderParent(
             }
             setOnLongClickListener {
                 onClickListener.onLongItemClick(currentUser)
+            }
+            binding.apply {
+                btnMainAction.setOnClickListener {
+                    onItemClicked()
+                }
             }
         }
     }

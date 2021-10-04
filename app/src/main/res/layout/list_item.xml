@@ -5,132 +5,118 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/extra_small_4dp"
-    android:theme="@style/Base.Theme.MyApp.WhiteSurface">
+    android:theme="@style/Base.Theme.MyApp.WhiteSurface"
+    tools:parentTag="com.google.android.material.card.MaterialCardView">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/layout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="@dimen/normal_16dp">
+        android:paddingHorizontal="@dimen/normal_16dp"
+        android:paddingVertical="@dimen/small_8dp">
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/cbRemove"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:minWidth="0dp"
             android:text="@null"
             android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivProfilePic"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="@dimen/small_8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cbRemove"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_profile" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingVertical="@dimen/small_8dp">
+            android:layout_marginHorizontal="@dimen/normal_16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/header2_18sp"
+            app:layout_constraintBottom_toTopOf="@+id/tvOccupation"
+            app:layout_constraintEnd_toStartOf="@+id/barrierButton"
+            app:layout_constraintStart_toEndOf="@id/ivProfilePic"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Ava  Ava" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivProfilePic"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_profile" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvOccupation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/normal_16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="@dimen/header4_12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/barrierButton"
+            app:layout_constraintStart_toEndOf="@+id/ivProfilePic"
+            app:layout_constraintTop_toBottomOf="@+id/tvName"
+            tools:text="Photograph" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/normal_16dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="@dimen/header2_18sp"
-                app:layout_constraintBottom_toTopOf="@+id/tvOccupation"
-                app:layout_constraintEnd_toStartOf="@+id/layoutIcon"
-                app:layout_constraintStart_toEndOf="@id/ivProfilePic"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Ava  Ava SmAva  Ava SmAva  Ava Sm " />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnMainAction"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:text="@string/add"
+            android:textAllCaps="false"
+            android:textSize="@dimen/header2_18sp"
+            android:textStyle="normal"
+            android:visibility="visible"
+            app:icon="@drawable/ic_add"
+            app:iconGravity="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvOccupation"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/normal_16dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="@dimen/header4_12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/layoutIcon"
-                app:layout_constraintStart_toEndOf="@+id/ivProfilePic"
-                app:layout_constraintTop_toBottomOf="@+id/tvName"
-                tools:text="Photograph" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_added"
+            tools:layout_editor_absoluteX="42dp" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/layoutIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/imageBtnRemove"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackground"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/ic_trashcan"
-                    tools:visibility="gone" />
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrierButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="start"
+            app:constraint_referenced_ids="ivDone, btnMainAction, spinner" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/layoutBtnAdd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="@dimen/small_8dp"
-                    android:visibility="gone"
-                    tools:visibility="visible">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvAdd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/small_8dp"
-                        android:text="@string/add"
-                        android:textColor="?attr/colorPrimary"
-                        android:textSize="@dimen/header2_18sp" />
-
-                    <androidx.appcompat.widget.AppCompatImageButton
-                        android:id="@+id/imageBtnAdd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        app:srcCompat="@drawable/ic_add" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivAdded"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/ic_added"
-                    tools:layout_editor_absoluteX="42dp" />
-
-                <com.google.android.material.progressindicator.CircularProgressIndicator
-                    android:id="@+id/spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="true"
-                    android:visibility="gone" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </com.google.android.material.card.MaterialCardView>
+
+
 
