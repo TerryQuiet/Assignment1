@@ -77,7 +77,6 @@
             android:textAllCaps="false"
             android:textSize="@dimen/header2_18sp"
             android:textStyle="normal"
-            android:visibility="visible"
             app:icon="@drawable/ic_add"
             app:iconGravity="end"
             app:layout_constraintBottom_toBottomOf="parent"

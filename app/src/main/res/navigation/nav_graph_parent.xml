@@ -10,7 +10,7 @@
         android:id="@+id/viewPagerContainer"
         android:name="tk.quietdev.level1.ui.main.myprofile.contacts.pager.ViewPagerContainerFragment"
         android:label="list"
-        tools:layout="@layout/fragment_viewpager_container">
+        tools:layout="@layout/fragment_profile">
         <argument
             android:name="userId"
             app:argType="integer" />
@@ -44,7 +44,8 @@
     <fragment
         android:id="@+id/addContactsListFragment"
         android:name="tk.quietdev.level1.ui.main.myprofile.contacts.list.addcontacts.AddContactsListFragment"
-        android:label="Find user">
+        android:label="Find user"
+        tools:layout="@layout/fragment_contacts">
         <action
             android:id="@+id/action_addContactsListFragment_to_viewPagerContainer"
             app:destination="@id/viewPagerContainer" />
