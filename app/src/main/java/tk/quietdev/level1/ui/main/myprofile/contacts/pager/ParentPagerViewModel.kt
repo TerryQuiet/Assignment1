@@ -1,6 +1,5 @@
 package tk.quietdev.level1.ui.main.myprofile.contacts.pager
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -8,48 +7,54 @@ import androidx.lifecycle.viewModelScope
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import tk.quietdev.level1.data.repository.Repository
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.Resource
 
 class ParentPagerViewModel @AssistedInject constructor(
     val repository: Repository,
-    @Assisted string: String
+    @Assisted selectedUserId: Int,
+    @Assisted type: ViewPagerType
 ) : ViewModel() {
 
     var userListAll: MutableLiveData<List<UserModel>> = MutableLiveData(listOf())
-
-    private var job: Job? = null
     var currentPage: Int = -1
 
-    fun initCurrentUserContacts(selectedUserId: Int) {
-        job = repository.getCurrentUserContactIdsFlow(false).onEach {
-            Log.d("TAG", "initCurrentUserContacts: ${it.message}")
-            if (it is Resource.Success) {
-                it.data?.let {
-                    val list= repository.getCurrentUserContactsFlow(it, false).first().data ?: listOf()
-                    initPage(selectedUserId, list)
-                    userListAll.value = list
-                    job?.cancel()
-                }
-            }
-        }.launchIn(viewModelScope)
+    init {
+        when (type) {
+            ViewPagerType.ALL_USERS -> initAllUsers(selectedUserId)
+            ViewPagerType.CONTACTS -> initCurrentUserContacts(selectedUserId)
+        }
     }
 
-    fun initAllUsers(selectedUserId: Int) {
-        job = repository.getAllUsersFlow().onEach {
-            if (it is Resource.Success) {
+    private fun initCurrentUserContacts(selectedUserId: Int) {
+        viewModelScope.launch {
+            repository.getCurrentUserContactIdsFlow(false).filter {
+                it is Resource.Success
+            }.collect {
+                it.data?.let {
+                    val list =
+                        repository.getCurrentUserContactsFlow(it, false).first().data ?: listOf()
+                    initPage(selectedUserId, list)
+                    userListAll.value = list
+                }
+            }
+        }
+    }
+
+    private fun initAllUsers(selectedUserId: Int) {
+        viewModelScope.launch {
+            repository.getAllUsersFlow().filter {
+                it is Resource.Success
+            }.collect {
                 it.data?.let {
                     initPage(selectedUserId, it)
                     userListAll.value = it
-                    job?.cancel()
                 }
             }
-        }.launchIn(viewModelScope)
+        }
     }
 
 
@@ -66,16 +71,16 @@ class ParentPagerViewModel @AssistedInject constructor(
 
     class Factory(
         private val assistedFactory: ParentPagerViewModelFactory,
-        private val name: String,
+        private val userId: Int,
+        private val type: ViewPagerType
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return assistedFactory.create(name) as T
+            return assistedFactory.create(userId, type) as T
         }
     }
-
 }
 
 @AssistedFactory
 interface ParentPagerViewModelFactory {
-    fun create(name: String): ParentPagerViewModel
+    fun create(selectedUserId: Int, type: ViewPagerType): ParentPagerViewModel
 }
