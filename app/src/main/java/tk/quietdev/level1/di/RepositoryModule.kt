@@ -12,6 +12,7 @@ import tk.quietdev.level1.data.remote.ShppApi
 import tk.quietdev.level1.data.repository.AccessTokenRepositoryImpl
 import tk.quietdev.level1.data.repository.RemoteApiRepository
 import tk.quietdev.level1.data.repository.Repository
+import tk.quietdev.level1.utils.httpIntercepors.TokenInterceptor
 import javax.inject.Singleton
 
 @Module
@@ -24,6 +25,7 @@ object RepositoryModule {
         api: ShppApi,
         dao: RoomUserDao,
         db: UserDatabase,
+        tokenInterceptor: TokenInterceptor,
         remoteMapper: RemoteMapper,
         roomMapper: RoomMapper
     ): Repository = RemoteApiRepository(
@@ -31,7 +33,8 @@ object RepositoryModule {
         db = db,
         api = api,
         remoteMapper = remoteMapper,
-        roomMapper = roomMapper
+        roomMapper = roomMapper,
+        tokenInterceptor = tokenInterceptor
     )
 
     @Singleton

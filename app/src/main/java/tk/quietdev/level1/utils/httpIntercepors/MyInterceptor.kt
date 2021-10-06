@@ -1,4 +1,4 @@
-package tk.quietdev.level1.utils
+package tk.quietdev.level1.utils.httpIntercepors
 
 import android.util.Log
 import okhttp3.Interceptor

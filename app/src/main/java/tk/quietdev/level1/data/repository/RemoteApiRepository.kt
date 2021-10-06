@@ -14,6 +14,7 @@ import tk.quietdev.level1.data.remote.networkBoundResource
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.Resource
 import tk.quietdev.level1.utils.UserRegisterError
+import tk.quietdev.level1.utils.httpIntercepors.TokenInterceptor
 import kotlin.reflect.KSuspendFunction1
 
 class RemoteApiRepository(
@@ -22,6 +23,7 @@ class RemoteApiRepository(
     private val db: UserDatabase,
     private val remoteMapper: RemoteMapper,
     private val roomMapper: RoomMapper,
+    private val tokenInterceptor: TokenInterceptor
 ) : Repository {
     private val shppApiErrorMapper by lazy { remoteMapper.shppApiErrorResponseMapper() }
 
@@ -32,7 +34,7 @@ class RemoteApiRepository(
             },
             fetch = {
                 val data = remoteMapper.userToApiUserUpdate(updatedUserModel)
-                api.updateUser(getAuthHeaders(), data)
+                api.updateUser(data)
             },
             saveFetchResult = { onGetUserResponse(it) }
         )
@@ -62,6 +64,7 @@ class RemoteApiRepository(
                     val currentUser = remoteMapper.toRoomCurrentUser(it)
                     val roomUser = remoteMapper.apiUserToRoomUser(it.user)
                     db.withTransaction {
+                        tokenInterceptor.token = currentUser.accessToken
                         dao.insert(roomUser)
                         dao.insertCurrentUser(currentUser)
                     }
@@ -79,11 +82,13 @@ class RemoteApiRepository(
     override fun currentUserFlow(): Flow<Resource<UserModel?>> = networkBoundResource(
         query = {
             flow {
-                val userId = dao.getCurrentUser().id
+                val currentUser = dao.getCurrentUser()
+                tokenInterceptor.token = currentUser.accessToken
+                val userId = currentUser.id
                 emitAll(dao.getUser(userId).map { roomMapper.roomUserToUser(it) })
             }
         },
-        fetch = { api.getCurrentUser(getBearerToken()) },
+        fetch = { api.getCurrentUser() },
         saveFetchResult = { onGetUserResponse(it) }
     )
 
@@ -94,7 +99,7 @@ class RemoteApiRepository(
                     it.map { it.id }
                 }
             },
-            fetch = { api.getCurrentUserContacts(getBearerToken()) },
+            fetch = { api.getCurrentUserContacts() },
             saveFetchResult = { onGetUserContactsResponse(it) },
             shouldFetch = { shouldFetch }
         )
@@ -103,12 +108,11 @@ class RemoteApiRepository(
         networkBoundResource(
             query = {
                 dao.getUsersByIds(list).map {
-
                     it.map { roomMapper.roomUserToUser(it) }
                 }
 
             },
-            fetch = { api.getCurrentUserContacts(getBearerToken()) },
+            fetch = { api.getCurrentUserContacts() },
             saveFetchResult = { onGetUserContactsResponse(it) },
             shouldFetch = { shouldFetch }
         )
@@ -125,7 +129,9 @@ class RemoteApiRepository(
             }
         },
         fetch = {
-            api.getAllUsers(getBearerToken())
+            api.getAllUsers(
+                //getBearerToken()
+            )
         },
         saveFetchResult = { response ->
             if (response.isSuccessful) {
@@ -151,10 +157,7 @@ class RemoteApiRepository(
                 }
             },
             fetch = {
-                api.addUserContact(
-                    getAuthHeaders(),
-                    ApiUserContactManipulation(userModelId)
-                )
+                api.addUserContact(ApiUserContactManipulation(userModelId))
             },
             saveFetchResult = { onGetUserContactsResponse(it) }
         )
@@ -169,10 +172,7 @@ class RemoteApiRepository(
                 }
             },
             fetch = {
-                api.removeUserContact(
-                    getAuthHeaders(),
-                    ApiUserContactManipulation(userModelId)
-                )
+                api.removeUserContact(ApiUserContactManipulation(userModelId))
             },
             saveFetchResult = { onGetUserContactsResponse(it) }
         )
@@ -215,21 +215,6 @@ class RemoteApiRepository(
                 throw UserRegisterError(it)
             }
         }
-    }
-
-    private suspend fun getBearerToken(): String {
-        return "Bearer ${getCurrentUserToken()}"
-    }
-
-    private suspend fun getCurrentUserToken(): String {
-        return dao.getCurrentUser().accessToken
-    }
-
-    private suspend fun getAuthHeaders(): HashMap<String, String> {
-        val header = HashMap<String, String>()
-        header["Content-Type"] = "application/json"
-        header["Authorization"] = getBearerToken()
-        return header
     }
 
 }

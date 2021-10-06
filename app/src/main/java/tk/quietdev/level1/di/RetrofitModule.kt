@@ -12,12 +12,17 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import tk.quietdev.level1.data.remote.ShppApi
-import tk.quietdev.level1.utils.MyInterceptor
+import tk.quietdev.level1.utils.httpIntercepors.MyInterceptor
+import tk.quietdev.level1.utils.httpIntercepors.TokenInterceptor
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
+
+    @Singleton
+    @Provides
+    fun provideTokenInterceptor() = TokenInterceptor()
 
     @Singleton
     @Provides
@@ -28,9 +33,13 @@ object RetrofitModule {
 
     @Singleton
     @Provides
-    fun providesOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+    fun providesOkHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        tokenInterceptor: TokenInterceptor
+    ): OkHttpClient =
         OkHttpClient
             .Builder()
+            .addInterceptor(tokenInterceptor)
             .addInterceptor(httpLoggingInterceptor)
             .addInterceptor(MyInterceptor())
             .build()
