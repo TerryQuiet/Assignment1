@@ -1,6 +1,5 @@
 package tk.quietdev.level1.data.repository
 
-import android.util.Log
 import androidx.room.withTransaction
 import kotlinx.coroutines.flow.*
 import retrofit2.Response
@@ -129,9 +128,7 @@ class RemoteApiRepository(
             }
         },
         fetch = {
-            api.getAllUsers(
-                //getBearerToken()
-            )
+            api.getAllUsers()
         },
         saveFetchResult = { response ->
             if (response.isSuccessful) {
@@ -201,7 +198,6 @@ class RemoteApiRepository(
     }
 
     private suspend fun onGetUserResponse(response: Response<GetUserResponse>) {
-        Log.d("TAG", "onGetUserResponse: $response")
         if (response.isSuccessful) {
             val apiUser = response.body()?.data?.user
             apiUser?.let {
