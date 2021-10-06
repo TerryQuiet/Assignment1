@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import tk.quietdev.level1.data.db.RoomMapper
 import tk.quietdev.level1.data.db.RoomUserDao
+import tk.quietdev.level1.data.db.UserDatabase
 import tk.quietdev.level1.data.remote.RemoteMapper
 import tk.quietdev.level1.data.remote.ShppApi
 import tk.quietdev.level1.data.repository.AccessTokenRepositoryImpl
@@ -21,10 +22,12 @@ object RepositoryModule {
     @Provides
     fun provideRemoteRepository(
         api: ShppApi,
-        db: RoomUserDao,
+        dao: RoomUserDao,
+        db: UserDatabase,
         remoteMapper: RemoteMapper,
         roomMapper: RoomMapper
     ): Repository = RemoteApiRepository(
+        dao = dao,
         db = db,
         api = api,
         remoteMapper = remoteMapper,

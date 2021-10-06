@@ -1,6 +1,9 @@
 package tk.quietdev.level1.data.db
 
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import tk.quietdev.level1.data.db.model.RoomCurrentUser
 import tk.quietdev.level1.data.db.model.RoomUser
@@ -17,31 +20,17 @@ interface RoomUserDao {
     fun getUser(id: Int): Flow<RoomUser>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun _insertAllUsers(list: List<RoomUser>)
+    suspend fun insertAllUsers(list: List<RoomUser>)
 
     @Query("DELETE from room_all_users")
-    fun _clearUserList()
-
-    @Transaction
-    open suspend fun insertAllUsers(list: List<RoomUser>) {
-        _clearUserList()
-        _insertAllUsers(list)
-    }
+    fun clearUserList()
 
     @Query("SELECT * from room_all_users ORDER BY id ASC")
     fun getAllUsers(): Flow<List<RoomUser>>
 
     // Current user
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun _insertCurrentUser(userRoom: RoomCurrentUser)
-
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    @Transaction
-    open suspend fun insertCurrentUser(roomCurrentUser: RoomCurrentUser, roomUser: RoomUser) {
-        insert(roomUser)
-        _insertCurrentUser(roomCurrentUser)
-    }
+    suspend fun insertCurrentUser(userRoom: RoomCurrentUser)
 
     @Query("SELECT * from room_current_user WHERE single = 1")
     suspend fun getCurrentUser(): RoomCurrentUser
@@ -63,16 +52,9 @@ interface RoomUserDao {
     suspend fun getCurrentUserContactsIds(): List<RoomUserContactsIds>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun _insert(list: List<RoomUserContactsIds>)
+    suspend fun insert(list: List<RoomUserContactsIds>)
 
     @Query("DELETE from room_current_user_contacts_ids")
-    suspend fun _clearUserContactsList()
-
-    @Transaction
-    open suspend fun insert(listIds: List<RoomUserContactsIds>, roomUsers: List<RoomUser>) {
-        _clearUserContactsList()
-        _insertAllUsers(roomUsers)
-        _insert(listIds)
-    }
+    suspend fun clearUserContactsList()
 
 }
