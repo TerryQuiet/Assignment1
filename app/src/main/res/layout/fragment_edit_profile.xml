@@ -3,6 +3,8 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/colorSurface"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,9 +12,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/backgroundColor"
-        android:fillViewport="true"
-        android:theme="@style/Base.Theme.MyApp.WhiteSurface">
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -22,9 +22,8 @@
                 android:id="@+id/containerPicture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/backgroundColor"
+                android:background="@color/dark_blue_500"
                 android:padding="@dimen/normal_16dp"
-                android:theme="@style/Base.Theme.MyApp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -84,6 +83,7 @@
                     android:id="@+id/etOccupationParent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:hint="@string/career">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -128,7 +128,6 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/etAddressParent"
                     android:layout_width="match_parent"
-
                     android:layout_height="wrap_content"
                     android:hint="@string/address"
                     android:singleLine="true">
@@ -145,10 +144,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/date_of_birth"
-                    app:endIconMode="custom"
+                    android:singleLine="true"
                     app:endIconDrawable="@drawable/ic_baseline_calendar_today_24"
-                    app:endIconTint="?attr/colorPrimary"
-                    android:singleLine="true">
+                    app:endIconMode="custom"
+                    app:endIconTint="?attr/colorPrimary">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etBirthDate"
@@ -162,7 +161,7 @@
 
             <Button
                 android:id="@+id/btnSave"
-                style="@style/orangeButton"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/normal_16dp"
@@ -187,7 +186,8 @@
         android:layout_height="match_parent"
         android:background="#CC434343"
         android:clickable="true"
-        android:visibility="visible">
+        android:visibility="visible"
+        tools:visibility="gone">
 
         <com.google.android.material.progressindicator.CircularProgressIndicator
             android:layout_width="match_parent"

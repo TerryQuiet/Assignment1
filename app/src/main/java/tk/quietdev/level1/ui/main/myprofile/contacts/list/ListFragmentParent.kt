@@ -3,7 +3,6 @@ package tk.quietdev.level1.ui.main.myprofile.contacts.list
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.databinding.FragmentContactsBinding
@@ -42,7 +41,6 @@ abstract class ListFragmentParent :
         binding.recycleView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = contactsAdapter
-            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
     }
 

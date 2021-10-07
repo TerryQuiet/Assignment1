@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.MyApp" parent="Base.Theme.MyApp">
+
+        <item name="colorPrimary">@color/orange_500</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/orange_200</item>
+        <item name="colorSecondary">?attr/colorPrimary</item>
+        <item name="colorOnSecondary">?attr/colorOnPrimary</item>
+        <item name="colorSecondaryVariant">?attr/colorPrimaryVariant</item>
+
+        <item name="colorSurface">@color/dark_blue_500</item>
+        <item name="android:colorBackground">?attr/colorSurface</item>
+
+        <item name="colorOnBackground">@color/white</item>
+        <item name="colorOnSurface">?attr/colorOnBackground</item>
+
+        <item name="errorTextColor">@color/red_200</item>
+        <item name="colorOnError">?attr/errorTextColor</item>
+
+        <!--My addiction-->
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColorHint">@color/gray</item>
+
+        <!--statusBar-->
+        <item name="android:statusBarColor">?android:textColorHint</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+    </style>
+</resources>
+

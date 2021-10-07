@@ -24,6 +24,8 @@ class LoginViewModel @Inject constructor(
     val dataState: LiveData<Resource<UserModel?>>
         get() = _dataState
 
+    var email: String = ""
+
     private var loginJob: Job? = null
 
     fun tokenLogin() {

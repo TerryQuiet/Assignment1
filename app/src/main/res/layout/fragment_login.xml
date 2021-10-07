@@ -2,10 +2,9 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/colorSurface"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.main.myprofile.ProfileFragment">
+    android:layout_height="match_parent">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -141,7 +140,7 @@
         android:layout_margin="@dimen/normal_16dp"
         android:text="@string/don_t_have_an_account"
         android:textAlignment="center"
-        android:textColor="@color/gray"
+        android:textColor="?android:attr/textColorHint"
         android:textSize="@dimen/header3_14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tvLinkSignUp"

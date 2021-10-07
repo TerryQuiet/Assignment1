@@ -3,11 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="?attr/colorSurface"
     android:layout_height="wrap_content"
-    android:background="?attr/backgroundColor"
     android:orientation="vertical"
-    android:paddingHorizontal="@dimen/normal_16dp"
-    android:theme="@style/Base.Theme.MyApp">
+    android:paddingHorizontal="@dimen/normal_16dp">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/ivProfilePic"
@@ -18,8 +17,7 @@
         app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
         app:srcCompat="@drawable/ic_profile" />
 
-
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +32,7 @@
         app:layout_constraintTop_toBottomOf="@id/ivProfilePic"
         tools:text="Lucile Alvarado" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvOccupation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -45,7 +43,7 @@
         android:textSize="@dimen/header3_14sp"
         tools:text="Graphic designer" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
