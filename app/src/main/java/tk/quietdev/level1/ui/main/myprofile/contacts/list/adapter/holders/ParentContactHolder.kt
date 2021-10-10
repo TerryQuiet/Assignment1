@@ -8,8 +8,7 @@ import tk.quietdev.level1.databinding.ListItemBinding
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.utils.ext.loadImage
 
-
-abstract class ContactHolderParent(
+abstract class ParentContactHolder(
     protected val binding: ListItemBinding,
     protected val onClickListener: OnItemClickListener,
 ) : RecyclerView.ViewHolder(binding.root) {

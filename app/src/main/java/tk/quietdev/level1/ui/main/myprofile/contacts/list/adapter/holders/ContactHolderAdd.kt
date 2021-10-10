@@ -5,4 +5,4 @@ import tk.quietdev.level1.databinding.ListItemBinding
 class ContactHolderAdd(
     binding: ListItemBinding,
     onClickListener: OnItemClickListener,
-) : ContactHolderParent(binding, onClickListener)
+) : ParentContactHolder(binding, onClickListener)

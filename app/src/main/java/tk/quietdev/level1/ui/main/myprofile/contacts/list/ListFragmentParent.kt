@@ -7,16 +7,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.databinding.FragmentContactsBinding
 import tk.quietdev.level1.ui.main.AppbarSharedViewModel
-import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.BaseContactsAdapter
+import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.ParentContactsAdapter
 
 abstract class ListFragmentParent :
     BaseFragment<FragmentContactsBinding>(FragmentContactsBinding::inflate) {
 
     private val appbarSharedViewModel: AppbarSharedViewModel by activityViewModels()
-    protected open val contactsAdapter: BaseContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
+    protected open val contactsAdapter: ParentContactsAdapter by lazy(mode = LazyThreadSafetyMode.NONE) { getContactAdapter() }
     protected abstract val viewModel: ParentListViewModel
 
-    abstract fun getContactAdapter(): BaseContactsAdapter
+    abstract fun getContactAdapter(): ParentContactsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

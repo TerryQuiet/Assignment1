@@ -3,9 +3,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/colorSurface"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/containerMessage"
@@ -45,7 +45,7 @@
         android:layout_marginVertical="@dimen/small_8dp"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/normal_16dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+        app:layout_constraintBottom_toTopOf="@+id/cbRemember"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/containerMessage">
@@ -90,17 +90,61 @@
 
     <CheckBox
         android:id="@+id/cbRemember"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/normal_16dp"
-        android:layout_marginBottom="56dp"
+        android:gravity="start"
         android:text="@string/remember_me"
         android:textColor="?attr/colorOnSurface"
         android:textSize="@dimen/header2_18sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
+        app:layout_constraintBottom_toTopOf="@+id/bntGoogle"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/containerEditables" />
+        app:layout_constraintTop_toBottomOf="@id/containerEditables" />
+
+    <tk.quietdev.level1.ui.custom.ComposeCustomView
+        android:id="@+id/bntGoogleCompose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/normal_16dp"
+        app:backgroundColor="?attr/colorOnBackground"
+        app:cornerRadius="8dp"
+        app:icon="@drawable/ic_google"
+        app:layout_constraintBottom_toTopOf="@id/bntGoogle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:text="Google"
+        app:textColor="?attr/colorSurface"
+        app:textSize="16sp" />
+
+
+    <tk.quietdev.level1.ui.custom.CustomButtonComponentView
+        android:id="@+id/bntGoogle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/normal_16dp"
+        app:backgroundColor="?attr/colorOnBackground"
+        app:cornerRadius="8dp"
+        app:icon="@drawable/ic_google"
+        app:layout_constraintBottom_toTopOf="@id/tvOr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:text="Google"
+        app:textColor="?attr/colorSurface"
+        app:textSize="16sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+
+        android:id="@+id/tvOr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/or"
+        android:textSize="@dimen/header2_18sp"
+        app:layout_constraintBottom_toTopOf="@id/btnRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <com.google.android.material.button.MaterialButton

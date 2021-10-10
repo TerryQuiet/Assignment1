@@ -10,7 +10,7 @@ import tk.quietdev.level1.models.UserModel
 class ContactHolderRemove(
     binding: ListItemBinding,
     onClickListener: OnItemClickListener,
-) : ContactHolderParent(binding, onClickListener) {
+) : ParentContactHolder(binding, onClickListener) {
 
     private val listStateObserver = Observer<List<Int>> { selectedList ->
         binding.apply {

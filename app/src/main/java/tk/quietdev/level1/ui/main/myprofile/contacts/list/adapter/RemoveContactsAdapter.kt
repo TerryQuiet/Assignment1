@@ -7,18 +7,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import tk.quietdev.level1.databinding.ListItemBinding
-import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderParent
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderRemove
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.HolderState
+import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ParentContactHolder
 import tk.quietdev.level1.utils.OnSwipeCallBack
 
 class RemoveContactsAdapter(
     private val icon: Drawable?,
-    onClickListener: ContactHolderParent.OnItemClickListener,
+    onClickListener: ParentContactHolder.OnItemClickListener,
     val removeState: MutableLiveData<List<Int>>,
     holderState: MutableLiveData<MutableMap<Int, HolderState>>,
 
-    ) : BaseContactsAdapter(onClickListener, holderState),
+    ) : ParentContactsAdapter(onClickListener, holderState),
     OnSwipeCallBack.Listener {
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
@@ -27,7 +27,7 @@ class RemoveContactsAdapter(
         ItemTouchHelper(onSwipeCallBack).attachToRecyclerView(recyclerView)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactHolderParent {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParentContactHolder {
         return ContactHolderRemove(
             ListItemBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
@@ -42,13 +42,13 @@ class RemoveContactsAdapter(
         (viewHolder as ContactHolderRemove).onIconClick()
     }
 
-    override fun onViewAttachedToWindow(holder: ContactHolderParent) {
+    override fun onViewAttachedToWindow(holder: ParentContactHolder) {
         super.onViewAttachedToWindow(holder)
         holder as ContactHolderRemove
         holder.setListObserver(removeState)
     }
 
-    override fun onViewDetachedFromWindow(holder: ContactHolderParent) {
+    override fun onViewDetachedFromWindow(holder: ParentContactHolder) {
         super.onViewDetachedFromWindow(holder)
         holder as ContactHolderRemove
         holder.removeListObserver(removeState)

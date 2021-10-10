@@ -15,22 +15,50 @@
 -->
 
 <resources>
-<!--    <declare-styleable name="ListHolderView">
-        <attr name="backgroundColor" format="color" />
-        <attr name="holderIsCheckable" format="boolean" />
-        <attr name="holderTitle" format="string" />
-        <attr name="holderSubtitle" format="string" />
-        <attr name="holderType" format="enum">
-            <enum name="ADD" value="0" />
-            <enum name="REMOVE" value="1" />
-        </attr>
-        <attr name="holderButtonState" format="enum">
-            <enum name="VISIBLE" value="0" />
-            <enum name="GONE" value="1" />
-            <enum name="SPINNER" value="2" />
-        </attr>
+    <!--    <declare-styleable name="ListHolderView">
+            <attr name="backgroundColor" format="color" />
+            <attr name="holderIsCheckable" format="boolean" />
+            <attr name="holderTitle" format="string" />
+            <attr name="holderSubtitle" format="string" />
+            <attr name="holderType" format="enum">
+                <enum name="ADD" value="0" />
+                <enum name="REMOVE" value="1" />
+            </attr>
+            <attr name="holderButtonState" format="enum">
+                <enum name="VISIBLE" value="0" />
+                <enum name="GONE" value="1" />
+                <enum name="SPINNER" value="2" />
+            </attr>
 
-        <attr name="holderPicture" format="reference" />
+            <attr name="holderPicture" format="reference" />
 
-    </declare-styleable>-->
+        </declare-styleable>-->
+
+    <attr name="backgroundColor" format="color" />
+    <attr name="textColor" format="color" />
+    <attr name="text" format="string" />
+    <attr name="textSize" format="dimension" />
+    <attr name="icon" format="reference" />
+    <attr name="cornerRadius" format="dimension" />
+
+    <declare-styleable name="CustomButtonComponentView">
+        <attr name="backgroundColor" />
+        <attr name="textColor" />
+        <attr name="text" />
+        <attr name="textSize" />
+        <attr name="icon" />
+        <attr name="cornerRadius" />
+    </declare-styleable>
+
+    <declare-styleable name="ComposeCustomView">
+        <attr name="backgroundColor" />
+        <attr name="textColor" />
+        <attr name="text" />
+        <attr name="textSize" />
+        <attr name="icon" />
+        <attr name="cornerRadius" />
+    </declare-styleable>
+
+
+    <attr name="CustomButtonComponentViewStyle" format="reference" />
 </resources>

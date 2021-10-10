@@ -53,6 +53,13 @@ class RegisterFragment :
                     passwd = etPassword.text.toString()
                 )
             }
+            bntGoogle.setOnClickListener {
+                bntGoogle.changeIconPositon()
+            }
+            bntGoogleCompose.onClick = {
+                bntGoogleCompose.text = "Compose google"
+                bntGoogle.changeIconPositon()
+            }
             etEmail.apply {
                 doOnTextChanged { text, _, _, _ ->
                     if (authSharedViewModel.isEmailValid(text)) {

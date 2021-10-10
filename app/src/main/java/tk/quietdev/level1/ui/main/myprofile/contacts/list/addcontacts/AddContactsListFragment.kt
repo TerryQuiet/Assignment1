@@ -11,7 +11,7 @@ import tk.quietdev.level1.R
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.ListFragmentParent
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.AddContactsAdapter
-import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderParent
+import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ParentContactHolder
 import tk.quietdev.level1.ui.main.myprofile.contacts.pager.ViewPagerType
 
 @AndroidEntryPoint
@@ -43,7 +43,7 @@ class AddContactsListFragment : ListFragmentParent() {
         )
     }
 
-    private val onItemClickListener = object : ContactHolderParent.OnItemClickListener {
+    private val onItemClickListener = object : ParentContactHolder.OnItemClickListener {
 
         override fun onItemClick(userModel: UserModel) {
             openContactDetail(userModel)

@@ -14,8 +14,8 @@ import tk.quietdev.level1.R
 import tk.quietdev.level1.models.UserModel
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.ListFragmentParent
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.RemoveContactsAdapter
-import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ContactHolderParent
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.HolderState
+import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ParentContactHolder
 import tk.quietdev.level1.ui.main.myprofile.contacts.pager.ViewPagerType
 import tk.quietdev.level1.utils.Const
 
@@ -117,7 +117,7 @@ class RemoveContactsListFragment : ListFragmentParent() {
     }
 
 
-    private val onItemClickListener = object : ContactHolderParent.OnItemClickListener {
+    private val onItemClickListener = object : ParentContactHolder.OnItemClickListener {
 
         override fun onItemClick(userModel: UserModel) {
             if (!viewModel.contactsToRemove.value.isNullOrEmpty()) {

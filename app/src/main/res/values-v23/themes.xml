@@ -12,17 +12,13 @@
         <item name="colorSecondary">@color/orange_500</item>
         <item name="colorOnSecondary">?attr/colorOnPrimary</item>
         <item name="colorSecondaryVariant">@color/orange_200</item>
-
         <item name="colorSurface">@color/white_700</item>
         <item name="android:colorBackground">@color/white</item>
-
         <item name="colorOnBackground">@color/dark_blue_500</item>
         <item name="colorOnSurface">?attr/colorOnBackground</item>
 
         <item name="errorTextColor">@color/red_600</item>
         <item name="colorOnError">?attr/errorTextColor</item>
-
-        <!--My addiction-->
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textColorHint">@color/dark_blue_200</item>
 
@@ -45,7 +41,9 @@
         <item name="textInputStyle">@style/Widget.App.TextInputLayout</item>
     </style>
 
-    <style name="Theme.DetailsScreen" parent="Base.Theme.MyApp">
+    <style name="Theme.DetailsScreen" parent="Theme.BaseDetail"></style>
+
+    <style name="Theme.BaseDetail" parent="Base.Theme.MyApp">
         <item name="colorPrimary">@color/orange_500</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryVariant">@color/orange_200</item>
