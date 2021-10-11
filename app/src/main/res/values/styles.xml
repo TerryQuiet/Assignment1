@@ -6,11 +6,56 @@
         <item name="android:layout_height">60dp</item>
     </style>
 
-    <style name="WindowAnimations">
-        <item name="android:activityOpenEnterAnimation">@anim/enter_activity</item>
-        <item name="android:activityOpenExitAnimation">@anim/exit_activity</item>
-        <item name="android:activityCloseEnterAnimation">@anim/enter_activity</item>
-        <item name="android:activityCloseExitAnimation">@anim/exit_activity</item>
+    <style name="ErrorText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/holo_red_light</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!--    Toolbar-->
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.MyApp.Toolbar</item>
+    </style>
+
+    <style name="ThemeOverlay.MyApp.Toolbar" parent="">
+        <item name="backgroundColor">@color/dark_blue_500</item>
+        <item name="colorPrimary">@color/dark_blue_500</item>
+        <item name="colorPrimaryVariant">@color/dark_blue_200</item>
+        <item name="colorOnPrimary">@color/white</item>
+    </style>
+
+    <!--    Snackbar-->
+    <style name="Widget.App.Snackbar" parent="Widget.MaterialComponents.Snackbar">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Snackbar</item>
+        <item name="actionTextColorAlpha">1</item>
+        <item name="backgroundOverlayColorAlpha">1</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+    </style>
+
+    <style name="Widget.App.SnackbarButton" parent="Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="android:textColor">@color/orange_500</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Snackbar" parent="">
+        <item name="colorOnSurface">@color/dark_blue_200</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>
+        <item name="hintTextColor">?android:attr/textColorHint</item>
+        <item name="android:textColorHint">?android:attr/textColorHint</item>
+        <item name="errorTextColor">?attr/colorError</item>
+    </style>
+
+    <style name="ThemeOverlay.App.TextInputLayout" parent="">
+        <item name="android:paddingStart">@dimen/extra_small_4dp</item>
+        <item name="editTextStyle">@style/AppTheme.TextInputEditTextStyle</item>
+    </style>
+
+    <style name="AppTheme.TextInputEditTextStyle" parent="@style/Widget.MaterialComponents.TextInputEditText.FilledBox">
+        <item name="backgroundTint">?attr/colorSurface</item>
     </style>
 
 </resources>

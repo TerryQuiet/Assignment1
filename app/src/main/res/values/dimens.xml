@@ -1,7 +1,18 @@
 <resources>
     <dimen name="normal_16dp">16dp</dimen>
     <dimen name="small_8dp">8dp</dimen>
-    <dimen name="xsmall_4dp">4dp</dimen>
-    <dimen name="details_square_photo">113dp</dimen>
+    <dimen name="extra_small_4dp">4dp</dimen>
     <dimen name="large_24dp">24dp</dimen>
+
+    <!--text-->
+    <dimen name="header1_24sp">24sp</dimen>
+    <dimen name="header4_12sp">12sp</dimen>
+    <dimen name="header3_14sp">14sp</dimen>
+    <dimen name="header2_18sp">18sp</dimen>
+
+    <!--style-->
+    <dimen name="wide_button_height_64dp">64dp</dimen>
+    <dimen name="details_square_photo">113dp</dimen>
+
+
 </resources>
