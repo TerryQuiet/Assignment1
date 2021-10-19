@@ -1,10 +1,6 @@
-package tk.quietdev.level1.models
+package tk.quietdev.level1.domain.models
 
-import android.os.Parcelable
 
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 data class UserModel(
     var id: Int,
     var userName: String? = null,
@@ -14,4 +10,4 @@ data class UserModel(
     var pictureUri: String? = "https://i.pravatar.cc/150?u=${email}",
     var birthDate: String? = null,
     var phone: String? = null,
-) : Parcelable
+)

@@ -3,6 +3,8 @@ package tk.quietdev.level1.data.repository
 import androidx.room.withTransaction
 import kotlinx.coroutines.flow.*
 import retrofit2.Response
+import tk.quietdev.level1.common.Resource
+import tk.quietdev.level1.data.Repository
 import tk.quietdev.level1.data.db.RoomMapper
 import tk.quietdev.level1.data.db.RoomUserDao
 import tk.quietdev.level1.data.db.UserDatabase
@@ -10,8 +12,7 @@ import tk.quietdev.level1.data.remote.RemoteMapper
 import tk.quietdev.level1.data.remote.ShppApi
 import tk.quietdev.level1.data.remote.models.*
 import tk.quietdev.level1.data.remote.networkBoundResource
-import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.utils.Resource
+import tk.quietdev.level1.domain.models.UserModel
 import tk.quietdev.level1.utils.UserRegisterError
 import tk.quietdev.level1.utils.httpIntercepors.TokenInterceptor
 import kotlin.reflect.KSuspendFunction1

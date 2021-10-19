@@ -11,7 +11,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar.LENGTH_INDEFI
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
-import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.domain.models.UserModel
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.ListFragmentParent
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.RemoveContactsAdapter
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.HolderState

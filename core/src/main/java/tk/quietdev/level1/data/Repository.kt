@@ -1,8 +1,8 @@
-package tk.quietdev.level1.data.repository
+package tk.quietdev.level1.data
 
 import kotlinx.coroutines.flow.Flow
-import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.utils.Resource
+import tk.quietdev.level1.common.Resource
+import tk.quietdev.level1.domain.models.UserModel
 
 interface Repository {
 
@@ -14,6 +14,9 @@ interface Repository {
     fun updateUser(updatedUserModel: UserModel): Flow<Resource<UserModel?>>
     fun removeUserContact(userModelId: Int): Flow<Resource<List<UserModel>>>
     fun getCurrentUserContactIdsFlow(shouldFetch: Boolean = true): Flow<Resource<List<Int>>>
-    fun getCurrentUserContactsFlow(list: List<Int>, shouldFetch: Boolean = true): Flow<Resource<List<UserModel>>>
+    fun getCurrentUserContactsFlow(
+        list: List<Int>,
+        shouldFetch: Boolean = true
+    ): Flow<Resource<List<UserModel>>>
 
 }

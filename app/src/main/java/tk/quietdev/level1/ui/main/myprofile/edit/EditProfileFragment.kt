@@ -9,11 +9,11 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.R
+import tk.quietdev.level1.common.Resource
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
-import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.domain.models.UserModel
 import tk.quietdev.level1.utils.CalendarUtil
 import tk.quietdev.level1.utils.Const
-import tk.quietdev.level1.utils.Resource
 import tk.quietdev.level1.utils.ext.loadImage
 
 @AndroidEntryPoint

@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import tk.quietdev.level1.data.Repository
 import tk.quietdev.level1.data.db.RoomMapper
 import tk.quietdev.level1.data.db.RoomUserDao
 import tk.quietdev.level1.data.db.UserDatabase
@@ -11,7 +12,6 @@ import tk.quietdev.level1.data.remote.RemoteMapper
 import tk.quietdev.level1.data.remote.ShppApi
 import tk.quietdev.level1.data.repository.AccessTokenRepositoryImpl
 import tk.quietdev.level1.data.repository.RemoteApiRepository
-import tk.quietdev.level1.data.repository.Repository
 import tk.quietdev.level1.utils.httpIntercepors.TokenInterceptor
 import javax.inject.Singleton
 

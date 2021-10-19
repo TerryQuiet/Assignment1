@@ -19,8 +19,9 @@ class ContactDetailFragment :
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.show()
         arguments?.takeIf { it.containsKey(Const.CONTACT_DETAIL) }?.apply {
-            viewModel.currentUserModel = getParcelable(Const.CONTACT_DETAIL)!!
+            viewModel.currentUserModelId = getInt(Const.CONTACT_DETAIL)!!
         }
+        // TODO: 10/17/2021 viewModelFactory 
         bindViews()
     }
 

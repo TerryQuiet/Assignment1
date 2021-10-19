@@ -6,7 +6,7 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.databinding.FragmentProfileBinding
-import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.domain.models.UserModel
 import tk.quietdev.level1.utils.ext.loadImage
 
 @AndroidEntryPoint
@@ -31,7 +31,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             btnEditProfile.setOnClickListener {
                 viewModel.currentUserModel.value?.apply {
                     this.data?.let {
-                        openEditFragment(it)
+                        openEditFragment()
                     }
                 }
             }
@@ -49,9 +49,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
-    private fun openEditFragment(userModel: UserModel) {
+    private fun openEditFragment() {
         findNavController().navigate(
-            ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment(userModel)
+            ProfileFragmentDirections.actionProfileFragmentToEditProfileFragment()
         )
     }
 

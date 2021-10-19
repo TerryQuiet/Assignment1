@@ -7,7 +7,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.databinding.FragmentViewpagerContainerBinding
-import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.domain.models.UserModel
 import javax.inject.Inject
 
 

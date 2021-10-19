@@ -25,9 +25,6 @@
         android:name="tk.quietdev.level1.ui.main.myprofile.edit.EditProfileFragment"
         android:label="@string/edit_profile"
         tools:layout="@layout/fragment_edit_profile">
-        <argument
-            android:name="user"
-            app:argType="tk.quietdev.level1.models.UserModel" />
     </fragment>
 
 
@@ -37,8 +34,8 @@
         android:label="@string/profile"
         tools:layout="@layout/fragment_contact_detail">
         <argument
-            android:name="user"
-            app:argType="tk.quietdev.level1.models.UserModel" />
+            android:name="userId"
+            app:argType="integer" />
     </fragment>
 
     <fragment

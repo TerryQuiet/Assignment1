@@ -5,7 +5,7 @@ import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import tk.quietdev.level1.databinding.ListItemBinding
-import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.domain.models.UserModel
 
 class ContactHolderRemove(
     binding: ListItemBinding,

@@ -2,7 +2,7 @@ package tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter
 
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.ListAdapter
-import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.domain.models.UserModel
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.HolderState
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ParentContactHolder
 import tk.quietdev.level1.utils.DiffCallBack

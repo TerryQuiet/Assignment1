@@ -1,7 +1,7 @@
 package tk.quietdev.level1.utils
 
 import androidx.recyclerview.widget.DiffUtil
-import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.domain.models.UserModel
 
 object DiffCallBack : DiffUtil.ItemCallback<UserModel>() {
     override fun areItemsTheSame(oldItem: UserModel, newItem: UserModel): Boolean {

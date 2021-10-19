@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
-import tk.quietdev.level1.models.UserModel
+import tk.quietdev.level1.domain.models.UserModel
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.ListFragmentParent
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.AddContactsAdapter
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.ParentContactHolder

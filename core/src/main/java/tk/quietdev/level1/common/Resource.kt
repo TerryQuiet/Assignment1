@@ -1,4 +1,4 @@
-package tk.quietdev.level1.utils
+package tk.quietdev.level1.common
 
 sealed class Resource<T>(
     var data: T? = null,

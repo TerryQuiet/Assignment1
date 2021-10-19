@@ -9,9 +9,9 @@ import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import tk.quietdev.level1.data.repository.Repository
-import tk.quietdev.level1.models.UserModel
-import tk.quietdev.level1.utils.Resource
+import tk.quietdev.level1.common.Resource
+import tk.quietdev.level1.data.Repository
+import tk.quietdev.level1.domain.models.UserModel
 
 class ParentPagerViewModel @AssistedInject constructor(
     val repository: Repository,

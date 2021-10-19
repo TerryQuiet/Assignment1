@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import tk.quietdev.level1.data.repository.Repository
+import tk.quietdev.level1.data.Repository
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.ParentListViewModel
 import javax.inject.Inject
 
