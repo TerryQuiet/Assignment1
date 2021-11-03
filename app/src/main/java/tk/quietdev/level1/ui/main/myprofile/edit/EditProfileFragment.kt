@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
-import tk.quietdev.level1.BaseFragment
+import tk.quietdev.level1.ui.base.BaseFragment
 import tk.quietdev.level1.R
 import tk.quietdev.level1.common.Resource
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding

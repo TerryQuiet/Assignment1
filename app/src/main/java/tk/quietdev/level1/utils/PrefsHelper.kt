@@ -11,6 +11,8 @@ class PrefsHelper @Inject constructor(@ApplicationContext androidContext: Contex
     private val PREFS_NAME = "params"
     val USER_ID = "USERID"
     val IS_REMEMBER = "isSaveChecked"
+    val TOKEN = "token"
+    val CURRENT_USER_ID = "CurrentUserId"
 
     private var preferences: SharedPreferences =
         androidContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -43,6 +45,13 @@ class PrefsHelper @Inject constructor(@ApplicationContext androidContext: Contex
     fun getIntOrNull(key: String): Int? {
         return if (preferences.contains(key)) {
             preferences.getInt(key, -1)
+        } else
+            null
+    }
+
+    fun getString(key: String): String? {
+        return if (preferences.contains(key)) {
+            preferences.getString(key, "")
         } else
             null
     }

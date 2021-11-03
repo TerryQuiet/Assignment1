@@ -115,6 +115,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:text="Google"
+        style="@style/customStyle"
         app:textColor="?attr/colorSurface"
         app:textSize="16sp" />
 

@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.databinding.FragmentContactsBinding
+import tk.quietdev.level1.ui.base.BaseFragment
 import tk.quietdev.level1.ui.main.AppbarSharedViewModel
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.ParentContactsAdapter
 

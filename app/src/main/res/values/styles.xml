@@ -53,4 +53,9 @@
         <item name="backgroundTint">?attr/colorSurface</item>
     </style>
 
+    <style name="customStyle">
+        <item name="text">"SDSSAD"</item>
+
+    </style>
+
 </resources>

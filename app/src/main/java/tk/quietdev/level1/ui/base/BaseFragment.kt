@@ -1,4 +1,4 @@
-package tk.quietdev.level1
+package tk.quietdev.level1.ui.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

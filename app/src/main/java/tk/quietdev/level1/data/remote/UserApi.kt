@@ -7,11 +7,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import tk.quietdev.level1.data.remote.models.*
 
-interface ShppApi {
-
-    companion object {
-        const val BASE_URL = "http://188.40.127.78:7777/api/"
-    }
+interface UserApi {
 
     @POST("./user/register")
     suspend fun userRegister(@Body requestBody: AuthUser): Response<AuthResponse>
@@ -21,9 +17,6 @@ interface ShppApi {
 
     @GET("./user/profile")
     suspend fun getCurrentUser(): Response<GetUserResponse>
-
-    @GET("./users")
-    suspend fun getAllUsers(): Response<GetAllUsersResponse>
 
     @GET("./user/contacts")
     suspend fun getCurrentUserContacts(): Response<GetUserContactsResponse>
@@ -40,5 +33,8 @@ interface ShppApi {
     suspend fun removeUserContact(@Body requestBody: ApiUserContactManipulation)
             : Response<GetUserContactsResponse>
 
+    @Deprecated("to be removed")
+    @GET("./users")
+    suspend fun getAllUsers(): Response<GetAllUsersResponse>
 
 }

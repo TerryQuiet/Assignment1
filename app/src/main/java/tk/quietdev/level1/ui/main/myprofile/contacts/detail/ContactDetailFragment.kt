@@ -5,8 +5,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.databinding.FragmentContactDetailBinding
+import tk.quietdev.level1.ui.base.BaseFragment
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
 

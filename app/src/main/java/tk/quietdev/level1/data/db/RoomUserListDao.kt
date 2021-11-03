@@ -10,7 +10,7 @@ import tk.quietdev.level1.data.db.model.RoomUser
 import tk.quietdev.level1.data.db.model.RoomUserContactsIds
 
 @Dao
-interface RoomUserDao {
+interface RoomUserListDao {
 
     // All users list
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -56,5 +56,6 @@ interface RoomUserDao {
 
     @Query("DELETE from room_current_user_contacts_ids")
     suspend fun clearUserContactsList()
+
 
 }

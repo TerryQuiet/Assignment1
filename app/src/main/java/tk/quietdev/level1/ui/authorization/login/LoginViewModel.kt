@@ -7,21 +7,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import tk.quietdev.level1.common.Resource
-import tk.quietdev.level1.data.Repository
-import tk.quietdev.level1.domain.models.UserModel
+import tk.quietdev.level1.usecase.UserLoginUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val repository: Repository
+    private val userLoginUseCase: UserLoginUseCase
 ) : ViewModel() {
 
-    private val _dataState: MutableLiveData<Resource<UserModel?>> = MutableLiveData()
-    val dataState: LiveData<Resource<UserModel?>>
+    private val _dataState: MutableLiveData<Resource<Boolean>> = MutableLiveData()
+    val dataState: LiveData<Resource<Boolean>>
         get() = _dataState
 
     var email: String = ""
@@ -29,19 +26,17 @@ class LoginViewModel @Inject constructor(
     private var loginJob: Job? = null
 
     fun tokenLogin() {
-        login(repository.currentUserFlow())
+        _dataState.value = Resource.Success(true)
     }
 
     fun passwordLogin(email: String, passwd: String) {
-        login(repository.userLogin(email, passwd))
+        viewModelScope.launch {
+            val response = userLoginUseCase.invoke(email = email, password = passwd)
+            _dataState.value = response
+        }
     }
 
-    private fun login(currentUserFlow: Flow<Resource<UserModel?>>) {
-        loginJob = currentUserFlow.onEach {
-            _dataState.value = it
-            if (it is Resource.Success) {
-                loginJob?.cancel()
-            }
-        }.launchIn(viewModelScope)
+    private fun login() {
+
     }
 }

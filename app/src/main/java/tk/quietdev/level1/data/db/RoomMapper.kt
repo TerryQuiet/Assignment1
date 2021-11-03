@@ -1,12 +1,12 @@
 package tk.quietdev.level1.data.db
 
-import tk.quietdev.level1.data.db.model.RoomCurrentUser
+import tk.quietdev.level1.data.db.model.DeprecatedRoomCurrentUser
 import tk.quietdev.level1.data.db.model.RoomUser
 import tk.quietdev.level1.domain.models.UserModel
 import javax.inject.Inject
 
 class RoomMapper @Inject constructor() {
-    fun roomUserToUser(roomCurrentUser: RoomUser): UserModel {
+    fun roomUserToDomainUser(roomCurrentUser: RoomUser): UserModel {
         roomCurrentUser.apply {
             return UserModel(
                 id = id,
@@ -20,7 +20,8 @@ class RoomMapper @Inject constructor() {
         }
     }
 
-    fun roomCurrentUserToUser(roomCurrentUser: RoomCurrentUser): UserModel {
+    @Deprecated("to remove")
+    fun roomCurrentUserToDomainUser(roomCurrentUser: DeprecatedRoomCurrentUser): UserModel {
         roomCurrentUser.apply {
             return UserModel(
                 id = id,
@@ -32,6 +33,21 @@ class RoomMapper @Inject constructor() {
                 phone = phone,
             )
         }
+    }
+
+    fun domainUserToRoomUser(userModeuserModell: UserModel): RoomUser {
+        with(userModeuserModell) {
+            return RoomUser(
+                email = email,
+                name = userName,
+                address = physicalAddress,
+                birthday = birthDate,
+                career = occupation,
+                id = id,
+                phone = phone
+            )
+        }
+
     }
 
 }

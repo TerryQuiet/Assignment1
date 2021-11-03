@@ -4,9 +4,9 @@ package tk.quietdev.level1.ui.main.myprofile
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
-import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.databinding.FragmentProfileBinding
 import tk.quietdev.level1.domain.models.UserModel
+import tk.quietdev.level1.ui.base.BaseFragment
 import tk.quietdev.level1.utils.ext.loadImage
 
 @AndroidEntryPoint

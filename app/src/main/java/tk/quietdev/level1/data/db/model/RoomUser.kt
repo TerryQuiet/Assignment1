@@ -9,9 +9,9 @@ data class RoomUser(
     val address: String?,
     val birthday: String?,
     val career: String?,
-    val createdAt: String?,
+    val createdAt: String? = null,
     val email: String,
     val name: String?,
     val phone: String?,
-    val updatedAt: String?,
+    val updatedAt: String? = null,
 )

@@ -3,7 +3,7 @@ package tk.quietdev.level1.data.remote
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import tk.quietdev.level1.data.db.model.RoomCurrentUser
+import tk.quietdev.level1.data.db.model.DeprecatedRoomCurrentUser
 import tk.quietdev.level1.data.db.model.RoomUser
 import tk.quietdev.level1.data.db.model.RoomUserContactsIds
 import tk.quietdev.level1.data.remote.models.*
@@ -11,9 +11,9 @@ import tk.quietdev.level1.domain.models.UserModel
 import javax.inject.Inject
 
 class RemoteMapper @Inject constructor() {
-    fun toRoomCurrentUser(userTokenData: UserTokenData): RoomCurrentUser {
+    fun toRoomCurrentUser(userTokenData: UserTokenData): DeprecatedRoomCurrentUser {
         userTokenData.user.apply {
-            return RoomCurrentUser(
+            return DeprecatedRoomCurrentUser(
                 id = id,
                 accessToken = userTokenData.accessToken,
                 address = address,
@@ -51,7 +51,6 @@ class RemoteMapper @Inject constructor() {
     fun userToApiUserUpdate(userModel: UserModel): ApiUpdatedUser {
         userModel.apply {
             return ApiUpdatedUser(
-
                 ApiInternalUpdatedUser(
                     name = userName,
                     phone = phone,
@@ -59,6 +58,20 @@ class RemoteMapper @Inject constructor() {
                     career = occupation,
                     birthday = birthDate,
                 )
+            )
+        }
+    }
+
+    fun apiUserToDomainUser(apiUser: ApiUser): UserModel {
+        with(apiUser) {
+            return UserModel(
+                id = id,
+                userName = name,
+                email = email,
+                occupation = career,
+                physicalAddress = address,
+                birthDate = birthday?.take(10),
+                phone = phone,
             )
         }
     }

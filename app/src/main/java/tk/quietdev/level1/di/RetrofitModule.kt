@@ -11,7 +11,9 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import tk.quietdev.level1.data.remote.ShppApi
+import tk.quietdev.level1.BuildConfig
+import tk.quietdev.level1.data.remote.AllUsersApi
+import tk.quietdev.level1.data.remote.UserApi
 import tk.quietdev.level1.utils.httpIntercepors.MyInterceptor
 import tk.quietdev.level1.utils.httpIntercepors.TokenInterceptor
 import javax.inject.Singleton
@@ -23,13 +25,6 @@ object RetrofitModule {
     @Singleton
     @Provides
     fun provideTokenInterceptor() = TokenInterceptor()
-
-    @Singleton
-    @Provides
-    fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
-        .apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
 
     @Singleton
     @Provides
@@ -46,6 +41,13 @@ object RetrofitModule {
 
     @Singleton
     @Provides
+    fun providesHttpLoggingInterceptor() = HttpLoggingInterceptor()
+        .apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+    @Singleton
+    @Provides
     fun providesMoshi(): Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
 
@@ -53,13 +55,16 @@ object RetrofitModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient, mosh: Moshi): Retrofit = Retrofit.Builder()
         .addConverterFactory(MoshiConverterFactory.create(mosh))
-        .baseUrl(ShppApi.BASE_URL)
+        .baseUrl(BuildConfig.API_URL)
         .client(okHttpClient)
         .build()
 
 
     @Provides
     @Singleton
-    fun provideRetrofitService(retrofit: Retrofit): ShppApi = retrofit.create(ShppApi::class.java)
+    fun userApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
 
+    @Provides
+    @Singleton
+    fun usersListApi(retrofit: Retrofit): AllUsersApi = retrofit.create(AllUsersApi::class.java)
 }

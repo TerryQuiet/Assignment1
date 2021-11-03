@@ -5,9 +5,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
-import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.databinding.FragmentViewpagerContainerBinding
 import tk.quietdev.level1.domain.models.UserModel
+import tk.quietdev.level1.ui.base.BaseFragment
 import javax.inject.Inject
 
 

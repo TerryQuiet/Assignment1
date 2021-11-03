@@ -6,10 +6,10 @@ import retrofit2.Response
 import tk.quietdev.level1.common.Resource
 import tk.quietdev.level1.data.Repository
 import tk.quietdev.level1.data.db.RoomMapper
-import tk.quietdev.level1.data.db.RoomUserDao
+import tk.quietdev.level1.data.db.RoomUserListDao
 import tk.quietdev.level1.data.db.UserDatabase
 import tk.quietdev.level1.data.remote.RemoteMapper
-import tk.quietdev.level1.data.remote.ShppApi
+import tk.quietdev.level1.data.remote.UserApi
 import tk.quietdev.level1.data.remote.models.*
 import tk.quietdev.level1.data.remote.networkBoundResource
 import tk.quietdev.level1.domain.models.UserModel
@@ -18,8 +18,8 @@ import tk.quietdev.level1.utils.httpIntercepors.TokenInterceptor
 import kotlin.reflect.KSuspendFunction1
 
 class RemoteApiRepository(
-    private val api: ShppApi,
-    private val dao: RoomUserDao,
+    private val api: UserApi,
+    private val dao: RoomUserListDao,
     private val db: UserDatabase,
     private val remoteMapper: RemoteMapper,
     private val roomMapper: RoomMapper,
@@ -30,12 +30,13 @@ class RemoteApiRepository(
     override fun updateUser(updatedUserModel: UserModel): Flow<Resource<UserModel?>> =
         networkBoundResource(
             query = {
-                dao.getUser(updatedUserModel.id).map { roomMapper.roomUserToUser(it) }
+                dao.getUser(updatedUserModel.id).map { roomMapper.roomUserToDomainUser(it) }
             },
             fetch = {
                 val data = remoteMapper.userToApiUserUpdate(updatedUserModel)
                 api.updateUser(data)
             },
+
             saveFetchResult = { onGetUserResponse(it) }
         )
 
@@ -51,7 +52,7 @@ class RemoteApiRepository(
     ) = networkBoundResource(
         query = {
             dao.getCurrentUserFlow().map {
-                if (it == null) it else roomMapper.roomCurrentUserToUser(it)
+                if (it == null) it else roomMapper.roomCurrentUserToDomainUser(it)
             }
         },
         fetch = {
@@ -64,7 +65,6 @@ class RemoteApiRepository(
                     val currentUser = remoteMapper.toRoomCurrentUser(it)
                     val roomUser = remoteMapper.apiUserToRoomUser(it.user)
                     db.withTransaction {
-                        tokenInterceptor.token = currentUser.accessToken
                         dao.insert(roomUser)
                         dao.insertCurrentUser(currentUser)
                     }
@@ -83,9 +83,8 @@ class RemoteApiRepository(
         query = {
             flow {
                 val currentUser = dao.getCurrentUser()
-                tokenInterceptor.token = currentUser.accessToken
                 val userId = currentUser.id
-                emitAll(dao.getUser(userId).map { roomMapper.roomUserToUser(it) })
+                emitAll(dao.getUser(userId).map { roomMapper.roomUserToDomainUser(it) })
             }
         },
         fetch = { api.getCurrentUser() },
@@ -108,7 +107,7 @@ class RemoteApiRepository(
         networkBoundResource(
             query = {
                 dao.getUsersByIds(list).map {
-                    it.map { roomMapper.roomUserToUser(it) }
+                    it.map { roomMapper.roomUserToDomainUser(it) }
                 }
 
             },
@@ -125,7 +124,7 @@ class RemoteApiRepository(
                 userIds.add(dao.getCurrentUser().id)
                 emitAll(
                     dao.getUsersExcludingId(userIds)
-                        .map { it.map { roomMapper.roomUserToUser(it) } })
+                        .map { it.map { roomMapper.roomUserToDomainUser(it) } })
             }
         },
         fetch = {
@@ -143,6 +142,7 @@ class RemoteApiRepository(
                 }
             } // todo implement on unsuccessful response
         }
+
     )
 
     override fun addUserContact(userModelId: Int) =
@@ -150,7 +150,7 @@ class RemoteApiRepository(
             query = {
                 flow {
                     emitAll(dao.getCurrentUserContactsIds().map { it.id }.let {
-                        dao.getUsersByIds(it).map { it.map { roomMapper.roomUserToUser(it) } }
+                        dao.getUsersByIds(it).map { it.map { roomMapper.roomUserToDomainUser(it) } }
                     })
                 }
             },
@@ -165,7 +165,7 @@ class RemoteApiRepository(
             query = {
                 flow {
                     emitAll(dao.getCurrentUserContactsIds().map { it.id }.let {
-                        dao.getUsersByIds(it).map { it.map { roomMapper.roomUserToUser(it) } }
+                        dao.getUsersByIds(it).map { it.map { roomMapper.roomUserToDomainUser(it) } }
                     })
                 }
             },

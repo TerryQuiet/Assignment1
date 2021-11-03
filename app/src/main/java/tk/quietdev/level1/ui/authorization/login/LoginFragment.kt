@@ -9,13 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import tk.quietdev.level1.BaseFragment
 import tk.quietdev.level1.R
 import tk.quietdev.level1.common.Resource
 import tk.quietdev.level1.databinding.FragmentLoginBinding
-import tk.quietdev.level1.domain.models.UserModel
 import tk.quietdev.level1.ui.authorization.AuthActivity
 import tk.quietdev.level1.ui.authorization.AuthViewModel
+import tk.quietdev.level1.ui.base.BaseFragment
 
 @AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
@@ -42,7 +41,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 is Resource.Loading -> {
                     binding.progressCircular.visibility = View.VISIBLE
                 }
-                is Resource.Success<UserModel?> -> {
+                is Resource.Success -> {
                     (activity as AuthActivity).login()
                     binding.progressCircular.visibility = View.GONE
                 }

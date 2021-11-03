@@ -39,18 +39,18 @@
                     app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
                     app:srcCompat="@drawable/ic_profile" />
 
-                <androidx.appcompat.widget.AppCompatImageButton
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btnAddPhoto"
                     android:layout_width="55dp"
                     android:layout_height="55dp"
                     android:layout_margin="@dimen/normal_16dp"
-                    android:background="?attr/selectableItemBackground"
-                    android:src="@drawable/ic_add_photo"
+                    android:backgroundTint="@color/gray"
+                    android:src="@drawable/ic_photo_add"
                     app:layout_constraintBottom_toBottomOf="@id/ivProfilePic"
                     app:layout_constraintStart_toEndOf="@id/ivProfilePic"
                     app:layout_constraintTop_toTopOf="@id/ivProfilePic">
 
-                </androidx.appcompat.widget.AppCompatImageButton>
+                </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
