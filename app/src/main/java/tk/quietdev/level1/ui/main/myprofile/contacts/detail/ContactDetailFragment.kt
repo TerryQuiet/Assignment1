@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import tk.quietdev.level1.common.Resource
 import tk.quietdev.level1.databinding.FragmentContactDetailBinding
 import tk.quietdev.level1.ui.base.BaseFragment
 import tk.quietdev.level1.utils.Const
@@ -19,20 +20,27 @@ class ContactDetailFragment :
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).supportActionBar?.show()
         arguments?.takeIf { it.containsKey(Const.CONTACT_DETAIL) }?.apply {
-            viewModel.currentUserModelId = getInt(Const.CONTACT_DETAIL)!!
+            viewModel.init(getInt(Const.CONTACT_DETAIL)!!)
         }
-        // TODO: 10/17/2021 viewModelFactory 
         bindViews()
     }
 
     private fun bindViews() {
-        viewModel.currentUserModel.let {
-            binding.topContainer.apply {
-                tvName.text = it.userName
-                tvAddress.text = it.physicalAddress
-                tvOccupation.text = it.occupation
-                ivProfilePic.loadImage(it.pictureUri)
+        viewModel.currentUserModel.observe(viewLifecycleOwner) {
+            when (it) {
+                is Resource.Success -> {
+                    binding.topContainer.apply {
+                        it.data?.let {
+                            tvName.text = it.userName
+                            tvAddress.text = it.physicalAddress
+                            tvOccupation.text = it.occupation
+                            ivProfilePic.loadImage(it.pictureUri)
+                        }
+
+                    }
+                }
             }
+
         }
     }
 

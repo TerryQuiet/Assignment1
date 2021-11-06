@@ -7,14 +7,15 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import tk.quietdev.level1.common.Resource
-import tk.quietdev.level1.data.Repository
 import tk.quietdev.level1.domain.models.UserModel
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.adapter.holders.HolderState
-
+import tk.quietdev.level1.usecase.AddUserContactUseCase
+import kotlin.reflect.KSuspendFunction1
 
 abstract class ParentListViewModel(
-    protected val repository: Repository
+    private val addUserContactUseCase: AddUserContactUseCase
 ) : ViewModel() {
     val userListToShow = MutableLiveData<Resource<List<UserModel>>>()
     val holderState = MutableLiveData(mutableMapOf<Int, HolderState>())
@@ -23,30 +24,34 @@ abstract class ParentListViewModel(
     abstract var search: String
     protected lateinit var userListAll: Resource<List<UserModel>>
 
+
     fun action(
-        action: (Int) -> Flow<Resource<List<UserModel>>>,
+        action: KSuspendFunction1<Int, Flow<Resource<Boolean>>>,
         id: Int,
         onSuccess: () -> Unit,
         onFail: () -> Unit
     ) {
-        val job = action(id).onEach {
-            when (it) {
-                is Resource.Success -> {
-                    onSuccess()
-                    actionJobs.remove(id)?.cancel()
+        viewModelScope.launch {
+            val job = action(id).onEach {
+                when (it) {
+                    is Resource.Success -> {
+                        onSuccess()
+                        actionJobs.remove(id)?.cancel()
+                    }
+                    is Resource.Error -> {
+                        holderState.value?.set(id, HolderState.FAIL)
+                        onFail()
+                        actionJobs.remove(id)?.cancel()
+                    }
+                    is Resource.Loading -> {
+                        holderState.value?.set(id, HolderState.PENDING)
+                    }
                 }
-                is Resource.Error -> {
-                    holderState.value?.set(id, HolderState.FAIL)
-                    onFail()
-                    actionJobs.remove(id)?.cancel()
-                }
-                is Resource.Loading -> {
-                    holderState.value?.set(id, HolderState.PENDING)
-                }
-            }
-            holderState.postValue(holderState.value)
-        }.launchIn(viewModelScope)
-        actionJobs[id] = job
+                holderState.postValue(holderState.value)
+            }.launchIn(viewModelScope)
+            actionJobs[id] = job
+        }
+
     }
 
     fun changeSearchQuery(text: String) {
@@ -58,7 +63,7 @@ abstract class ParentListViewModel(
 
     fun addUserContact(id: Int) {
         action(
-            repository::addUserContact,
+            addUserContactUseCase::invoke,
             id,
             onSuccess = { holderState.value?.set(id, HolderState.SUCCESS) },
             onFail = {}
@@ -73,15 +78,14 @@ abstract class ParentListViewModel(
                     search,
                     true
                 )
-            }
-                ?: listOf()))
+            } ?: listOf()))
+
             is Resource.Loading -> Resource.Loading((it.data?.filter {
                 it.email.contains(
                     search,
                     true
                 )
-            }
-                ?: listOf()))
+            } ?: listOf()))
         }
 
 }

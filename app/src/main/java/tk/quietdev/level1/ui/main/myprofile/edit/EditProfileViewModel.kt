@@ -1,27 +1,37 @@
 package tk.quietdev.level1.ui.main.myprofile.edit
 
 import android.net.Uri
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import tk.quietdev.level1.data.Repository
-import tk.quietdev.level1.utils.Const
+import kotlinx.coroutines.launch
+import tk.quietdev.level1.common.Resource
+import tk.quietdev.level1.domain.models.UserModel
+import tk.quietdev.level1.usecase.EditUserUseCase
+
+import tk.quietdev.level1.usecase.FlowCurrentUserUseCase
 import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class EditProfileViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+class EditProfileViewModel @Inject constructor(
+    private val currentUserUseCase: FlowCurrentUserUseCase,
+    private val editUserUseCase: EditUserUseCase
+) : ViewModel() {
 
-    var currentUserModel = repository.currentUserFlow().asLiveData() as MutableLiveData
+    private val _currentUserModel = MutableLiveData<Resource<UserModel>>(Resource.Loading(null))
+    val currentUserModel: LiveData<Resource<UserModel>> get() = _currentUserModel
     var localPictureUri: Uri? = null
 
-    /**
-     * @return returns true if user was updated
-     */
+    init {
+        subscribeCurrentUser()
+    }
+
     fun updateUser(
         userName: String,
         email: String,
@@ -29,7 +39,7 @@ class EditProfileViewModel @Inject constructor(private val repository: Repositor
         physicalAddress: String,
         birthDate: String,
         phone: String,
-        pictureUri: String? = null
+        //pictureUri: String? = null
     ) {
         val currentUser = currentUserModel.value?.data
         currentUser?.let { it ->
@@ -40,23 +50,35 @@ class EditProfileViewModel @Inject constructor(private val repository: Repositor
                 physicalAddress = physicalAddress,
                 birthDate = birthDate,
                 phone = phone,
-                pictureUri = pictureUri
+                //pictureUri = pictureUri
             )
             if (currentUser != updatedUser) {
-                //this does not work, I don't understand why
-                /*currentUserModel =
-                         repository.updateUser(updatedUser).asLiveData() as MutableLiveData*/
-                repository.updateUser(updatedUser).onEach {
-                    it.message = Const.ON_USER_UPDATE
-                    currentUserModel.value = it
-                }.launchIn(viewModelScope)
+                Log.d("TAG", "updateUser: $currentUser \n $updatedUser")
+                Log.wtf("TAG", "updateUser: ")
+                viewModelScope.launch {
+                    editUserUseCase.invoke(updatedUser).onEach {
+                        when (it) {
+                            is Resource.Loading -> _currentUserModel.value =
+                                Resource.Loading(_currentUserModel.value?.data)
+                            //is Resource.Success -> _currentUserModel.value = Resource.Success(_currentUserModel.value?.data!!)
+                        }
+                    }.launchIn(viewModelScope)
+                }
             }
         }
     }
 
+    private fun subscribeCurrentUser() {
+        viewModelScope.launch {
+            currentUserUseCase.invoke().onEach {
+                _currentUserModel.value = it
+            }.launchIn(viewModelScope)
+        }
+    }
 
-    fun getShortDate(ts:Long?):String{
-        if(ts == null) return ""
+
+    fun getShortDate(ts: Long?): String {
+        if (ts == null) return ""
         //Get instance of calendar
         val calendar = Calendar.getInstance(Locale.getDefault())
         //get current date from ts

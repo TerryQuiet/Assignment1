@@ -38,6 +38,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
+
     private fun bindViews(userModel: UserModel) {
         userModel.apply {
             binding.topContainer.apply {

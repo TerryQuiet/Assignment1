@@ -4,18 +4,23 @@ package tk.quietdev.level1.ui.main.myprofile.contacts.list.removecontacts
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import tk.quietdev.level1.data.Repository
-import tk.quietdev.level1.data.repository.RemoteApiRepository
+import kotlinx.coroutines.launch
 import tk.quietdev.level1.ui.main.myprofile.contacts.list.ParentListViewModel
+import tk.quietdev.level1.usecase.AddUserContactUseCase
+import tk.quietdev.level1.usecase.FlowUserContactsUseCase
+import tk.quietdev.level1.usecase.RefreshUserContactsUseCase
+import tk.quietdev.level1.usecase.RemoveUserContactUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class RemoveContactListViewModel @Inject constructor(
-    repository: Repository
-) : ParentListViewModel(repository) {
+    addUserContactUseCase: AddUserContactUseCase,
+    private val removeUserContactUseCase: RemoveUserContactUseCase,
+    private val refreshUserContactsUseCase: RefreshUserContactsUseCase,
+    private val flowUserContactsUseCase: FlowUserContactsUseCase
+) : ParentListViewModel(addUserContactUseCase) {
 
     override var search = ""
 
@@ -26,16 +31,17 @@ class RemoveContactListViewModel @Inject constructor(
     }
 
     init {
-        (repository as RemoteApiRepository).getCurrentUserContactIdsFlow().onEach {
-            it.data?.let {
-                userListAll = repository.getCurrentUserContactsFlow(it).first()
+        viewModelScope.launch {
+            flowUserContactsUseCase.invoke().onEach { userList ->
+                userListAll = userList
                 userListToShow.value = searchQueryMap(userListAll)
-            }
-        }.launchIn(viewModelScope)
+            }.launchIn(viewModelScope)
+            refreshUserContactsUseCase.invoke()
+        }
     }
 
     fun removeContact(id: Int, position: Int? = null) {
-        action(repository::removeUserContact, id,
+        action(removeUserContactUseCase::invoke, id,
             onSuccess = {
                 holderState.value = holderState.value?.minus(id)?.toMutableMap()
                 contactsToRemove.value = contactsToRemove.value?.minus(listOf(id))

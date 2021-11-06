@@ -7,11 +7,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
-import tk.quietdev.level1.ui.base.BaseFragment
 import tk.quietdev.level1.R
 import tk.quietdev.level1.common.Resource
 import tk.quietdev.level1.databinding.FragmentEditProfileBinding
 import tk.quietdev.level1.domain.models.UserModel
+import tk.quietdev.level1.ui.base.BaseFragment
 import tk.quietdev.level1.utils.CalendarUtil
 import tk.quietdev.level1.utils.Const
 import tk.quietdev.level1.utils.ext.loadImage
@@ -75,7 +75,6 @@ class EditProfileFragment :
 
     private fun updateUser() {
         binding.apply {
-            progressCircular.visibility = View.VISIBLE
             viewModel.updateUser(
                 userName = etName.text.toString(),
                 email = etEmail.text.toString(),

@@ -12,7 +12,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import tk.quietdev.level1.BuildConfig
-import tk.quietdev.level1.data.remote.AllUsersApi
 import tk.quietdev.level1.data.remote.UserApi
 import tk.quietdev.level1.utils.httpIntercepors.MyInterceptor
 import tk.quietdev.level1.utils.httpIntercepors.TokenInterceptor
@@ -64,7 +63,4 @@ object RetrofitModule {
     @Singleton
     fun userApi(retrofit: Retrofit): UserApi = retrofit.create(UserApi::class.java)
 
-    @Provides
-    @Singleton
-    fun usersListApi(retrofit: Retrofit): AllUsersApi = retrofit.create(AllUsersApi::class.java)
 }

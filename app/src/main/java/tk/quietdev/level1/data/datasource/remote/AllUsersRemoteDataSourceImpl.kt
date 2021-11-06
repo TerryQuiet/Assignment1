@@ -3,6 +3,7 @@ package tk.quietdev.level1.data.datasource.remote
 import tk.quietdev.level1.common.Resource
 import tk.quietdev.level1.data.remote.RemoteMapper
 import tk.quietdev.level1.data.remote.UserApi
+import tk.quietdev.level1.data.remote.models.ApiUserContactManipulation
 import tk.quietdev.level1.domain.models.UserModel
 
 class AllUsersRemoteDataSourceImpl(
@@ -10,15 +11,39 @@ class AllUsersRemoteDataSourceImpl(
     private val remoteMapper: RemoteMapper,
 ) : AllUsersRemoteDataSource {
     override suspend fun getAllUsers(): Resource<List<UserModel>> {
-        TODO("Not yet implemented")
+        val response = api.getAllUsers()
+        if (response.isSuccessful) {
+            val userList =
+                response.body()?.data?.users?.map {
+                    remoteMapper.apiUserToDomainUser(it)
+                }
+            userList?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message() ?: "Failed to get userContacts")
     }
 
     override suspend fun updateUser(userModel: UserModel): Resource<Boolean> {
-        TODO("Not yet implemented")
+        val updatedUser = remoteMapper.userToApiUserUpdate(userModel)
+        val response = api.updateUser(updatedUser)
+        return if (response.isSuccessful) {
+            Resource.Success(true)
+        } else Resource.Error("todo")
     }
 
     override suspend fun getUserContacts(): Resource<List<UserModel>> {
-        TODO("Not yet implemented")
+        val response = api.getCurrentUserContacts()
+        if (response.isSuccessful) {
+            val userList =
+                response.body()?.data?.contacts?.map {
+                    remoteMapper.apiUserToDomainUser(it)
+                }
+            userList?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message() ?: "Failed to get userContacts")
     }
 
     override suspend fun getCurrentUser(): Resource<UserModel> {
@@ -50,11 +75,21 @@ class AllUsersRemoteDataSourceImpl(
     }
 
     override suspend fun removeContact(contactId: Int): Resource<Boolean> {
-        TODO("Not yet implemented")
+        val response = api.removeUserContact(ApiUserContactManipulation(contactId))
+        return if (response.isSuccessful) {
+            Resource.Success(true)
+        } else {
+            Resource.Error(response.message())
+        }
     }
 
     override suspend fun addContact(contactId: Int): Resource<Boolean> {
-        TODO("Not yet implemented")
+        val response = api.addUserContact(ApiUserContactManipulation(contactId))
+        return if (response.isSuccessful) {
+            Resource.Success(true)
+        } else {
+            Resource.Error(response.message())
+        }
     }
 
     override suspend fun editUser(user: UserModel): Resource<Boolean> {

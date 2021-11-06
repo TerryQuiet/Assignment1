@@ -8,20 +8,22 @@ import tk.quietdev.level1.data.remote.models.AuthResponse
 import tk.quietdev.level1.data.remote.models.AuthUser
 import kotlin.reflect.KSuspendFunction1
 
+typealias Token = String
+
 class UserAuthDataSourceImpl(
     private val remoteMapper: RemoteMapper,
     private val api: UserApi,
 ) : UserAuthDataSource {
-    override suspend fun userRegister(login: String, password: String): Resource<String> =
+    override suspend fun userRegister(login: String, password: String): Resource<Token> =
         userAuth(api::userRegister, AuthUser(email = login, password = password))
 
-    override suspend fun userLogin(login: String, password: String): Resource<String> =
+    override suspend fun userLogin(login: String, password: String): Resource<Token> =
         userAuth(api::userLogin, AuthUser(email = login, password = password))
 
     private suspend fun userAuth(
         call: KSuspendFunction1<AuthUser, Response<AuthResponse>>,
         authUser: AuthUser
-    ): Resource<String> {
+    ): Resource<Token> {
         val response = call(authUser)
         if (response.isSuccessful) {
             val userTokenData = response.body()?.data?.accessToken

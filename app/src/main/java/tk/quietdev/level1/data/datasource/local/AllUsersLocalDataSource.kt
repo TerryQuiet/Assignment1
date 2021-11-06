@@ -5,16 +5,16 @@ import tk.quietdev.level1.common.Resource
 import tk.quietdev.level1.domain.models.UserModel
 
 interface AllUsersLocalDataSource {
-    fun getAllUsersFlow(): Flow<Resource<List<UserModel>>>
+    fun flowCurrentUserContactsIdList(): Flow<Resource<List<Int>>>
     fun getUserFlow(id: Int): Flow<Resource<UserModel>>
-    fun getIncludeUsersFlow(includeList: List<Int>): Flow<Resource<List<UserModel>>>
-    fun getExcludeUsersFlow(excludeList: List<Int>): Flow<Resource<List<UserModel>>>
-    suspend fun putUser(userModel: UserModel): Resource<Boolean>
-    suspend fun setUserList(userList: List<UserModel>): Resource<Boolean>
 
+    suspend fun removeContacts(toRemove: List<Int>): Resource<Boolean>
+    suspend fun addContact(id: Int): Resource<Boolean>
+    suspend fun getUsersByIdListExclude(excludeList: List<Int>): List<UserModel>
+    suspend fun putUser(userModel: UserModel): Resource<Boolean>
+    suspend fun refreshUserContactList(userList: List<UserModel>): Resource<Boolean>
     suspend fun getCurrentUserId(): Resource<Int>
-    suspend fun getCurrentUserContactsIdList(): Resource<List<Int>>
     suspend fun setCurrentUserId(userId: Int)
-    suspend fun setCurrentUserContactsIdList(idList: List<Int>)
-    suspend fun flowCurrentUserContactsIdList(): Flow<Resource<List<Int>>>
+    suspend fun getUsersByIdList(idList: List<Int>): List<UserModel>
+    suspend fun refreshAllUsersList(userList: List<UserModel>): Resource<Boolean>
 }

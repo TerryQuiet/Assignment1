@@ -11,7 +11,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import tk.quietdev.level1.R
 import tk.quietdev.level1.common.Resource
 import tk.quietdev.level1.databinding.FragmentRegistrationBinding
-import tk.quietdev.level1.domain.models.UserModel
 import tk.quietdev.level1.ui.authorization.AuthActivity
 import tk.quietdev.level1.ui.authorization.AuthViewModel
 import tk.quietdev.level1.ui.base.BaseFragment
@@ -37,7 +36,7 @@ class RegisterFragment :
                 is Resource.Loading -> {
                     binding.progressCircular.visibility = View.VISIBLE
                 }
-                is Resource.Success<UserModel?> -> {
+                is Resource.Success -> {
                     (activity as AuthActivity).login()
                     binding.progressCircular.visibility = View.GONE
                 }

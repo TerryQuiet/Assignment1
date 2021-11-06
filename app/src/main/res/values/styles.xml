@@ -55,7 +55,19 @@
 
     <style name="customStyle">
         <item name="text">"SDSSAD"</item>
-
     </style>
+
+    <style name="TopSearchBarTheme">
+        <item name="colorPrimary">@color/orange_500</item>
+        <item name="colorPrimaryVariant">@color/orange_200</item>
+        <item name="colorSecondary">?attr/colorPrimary</item>
+        <item name="colorSecondaryVariant">?attr/colorPrimaryVariant</item>
+        <item name="colorSurface">@color/dark_blue_500</item>
+        <item name="android:colorBackground">@color/dark_blue_500</item>
+        <item name="colorOnBackground">@color/white</item>
+        <item name="errorTextColor">@color/red_200</item>
+        <item name="android:textColorHint">@color/gray</item>
+    </style>
+
 
 </resources>

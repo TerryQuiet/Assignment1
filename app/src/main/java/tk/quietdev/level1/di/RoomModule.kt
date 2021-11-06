@@ -8,7 +8,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import tk.quietdev.level1.data.db.RoomCurrentUserDao
 import tk.quietdev.level1.data.db.RoomUserListDao
 import tk.quietdev.level1.data.db.UserDatabase
 import javax.inject.Singleton
@@ -37,9 +36,4 @@ object RoomModule {
         return db.roomUserListDao()
     }
 
-    @Singleton
-    @Provides
-    fun provideRoomUser(db: UserDatabase): RoomCurrentUserDao {
-        return db.roomCurrentUserDao()
-    }
 }

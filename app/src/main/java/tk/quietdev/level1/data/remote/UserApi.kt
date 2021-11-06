@@ -33,7 +33,6 @@ interface UserApi {
     suspend fun removeUserContact(@Body requestBody: ApiUserContactManipulation)
             : Response<GetUserContactsResponse>
 
-    @Deprecated("to be removed")
     @GET("./users")
     suspend fun getAllUsers(): Response<GetAllUsersResponse>
 

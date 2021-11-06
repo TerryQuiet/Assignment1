@@ -17,6 +17,7 @@ class ViewPagerContainerFragment :
 
     @Inject
     lateinit var assistedFactory: ParentPagerViewModelFactory
+
     private val args: ViewPagerContainerFragmentArgs by navArgs()
     private val viewModel: ParentPagerViewModel by viewModels {
         ParentPagerViewModel.Factory(

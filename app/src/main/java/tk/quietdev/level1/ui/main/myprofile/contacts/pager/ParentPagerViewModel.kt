@@ -10,11 +10,15 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import tk.quietdev.level1.common.Resource
-import tk.quietdev.level1.data.Repository
 import tk.quietdev.level1.domain.models.UserModel
+import tk.quietdev.level1.usecase.FlowNotUserContactsUseCase
+import tk.quietdev.level1.usecase.FlowUserContactsUseCase
+import kotlin.reflect.KSuspendFunction0
+
 
 class ParentPagerViewModel @AssistedInject constructor(
-    val repository: Repository,
+    private val flowUserContactsUseCase: FlowUserContactsUseCase,
+    private val flowNotUserContactsUseCase: FlowNotUserContactsUseCase,
     @Assisted selectedUserId: Int,
     @Assisted type: ViewPagerType
 ) : ViewModel() {
@@ -24,29 +28,17 @@ class ParentPagerViewModel @AssistedInject constructor(
 
     init {
         when (type) {
-            ViewPagerType.ALL_USERS -> initAllUsers(selectedUserId)
-            ViewPagerType.CONTACTS -> initCurrentUserContacts(selectedUserId)
+            ViewPagerType.ALL_USERS -> initList(flowNotUserContactsUseCase::invoke, selectedUserId)
+            ViewPagerType.CONTACTS -> initList(flowUserContactsUseCase::invoke, selectedUserId)
         }
     }
 
-    private fun initCurrentUserContacts(selectedUserId: Int) {
+    private fun initList(
+        func: KSuspendFunction0<Flow<Resource<List<UserModel>>>>,
+        selectedUserId: Int
+    ) {
         viewModelScope.launch {
-            repository.getCurrentUserContactIdsFlow(false).filter {
-                it is Resource.Success
-            }.collect {
-                it.data?.let {
-                    val list =
-                        repository.getCurrentUserContactsFlow(it, false).first().data ?: listOf()
-                    initPage(selectedUserId, list)
-                    userListAll.value = list
-                }
-            }
-        }
-    }
-
-    private fun initAllUsers(selectedUserId: Int) {
-        viewModelScope.launch {
-            repository.getAllUsersFlow().filter {
+            func.invoke().filter {
                 it is Resource.Success
             }.collect {
                 it.data?.let {
@@ -56,7 +48,6 @@ class ParentPagerViewModel @AssistedInject constructor(
             }
         }
     }
-
 
     private fun initPage(selectedUserId: Int, list: List<UserModel>) {
         if (currentPage == -1) {
@@ -72,15 +63,22 @@ class ParentPagerViewModel @AssistedInject constructor(
     class Factory(
         private val assistedFactory: ParentPagerViewModelFactory,
         private val userId: Int,
-        private val type: ViewPagerType
-    ) : ViewModelProvider.Factory {
+        private val type: ViewPagerType,
+
+        ) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return assistedFactory.create(userId, type) as T
+            return assistedFactory.create(
+                userId,
+                type,
+            ) as T
         }
     }
 }
 
 @AssistedFactory
 interface ParentPagerViewModelFactory {
-    fun create(selectedUserId: Int, type: ViewPagerType): ParentPagerViewModel
+    fun create(
+        selectedUserId: Int,
+        type: ViewPagerType,
+    ): ParentPagerViewModel
 }

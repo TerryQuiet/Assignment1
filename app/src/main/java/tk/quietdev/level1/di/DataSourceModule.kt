@@ -25,6 +25,7 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DataSourceModule {
+
     @Singleton
     @Provides
     fun providePrefHelper(@ApplicationContext context: Context): PrefsHelper {
@@ -36,7 +37,6 @@ object DataSourceModule {
     fun provideAuthTokenDataSource(prefsHelper: PrefsHelper): AuthTokenDataSource {
         return AuthTokenDataSourceSharedPrefs(prefsHelper)
     }
-
 
     @Singleton
     @Provides
@@ -62,7 +62,6 @@ object DataSourceModule {
             prefsHelper = prefsHelper
         )
     }
-
 
     @Singleton
     @Provides

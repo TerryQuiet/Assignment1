@@ -6,31 +6,28 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import tk.quietdev.level1.common.Resource
-import tk.quietdev.level1.data.Repository
-import tk.quietdev.level1.domain.models.UserModel
+import tk.quietdev.level1.usecase.UserRegsterUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val repository: Repository
+    private val userRegsterUseCase: UserRegsterUseCase
 ) : ViewModel() {
 
-    private val _dataState: MutableLiveData<Resource<UserModel?>> = MutableLiveData()
-    val dataState: LiveData<Resource<UserModel?>>
+    private val _dataState: MutableLiveData<Resource<Boolean>> = MutableLiveData()
+    val dataState: LiveData<Resource<Boolean>>
         get() = _dataState
-    private var registerJob: Job? = null
 
     fun regUser(email: String, passwd: String) {
-        registerJob = repository.userRegistration(email, passwd).onEach {
-            _dataState.value = it
-            if (it is Resource.Success) {
-                registerJob?.cancel()
-            }
-        }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            userRegsterUseCase.invoke(email = email, password = passwd).onEach {
+                _dataState.value = it
+            }.launchIn(viewModelScope)
+        }
     }
 
 }
